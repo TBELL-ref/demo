@@ -48,15 +48,17 @@ function blogMenu(mode) {
   };
 }
 
+// /multi drops the greeting from 회사소개 (only 티벨 코어 and 찾아오시는 길 remain), so it is "기업 정보" there.
+const ABOUT_LABEL = (mode) => (mode === "all" ? "기업 정보" : "회사소개");
 const COMPANY_MENU = (mode) => ({
   id: "company",
   label: "회사 소개",
   href: hashBase(mode) + "company",
   children: [
     {
-      id: "about", label: "회사소개", href: hashBase(mode) + "company/about",
+      id: "about", label: ABOUT_LABEL(mode), href: hashBase(mode) + "company/about",
       children: [
-        { id: "about", label: "회사소개", href: hashBase(mode) + "company/about" },
+        { id: "about", label: ABOUT_LABEL(mode), href: hashBase(mode) + "company/about" },
         { id: "vision", label: "경영철학", href: hashBase(mode) + "company/vision" },
         { id: "history", label: "연혁", href: hashBase(mode) + "company/history" }
       ]
@@ -1267,7 +1269,7 @@ function ethicalBody() {
 }
 
 const ABOUT_SLIDES = [
-  { id: "about", title: "회사 소개", desc: "", tags: [], bg: ["bg-info.de3329d4a93fff58c0c9.png", "bg-tablet-info.dfaa0c39c60c825ecbb2.png", "bg-mobile-info.92d953b0346cc509e852.png"], body: aboutBody },
+  { id: "about", title: MULTI ? "기업 정보" : "회사 소개", desc: "", tags: [], bg: ["bg-info.de3329d4a93fff58c0c9.png", "bg-tablet-info.dfaa0c39c60c825ecbb2.png", "bg-mobile-info.92d953b0346cc509e852.png"], body: aboutBody },
   { id: "vision", title: "경영철학", desc: "", tags: [], bg: ["bg-vision.2e2c550d96ce302bf12d.png", "bg-tablet-vision.657fdee36572fc7cefea.png", "bg-mobile-vision.5aa6cb952f2921958f37.png"], body: visionBody }
 ];
 
@@ -1542,27 +1544,44 @@ function multiTop(mode, group) {
 
 function fillMultiDrop(mode, group, child) {
   const sub = activeChild(group, child);
+  const arrow = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>`;
   const link = (href, label, on, cls = "") => `<a href="${href}"${cls ? ` class="${cls}"` : ""}${on ? ' aria-current="page"' : ""}>${label}</a>`;
-  const service = MULTI_MENU[0].sections.map((sec) => `
-    <div class="md-sec">
-      ${link(sec.href, sec.label, mode === sec.id && !group, "md-head")}
-      <div class="md-groups">${sec.groups.map((g) => `
-        <div class="md-group">
-          ${link(g.href, g.label, mode === sec.id && group === g.id && (!g.children || !child))}
-          ${(g.children || []).map((k) => link(k.href, k.label, mode === sec.id && group === g.id && sub === k.id, "md-leaf")).join("")}
-        </div>`).join("")}</div>
-    </div>`).join("");
-  const plainCol = (item) => `<div class="md-groups">${item.children.map((g) => `
+  // 서비스: two framed sections. Each opens with its area (eyebrow, name, 사업 소개 link), then its menu.
+  const EYEBROW = { qa: "SOFTWARE TEST &amp; QUALITY", security: "TBELL 정보보호 컨설팅" };
+  const NAME = { qa: "QA", security: "보안 컨설팅" };
+  const service = MULTI_MENU[0].sections.map((sec) => {
+    const here = mode === sec.id;
+    const groups = sec.groups.filter((g) => g.id);
+    const nested = groups.some((g) => g.children);
+    const body = nested
+      ? `<div class="md-groups">${groups.map((g) => `
+          <div class="md-group">
+            ${link(g.href, g.label, here && group === g.id && !child, "md-gtitle")}
+            ${(g.children || []).map((k) => link(k.href, k.label, here && group === g.id && sub === k.id, "md-leaf")).join("")}
+          </div>`).join("")}</div>`
+      : `<div class="md-rows">${groups.map((g) => link(g.href, `<span>${g.label}</span>${arrow}`, here && group === g.id, "md-row")).join("")}</div>`;
+    return `
+    <section class="md-sec md-${sec.id}${here ? " is-here" : ""}" aria-label="${NAME[sec.id]}">
+      <header class="md-sec-head">
+        <p class="md-eyebrow">${EYEBROW[sec.id]}</p>
+        <div class="md-title"><b>${NAME[sec.id]}</b>${link(sec.href, `사업 소개${arrow}`, here && !group, "md-home")}</div>
+      </header>
+      ${body}
+    </section>`;
+  }).join("");
+  const plainCol = (item) => item.children.every((g) => !g.children)
+    ? `<div class="md-rows md-flat">${item.children.map((g) => link(g.href, `<span>${g.label}</span>${arrow}`, mode === "all" && group === item.id && activeChild(group, child) === g.id, "md-row")).join("")}</div>`
+    : `<div class="md-groups md-plain">${item.children.map((g) => `
     <div class="md-group">
-      ${link(g.href, g.label, mode === "all" && group === item.id && activeChild(group, child) === g.id)}
+      ${link(g.href, g.label, mode === "all" && group === item.id && activeChild(group, child) === g.id, "md-gtitle")}
       ${(g.children || []).map((k) => link(k.href, k.label, mode === "all" && group === item.id && (child || "about") === k.id, "md-leaf")).join("")}
     </div>`).join("")}</div>`;
   const cols = [
-    `<div class="drop-col md-panel" data-id="service">${service}</div>`,
+    `<div class="drop-col md-panel md-service" data-id="service">${service}</div>`,
     `<div class="drop-col md-panel" data-id="blog">${plainCol(MULTI_MENU[1])}</div>`,
     `<div class="drop-col md-panel" data-id="company">${plainCol(MULTI_MENU[2])}</div>`
   ].join("");
-  menuDrop.innerHTML = `<div class="drop-side"></div><div class="drop-cols">${cols}</div><div class="drop-side"></div>`;
+  menuDrop.innerHTML = `<div class="drop-cols">${cols}</div>`;
   menuDrop.style.height = "0px";
   menuDrop.classList.remove("is-open");
 }
@@ -1611,6 +1630,7 @@ function fillDrop(menu, group, child) {
 }
 
 function menuFitHeight() {
+  if (MULTI) return Math.min(menuDrop.querySelector(".drop-cols").offsetHeight, Math.max(0, window.innerHeight - header.offsetHeight));
   const columns = [...menuDrop.querySelectorAll(".drop-col")];
   const content = columns.reduce((max, col) => Math.max(max, col.offsetHeight), 0);
   const styles = getComputedStyle(menuDrop);

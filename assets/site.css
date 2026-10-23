@@ -2398,20 +2398,59 @@ a.s-card:hover .s-ibox { border-color: var(--active); }
 .detail .sheet .chip input:focus-visible { outline: none; }
 
 /* ── /multi header (multi/index.html): 서비스 · 블로그 · 회사소개 + 문의 ──────────
-   Same header shell; the drop shows only the hovered item's panel. 서비스 lists QA and 보안 side by side,
-   each with its own menu (사업 소개, groups, and their pages). */
+   The drop is an opaque sheet under the header showing only the hovered item's panel. 서비스 splits into
+   two framed sections — QA and 보안 컨설팅 — each opening with its area name and a 사업 소개 link. */
 .is-multi .switch { display: none; }
-.is-multi .drop-cols { justify-content: center; }
-.is-multi .drop-col { width: auto; }
-.is-multi .drop-col:not(.is-hover) { display: none; }
-.is-multi .md-panel { flex-direction: row; gap: clamp(32px, 4vw, 72px); padding: 6px 0 10px; }
-.md-sec { display: grid; align-content: start; gap: 12px; }
-.is-multi .drop-col a { min-height: 0; justify-content: flex-start; padding: 6px 0; text-align: left; border-bottom: 0; color: #c8c8c8; font-size: 14px; }
-.is-multi .drop-col a.md-head { padding-bottom: 10px; border-bottom: 1px solid #3a3a3a; color: #fff; font-size: 16px; font-weight: 700; }
-.md-groups { display: flex; gap: clamp(18px, 2vw, 36px); }
-.md-group { display: flex; flex-direction: column; min-width: 92px; }
-.is-multi .drop-col .md-group > a:first-child { color: #fff; font-weight: 500; }
-.is-multi .drop-col a.md-leaf { padding: 4px 0; color: #969696; font-size: 13px; }
-.is-multi .drop-col a:hover, .is-multi .drop-col a[aria-current="page"] { color: var(--active) !important; }
+.is-multi .menu-drop { left: 0; right: 0; }
+.is-multi .menu-drop.is-open { padding: 0; background: #141414; border-top: 1px solid #262626; box-shadow: 0 24px 40px rgba(0, 0, 0, .45); }
+.is-multi .drop-cols { flex: none; align-self: flex-start; width: min(1180px, calc(100% - 64px)); margin: 0 auto; padding: 28px 0 32px; display: block; }
+.is-multi .drop-col { width: auto; display: none; }
+.is-multi .drop-col.is-hover { display: flex; animation: md-in .28s ease both; }
+@keyframes md-in { from { opacity: 0; transform: translateY(-6px); } }
+.is-multi .drop-col a { display: flex; min-height: 0; justify-content: flex-start; padding: 0; text-align: left; border-bottom: 0; color: #a8a8a8; font-size: 14px; font-weight: 400; transition: color .2s; }
+.is-multi .drop-col a:hover, .is-multi .drop-col a[aria-current="page"] { color: var(--active); }
+
+/* 서비스: two sections side by side */
+.md-service { grid-template-columns: 1.45fr 1fr; gap: 20px; }
+.is-multi .drop-col.md-service.is-hover { display: grid; }
+.md-sec { position: relative; display: grid; align-content: start; gap: 22px; padding: 24px 28px 26px; background: #1b1b1b; border: 1px solid #2a2a2a; border-radius: 14px; transition: border-color .25s, background .25s; }
+.md-sec::before { content: ""; position: absolute; left: 28px; right: 28px; top: -1px; height: 2px; background: var(--active); transform: scaleX(0); transform-origin: left; transition: transform .35s ease; }
+.md-sec:hover, .md-sec.is-here { background: #1f1f1f; border-color: #3a3a3a; }
+.md-sec:hover::before, .md-sec.is-here::before { transform: scaleX(1); }
+.md-sec-head { display: grid; gap: 6px; padding-bottom: 18px; border-bottom: 1px solid #2e2e2e; }
+.md-eyebrow { margin: 0; color: #969696; font-family: var(--num); font-size: 11px; font-weight: 600; letter-spacing: .14em; }
+.md-title { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.md-title b { color: #fff; font-size: 22px; font-weight: 700; }
+.is-multi .drop-col a.md-home { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px 6px 14px; border: 1px solid #3a3a3a; border-radius: 62px; color: #e6e6e6; font-size: 13px; }
+.is-multi .drop-col a.md-home:hover, .is-multi .drop-col a.md-home[aria-current="page"] { border-color: var(--active); background: rgba(39, 196, 213, .12); }
+.md-home svg, .md-row svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.md-groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 8px 24px; }
+.md-group { display: flex; flex-direction: column; gap: 9px; }
+.is-multi .drop-col a.md-gtitle { margin-bottom: 4px; padding-bottom: 8px; border-bottom: 1px solid #2e2e2e; color: #fff; font-size: 15px; font-weight: 500; }
+.is-multi .drop-col a.md-leaf { font-size: 13.5px; }
+.is-multi .drop-col a.md-leaf::before { content: ""; width: 0; height: 1px; margin-right: 0; align-self: center; background: var(--active); transition: width .2s, margin .2s; }
+.is-multi .drop-col a.md-leaf:hover::before, .is-multi .drop-col a.md-leaf[aria-current="page"]::before { width: 8px; margin-right: 6px; }
+.md-rows { display: grid; }
+.is-multi .drop-col a.md-row { align-items: center; justify-content: space-between; padding: 13px 2px; border-bottom: 1px solid #2a2a2a; color: #fff; font-size: 15px; font-weight: 500; }
+.is-multi .drop-col a.md-row:last-child { border-bottom: 0; }
+.md-row svg { opacity: .35; transition: opacity .2s, transform .2s; }
+.md-row:hover svg, .md-row[aria-current="page"] svg { opacity: 1; transform: translate(2px, -2px); }
+
+/* 블로그 · 회사소개 */
+.md-rows.md-flat { width: 100%; grid-template-columns: repeat(5, 1fr); column-gap: 28px; }
+.md-flat .md-row { border-bottom: 1px solid #2a2a2a !important; }
+.md-plain { width: 100%; grid-template-columns: repeat(auto-fit, minmax(150px, 220px)); justify-content: center; gap: 8px 40px; }
+
 .nav-sec { padding: 12px 0 2px; color: var(--active); font-family: var(--num); font-size: 12px; letter-spacing: .12em; }
 .inq-switch + .detail .banner { border-top: 0; }
+@media (max-width: 1024px) {
+  .md-service { grid-template-columns: 1fr 1fr; }
+  .md-sec { padding: 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .is-multi .drop-col.is-hover { animation: none; }
+  .md-sec::before { transition: none; }
+}
+.is-multi .drop-col a.md-row:hover, .is-multi .drop-col a.md-row[aria-current="page"],
+.is-multi .drop-col a.md-gtitle:hover, .is-multi .drop-col a.md-gtitle[aria-current="page"],
+.is-multi .drop-col a.md-leaf:hover, .is-multi .drop-col a.md-leaf[aria-current="page"] { color: var(--active); }
