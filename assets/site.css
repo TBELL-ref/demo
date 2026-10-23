@@ -17,7 +17,10 @@
   /* Side margin: grows as the window narrows toward the content width so pages never run to the edge. */
   --gutter: clamp(24px, 6vw, 80px);
   /* Side padding that centres a 1180px column and never drops below the gutter. */
-  --side: max(var(--gutter), calc((100% - var(--content-max)) / 2));
+  /* White-background pages follow the origin: content spans 66% of the window (17% each side), capped at
+     1260px; 88% on tablets; on phones only the gutter remains. */
+  --white-w: min(1260px, 66vw);
+  --side: max(var(--gutter), calc((100% - var(--white-w)) / 2));
   --section-pad: 96px;
   --subnav-h: 54px;
   --font: "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
@@ -556,7 +559,7 @@ html:has(.stage) { scroll-snap-type: y proximity; }
 }
 .expand-card.is-open { width: 24vw; }
 .expand-card img { width: auto; height: 100%; max-width: none; object-fit: cover; }
-.expand-card span { position: absolute; left: 0; bottom: 0; width: 100%; padding: 10%; color: #fff; text-align: left; }
+.expand-card > span { position: absolute; left: 0; bottom: 0; width: 100%; padding: 10%; color: #fff; text-align: left; }
 .expand-card strong, .expand-card em { display: block; white-space: pre-wrap; font-style: normal; }
 .expand-card em { display: none; font-weight: 400; line-height: 1.5; }
 .expand-card.is-open em { display: block; }
@@ -2535,3 +2538,25 @@ a.s-card:hover .s-ibox { border-color: var(--active); }
 .mh-hero { isolation: isolate; }
 .mh-rope { display: none; }
 .mh-knot::before { content: ""; position: absolute; top: 50%; left: -50vw; right: -50vw; height: 2px; z-index: -1; background: linear-gradient(90deg, transparent, rgba(39, 196, 213, .55) 30%, rgba(39, 196, 213, .55) 70%, transparent); }
+
+/* ── White pages at the origin's proportions (66% / 88% / gutter) ─────────────────── */
+@media (max-width: 1024px) { :root { --white-w: 88vw; } }
+@media (max-width: 768px) { :root { --white-w: calc(100vw - 2 * var(--gutter)); } }
+/* security detail pages (hero, tabs, body) and the diagnose tool use the same column */
+.s-page.light .s-wrap { max-width: none; padding-left: var(--side); padding-right: var(--side); }
+
+/* 테스트 분야 cards at the origin's ratios: closed 8vw × 16vw showing the number only, open 24vw */
+.expand-row { padding: 0; }
+.expand-card .ec-name { display: none; }
+.expand-card.is-open .ec-name { display: inline; }
+.expand-card > span { padding: 8%; }
+.expand-card strong { font-size: clamp(14px, 1.15vw, 20px); }
+.expand-card em { margin-top: 8px; font-size: clamp(13px, .9vw, 16px); line-height: 1.45; }
+@media (max-width: 768px) {
+  .expand-card .ec-name { display: inline; }
+}
+@media (max-width: 768px) {
+  .s-subnav .s-wrap { justify-content: flex-start; gap: 24px; overflow-x: auto; scrollbar-width: none; }
+  .s-subnav .s-wrap::-webkit-scrollbar { display: none; }
+  .s-subnav a, .s-subnav button { flex: none; white-space: nowrap; }
+}

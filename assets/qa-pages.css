@@ -402,9 +402,9 @@
 
 /* QA detail bodies: one side margin on .svc-body; sections inside use the full width up to 1320px instead
    of adding margins of their own. Photo bands and the origin's full-width images still run edge to edge. */
-.svc-body { --svc-pad: var(--gutter); padding-inline: var(--svc-pad); }
+.svc-body { --svc-pad: max(var(--gutter), calc((100vw - var(--white-w)) / 2)); padding-inline: var(--svc-pad); }
 .svc-body > .qp-sec, .svc-body > .qp-h-solo, .svc-body > .expand-row, .svc-body > .contact-row, .svc-body > .way, .svc-body > .apply {
-  width: 100%; max-width: var(--content-max); margin-left: auto; margin-right: auto; padding-left: 0; padding-right: 0;
+  width: 100%; max-width: none; margin-left: 0; margin-right: 0; padding-left: 0; padding-right: 0;
 }
 .svc-body > .qp-band, .svc-body > .qp-venn, .svc-body > .qp-stairs, .svc-body > .qp-mosaic, .svc-body > picture, .svc-body > img {
   margin-left: calc(-1 * var(--svc-pad)); margin-right: calc(-1 * var(--svc-pad)); width: auto; max-width: none;
@@ -558,3 +558,5 @@
 /* full-bleed bands keep the page gutter inside; overlapping rings never spill past the edge */
 .qp-venn, .qp-stairs { padding-left: var(--gutter); padding-right: var(--gutter); }
 @media (max-width: 1024px) { .qp-rings { gap: 10px; } .qp-rings li { margin: 0; } }
+/* number cards: text sized to the narrower 66% column so each line stays whole */
+.qp-numcards p { padding: 10px 8px; font-size: clamp(12px, .95vw, 17px); word-break: keep-all; }

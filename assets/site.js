@@ -613,7 +613,7 @@ function outsourcingBody() {
   const cards = SERVICE_CARDS.map(([id, title, image, desc], index) => `
     <button class="expand-card${index === 0 ? " is-open" : ""}" type="button">
       <img src="${ORIGIN}${image}" alt="">
-      <span><strong>${id} ${title}</strong><em>${desc}</em></span>
+      <span><strong>${id}<span class="ec-name"> ${title}</span></strong><em>${desc}</em></span>
     </button>`).join("");
   return `
     ${qpOutsourcingAdvantages()}
