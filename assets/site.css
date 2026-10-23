@@ -2612,7 +2612,7 @@ a.s-card:hover .s-ibox { border-color: var(--active); }
 
 /* ── /multi hero B · two doors (design_demo/multi-hero-options/b-two-doors) ─────────── */
 .mh-doors { position: relative; display: grid; grid-template-columns: 1fr 1fr; height: clamp(620px, calc(100vh - var(--header-h)), 900px); background: #0d0d0d; }
-.md-title { display: block; grid-column: 1 / -1; grid-row: 1; position: absolute; z-index: 3; left: var(--gutter); right: var(--gutter); top: clamp(64px, 10vh, 120px); text-align: center; font-size: clamp(34px, 4.2vw, 62px); line-height: 1.25; font-weight: 700; letter-spacing: -.03em; text-shadow: 0 4px 30px rgba(0, 0, 0, .6); pointer-events: none; }
+.door-title { display: block; grid-column: 1 / -1; grid-row: 1; position: absolute; z-index: 3; left: var(--gutter); right: var(--gutter); top: clamp(64px, 10vh, 120px); text-align: center; font-size: clamp(34px, 4.2vw, 62px); line-height: 1.25; font-weight: 700; letter-spacing: -.03em; text-shadow: 0 4px 30px rgba(0, 0, 0, .6); pointer-events: none; }
 .door { grid-row: 1; position: relative; display: flex; flex-direction: column; justify-content: flex-end; padding: 0 clamp(28px, 4.4vw, 64px) clamp(40px, 7vh, 72px); overflow: hidden; color: #fff; }
 .door + .door { border-left: 1px solid rgba(255, 255, 255, .08); }
 .door::after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(10, 10, 10, .88) 0%, rgba(10, 10, 10, .12) 42%, rgba(10, 10, 10, .92) 100%); }
@@ -2631,8 +2631,8 @@ a.s-card:hover .s-ibox { border-color: var(--active); }
 .mh-since .mh-figs { margin-top: clamp(56px, 6vw, 88px); padding-top: 40px; border-top: 1px solid #2e2e2e; }
 @media (max-width: 768px) {
   .mh-doors { grid-template-columns: 1fr; height: auto; }
-  .md-title { grid-row: auto; position: static; padding: 48px var(--gutter) 28px; text-align: left; font-size: 30px; text-wrap: balance; }
-  .md-title br { display: none; }
+  .door-title { grid-row: auto; position: static; padding: 48px var(--gutter) 28px; text-align: left; font-size: 30px; text-wrap: balance; }
+  .door-title br { display: none; }
   .door { grid-row: auto; min-height: 400px; padding: 0 var(--gutter) 36px; }
   .door + .door { border-left: 0; border-top: 1px solid rgba(255, 255, 255, .08); }
   .door::after { background: linear-gradient(180deg, rgba(10, 10, 10, .2) 0%, rgba(10, 10, 10, .92) 85%); }
