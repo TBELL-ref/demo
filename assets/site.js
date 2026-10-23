@@ -195,12 +195,17 @@ function stats() {
   return `<div class="stage-center"><h2>고객과 더불어 성장하는 TBELL</h2><div class="stats">${cells}</div></div>`;
 }
 
+// Root gate: the same two business entrances as the /multi home (multiBizCard).
 function gateHome() {
+  const [qaSec, secSec] = MULTI_MENU[0].sections;
   return `
-    <section class="gate">
-      <a class="gate-card" href="#qa"><span class="en">QA</span><h1>QA</h1><p>테스트 아웃소싱, 자동화, TestOps.</p><span class="go">들어가기</span></a>
-      <a class="gate-card" href="#security"><span class="en">Consulting</span><h1>보안 컨설팅</h1><p>인증, 개인정보, 보안 체계.</p><span class="go">들어가기</span></a>
-    </section>
+    <div class="mh"><section class="mh-biz gate-biz">
+      <div class="mh-wrap">
+        <p class="qh-label">BUSINESS</p>
+        <h1 class="gate-title">두 개의 전문 영역에서 일합니다</h1>
+        <div class="mb-grid">${multiBizCard(qaSec, BIZ_ART.qa())}${multiBizCard(secSec, BIZ_ART.security())}</div>
+      </div>
+    </section></div>
     ${stage("shade-d", stats())}`;
 }
 
@@ -216,6 +221,12 @@ const MULTI_SINCE = [
   ["2023", "2023년도 SK텔레콤 최우수파트너사 수상"]
 ];
 const MULTI_FIGURES = [[1460, "개", "누적 수행 프로젝트"], [161, "개사", "이용 고객사"], [165, "명", "임직원"]];
+
+// Card artwork: the QA home banner badge, and a still copy of the security home shield.
+const BIZ_ART = {
+  qa: () => `<img src="${ORIGIN}banner-main-pc-001.0e1ee99f9660f77d4fe1.png" alt="" loading="lazy">`,
+  security: () => `<span class="mb-shield"><img src="${window.TBELL_BASE || ""}assets/shield.png?v=3" alt="" loading="lazy"><i></i><svg viewBox="0 0 1400 1400"><path d="M642 642 L686 686 L766 594"/></svg></span>`
+};
 
 // One entrance per business: label, the h1 of that home, its sub-pages from the header menu.
 function multiBizCard(sec, art) {
@@ -239,8 +250,6 @@ function multiHome() {
   const years = new Date().getFullYear() - 2015;
   const core = [["core-test", "TEST"], ["core-customer", "CUSTOMER"], ["core-human", "HUMAN"]];
   const [qaSec, secSec] = MULTI_MENU[0].sections;
-  const qaArt = `<img src="${ORIGIN}banner-main-pc-001.0e1ee99f9660f77d4fe1.png" alt="" loading="lazy">`;
-  const secArt = `<span class="mb-shield"><img src="${base}assets/shield.png?v=3" alt="" loading="lazy"><i></i><svg viewBox="0 0 1400 1400"><path d="M642 642 L686 686 L766 594"/></svg></span>`;
   return `<div class="mh">
   <section class="mh-top" style="background-image:url('${ORIGIN}bg-vision.2e2c550d96ce302bf12d.png')">
     <div class="mh-wrap mh-top-in">
@@ -255,7 +264,7 @@ function multiHome() {
     <div class="mh-wrap">
       <p class="qh-label">BUSINESS</p>
       <h2>두 개의 전문 영역에서 일합니다</h2>
-      <div class="mb-grid">${multiBizCard(qaSec, qaArt)}${multiBizCard(secSec, secArt)}</div>
+      <div class="mb-grid">${multiBizCard(qaSec, BIZ_ART.qa())}${multiBizCard(secSec, BIZ_ART.security())}</div>
     </div>
   </section>
   <section class="mh-core" style="background-image:url('${base}assets/qa/photos/core-building.jpg')">

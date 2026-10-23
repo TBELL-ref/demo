@@ -2600,3 +2600,30 @@ a.s-card:hover .s-ibox { border-color: var(--active); }
   .mh-mission br { display: none; }
   .mh-common .mh-cta { flex-direction: column; align-items: stretch; }
 }
+
+/* root gate: business entrances (same cards as the /multi home) */
+.gate-biz { padding-top: clamp(64px, 7vw, 110px); }
+.gate-title { margin-top: 12px; font-size: clamp(24px, 2.4vw, 36px); font-weight: 700; }
+
+/* ── /multi header: compact bar, grouped nav, quiet hairline, neutral button ───────── */
+.is-multi { --header-h: 68px; }
+.is-multi .site-head { background: rgba(13, 13, 13, .96); -webkit-backdrop-filter: saturate(140%) blur(14px); backdrop-filter: saturate(140%) blur(14px); }
+.is-multi .header { padding: 0 var(--gutter); border-bottom: 1px solid rgba(255, 255, 255, .08); }
+.is-multi .logo { flex: 1 1 0; padding: 0; }
+.is-multi .logo img { height: 18px; }
+.is-multi .logo:hover img { filter: none; opacity: .75; }
+.is-multi .tools { flex: 1 1 0; width: auto; }
+.is-multi #inquire { min-height: 0; height: 36px; padding: 0 16px; border-radius: 6px; background: #fff; border-color: #fff; color: #111; font-size: 14px; font-weight: 600; }
+.is-multi #inquire:hover { background: #dcdcdc; border-color: #dcdcdc; color: #111; }
+@media (min-width: 769px) {
+  .is-multi .nav { flex: none; width: auto; gap: clamp(4px, 1.6vw, 24px); justify-content: center; }
+  .is-multi .nav a { position: relative; width: auto; padding: 0 14px; border-radius: 0; color: rgba(255, 255, 255, .72); font-size: 15px; font-weight: 500; letter-spacing: -.01em; white-space: nowrap; transition: color .15s; }
+  .is-multi .nav a::after { content: ""; position: absolute; left: 14px; right: 14px; bottom: -1px; height: 2px; background: var(--active); transform: scaleX(0); transition: transform .2s ease; }
+  .is-multi .nav a:hover, .is-multi .nav a[aria-current="page"] { color: #fff; }
+  .is-multi .nav a:hover::after, .is-multi .nav a[aria-current="page"]::after { transform: scaleX(1); }
+}
+@media (max-width: 768px) {
+  .is-multi { --header-h: 56px; }
+  .is-multi .header { padding: 0 16px; }
+  .is-multi #inquire { height: 32px; padding: 0 12px; font-size: 13px; }
+}
