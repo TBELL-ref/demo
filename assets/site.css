@@ -2544,20 +2544,9 @@ a.s-card:hover .s-ibox { border-color: var(--active); }
 }
 
 /* ── /multi home v2: identity hero, two business entrances (design_demo/multi-home-hero-plan.md) ── */
-.mh-top { position: relative; isolation: isolate; display: grid; align-content: end; gap: clamp(48px, 7vh, 88px); min-height: clamp(600px, calc(100vh - var(--header-h)), 900px); padding: clamp(72px, 10vh, 120px) 0 clamp(40px, 5vh, 56px); background: #0b1112 center / cover no-repeat; text-align: left; }
-.mh-top::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(10, 14, 15, .78) 0%, rgba(10, 14, 15, .45) 55%, rgba(10, 14, 15, .85) 100%); }
-.mh-top-in { text-align: left; }
-.mh-top h1 { margin-top: 18px; font-size: clamp(34px, 4.4vw, 68px); font-weight: 700; line-height: 1.24; letter-spacing: -.02em; }
-.mh-top .lede { max-width: 34em; margin-top: 22px; color: #b9c3c5; font-size: clamp(15px, 1.15vw, 19px); line-height: 1.7; }
-.mh-top .mh-cta { justify-content: flex-start; margin-top: 34px; }
-.mh-proof { display: grid; grid-template-columns: repeat(3, 1fr); padding-top: 22px; border-top: 1px solid rgba(255, 255, 255, .16); text-align: left; }
-.mh-proof p { display: grid; gap: 4px; padding-right: 16px; }
-.mh-proof p + p { padding-left: 24px; border-left: 1px solid rgba(255, 255, 255, .12); }
-.mh-proof strong { font-family: var(--num); font-size: clamp(26px, 2.4vw, 38px); font-weight: 500; }
-.mh-proof span:not(.count) { color: #98a5a8; font-size: 14px; }
 
 .mh-biz { padding: clamp(80px, 9vw, 140px) 0; background: #121212; }
-.mb-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(16px, 2vw, 28px); margin-top: 48px; text-align: left; }
+.mb-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(16px, 2vw, 28px); margin-top: 0; text-align: left; }
 .mb-card { display: grid; grid-template-rows: auto 1fr; background: #1a1a1a; border: 1px solid #2a2a2a; overflow: hidden; transition: border-color .25s; }
 .mb-card:hover { border-color: #3d3d3d; }
 .mb-art { position: relative; display: block; height: clamp(180px, 16vw, 240px); overflow: hidden; background: #161616; }
@@ -2586,16 +2575,9 @@ a.s-card:hover .s-ibox { border-color: var(--active); }
 .mh-common .mh-cta { justify-content: center; margin-top: 36px; }
 
 @media (max-width: 1024px) {
-  .mh-top { min-height: 0; }
   .mb-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 768px) {
-  .mh-top { padding: 64px 0 32px; gap: 48px; }
-  .mh-top h1 br { display: block; }
-  .mh-top .mh-cta { flex-direction: column; align-items: stretch; }
-  .mh-proof { grid-template-columns: 1fr 1fr 1fr; }
-  .mh-proof p + p { padding-left: 12px; }
-  .mh-proof span:not(.count) { font-size: 12px; }
   .mb-art { height: 160px; }
   .mh-mission br { display: none; }
   .mh-common .mh-cta { flex-direction: column; align-items: stretch; }
@@ -2626,4 +2608,34 @@ a.s-card:hover .s-ibox { border-color: var(--active); }
   .is-multi { --header-h: 56px; }
   .is-multi .header { padding: 0 16px; }
   .is-multi #inquire { height: 32px; padding: 0 12px; font-size: 13px; }
+}
+
+/* ── /multi hero B · two doors (design_demo/multi-hero-options/b-two-doors) ─────────── */
+.mh-doors { position: relative; display: grid; grid-template-columns: 1fr 1fr; height: clamp(620px, calc(100vh - var(--header-h)), 900px); background: #0d0d0d; }
+.md-title { display: block; grid-column: 1 / -1; grid-row: 1; position: absolute; z-index: 3; left: var(--gutter); right: var(--gutter); top: clamp(64px, 10vh, 120px); text-align: center; font-size: clamp(34px, 4.2vw, 62px); line-height: 1.25; font-weight: 700; letter-spacing: -.03em; text-shadow: 0 4px 30px rgba(0, 0, 0, .6); pointer-events: none; }
+.door { grid-row: 1; position: relative; display: flex; flex-direction: column; justify-content: flex-end; padding: 0 clamp(28px, 4.4vw, 64px) clamp(40px, 7vh, 72px); overflow: hidden; color: #fff; }
+.door + .door { border-left: 1px solid rgba(255, 255, 255, .08); }
+.door::after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(10, 10, 10, .88) 0%, rgba(10, 10, 10, .12) 42%, rgba(10, 10, 10, .92) 100%); }
+.door-art { position: absolute; inset: 0; display: grid; place-items: center; transition: transform .8s ease; }
+.door-qa .door-art { background-color: #141414; background-repeat: no-repeat; background-size: 200% auto; background-position: 82% 56%; }
+.door-security .door-art { background: radial-gradient(circle at 50% 55%, #1d2425, #111 65%); }
+.door-security .mb-shield { width: clamp(180px, 19vw, 280px); margin-top: 6%; }
+.door:hover .door-art { transform: scale(1.025); }
+.door-copy { position: relative; z-index: 2; display: grid; justify-items: start; gap: 10px; }
+.door-copy small { font-family: var(--num); font-size: 13px; letter-spacing: .14em; color: #8f8f8f; }
+.door-copy b { font-size: clamp(30px, 2.8vw, 40px); font-weight: 700; line-height: 1.2; }
+.door-line { min-height: 3.2em; max-width: 24em; font-size: clamp(15px, 1.1vw, 17px); line-height: 1.6; color: #b9b9b9; }
+.door-copy em { display: inline-flex; align-items: center; gap: 8px; margin-top: 12px; font-style: normal; font-size: 15px; font-weight: 700; color: var(--active); }
+.door-copy em svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform .2s; }
+.door:hover .door-copy em svg { transform: translateX(4px); }
+.mh-since .mh-figs { margin-top: clamp(56px, 6vw, 88px); padding-top: 40px; border-top: 1px solid #2e2e2e; }
+@media (max-width: 768px) {
+  .mh-doors { grid-template-columns: 1fr; height: auto; }
+  .md-title { grid-row: auto; position: static; padding: 48px var(--gutter) 28px; text-align: left; font-size: 30px; text-wrap: balance; }
+  .md-title br { display: none; }
+  .door { grid-row: auto; min-height: 400px; padding: 0 var(--gutter) 36px; }
+  .door + .door { border-left: 0; border-top: 1px solid rgba(255, 255, 255, .08); }
+  .door::after { background: linear-gradient(180deg, rgba(10, 10, 10, .2) 0%, rgba(10, 10, 10, .92) 85%); }
+  .door-security .mb-shield { width: 170px; margin-top: -30%; }
+  .door-qa .door-art { background-color: #0d0d0d; background-size: 150% auto; background-position: 92% 0%; }
 }

@@ -201,8 +201,7 @@ function gateHome() {
   return `
     <div class="mh"><section class="mh-biz gate-biz">
       <div class="mh-wrap">
-        <p class="qh-label">BUSINESS</p>
-        <h1 class="gate-title">두 개의 전문 영역에서 일합니다</h1>
+        <h1 class="sr-only">티벨 사업 영역</h1>
         <div class="mb-grid">${multiBizCard(qaSec, BIZ_ART.qa())}${multiBizCard(secSec, BIZ_ART.security())}</div>
       </div>
     </section></div>
@@ -245,27 +244,33 @@ function multiBizCard(sec, art) {
     </article>`;
 }
 
+// /multi hero door: one half of the screen per business, the whole half is the link.
+// Copy is that home's own label and h1; artwork is the shared BIZ_ART.
+function multiDoor(sec) {
+  const qa = sec.id === "qa";
+  const art = qa
+    ? `<span class="door-art" aria-hidden="true" style="background-image:url('${ORIGIN}banner-main-pc-001.0e1ee99f9660f77d4fe1.png')"></span>`
+    : `<span class="door-art" aria-hidden="true">${BIZ_ART.security()}</span>`;
+  return `<a class="door door-${sec.id}" href="${sec.href}">
+      ${art}
+      <span class="door-copy">
+        <small>${qa ? "SOFTWARE TEST &amp; QUALITY" : "TBELL 정보보호 컨설팅"}</small>
+        <b>${qa ? "QA" : "정보보호"}</b>
+        <span class="door-line">${qa ? "차별화된 테스트 경험을 제공하는 대한민국 대표 품질 서비스 기업" : "우리 회사에 필요한 보안 인증, 2분이면 알 수 있습니다."}</span>
+        <em>${qa ? "QA" : "정보보호"} 홈으로<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></em>
+      </span>
+    </a>`;
+}
+
 function multiHome() {
   const base = window.TBELL_BASE || "";
   const years = new Date().getFullYear() - 2015;
   const core = [["core-test", "TEST"], ["core-customer", "CUSTOMER"], ["core-human", "HUMAN"]];
   const [qaSec, secSec] = MULTI_MENU[0].sections;
   return `<div class="mh">
-  <section class="mh-top" style="background-image:url('${ORIGIN}bg-vision.2e2c550d96ce302bf12d.png')">
-    <div class="mh-wrap mh-top-in">
-      <p class="qh-label">SINCE 2015 · TBELL</p>
-      <h1>소프트웨어는 제대로 동작하게,<br>정보는 안전하게 관리되게.</h1>
-      <p class="lede">2015년부터 1,460개 프로젝트, 161개 고객사와 함께해 온 기술 전문 기업입니다.</p>
-      <div class="mh-cta"><a class="pill" href="#" data-jump="mh-biz">사업 영역 보기</a><a class="pill ghost" href="#inquiry/qa">문의하기</a></div>
-    </div>
-    <div class="mh-wrap mh-proof" data-count-zone>${MULTI_FIGURES.map(([n, u, l]) => `<p><strong><span class="count" data-count="${n}">0</span>${u}</strong><span>${l}</span></p>`).join("")}</div>
-  </section>
-  <section class="mh-biz" id="mh-biz">
-    <div class="mh-wrap">
-      <p class="qh-label">BUSINESS</p>
-      <h2>두 개의 전문 영역에서 일합니다</h2>
-      <div class="mb-grid">${multiBizCard(qaSec, BIZ_ART.qa())}${multiBizCard(secSec, BIZ_ART.security())}</div>
-    </div>
+  <section class="mh-doors">
+    <h1 class="md-title">소프트웨어는 제대로 동작하게, <br>정보는 안전하게 관리되게.</h1>
+    ${multiDoor(qaSec)}${multiDoor(secSec)}
   </section>
   <section class="mh-core" style="background-image:url('${base}assets/qa/photos/core-building.jpg')">
     <div class="mh-wrap">
@@ -281,6 +286,7 @@ function multiHome() {
       <p class="qh-label">SINCE 2015</p>
       <h2><span class="count" data-count="${years}">0</span>년, 하나의 티벨</h2>
       <ol class="mh-line">${MULTI_SINCE.map(([y, t], i) => `<li style="--i:${i}"><b>${y}</b><span>${t}</span></li>`).join("")}</ol>
+      <div class="mh-figs">${MULTI_FIGURES.map(([n, u, l]) => `<div><p>${l}</p><strong><span class="count" data-count="${n}">0</span>${u}</strong></div>`).join("")}</div>
     </div>
   </section>
   <section class="mh-common">
