@@ -554,56 +554,27 @@ function outsourcingBody() {
       <span><strong>${id} ${title}</strong><em>${desc}</em></span>
     </button>`).join("");
   return `
-    ${shot({ pc: "content-outsourcing-01.e7d68115b2bd091842e0.png", tablet: "content-tablet-outsourcing-01.a4966949f2bf68d3b4e9.png", mobile: "content-mobile-outsourcing-01.e9853a0c30a020548304.png" })}
+    ${qpOutsourcingAdvantages()}
+    <h2 class="qp-h qp-h-solo" data-qp-reveal>테스트 분야</h2>
     <div class="expand-row">${cards}</div>
-    ${shot({ pc: "content-outsourcing-02.e2618bd66c15e03b421e.png", tablet: "content-outsourcing-02-tablet.png", mobile: "content-outsourcing-02-mobile.png" })}
+    <h2 class="qp-h qp-h-solo" data-qp-reveal>테스트 의뢰</h2>
     <div class="contact-row">
       <div><img src="${ORIGIN}icon-mail.svg" alt=""><div><strong>staff@tbell.co.kr</strong><span>이메일로 문의 가능합니다.</span></div></div>
       <div><img src="${ORIGIN}icon-phone.svg" alt=""><div><strong>070.7777.9113</strong><span>월-금요일 09:30-18:00 / 점심 12:00-13:00</span></div></div>
     </div>`;
 }
 
-function imageBody(spec) {
-  return shot(spec);
-}
 
-function blackboxBody() {
-  const domains = DOMAINS.map(([title, image]) => `<figure><img src="${ORIGIN}${image}" alt=""><figcaption>${title}</figcaption></figure>`).join("");
-  return `
-    ${shot({ pc: "content-blackbox-01.62900f12e2b31f7a30a8.png", tablet: "content-tablet-blackbox-01.1d54b655f647e1c7dbd0.png", mobile: "content-mobile-blackbox-01.576cc606454e2295d031.png" })}
-    <div class="domain-row">${domains}</div>
-    ${shot({ pc: "content-blackbox-02.5ca02fe35e6a35d34ae4.png", tablet: "content-tablet-blackbox-02.912af858d8134fcc659e.png", mobile: "content-mobile-blackbox-02.a1e63e996b45ecb3bc25.png" })}`;
-}
 
-function testopsBody() {
-  return `
-    ${shot({ pc: "content-testops-01.82c903b0f03221d2a802.png", tablet: "content-tablet-testops-01.bf5267c6b5d517a9dae4.png", mobile: "content-mobile-testops-01.689f9cf0e3ce6bcafabf.png" })}
-    <div class="svc-fit desk"><img src="${ORIGIN}item-testops-001.46b4233b27dcbcfd51d7.png" alt=""></div>
-    <div class="svc-scroll"><img src="${ORIGIN}item-mobile-testops-001.fe015dfee9aca576993c.png" alt=""></div>
-    <h2 class="svc-midtitle">BDD 기반 TestOps 환경 구축</h2>
-    ${shot({ pc: "content-testops-02.c917b398ec45e9a0b4c0.png", tablet: "content-tablet-testops-02.3fd0aa58d9866454d414.png", mobile: "content-mobile-testops-02.bf4ba39492f68346ae95.png" })}
-    <div class="svc-fit desk"><img src="${ORIGIN}item-testops-002.ba4781e8d62510f503e2.png" alt=""></div>
-    <div class="svc-scroll"><img src="${ORIGIN}item-mobile-testops-002.67426c144385d8f87ac3.png" alt=""></div>
-    ${shot({ pc: "content-testops-03.23604e113f9c64c69806.png", tablet: "content-tablet-testops-03.00f991688d00b429f643.png", mobile: "content-mobile-testops-03.0046d38078a00622890f.png" })}`;
-}
 
-function aitestBody() {
-  return `
-    <div class="desk">${shot({ pc: "content-aitest.e9447993b4821f5bd125.png", tablet: "content-tablet-aitest.ad8cdb2fab54aa6079c3.png" })}</div>
-    <div class="mob-only">
-      <img src="${ORIGIN}content-mobile-aitest-01.ed059f58ae0c5e71ba34.png" alt="">
-      <div class="svc-scroll"><img src="${ORIGIN}item-mobile-aitest-01.8ab522a53ae9095d625a.png" alt=""></div>
-      <img src="${ORIGIN}aitest-mobile-tail.png" alt="">
-    </div>`;
-}
 
 const SERVICE_SLIDES = [
   { id: "outsourcing", title: "Outsourcing Test", desc: "티벨의 아웃소싱 테스트는 기업 및\n프로젝트의 특성에 맞춘 고객 맞춤형 테스트입니다.", tags: ["Web/App", "IoT/AI", "Embedded", "Finance", "Automotive"], bg: ["bg-outsourcing.b46a027c427ae59d3db3.png", "bg-tablet-outsourcing.b7693ae7435210848e2c.png", "bg-mobile-outsourcing.bf9d543859738afb6936.png"], body: outsourcingBody },
-  { id: "automation", title: "Test Automation", desc: "티벨만의 차별화된 자동화 테스트 서비스를 통해 보다\n높은 수준의 품질 및 고객 만족 향상을 약속드립니다.", tags: ["안전성", "효율성", "전문성", "비용절감"], bg: ["bg-automation.eebf3b3db228963a7d7e.png", "bg-tablet-automation.42cf3238c4db4de3a5c2.png", "bg-mobile-automation.981f021b70be98f47f4a.png"], body: () => imageBody({ pc: "content-automation.9594e2423a9ea60bd185.png", tablet: "content-tablet-automation.719d5deaf1e5e74994f9.png", mobile: "content-mobile-automation.13273d2eab8ace9691b5.png" }) },
+  { id: "automation", title: "Test Automation", desc: "티벨만의 차별화된 자동화 테스트 서비스를 통해 보다\n높은 수준의 품질 및 고객 만족 향상을 약속드립니다.", tags: ["안전성", "효율성", "전문성", "비용절감"], bg: ["bg-automation.eebf3b3db228963a7d7e.png", "bg-tablet-automation.42cf3238c4db4de3a5c2.png", "bg-mobile-automation.981f021b70be98f47f4a.png"], body: automationBody },
   { id: "blackbox", title: "Blackbox Test", desc: "제품 개발을 위해 작성된 개발 명세서를 기반으로\n테스트 시나리오를 작성하고 테스트를 수행함으로써\n제품 품질 개선 활동하는 테스트 서비스입니다.", tags: ["Interface Test", "System Test", "Integration Test", "Sanity Test", "Regression Test", "Acceptance Test"], bg: ["bg-blackbox.93002ce8bac79cfd0f1f.png", "bg-tablet-blackbox.08b799c93405378cd9f7.png", "bg-mobile-blackbox.deb03514f8108bd54281.png"], body: blackboxBody },
-  { id: "whitebox", title: "Whitebox Test", desc: "화이트박스 테스트(WhiteBox Test)기법은 소프트웨어\n내부 소스 코드를 테스트하는 기법으로써 동작의\n유효성 뿐만아니라 실행 되는 과정을 살펴보는 테스트입니다.", tags: ["Static Test", "Dynamic Test"], bg: ["bg-whitebox.dd0f3a71aa3621b95657.png", "bg-tablet-whitebox.237c155d7035df71b7b8.png", "bg-mobile-whitebox.5a13073380c9706e9e8a.png"], body: () => imageBody({ pc: "content-whitebox.23e315717992b132f3f2.png", tablet: "content-tablet-whitebox.8326ffa2ca04cf6eda6b.png", mobile: "content-mobile-whitebox.5a9849a6f5cb181a9eb1.png" }) },
-  { id: "api", title: "API Test", desc: "서로 다른 소프트웨어 시스템 사이에\n통신과 연동을 위해 API 테스트는 필수적입니다.", tags: ["기능", "안정성", "성능"], bg: ["bg-api.c29a3eb4a94183fda704.png", "bg-tablet-api.0d2bd87a550607f6f885.png", "bg-mobile-api.f4098575a7ef1dc638a9.png"], body: () => imageBody({ pc: "content-api.4f76bf157990b790291a.png", tablet: "content-tablet-api.18563e61a62f2a226d7b.png", mobile: "content-mobile-api.aebfeaceee9a3b133b0f.png" }) },
-  { id: "perfomance", title: "", desc: "", tags: [], bg: ["bg-perfomance.970f68cd64a2613d1c03.png", "bg-tablet-perfomance.defe2610687b7c8a7569.png", "bg-mobile-perfomance.4b266306d8c200a4bea8.png"], body: () => imageBody({ pc: "content-perfomance.f4c2ac0d9b3799f362aa.png", tablet: "content-tablet-perfomance.b9fa35e2c1f3e7541bcf.png", mobile: "content-mobile-perfomance.2e6e983d78728d88b3cc.png" }) }
+  { id: "whitebox", title: "Whitebox Test", desc: "화이트박스 테스트(WhiteBox Test)기법은 소프트웨어\n내부 소스 코드를 테스트하는 기법으로써 동작의\n유효성 뿐만아니라 실행 되는 과정을 살펴보는 테스트입니다.", tags: ["Static Test", "Dynamic Test"], bg: ["bg-whitebox.dd0f3a71aa3621b95657.png", "bg-tablet-whitebox.237c155d7035df71b7b8.png", "bg-mobile-whitebox.5a13073380c9706e9e8a.png"], body: whiteboxBody },
+  { id: "api", title: "API Test", desc: "서로 다른 소프트웨어 시스템 사이에\n통신과 연동을 위해 API 테스트는 필수적입니다.", tags: ["기능", "안정성", "성능"], bg: ["bg-api.c29a3eb4a94183fda704.png", "bg-tablet-api.0d2bd87a550607f6f885.png", "bg-mobile-api.f4098575a7ef1dc638a9.png"], body: apiBody },
+  { id: "perfomance", title: "", desc: "", tags: [], bg: ["bg-perfomance.970f68cd64a2613d1c03.png", "bg-tablet-perfomance.defe2610687b7c8a7569.png", "bg-mobile-perfomance.4b266306d8c200a4bea8.png"], body: perfBody }
 ];
 
 const TESTOPS_SLIDES = [
@@ -1264,13 +1235,13 @@ function aboutBody() {
       <a href="https://map.kakao.com/link/map/${encodeURIComponent(name)},${lat},${lng}" target="_blank" rel="noopener noreferrer">지도 보기</a>
     </article>`).join("");
   return `
-    ${shot({ pc: "content-info.fc1421f9afb2b1ef4f7b.png", tablet: "content-tablet-info.c7063e23e4e8e1343822.png", mobile: "content-mobile-info.49569bdfa931a27fd22b.png" })}
+    ${qpAboutIntro()}
     <div class="way"><h2>찾아오시는 길</h2><div class="way-grid">${cards}</div></div>`;
 }
 
 function recruitBody() {
   return `
-    ${shot({ pc: "content-recruit.38d4da4bdc8774b7b4a9.png", tablet: "content-tablet-recruit.b8f0b18c52b29fac09b8.png", mobile: "content-mobile-recruit.7267146c48e819e7e2bf.png" })}
+    ${qpRecruitIntro()}
     <div class="apply">
       <a class="ghost" href="https://www.saramin.co.kr/zf_user/company-info/view-inner-recruit?csn=K255bFRkQk0ySjZLTVhjVXVqVThIdz09" target="_blank" rel="noopener noreferrer">사람인 지원하기</a>
       <a class="fill" href="https://www.jobkorea.co.kr/Recruit/Co_Read/Recruit/C/tbellhr?ChkDispType=1" target="_blank" rel="noopener noreferrer">잡코리아 지원하기</a>
@@ -1279,24 +1250,24 @@ function recruitBody() {
 
 function ethicalBody() {
   return `
-    ${shot({ pc: "content-ethical.499a3e6c3c4e30f5294c.png", tablet: "content-tablet-ethical.1ee5a7b40bf4c1b4e6d5.png", mobile: "content-mobile-ethical.34213ea9c12006b11ef3.png" })}
+    ${qpEthicalCode()}
     <div class="apply"><a class="fill" href="https://www.tbell.co.kr/files/${encodeURIComponent("윤리경영정책.pdf")}" target="_blank" rel="noopener noreferrer">PDF 다운로드</a></div>`;
 }
 
 const ABOUT_SLIDES = [
   { id: "about", title: "회사 소개", desc: "", tags: [], bg: ["bg-info.de3329d4a93fff58c0c9.png", "bg-tablet-info.dfaa0c39c60c825ecbb2.png", "bg-mobile-info.92d953b0346cc509e852.png"], body: aboutBody },
-  { id: "vision", title: "경영철학", desc: "", tags: [], bg: ["bg-vision.2e2c550d96ce302bf12d.png", "bg-tablet-vision.657fdee36572fc7cefea.png", "bg-mobile-vision.5aa6cb952f2921958f37.png"], body: () => shot({ pc: "content-vision.f5a13fbfa6c6198b0a31.png", tablet: "content-tablet-vision.86dede5eb72d6d4d5c25.png", mobile: "content-mobile-vision.b6f89e69d1bb8ae01535.png" }) }
+  { id: "vision", title: "경영철학", desc: "", tags: [], bg: ["bg-vision.2e2c550d96ce302bf12d.png", "bg-tablet-vision.657fdee36572fc7cefea.png", "bg-mobile-vision.5aa6cb952f2921958f37.png"], body: visionBody }
 ];
 
 const RECRUIT_SLIDES = [
-  { id: "benefit", title: "복리후생", desc: "", tags: [], bg: ["bg-benefit.980907dc0cae18031e40.png", "bg-tablet-benefit.e31e967d683d2abd1095.png", "bg-mobile-benefit.2a770bc2a5cd8dcfc473.png"], body: () => shot({ pc: "content-benefit.8c70c1af8a0fc41d19fe.png", tablet: "content-tablet-benefit.7fd7bd50d71cd63e60c4.png", mobile: "content-mobile-benefit.2ae238b17c45ef61d26c.png" }) },
+  { id: "benefit", title: "복리후생", desc: "", tags: [], bg: ["bg-benefit.980907dc0cae18031e40.png", "bg-tablet-benefit.e31e967d683d2abd1095.png", "bg-mobile-benefit.2a770bc2a5cd8dcfc473.png"], body: benefitBody },
   { id: "recruit", title: "Good Player, Great Work", desc: "티벨은 올바른 생각과 실천을 통해 “우수한 인재를, 일하기 좋은 기업”을 만듭니다.", tags: [], bg: ["bg-recruit.96e2ea0dae220b78e221.png", "bg-tablet-recruit.95364057a4fd3ee61e20.png", "bg-mobile-recruit.89efb893fcee0ae88828.png"], body: recruitBody }
 ];
 
 const ESG_SLIDES = [
   { id: "ethical", title: "윤리 경영", desc: "", tags: [], bg: ["bg-ethical.4ee79d2ecc425576aabf.png", "bg-tablet-ethical.3ee09f7000c4ffa90a44.png", "bg-mobile-ethical.6ca0468a4dffddfbd2d7.png"], body: ethicalBody },
-  { id: "social", title: "사회 경영", desc: "", tags: [], bg: ["bg-social.18fa9508d7893696bec6.png", "bg-tablet-social.12a02e3c7d934095805f.png", "bg-mobile-social.e1f4c148af28514f5139.png"], body: () => shot({ pc: "content-social-01.9d7e25d9e5508740f445.png", tablet: "content-tablet-social-01.7a5073b4f6e570f4863b.png", mobile: "content-mobile-social-01.f68c2567deeef779e297.png" }) + shot({ pc: "content-social-02.23079b9eda512c5c4ba4.png", tablet: "content-tablet-social-02.d0c6eff802b83f15f53e.png", mobile: "content-mobile-social-02.1d70a1432fef8d8776ec.png" }) },
-  { id: "environmental", title: "환경 경영", desc: "친환경 제품 및 서비스, 에너지 소비 분야를 중심으로 친환경 ICT 기업 도약을 추진합니다.", tags: [], bg: ["bg-environ.9fef7398af46aa8d3846.png", "bg-tablet-environmental.b52a1a9ba527c8536088.png", "bg-mobile-environmental.890cbb7f7a60a4853a15.png"], body: () => shot({ pc: "content-environmental.47f11988867ea557261a.png", tablet: "content-tablet-environmental.2ea0e8ec9717000430e7.png", mobile: "content-mobile-environmental.f0d643e418aa40254ce7.png" }) }
+  { id: "social", title: "사회 경영", desc: "", tags: [], bg: ["bg-social.18fa9508d7893696bec6.png", "bg-tablet-social.12a02e3c7d934095805f.png", "bg-mobile-social.e1f4c148af28514f5139.png"], body: socialBody },
+  { id: "environmental", title: "환경 경영", desc: "친환경 제품 및 서비스, 에너지 소비 분야를 중심으로 친환경 ICT 기업 도약을 추진합니다.", tags: [], bg: ["bg-environ.9fef7398af46aa8d3846.png", "bg-tablet-environmental.b52a1a9ba527c8536088.png", "bg-mobile-environmental.890cbb7f7a60a4853a15.png"], body: envBody }
 ];
 const INQUIRY = {
   qa: {
@@ -2055,6 +2026,7 @@ function render() {
   wireJump();
   wireDiagnose();
   if (typeof wireSvcMotion === "function") wireSvcMotion();
+  if (typeof wireQaPages === "function") wireQaPages();
   wireQaHome();
   wireSecHome();
   fillConsult();
@@ -2137,5 +2109,20 @@ navToggle.addEventListener("click", () => {
   const open = nav.classList.toggle("open");
   navToggle.setAttribute("aria-expanded", String(open));
 });
-window.addEventListener("hashchange", render);
+// Moving between pages of one QA deck (테스트 종류, TestOps, 회사…) morphs the shared pieces — the
+// section headings and the box diagram — with a view transition instead of a hard cut.
+let lastRoute = parse();
+window.addEventListener("hashchange", () => {
+  const prev = lastRoute;
+  const next = parse();
+  lastRoute = next;
+  const deck = prev.mode === next.mode && prev.group === next.group && prev.child !== next.child && document.querySelector(".svc-page");
+  const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (!deck || still || !document.startViewTransition) { render(); return; }
+  // The transition waits for a painted frame; if none comes (throttled tab), render anyway.
+  let done = false;
+  const once = () => { if (!done) { done = true; render(); } };
+  const vt = document.startViewTransition(once);
+  setTimeout(() => { if (!done) { vt.skipTransition(); once(); } }, 400);
+});
 render();
