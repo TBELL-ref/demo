@@ -554,3 +554,7 @@
 }
 .way article { border-top: 0; padding-top: 0; }
 .way article h3 { padding-top: 16px; border-top: 1px solid #e4e4e4; }
+
+/* full-bleed bands keep the page gutter inside; overlapping rings never spill past the edge */
+.qp-venn, .qp-stairs { padding-left: var(--gutter); padding-right: var(--gutter); }
+@media (max-width: 1024px) { .qp-rings { gap: 10px; } .qp-rings li { margin: 0; } }

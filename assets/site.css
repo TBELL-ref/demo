@@ -15,7 +15,7 @@
   --track: #2c2c2c;
   --content-max: 1180px;
   /* Side margin: grows as the window narrows toward the content width so pages never run to the edge. */
-  --gutter: clamp(20px, 5vw, 72px);
+  --gutter: clamp(24px, 6vw, 80px);
   /* Side padding that centres a 1180px column and never drops below the gutter. */
   --side: max(var(--gutter), calc((100% - var(--content-max)) / 2));
   --section-pad: 96px;
