@@ -721,7 +721,9 @@ function tTabs(current) {
   const items = [["overview", "솔루션 개요", "#qa/tauto"], ["auto", "T-AUTO", "#qa/tauto/auto"], ["gen", "T-GEN", "#qa/tauto/gen"], ["lens", "T-LENS", "#qa/tauto/lens"], ["voc", "T-VOC", "#qa/tauto/voc"]];
   return `<nav class="subnav tq-tabs" aria-label="T 솔루션">${items.map(([id, label, href]) => `<a href="${href}"${id === current ? ' aria-current="page"' : ""}>${label}</a>`).join("")}</nav>`;
 }
-const tPage = (current, eyebrow, title, lede, body) => sPage(eyebrow, title, lede, tTabs(current) + tpBody(body));
+// Booth notice for 베스트콘 (T-AUTO · T-GEN); remove after the event.
+const tEvent = () => `<p class="tq-event"><b>EVENT</b><span>베스트콘에서 T-AUTO와 T-GEN을 소개합니다. 부스에서 직접 확인해 보세요.</span><a href="mailto:qa-platform@tbell.co.kr">qa-platform@tbell.co.kr</a></p>`;
+const tPage = (current, eyebrow, title, lede, body) => sPage(eyebrow, title, lede, tTabs(current) + tEvent() + tpBody(body));
 
 function tautoHome() {
   const stages = [["설계", "gen"], ["검증·운영", "auto"], ["평가", "lens"], ["피드백", "voc"]];
@@ -764,6 +766,11 @@ function tAuto() {
           <li class="l${4 - i}" style="--i:${i}"><span class="tp-lno">${no}</span><div class="tp-lname"><b>${name}</b><p>${text}</p></div><div class="tp-lchips">${chips.map((c) => `<span>${c}</span>`).join("")}</div></li>`).join("")}</ol>
       </div>
       <p class="tp-note">T-AUTO는 소프트웨이브 2024에서 소프트웨어 테스트 자동화 도구로 처음 소개했습니다.</p>`) +
+    tpSec("areas", "PLATFORM", "기능도, 성능도, LLM까지.", "하나의 자산 · 실행 · 결함 체계 위에서 네 가지 검증 영역이 함께 동작합니다.", `
+      <ul class="tq-areas">${[["기능 QA", "App · Web · API 기능 검증 자동화"], ["앱 성능", "스텝 · 구간별 지표 수집 · 판정"], ["LLM 평가", "T-LENS 기반 챗봇 품질 평가"], ["실기기 검증", "디바이스 팜 · 클라우드 · 직접 연결"]]
+        .map(([t, d], i) => `<li${i === 2 ? ' class="is-key"' : ""}><b>${t}</b><p>${d}</p></li>`).join("")}</ul>
+      <p class="tq-envs"><span>Android</span><span>iOS</span><span>Web</span><span>API</span></p>
+      <p class="tp-note">실기기 팜 · 클라우드 · 직접 연결 단말 기반 End-to-End 검증 · 2021년부터 축적한 TestOps 운영 경험</p>`) +
     tpSec("nocode", "NO-CODE", "LLM 기반 No-Code 자동화", "Web 환경 PoC 사례: 시나리오 설정만으로 테스트 전 과정을 자동 수행했습니다.", `
       <div class="tq-split">
         <ol class="tq-vsteps">${[["시나리오 설정", "자연어로 테스트 시나리오를 입력합니다."], ["AI 분석 및 식별 (LLM)", "화면의 UI 요소와 Action을 자동으로 파악합니다."], ["테스트 자동 실행", "식별한 요소를 기준으로 검증을 수행합니다."]]
@@ -808,6 +815,11 @@ function tGen() {
         <ol class="qp-valuebars">${[["중복 TC 선별", "AI 에이전트가 겹치는 테스트 케이스를 골라냅니다."], ["담당자 검토", "사람이 결과를 확인합니다(Human-in-the-loop)."], ["재생성", "검토 결과를 반영해 테스트 케이스를 다시 만듭니다."]]
           .map(([t, d], i) => `<li style="--i:${i}"><b>0${i + 1} ${t}</b><p>${d}</p></li>`).join("")}</ol>
       </div>
+    </section>` +
+    `<section class="tq-metrics" data-qp-reveal>
+      <p class="tp-eyebrow">EXPECTED BENEFITS</p>
+      <div class="tq-metrics-row one"><div><span>수십~수백 개 TC 자동 생성으로 작성 속도</span><strong>5~10배<em>↑</em></strong></div></div>
+      <ul class="tq-chips"><li>QA 초기 기본 커버리지 보장</li><li>일관된 형식 · 구조의 TC</li><li>신규 인력 빠른 온보딩</li></ul>
     </section>`);
 }
 
