@@ -10,7 +10,9 @@ const BLOG_CATS = [
   },
   { id: "security", name: "보안", modes: ["security"], nos: [28] },
   { id: "newsletter", name: "NewsLetter", modes: ["qa", "security"], nos: [7] },
-  { id: "event", name: "전시·행사", modes: ["qa", "security"], nos: [10] },
+  // 블로그 전시·행사는 QA(30)·보안(31)·공통(10)으로 나뉨. 보안 모드는 보안 전용만 보여 줌.
+  { id: "event", name: "전시·행사", modes: ["qa"], nos: [30, 10] },
+  { id: "event", name: "전시·행사", modes: ["security"], nos: [31] },
   { id: "activity", name: "성과·활동", modes: ["qa", "security"], nos: [18] }
 ];
 
@@ -92,17 +94,13 @@ const MENUS = {
       ]
     },
     {
-      id: "tauto", label: "T-AUTO", href: "#qa/tauto",
+      id: "tauto", label: "T 솔루션", href: "#qa/tauto",
       children: [
+        { id: "overview", label: "솔루션 개요", href: "#qa/tauto" },
+        { id: "auto", label: "T-AUTO", href: "#qa/tauto/auto" },
+        { id: "gen", label: "T-GEN", href: "#qa/tauto/gen" },
         { id: "lens", label: "T-LENS", href: "#qa/tauto/lens" },
-        { id: "voc", label: "T-VOC", href: "#qa/tauto/voc" },
-        { id: "vux", label: "VUX", href: "#qa/tauto/vux" }
-      ]
-    },
-    {
-      id: "tassi", label: "T-ASSI", href: "http://t-assi.co.kr/",
-      children: [
-        { id: "intro", label: "T-ASSI 소개", href: "http://t-assi.co.kr/service" }
+        { id: "voc", label: "T-VOC", href: "#qa/tauto/voc" }
       ]
     },
     blogMenu("qa"),
@@ -172,10 +170,6 @@ function stage(kind, inner) {
   return `<section class="stage ${kind}">${inner}</section>`;
 }
 
-function bounce(word) {
-  return `<div class="bounce" data-bounce="${word}"></div>`;
-}
-
 function stats() {
   const items = [
     [1460, "개", "누적 수행 프로젝트 수"],
@@ -196,28 +190,333 @@ function gateHome() {
     ${stage("shade-d", stats())}`;
 }
 
-function originMain() {
-  const copy = `<div class="stage-center"><h2>기업 및 프로젝트의 특성에\n최적화된 고객 맞춤형 테스트</h2><p>테스트 아웃소싱 전문 기업 TBELL</p><a class="more" href="#qa/types">VIEW MORE</a></div>`;
-  const ops = `<div class="stage-center"><h2>TestOps</h2><p>티벨은 최신 테스트 자동화 기술을 적용한 TestOps\n환경 구축을 통해 고객에게 최적의 가치를 제공하고 있습니다.</p><a class="more" href="#qa/testops">VIEW MORE</a></div>`;
-  const label = `<div class="stage-center"><h2>데이터 라벨링 플랫폼</h2><p>데이터 수집에서 정제, 전처리, 분석, 가공, 시각화, 배포, 관리까지!\n원하는 기능을 선택하여 활용 가능합니다.</p>${bounce("SSLO")}</div>`;
-  return [
-    stagePhoto("shade-a", { pc: "sec-main-001.2becab69b548a8cf401d.png", tablet: "sec-main-tablet-001.81e3f7ea7a2a69dbec77.png", mobile: "sec-main-mobile-001.2a0ff5d2df2b1913eb7a.png" }, copy),
-    stagePhoto("shade-b", { pc: "sec-main-002.2e4090c5e8921c5fcc33.png", tablet: "sec-main-tablet-002.1317fc7543a9d207f03d.png", mobile: "sec-main-mobile-002.70747ccffb2ac394fa5b.png" }, ops),
-    stage("shade-c", `<div class="stage-split"><div><h2>스타트업 최적화 테스트 플랫폼 T-ASSI</h2><p>스타트업 대상으로 런칭 전 검수를 통해 안정적인 서비스 오픈이\n될 수 있도록 합리적인 가격에 서비스를 제공해 드리고 있습니다.</p><a class="more" href="http://t-assi.co.kr/" target="_blank" rel="noopener noreferrer">바로가기</a></div><img src="assets/origin/sec-main-003.548f73b5613e8f388fa9.png" alt=""></div>`),
-    stagePhoto("shade-d", { pc: "sec-main-004.9d90b65a79f55720925e.png", tablet: "sec-main-tablet-004.34894a25d932823369af.png", mobile: "sec-main-mobile-004.7e5a48c3f320661eae16.png" }, label),
-    stage("shade-e", `<div class="stage-center"><h2>티벨과 함께하는 고객사</h2></div>`)
-  ].join("");
+// ── QA home (design_demo/qa-home-plan.md) ────────────────────────────
+// Scenes built on the origin artwork: TEST∞OPS badge hero, service photo explorer,
+// TestOps office scene, automation-to-AI timeline, industries, clients, closing band.
+
+const CLIENT_LOGOS = [
+  "01_sk_telecom.ae25244966926033ab37.png", "02_logo.26e3f50ed53544c1c7ac.png", "03_lg.a96d12b90e0b1d8e2a5a.png",
+  "04_lgu+.5aa452b3620888b8180c.png", "05_woongjin.4b5f79bcf32c2b52d4c0.png", "06_gs.b4937c30866898d5978d.png",
+  "07_olive_young.e63706f5f90bed782755.png", "08_kakaopay.ec0feddaf22e913c7e02.png", "10_logo.903a4c7c9aa13d6268ce.png",
+  "11_theres.78c038692ae02eeeb8b8.png", "12_11street.ce145ee69dde686b285c.png", "14_kt.626d843890e82319cfb2.png",
+  "15_tripstore.35fd24420f22a807102d.png", "16_cyberlogitec.21555d984495dfddc26d.png", "17_lig.c81d0240fab7968ff357.png",
+  "18_hmm.18d13a82edd9e11b5231.png", "19_nuri.9e846a18d466c945442b.png"
+];
+
+// Service explorer: names and copy from the origin service pages (SERVICE_SLIDES / page artwork).
+const QA_EXPLORE = [
+  ["outsourcing", "아웃소싱 테스트", "기업과 프로젝트의 특성에 맞춘 고객 맞춤형 테스트입니다. 분야별 테스트 전문가가 개발자와 바로 소통합니다."],
+  ["automation", "테스트 자동화", "티벨만의 차별화된 자동화 테스트로 더 높은 수준의 품질과 고객 만족을 약속합니다."],
+  ["blackbox", "블랙박스 테스트", "개발 명세서를 기반으로 테스트 시나리오를 작성하고 수행해 제품 품질을 개선합니다."],
+  ["whitebox", "화이트박스 테스트", "내부 소스 코드를 대상으로 동작의 유효성뿐 아니라 실행 과정까지 살펴봅니다."],
+  ["api", "API 테스트", "서로 다른 소프트웨어 시스템 사이의 통신과 연동을 기능·안정성·성능 관점에서 검증합니다."],
+  ["perfomance", "성능 테스트", "처리량과 응답시간, 자원 사용 등 성능 측정 지표를 산출해 시스템의 한계와 임계점을 검증합니다."]
+];
+
+// The five icon nodes printed on the origin badge, in image pixels, and the service each one opens.
+const QA_BADGE = {
+  pc: { box: "0 0 1920 990", core: [1440, 510, 100], ring: 300, r: 36, tip: -1, nodes: [[1440, 348], [1541, 401], [1330, 388], [1280, 507], [1330, 627]] },
+  mobile: { box: "0 0 1440 2376", core: [952, 1547, 150], ring: 450, r: 54, tip: -1, nodes: [[958, 1208], [1154, 1329], [739, 1305], [625, 1537], [739, 1771]] }
+};
+const QA_BADGE_LINKS = [["outsourcing", "아웃소싱 테스트"], ["whitebox", "화이트박스 테스트"], ["automation", "테스트 자동화"], ["blackbox", "블랙박스 테스트"], ["perfomance", "성능 테스트"]];
+
+// T 브랜드 솔루션 on the home: the quality cycle from the leaflet (design → platform → eval → feedback).
+const QA_TIMELINE = [
+  { year: "DESIGN", kind: "설계", title: "T-GEN", href: "#qa/tauto/gen", demo: "gen",
+    text: "기획서·Figma·요구사항 문서를 분석해 테스트 케이스를 자동으로 도출하고, AI 에이전트가 중복을 걸러냅니다." },
+  { year: "PLATFORM", kind: "통합 플랫폼", title: "T-AUTO", href: "#qa/tauto/auto", demo: "auto",
+    text: "자연어 시나리오만으로 테스트를 자동 수행하는 No-Code 자동화와, UI가 바뀌어도 스스로 복구하는 Self-Healing을 제공합니다." },
+  { year: "EVAL", kind: "평가", title: "T-LENS", href: "#qa/tauto/lens", demo: "lens",
+    text: "LLM-as-a-Judge로 대화형 AI의 응답 품질을 정량·정성 평가하고, AWS Device Farm으로 여러 기기에서 병렬 검증합니다." },
+  { year: "FEEDBACK", kind: "피드백", title: "T-VOC", href: "#qa/tauto/voc", demo: "voc",
+    text: "앱 스토어 리뷰를 자동으로 모아 부정 리뷰를 Jira 티켓으로 등록하고, AI가 유형을 분류해 답변을 추천합니다." }
+];
+
+function qaBadge(kind) {
+  const spec = QA_BADGE[kind];
+  const [cx, cy, coreR] = spec.core;
+  const nodes = spec.nodes.map(([x, y], i) => {
+    const [id, name] = QA_BADGE_LINKS[i];
+    const w = name.length * (kind === "pc" ? 17 : 50) + (kind === "pc" ? 36 : 90);
+    const h = kind === "pc" ? 40 : 96;
+    const tx = x - spec.r - 14 - w;
+    return `<a class="qh-node" href="#qa/types/${id}" data-i="${i}" aria-label="${name}">
+        <circle class="qh-node-halo" cx="${x}" cy="${y}" r="${spec.r + 10}"/>
+        <circle class="qh-node-hit" cx="${x}" cy="${y}" r="${spec.r + 6}"/>
+        <g class="qh-tip"><rect x="${tx}" y="${y - h / 2}" width="${w}" height="${h}" rx="${h / 2}"/><text x="${tx + w / 2}" y="${y + h * 0.13}" text-anchor="middle">${name}</text></g>
+      </a>`;
+  }).join("");
+  return `<svg class="qh-badge-layer is-${kind}" viewBox="${spec.box}" preserveAspectRatio="${kind === "pc" ? "xMaxYMid" : "xMidYMax"} slice">
+      <g class="qh-orbit" style="transform-origin:${cx}px ${cy}px"><circle cx="${cx}" cy="${cy}" r="${spec.ring}"/></g>
+      <circle class="qh-core-pulse" cx="${cx}" cy="${cy}" r="${coreR}" style="transform-origin:${cx}px ${cy}px"/>
+      ${nodes}
+    </svg>`;
+}
+
+function qaDemo(kind) {
+  if (kind === "voc") {
+    return `<div class="qh-demo voc"><div class="qh-voc-in"><span style="--i:0">★★★★☆ 로그인이 자주 풀려요…</span><span style="--i:1">★★☆☆☆ 결제 후 화면이 멈춰요</span><span style="--i:2">★★★★★ 업데이트 후 빨라졌어요</span></div>
+      <div class="qh-voc-lanes"><div><b>장애</b><i></i><i></i></div><div><b>기능</b><i></i></div><div><b>칭찬</b><i></i></div></div>
+      <p class="qh-ticket">Jira 등록 · VOC-1242 (Critical)</p></div>`;
+  }
+  if (kind === "gen") {
+    return `<div class="qh-demo gen"><div class="qh-docs"><span>기획서.pdf</span><span>Figma</span><span>요구사항.xlsx</span></div>
+      <ol>${["TC-001 비밀번호 5회 오류 시 계정 잠금", "TC-002 잠금 해제 메일 발송", "TC-003 임시 비밀번호 재설정"].map((t, i) => `<li style="--i:${i}"><code>${t}</code><em></em></li>`).join("")}</ol></div>`;
+  }
+  if (kind === "auto") {
+    return `<div class="qh-demo auto"><p class="qh-q">“로그인 후 장바구니에 상품을 담고 결제 화면까지 이동”</p><ol>${["로그인 화면 요소 식별", "상품 담기 버튼 식별", "결제 화면 진입 확인"].map((t, i) => `<li style="--i:${i}"><code>${t}</code><em></em></li>`).join("")}</ol></div>`;
+  }
+  return `<div class="qh-demo lens"><p class="qh-q">Q. 해외 결제 수수료는 얼마인가요?</p>
+    ${[["정확성", 92], ["근거 제시", 84], ["어조·안전성", 96]].map(([k, v], i) => `<div class="qh-judge" style="--i:${i};--v:${v}%"><span>${k}</span><i></i><b>${v}</b></div>`).join("")}
+    <p class="qh-reason">사유: 수수료율과 적용 조건을 함께 안내함</p></div>`;
 }
 
 function qaHome() {
-  return originMain();
+  const list = QA_EXPLORE.map(([id, name], i) =>
+    `<li><button type="button" role="tab" id="qx-tab-${i}" aria-selected="${i ? "false" : "true"}" aria-controls="qx-panel" tabindex="${i ? "-1" : "0"}" data-i="${i}"><span class="n">${String(i + 1).padStart(2, "0")}</span>${name}</button></li>`).join("");
+  const shots = QA_EXPLORE.map(([id], i) => {
+    const slide = SERVICE_SLIDES.find((s) => s.id === id);
+    return `<picture class="qx-shot${i ? "" : " is-on"}" data-i="${i}"><source media="(max-width: 768px)" srcset="${ORIGIN}${slide.bg[2]}"><img src="${ORIGIN}${slide.bg[0]}" alt=""${i ? ' loading="lazy"' : ""}></picture>`;
+  }).join("");
+  const first = QA_EXPLORE[0];
+  const firstTags = SERVICE_SLIDES[0].tags.map((t) => `<span>#${t}</span>`).join("");
+  const timeline = QA_TIMELINE.map((m, i) =>
+    `<li><button type="button" role="tab" id="qt-tab-${i}" aria-selected="${i === QA_TIMELINE.length - 1 ? "true" : "false"}" aria-controls="qt-panel" data-i="${i}"><span class="y">${m.year}</span><b>${m.title}</b><small>${m.kind}</small></button></li>`).join("");
+  const industries = DOMAINS.map(([name, image]) =>
+    `<li><img src="${ORIGIN}${image}" alt="" loading="lazy"><span>${name}</span></li>`).join("");
+  const logos = CLIENT_LOGOS.map((file) => `<li><img src="${ORIGIN}${file}" alt="" loading="lazy"></li>`).join("");
+  return `<div class="qh s-page dark" id="qh">
+  <section class="qh-hero">
+    <div class="qh-art">
+      <picture><source media="(max-width: 768px)" srcset="${ORIGIN}banner-main-mobile-001.d743cfc41f203f0522b3.png"><img src="${ORIGIN}banner-main-pc-001.0e1ee99f9660f77d4fe1.png" alt=""></picture>
+      ${qaBadge("pc")}${qaBadge("mobile")}
+    </div>
+    <div class="qh-hero-copy">
+      <p class="qh-label">SOFTWARE TEST &amp; QUALITY</p>
+      <h1>차별화된 테스트 경험을 제공하는<br>대한민국 대표 품질 서비스 기업</h1>
+      <p class="lede">대한민국 IT 산업에 품질로 기여하고자 테스트 방법론과 서비스를 차별화하여, 테스트 서비스의 패러다임 변화를 주도하고 있습니다.</p>
+      <div class="s-actions">
+        <a class="pill" href="#qa/types">테스트 서비스 보기</a>
+        <a class="pill ghost" href="#qa/inquiry">프로젝트 문의</a>
+      </div>
+    </div>
+    <a class="qh-scroll" href="#qa" data-jump="qh-services" aria-label="아래로 이동"><span></span></a>
+  </section>
+
+  <section class="s-sec qh-light qh-explore" id="qh-services"><div class="s-wrap">
+    <div class="qh-head"><p class="qh-label">TEST SERVICE</p><h2>프로젝트에 맞는 테스트를 고르세요</h2></div>
+    <div class="qx">
+      <div class="qx-list"><ul role="tablist" aria-label="테스트 서비스" aria-orientation="vertical">${list}</ul><i class="qx-bar" aria-hidden="true"></i></div>
+      <div class="qx-panel" id="qx-panel" role="tabpanel" aria-labelledby="qx-tab-0">
+        <div class="qx-stage">${shots}</div>
+        <div class="qx-info">
+          <div><h3 data-x="name">${first[1]}</h3><p data-x="text">${first[2]}</p><div class="qx-tags" data-x="tags">${firstTags}</div></div>
+          <a class="pill" data-x="link" href="#qa/types/${first[0]}">자세히 보기</a>
+        </div>
+      </div>
+    </div>
+  </div></section>
+
+  <section class="qh-testops" id="qh-testops">
+    <picture class="qh-testops-bg"><source media="(max-width: 768px)" srcset="${ORIGIN}sec-main-mobile-002.70747ccffb2ac394fa5b.png"><img src="${ORIGIN}sec-main-002.2e4090c5e8921c5fcc33.png" alt="" loading="lazy"></picture>
+    <div class="s-wrap">
+      <div class="qh-testops-copy">
+        <p class="qh-label">TESTOPS</p>
+        <h2>테스트를<br>개발 흐름 안으로</h2>
+        <p>티벨은 최신 테스트 자동화 기술을 적용한 TestOps 환경 구축을 통해 고객에게 최적의 가치를 제공하고 있습니다.</p>
+        <div class="s-actions"><a class="pill" href="#qa/testops/build">TestOps 구축</a><a class="pill ghost" href="#qa/testops/ai">AI 기반 검증 자동화</a></div>
+      </div>
+      <div class="qh-loop" aria-label="TestOps 진행 흐름">
+        <svg viewBox="100 40 320 180" aria-hidden="true">
+          <path class="qh-loop-base" d="M130 130C130 60 230 60 260 130S390 200 390 130 290 60 260 130 130 200 130 130Z"/>
+          <path class="qh-loop-draw" pathLength="100" d="M130 130C130 60 230 60 260 130S390 200 390 130 290 60 260 130 130 200 130 130Z"/>
+          <circle class="qh-loop-dot" r="7"><animateMotion dur="6s" repeatCount="indefinite" path="M130 130C130 60 230 60 260 130S390 200 390 130 290 60 260 130 130 200 130 130Z"/></circle>
+          <text x="260" y="138" text-anchor="middle">TestOps</text>
+        </svg>
+        <ol>
+          <li class="s1" style="--i:0"><b><em>01</em>BDD 시나리오</b><span>비즈니스 언어로 테스트 시나리오 작성</span></li>
+          <li class="s2" style="--i:1"><b><em>02</em>CI/CD 자동 실행</b><span>파이프라인에 연결해 변경마다 실행</span></li>
+          <li class="s3" style="--i:2"><b><em>03</em>관리 도구 연동</b><span>프로젝트·테스트 관리 도구와 연동</span></li>
+          <li class="s4" style="--i:3"><b><em>04</em>결과·결함 관리</b><span>계획부터 결과 관리까지 자동화</span></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="s-sec qh-light qh-timeline" id="qh-tsol"><div class="s-wrap">
+    <div class="qh-head"><p class="qh-label">T BRAND SOLUTION</p><h2>AI 기반 품질 검증 자동화</h2><p>T-AUTO를 중심으로 설계부터 평가, 고객 피드백까지 하나로 연결합니다.</p></div>
+    <div class="qt">
+      <div class="qt-rail"><div class="qt-line" aria-hidden="true"><i class="qt-fill"></i></div><ol role="tablist" aria-label="T 브랜드 솔루션">${timeline}</ol></div>
+      <div class="qt-panel" id="qt-panel" role="tabpanel"></div>
+    </div>
+  </div></section>` +
+    sSec("industries", ["INDUSTRIES", "다양한 산업에서 검증했습니다", "업종마다 다른 품질 기준과 규제를 이해하고 테스트를 설계합니다."], `
+    <ul class="s-industries s-body">${industries}</ul>`) + `
+  <section class="s-sec qh-light qh-clients" id="clients"><div class="s-wrap">
+    <div class="s-head"><p class="s-eyebrow">CLIENTS</p><h2>티벨과 함께하는 고객사</h2></div>
+    <div class="s-logos s-body"><ul>${logos}</ul><ul aria-hidden="true">${logos}</ul></div>
+  </div></section>
+
+  <section class="qh-close"><div class="s-wrap">
+    <h2>프로젝트에 맞는 테스트 범위를<br>제안해 드립니다.</h2>
+    <p>일정, 대상 플랫폼, 필요한 테스트 종류를 알려 주시면 투입 인력과 진행 방식을 함께 제안합니다.</p>
+    <a class="pill" href="#qa/inquiry">프로젝트 문의</a>
+  </div></section>
+</div>`;
 }
+
+function qaTimelinePanel(i) {
+  const m = QA_TIMELINE[i];
+  return `<div class="qt-copy"><p class="qt-kind"><span>${m.kind}</span>${m.year}</p><h3>${m.title}</h3><p>${m.text}</p><a class="pill ghost" href="${m.href}">${m.title} 보기</a></div>${qaDemo(m.demo)}`;
+}
+
+// List-and-panel explorer shared by the QA and security homes: the next visual wipes in over the
+// current one, the bar slides to the active row, ↑↓ keys move. fill(i, slot) writes the panel copy.
+function wireExplorer(scope, fill) {
+  if (!scope) return;
+  const tabs = Array.from(scope.querySelectorAll(".qx-list button"));
+  const shots = Array.from(scope.querySelectorAll(".qx-shot"));
+  const bar = scope.querySelector(".qx-bar");
+  const panel = scope.querySelector(".qx-panel");
+  const info = panel.querySelector(".qx-info");
+  const slot = (key) => panel.querySelector(`[data-x="${key}"]`);
+  let current = 0;
+  const moveBar = () => {
+    const tab = tabs[current];
+    bar.style.transform = `translateY(${tab.offsetTop}px)`;
+    bar.style.height = tab.offsetHeight + "px";
+  };
+  const pick = (i, focus) => {
+    if (i === current) return;
+    shots.forEach((shot) => shot.classList.remove("was"));
+    shots[current].classList.add("was");
+    shots[current].classList.remove("is-on");
+    shots[i].classList.add("is-on");
+    tabs.forEach((tab, k) => {
+      tab.setAttribute("aria-selected", k === i ? "true" : "false");
+      tab.tabIndex = k === i ? 0 : -1;
+    });
+    current = i;
+    info.classList.remove("swap");
+    void info.offsetWidth;
+    info.classList.add("swap");
+    fill(i, slot);
+    panel.setAttribute("aria-labelledby", tabs[i].id);
+    moveBar();
+    if (focus) tabs[i].focus();
+  };
+  tabs.forEach((tab, i) => {
+    tab.addEventListener("click", () => pick(i));
+    tab.addEventListener("mouseenter", () => pick(i));
+    tab.addEventListener("keydown", (event) => {
+      const step = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[event.key];
+      if (!step) return;
+      event.preventDefault();
+      pick((current + step + tabs.length) % tabs.length, true);
+    });
+  });
+  moveBar();
+  if (window.__qxResize) window.removeEventListener("resize", window.__qxResize);
+  window.__qxResize = moveBar;
+  window.addEventListener("resize", moveBar, { passive: true });
+}
+
+function wireQaHome() {
+  if (window.__qhTimer) { clearInterval(window.__qhTimer); window.__qhTimer = null; }
+  if (window.__qhIo) { window.__qhIo.disconnect(); window.__qhIo = null; }
+  const root = document.getElementById("qh");
+  if (!root) return;
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduce) root.querySelectorAll("svg").forEach((svg) => svg.pauseAnimations && svg.pauseAnimations());
+
+  // Hero: nodes light in turn; pointing at one stops the cycle on it. The art leans toward the pointer.
+  const hero = root.querySelector(".qh-hero");
+  const art = root.querySelector(".qh-art");
+  let lit = 0;
+  let held = false;
+  const light = (i) => {
+    lit = i;
+    root.querySelectorAll(".qh-node").forEach((node) => node.classList.toggle("is-lit", Number(node.dataset.i) === i));
+  };
+  light(0);
+  root.querySelectorAll(".qh-node").forEach((node) => {
+    const hold = () => { held = true; light(Number(node.dataset.i)); };
+    node.addEventListener("mouseenter", hold);
+    node.addEventListener("focus", hold);
+    node.addEventListener("mouseleave", () => { held = false; });
+    node.addEventListener("blur", () => { held = false; });
+  });
+  if (!reduce) {
+    hero.addEventListener("pointermove", (event) => {
+      const box = hero.getBoundingClientRect();
+      art.style.setProperty("--px", ((event.clientX - box.left) / box.width - 0.5).toFixed(3));
+      art.style.setProperty("--py", ((event.clientY - box.top) / box.height - 0.5).toFixed(3));
+    });
+    hero.addEventListener("pointerleave", () => { art.style.setProperty("--px", 0); art.style.setProperty("--py", 0); });
+  }
+
+  // Service explorer: the chosen service's photo wipes in; copy, tags and link follow.
+  wireExplorer(root.querySelector(".qx"), (i, slot) => {
+    const [id, name, text] = QA_EXPLORE[i];
+    slot("name").textContent = name;
+    slot("text").textContent = text;
+    slot("tags").innerHTML = (SERVICE_SLIDES.find((s) => s.id === id).tags || []).map((t) => `<span>#${t}</span>`).join("");
+    slot("link").href = `#qa/types/${id}`;
+  });
+
+  // Timeline: choosing a milestone fills the rail up to it and swaps in its demo.
+  const marks = Array.from(root.querySelectorAll(".qt-rail button"));
+  const fill = root.querySelector(".qt-fill");
+  const tPanel = root.querySelector("#qt-panel");
+  let tCurrent = -1;
+  let touched = false;
+  const show = (i) => {
+    if (i === tCurrent) return;
+    tCurrent = i;
+    marks.forEach((mark, k) => {
+      mark.setAttribute("aria-selected", k === i ? "true" : "false");
+      mark.tabIndex = k === i ? 0 : -1;
+      mark.parentElement.classList.toggle("is-past", k < i);
+    });
+    fill.style.width = (i / (marks.length - 1)) * 100 + "%";
+    tPanel.innerHTML = qaTimelinePanel(i);
+    tPanel.setAttribute("aria-labelledby", marks[i].id);
+  };
+  marks.forEach((mark, i) => {
+    mark.addEventListener("click", () => { touched = true; show(i); });
+    mark.addEventListener("keydown", (event) => {
+      const step = { ArrowRight: 1, ArrowLeft: -1 }[event.key];
+      if (!step) return;
+      event.preventDefault();
+      touched = true;
+      const n = (tCurrent + step + marks.length) % marks.length;
+      show(n);
+      marks[n].focus();
+    });
+  });
+  show(0);
+
+  // Scenes start their motion when they come into view; the hero cycle and timeline tour run on one clock.
+  window.__qhIo = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => entry.target.classList.toggle("play", entry.isIntersecting));
+  }, { threshold: 0.35 });
+  root.querySelectorAll(".qh-testops, .qh-timeline, .qh-hero").forEach((el) => window.__qhIo.observe(el));
+  if (!reduce) {
+    let tick = 0;
+    window.__qhTimer = setInterval(() => {
+      if (!document.body.contains(root)) { clearInterval(window.__qhTimer); window.__qhTimer = null; return; }
+      tick += 1;
+      if (!held) light((lit + 1) % QA_BADGE_LINKS.length);
+      const timelineSeen = root.querySelector(".qh-timeline").classList.contains("play");
+      if (timelineSeen && !touched && tick % 4 === 0) show((tCurrent + 1) % marks.length);
+    }, 1600);
+  } else {
+    show(marks.length - 1);
+  }
+}
+
 
 const ORIGIN = "assets/origin/";
-
-function stagePhoto(kind, spec, inner) {
-  return `<section class="stage ${kind} photo">${shot(spec)}<div class="stage-overlay">${inner}</div></section>`;
-}
 
 function shot(spec) {
   if (!spec) return "";
@@ -281,7 +580,7 @@ function testopsBody() {
     ${shot({ pc: "content-testops-01.82c903b0f03221d2a802.png", tablet: "content-tablet-testops-01.bf5267c6b5d517a9dae4.png", mobile: "content-mobile-testops-01.689f9cf0e3ce6bcafabf.png" })}
     <div class="svc-fit desk"><img src="${ORIGIN}item-testops-001.46b4233b27dcbcfd51d7.png" alt=""></div>
     <div class="svc-scroll"><img src="${ORIGIN}item-mobile-testops-001.fe015dfee9aca576993c.png" alt=""></div>
-    <h2 class="svc-midtitle">BBD 기반 TestOps 환경 구축</h2>
+    <h2 class="svc-midtitle">BDD 기반 TestOps 환경 구축</h2>
     ${shot({ pc: "content-testops-02.c917b398ec45e9a0b4c0.png", tablet: "content-tablet-testops-02.3fd0aa58d9866454d414.png", mobile: "content-mobile-testops-02.bf4ba39492f68346ae95.png" })}
     <div class="svc-fit desk"><img src="${ORIGIN}item-testops-002.ba4781e8d62510f503e2.png" alt=""></div>
     <div class="svc-scroll"><img src="${ORIGIN}item-mobile-testops-002.67426c144385d8f87ac3.png" alt=""></div>
@@ -301,7 +600,7 @@ function aitestBody() {
 const SERVICE_SLIDES = [
   { id: "outsourcing", title: "Outsourcing Test", desc: "티벨의 아웃소싱 테스트는 기업 및\n프로젝트의 특성에 맞춘 고객 맞춤형 테스트입니다.", tags: ["Web/App", "IoT/AI", "Embedded", "Finance", "Automotive"], bg: ["bg-outsourcing.b46a027c427ae59d3db3.png", "bg-tablet-outsourcing.b7693ae7435210848e2c.png", "bg-mobile-outsourcing.bf9d543859738afb6936.png"], body: outsourcingBody },
   { id: "automation", title: "Test Automation", desc: "티벨만의 차별화된 자동화 테스트 서비스를 통해 보다\n높은 수준의 품질 및 고객 만족 향상을 약속드립니다.", tags: ["안전성", "효율성", "전문성", "비용절감"], bg: ["bg-automation.eebf3b3db228963a7d7e.png", "bg-tablet-automation.42cf3238c4db4de3a5c2.png", "bg-mobile-automation.981f021b70be98f47f4a.png"], body: () => imageBody({ pc: "content-automation.9594e2423a9ea60bd185.png", tablet: "content-tablet-automation.719d5deaf1e5e74994f9.png", mobile: "content-mobile-automation.13273d2eab8ace9691b5.png" }) },
-  { id: "blackbox", title: "Blackbox Test", desc: "제품 개발을 위해 작성된 개발 명세서를 기반으로\n테스트 시나리오를 작성하고 테스트를 수행함으로써\n제품 품질 개선 활동하는 테스트 서비스입니다.", tags: ["Interface Test", "System Test", "Intergration Test", "Sanity Test", "Regression Test", "Acceptanace Test"], bg: ["bg-blackbox.93002ce8bac79cfd0f1f.png", "bg-tablet-blackbox.08b799c93405378cd9f7.png", "bg-mobile-blackbox.deb03514f8108bd54281.png"], body: blackboxBody },
+  { id: "blackbox", title: "Blackbox Test", desc: "제품 개발을 위해 작성된 개발 명세서를 기반으로\n테스트 시나리오를 작성하고 테스트를 수행함으로써\n제품 품질 개선 활동하는 테스트 서비스입니다.", tags: ["Interface Test", "System Test", "Integration Test", "Sanity Test", "Regression Test", "Acceptance Test"], bg: ["bg-blackbox.93002ce8bac79cfd0f1f.png", "bg-tablet-blackbox.08b799c93405378cd9f7.png", "bg-mobile-blackbox.deb03514f8108bd54281.png"], body: blackboxBody },
   { id: "whitebox", title: "Whitebox Test", desc: "화이트박스 테스트(WhiteBox Test)기법은 소프트웨어\n내부 소스 코드를 테스트하는 기법으로써 동작의\n유효성 뿐만아니라 실행 되는 과정을 살펴보는 테스트입니다.", tags: ["Static Test", "Dynamic Test"], bg: ["bg-whitebox.dd0f3a71aa3621b95657.png", "bg-tablet-whitebox.237c155d7035df71b7b8.png", "bg-mobile-whitebox.5a13073380c9706e9e8a.png"], body: () => imageBody({ pc: "content-whitebox.23e315717992b132f3f2.png", tablet: "content-tablet-whitebox.8326ffa2ca04cf6eda6b.png", mobile: "content-mobile-whitebox.5a9849a6f5cb181a9eb1.png" }) },
   { id: "api", title: "API Test", desc: "서로 다른 소프트웨어 시스템 사이에\n통신과 연동을 위해 API 테스트는 필수적입니다.", tags: ["기능", "안정성", "성능"], bg: ["bg-api.c29a3eb4a94183fda704.png", "bg-tablet-api.0d2bd87a550607f6f885.png", "bg-mobile-api.f4098575a7ef1dc638a9.png"], body: () => imageBody({ pc: "content-api.4f76bf157990b790291a.png", tablet: "content-tablet-api.18563e61a62f2a226d7b.png", mobile: "content-mobile-api.aebfeaceee9a3b133b0f.png" }) },
   { id: "perfomance", title: "", desc: "", tags: [], bg: ["bg-perfomance.970f68cd64a2613d1c03.png", "bg-tablet-perfomance.defe2610687b7c8a7569.png", "bg-mobile-perfomance.4b266306d8c200a4bea8.png"], body: () => imageBody({ pc: "content-perfomance.f4c2ac0d9b3799f362aa.png", tablet: "content-tablet-perfomance.b9fa35e2c1f3e7541bcf.png", mobile: "content-mobile-perfomance.2e6e983d78728d88b3cc.png" }) }
@@ -351,360 +650,597 @@ function testopsDeck(child) {
   return qaDeck(TESTOPS_SLIDES, child === "ai" ? "ai" : "build", "#qa/testops/");
 }
 
+// ── T 브랜드 솔루션 (source: 「T브랜드솔루션 리플렛 TYPE02」) ─────────────
+// T-AUTO is the platform at the centre; T-GEN, T-LENS, T-VOC and TestOps sit around it by role.
+// T-ASSI is part of the leaflet's map but is left out of the QA menu and pages for now.
+const T_BRANDS = [
+  { id: "gen", name: "T-GEN", role: "설계", en: "DESIGN", icon: "form", href: "#qa/tauto/gen", tag: "AI 기반 테스트 케이스 설계 자동화",
+    text: "기획서·Figma·요구사항 문서를 분석해 테스트 케이스를 자동으로 도출하고 중복을 정리합니다." },
+  { id: "auto", name: "T-AUTO", role: "플랫폼", en: "PLATFORM", icon: "layers", href: "#qa/tauto/auto", tag: "AI 기반 통합 품질 검증 플랫폼",
+    text: "4계층 아키텍처 위에서 No-Code 자동화, AI 자율 테스트, 품질 분석을 한 번에 운영합니다." },
+  { id: "testops", name: "TestOps", role: "검증·운영", en: "OPERATIONS", icon: "loop", href: "#qa/testops/build", tag: "멀티모달 테스트 및 품질 운영 자동화",
+    text: "CI/CD 연동부터 멀티모달 QA, 안정성 점수 기반 배포 결정까지 품질 운영을 자동화합니다." },
+  { id: "lens", name: "T-LENS", role: "평가", en: "EVAL", icon: "scan", href: "#qa/tauto/lens", tag: "대화형 AI(LLM) 품질 평가 플랫폼",
+    text: "LLM-as-a-Judge로 평가 프로세스를 표준화하고 정량·정성 평가를 자동화합니다." },
+  { id: "voc", name: "T-VOC", role: "피드백", en: "FEEDBACK", icon: "send", href: "#qa/tauto/voc", tag: "앱 스토어 VOC 모니터링 시스템",
+    text: "앱 스토어 리뷰를 모아 이슈로 만들고, AI가 유형을 나누고 답변을 추천합니다." }
+];
+
+const T_SOURCE = "출처: 티벨 「T 브랜드 솔루션」 리플렛";
+
+function tBrand(id) {
+  return T_BRANDS.find((b) => b.id === id);
+}
+
+// Other solutions, shown at the foot of each solution page.
+function tOthers(current) {
+  const cards = T_BRANDS.filter((b) => b.id !== current).map((b) =>
+    `<a class="s-card icon" href="${b.href}"><span class="s-ibox">${ICO[b.icon]}</span><div><span class="s-eyebrow">${b.en} · ${b.role}</span><h3>${b.name}</h3><p>${b.tag}</p></div></a>`).join("");
+  return sSec("others", ["T BRAND SOLUTION", "함께 쓰는 T 솔루션"], `<div class="s-cards two s-body">${cards}</div>`);
+}
+
+function tSteps(items) {
+  return `<ol class="ts-steps">${items.map(([title, text], i) =>
+    `<li style="--i:${i}"><span class="ts-no">${String(i + 1).padStart(2, "0")}</span><div><b>${title}</b><p>${text}</p></div></li>`).join("")}</ol>`;
+}
+
 function tautoHome() {
-  return page("T-AUTO", "T-AUTO", "소프트웨이브 2024에서 티벨은 소프트웨어 테스트 자동화를 지원하는 T-AUTO를 소개했습니다. 이 메뉴에는 그 자동화 축과, 이어서 공개된 LLM 평가·VOC 자동화·음성 검증을 둡니다.", `
-    <div class="grid">
-      ${card("#qa/tauto/lens", "2026.01", "T-LENS", "LLM 응답을 점수와 사유로 평가하는 시스템입니다.")}
-      ${card("#qa/tauto/voc", "VOC", "T-VOC", "금융사 VOC 관리 자동화로 시작된 구축 서비스입니다.")}
-      ${card("#qa/tauto/vux", "VUX", "음성 검증", "TTS·STT로 고객 상담 시나리오를 자동 검증합니다.")}
+  const around = ["gen", "testops", "lens", "voc"].map((id, i) => {
+    const b = tBrand(id);
+    return `<a class="ts-node n${i}" href="${b.href}" data-tag="${b.tag}"><span class="ts-role">${b.en}</span><span class="s-ibox">${ICO[b.icon]}</span><b>${b.name}</b><small>${b.role}</small></a>`;
+  }).join("");
+  const center = tBrand("auto");
+  return sPage("T BRAND SOLUTION", "AI 기반 품질 검증 자동화", "IT 고객을 위한 통합 QA 자동화 포트폴리오입니다. T-AUTO를 중심으로 설계부터 평가, 운영, 고객 피드백까지 하나의 품질 플랫폼 생태계로 연결합니다.",
+    sSec("map", ["PORTFOLIO MAP", "설계부터 피드백까지 하나로", "각 솔루션은 품질 주기의 한 단계를 맡고, T-AUTO가 그 사이를 잇습니다."], `
+    <div class="ts-map s-body">
+      <svg class="ts-ring" viewBox="0 0 400 400" aria-hidden="true"><circle cx="200" cy="200" r="150"/><circle class="ts-ring-flow" cx="200" cy="200" r="150" pathLength="100"/></svg>
+      <a class="ts-core" href="${center.href}"><span class="s-ibox">${ICO[center.icon]}</span><b>${center.name}</b><span class="ts-core-tag">${center.tag}</span></a>
+      ${around}
     </div>
-    <p class="note">T-AUTO 명칭 출처: 전자신문, 소프트웨이브 2024 현장 사진 설명.</p>`);
+    <ul class="ts-legend s-body" aria-label="품질 주기">${["설계", "검증·운영", "평가", "피드백"].map((s, i) => `<li><i>${i + 1}</i>${s}</li>`).join("")}</ul>`) +
+    sSec("value", ["VALUE", "도입하면 달라지는 것"], `
+    <div class="s-cards s-body">
+      <article class="s-card"><span class="s-ibox">${ICO.flag}</span><h3>출시 주기 단축</h3><p>설계와 실행을 자동화해 Time-to-Market을 앞당깁니다.</p></article>
+      <article class="s-card"><span class="s-ibox">${ICO.form}</span><h3>No-Code 자동화</h3><p>LLM이 자연어 시나리오를 읽고 테스트를 만들어 실행합니다.</p></article>
+      <article class="s-card"><span class="s-ibox">${ICO.renew}</span><h3>운영·비용 최적화</h3><p>필요한 테스트만 골라 구독형으로 운영해 초기 구축 비용을 줄입니다.</p></article>
+    </div>`, true) +
+    sSec("next", ["NEXT STEP", "이렇게 시작합니다"], `
+    <div class="s-body">${tSteps([
+      ["PoC / 파일럿 협의", "도입 가능성을 검토하고 요구사항을 분석합니다."],
+      ["우선순위 시나리오 선정", "핵심 기능 위주로 자동화 대상을 고릅니다."],
+      ["통합 및 확대 적용", "CI/CD 파이프라인과 연동하고 전사로 넓힙니다."]
+    ])}</div>
+    <div class="s-actions"><a class="pill" href="#qa/inquiry">T 솔루션 도입 문의</a></div>
+    <p class="s-note">${T_SOURCE}</p>`),
+    [["map", "포트폴리오"], ["value", "도입 효과"], ["next", "시작 방법"]]);
+}
+
+function tAuto() {
+  const layers = [
+    ["Quality Analytics Layer", "실패 분석 및 릴리즈 의사결정 지원", ["Failure Analysis AI", "Release Stability Score"], "a"],
+    ["AI Intelligence Layer", "AI Agent 기반 자율 테스트", ["TC Gen", "Explorer", "Self-Healing"], "b"],
+    ["Test Automation Layer", "No-Code 및 멀티 플랫폼 실행", ["No-Code AI QA", "One Runner Platform"], "c"],
+    ["Multi-modal QA Layer", "시각·음성 등 다양한 인터페이스 검증", ["Vision (OBS)", "Voice (STT/TTS)"], "d"]
+  ].map(([name, text, chips, tone], i) =>
+    `<li class="ts-layer t-${tone}" style="--i:${i}"><span class="ts-layer-no">L${4 - i}</span><div><b>${name}</b><p>${text}</p></div><div class="ts-chips">${chips.map((c) => `<span>${c}</span>`).join("")}</div></li>`).join("");
+  return sPage("T-AUTO · PLATFORM", "AI 기반 통합 품질 검증 플랫폼", "T 브랜드 솔루션의 중심입니다. 4계층 아키텍처 위에서 No-Code 자동화, AI 자율 테스트, 품질 분석을 한 플랫폼으로 운영하고, 설계(T-GEN)·평가(T-LENS)·피드백(T-VOC)과 연결합니다.",
+    sSec("layers", ["4-LAYER ARCHITECTURE", "네 개의 계층이 함께 움직입니다", "아래 계층이 다양한 인터페이스를 검증하고, 위로 올라갈수록 AI가 판단과 의사결정을 돕습니다."], `
+    <ol class="ts-layers s-body">${layers}</ol>
+    <p class="s-note">T-AUTO는 소프트웨이브 2024에서 소프트웨어 테스트 자동화 도구로 처음 소개했습니다(전자신문).</p>`) +
+    sSec("nocode", ["NO-CODE", "LLM 기반 No-Code 자동화", "Web 환경 PoC 사례: 시나리오 설정만으로 테스트 전 과정을 자동 수행했습니다."], `
+    <div class="ts-split s-body">
+      ${tSteps([
+        ["시나리오 설정", "자연어로 테스트 시나리오를 입력합니다."],
+        ["AI 분석 및 식별 (LLM)", "화면의 UI 요소와 Action을 자동으로 파악합니다."],
+        ["테스트 자동 실행", "식별한 요소를 기준으로 검증을 수행합니다."]
+      ])}
+      <div class="ts-demo nocode" aria-hidden="true">
+        <p class="ts-demo-k">시나리오</p>
+        <p class="ts-type">“로그인 후 장바구니에 상품을 담고 결제 화면까지 이동”</p>
+        <p class="ts-demo-k">AI 식별</p>
+        <div class="ts-found"><span>#login-id</span><span>#login-pw</span><span>button.cart-add</span><span>a.checkout</span></div>
+        <p class="ts-demo-k">실행</p>
+        <ul class="ts-run"><li>로그인</li><li>상품 담기</li><li>결제 화면 진입</li></ul>
+      </div>
+    </div>`, true) +
+    sSec("healing", ["SELF-HEALING", "UI가 바뀌어도 테스트가 스스로 복구합니다", "요소 탐색에 실패하면 원인을 분석해 새 경로를 찾아 이어서 실행합니다."], `
+    <div class="ts-split s-body">
+      ${tSteps([
+        ["실패 상태 캡처 및 보존", "요소 탐색 실패 시 UI 스크린샷과 DOM 구조를 즉시 저장합니다."],
+        ["데이터 정제 (Token Optimization)", "LLM 효율을 위해 불필요한 스크립트와 마커를 제거합니다."],
+        ["AI 기반 DOM 차이 분석", "기준(V1)과 현재(V2) XML을 비교해 구조 변경을 파악합니다."],
+        ["대체 경로(XPath) 자동 생성", "바뀐 UI에 맞는 새 Locator를 제안하고 복구합니다."]
+      ])}
+      <div class="ts-impact">
+        <p class="ts-demo-k">Impact &amp; Value</p>
+        <div class="ts-metric"><span>Flaky Test 감소율</span><strong>35% ~ 50%<em>↓</em></strong></div>
+        <div class="ts-metric"><span>자동 복구 성공률</span><strong>75% ~ 90%<em>↑</em></strong></div>
+        <ul><li>테스트 유지보수 비용 절감</li><li>릴리즈 안정성 지표화</li><li>UI 변경 대응 리드타임 단축</li></ul>
+        <p class="s-note">${T_SOURCE} 기재 수치</p>
+      </div>
+    </div>`) +
+    sSec("multimodal", ["MULTI-MODAL QA", "화면과 음성까지 검증합니다"], `
+    <div class="s-cards two s-body">
+      <article class="s-card icon"><span class="s-ibox">${ICO.look}</span><div><span class="s-eyebrow">VISION</span><h3>AI Vision (OBS)</h3><p>OBS 기반으로 화면의 이상을 탐지합니다.</p></div></article>
+      <article class="s-card icon"><span class="s-ibox">${ICO.loop}</span><div><span class="s-eyebrow">VOICE</span><h3>Voice (STT/TTS)</h3><p>테스터 대신 TTS·STT로 발화해 AI 고객 상담 시나리오의 음성 품질을 반복 검증합니다.</p><p class="who">SOTEC 2025 · STK 2025 · QA 코리아 컨퍼런스 2025에서 음성 테스트 자동화(VUX)로 공개</p></div></article>
+    </div>
+    <div class="s-actions"><a class="pill ghost" href="#qa/testops/build">TestOps에서 운영하는 방식 보기</a></div>`, true) +
+    tOthers("auto"),
+    [["layers", "아키텍처"], ["nocode", "No-Code"], ["healing", "Self-Healing"], ["multimodal", "멀티모달"]]);
+}
+
+function tGen() {
+  return sPage("T-GEN · DESIGN", "AI 기반 테스트 케이스 설계 자동화", "기획서, Figma, 요구사항 문서를 분석해 테스트 케이스를 자동으로 도출하고, AI 에이전트가 중복을 걸러 설계를 최적화합니다.",
+    sSec("docs", ["DOCS → TC", "문서에서 테스트 케이스를 바로 만듭니다"], `
+    <div class="ts-split s-body">
+      <div class="ts-copy"><p>기획서, Figma 화면, 요구사항 문서를 그대로 넣으면 AI가 기능과 조건을 읽어 테스트 케이스를 도출합니다.</p>
+        <div class="ts-chips"><span>기획서</span><span>Figma</span><span>요구사항 문서</span></div></div>
+      <div class="ts-demo gen" aria-hidden="true">
+        <div class="ts-docs"><span>기획서.pdf</span><span>Figma</span><span>요구사항.xlsx</span></div>
+        <i class="ts-arrow"></i>
+        <ul class="ts-tc"><li><b>TC-001</b> 비밀번호 5회 오류 시 계정 잠금</li><li><b>TC-002</b> 잠금 해제 메일 발송</li><li><b>TC-003</b> 임시 비밀번호 재설정</li></ul>
+      </div>
+    </div>`) +
+    sSec("optimize", ["OPTIMIZE", "중복은 줄이고, 판단은 사람과 함께", "AI 에이전트가 겹치는 테스트 케이스를 골라내고, 담당자가 확인한 결과로 다시 생성합니다(Human-in-the-loop)."], `
+    <div class="ts-split s-body">
+      ${tSteps([
+        ["중복 TC 선별", "AI 에이전트가 겹치는 테스트 케이스를 골라냅니다."],
+        ["담당자 검토", "사람이 결과를 확인합니다(Human-in-the-loop)."],
+        ["재생성", "검토 결과를 반영해 테스트 케이스를 다시 만듭니다."]
+      ])}
+      <div class="ts-demo dedupe" aria-hidden="true">
+        <ul><li>로그인 실패 시 오류 문구 표시</li><li class="dup">로그인 실패하면 에러 메시지 노출</li><li>비밀번호 5회 오류 시 계정 잠금</li><li class="dup">5회 연속 실패 시 로그인 차단</li></ul>
+        <p class="ts-demo-k">중복 2건 병합 제안 · 검토 대기</p>
+      </div>
+    </div>
+    <p class="s-note">${T_SOURCE}</p>`, true) +
+    tOthers("gen"),
+    [["docs", "문서 → TC"], ["optimize", "설계 최적화"]]);
 }
 
 function lens() {
-  return page("T-LENS", "T-LENS", "TBELL LLM Evaluation and Scoring System. 2026년 1월 13일 전자신문 보도 기준으로, LLM 기반 서비스 품질을 자동으로 평가·검증하는 시스템입니다.", `
-    <div class="list">
-      <article><h3>평가 방식</h3><p>LLM-as-a-Judge로 평가자 편차를 줄입니다. 챗봇 검증용 질문·응답 데이터셋으로 평가 프롬프트를 만들고, 여러 Judge 모델이 응답 품질을 점수와 사유로 냅니다.</p></article>
-      <article><h3>쓰는 범위</h3><p>시나리오 전체의 End-to-End 검증, 버전 변경 전후 비교, 새 모델 적용 시 품질 안정성 확인. 지표는 서비스 특성에 맞게 바꿀 수 있습니다.</p></article>
-      <article><h3>실행 환경</h3><p>AWS 기반이며 Device Farm으로 Android, iOS, 웹을 포함한 멀티 디바이스 테스트를 지원합니다. 결과는 대시보드에서 봅니다.</p></article>
-      <article><h3>티벨의 설명</h3><p>연구소장 이혜진 이사는 T-LENS를 평가 도구를 넘어 AI 서비스 품질을 관리하고 개선하는 기준으로 소개했습니다. 티벨은 이후 AI 테스트 자동화와 테스트 케이스 자동 생성으로 범위를 넓히겠다고 밝혔습니다.</p></article>
+  return sPage("T-LENS · EVAL", "대화형 AI(LLM) 품질 평가 플랫폼", "TBELL LLM Evaluation and Scoring System. LLM-as-a-Judge로 평가 프로세스를 표준화하고 정량·정성 평가를 자동화해 일관성을 확보합니다. 2026년 1월 공식 런칭했습니다.",
+    sSec("judge", ["LLM-AS-A-JUDGE", "평가자에 따라 달라지지 않는 평가"], `
+    <div class="ts-split s-body">
+      <div class="ts-copy"><p>챗봇 검증용 질문·응답 데이터셋으로 평가 프롬프트를 만들고, 여러 Judge 모델이 응답 품질을 점수와 사유로 냅니다. 평가 프로세스를 표준화해 정량·정성 평가의 일관성을 확보합니다.</p>
+        <ul class="ts-list"><li>시나리오 전체 End-to-End 검증</li><li>버전 변경 전후 비교</li><li>새 모델 적용 시 품질 안정성 확인</li></ul></div>
+      <div class="ts-demo lens" aria-hidden="true">
+        <div class="ts-score"><svg viewBox="0 0 80 80"><circle cx="40" cy="40" r="32"/><circle class="v" cx="40" cy="40" r="32" pathLength="100"/></svg><strong>92<small>%</small></strong></div>
+        <div><p class="ts-demo-k">EVALUATION SCORE</p><ul class="ts-eval"><li>정확성 <b class="ok">Pass</b></li><li>안전성 <b class="ok">Pass</b></li><li>일관성 <b class="warn">Warning</b></li></ul></div>
+        <div class="ts-progress"><span>Total Progress</span><i style="--w:75%"></i><b>75%</b></div>
+        <p class="ts-demo-cap">예시 화면</p>
+      </div>
+    </div>`) +
+    sSec("device", ["AWS DEVICE FARM", "여러 기기에서 동시에"], `
+    <div class="s-cards s-body">
+      <article class="s-card"><span class="s-ibox">${ICO.cloud}</span><h3>AWS Device Farm 연동</h3><p>Android, iOS, 웹을 포함한 다양한 디바이스 환경에서 병렬로 테스트합니다.</p></article>
+      <article class="s-card"><span class="s-ibox">${ICO.layers}</span><h3>대시보드</h3><p>평가 점수와 사유를 대시보드에서 확인합니다.</p></article>
+      <article class="s-card"><span class="s-ibox">${ICO.renew}</span><h3>지표 맞춤</h3><p>서비스 특성에 맞게 평가 지표를 바꿀 수 있습니다.</p></article>
     </div>
-    <p class="note">출처: 전자신문, 2026-01-13, 「티벨, LLM 평가·검증 자동화 시스템 T-LENS 공식 런칭」.</p>`);
+    <p class="s-note">${T_SOURCE} · 전자신문 2026.01.13 「티벨, LLM 평가·검증 자동화 시스템 T-LENS 공식 런칭」</p>`, true) +
+    tOthers("lens"),
+    [["judge", "평가 방식"], ["device", "실행 환경"]]);
 }
 
 function voc() {
-  return page("T-VOC", "T-VOC", "전자신문 보도는 제품명 T-VOC 대신, 2020년 금융사 VOC 관리 자동화 프로세스 구축으로 시작해 10여 개 고객사에 요구사항에 맞춘 자동화 구축을 제공해 온 서비스로 적고 있습니다.", `
-    <div class="list">
-      <article><h3>공개된 사실</h3><p>고객 요구에 맞춘 자동화 구축으로 서비스 운영을 지원합니다. QA 코리아 컨퍼런스 2025와 SOTEC 2025 기사 모두 이 VOC 자동화를 테스트 자동화 레퍼런스의 출발점으로 함께 소개합니다.</p></article>
-      <article><h3>옆에 둔 기술</h3><p>같은 기사들은 고객 발화와 시나리오를 분석하고, 자동화 가능한 케이스를 가려 CI/CD와 검증 자동화 프로세스를 만드는 흐름을 설명합니다. 음성 구간은 VUX 메뉴에서 따로 봅니다.</p></article>
+  return sPage("T-VOC · FEEDBACK", "앱 스토어 VOC 모니터링 시스템", "앱 스토어 리뷰를 자동으로 모으고, 부정 리뷰는 Jira 티켓으로 등록하며, AI가 리뷰 유형을 분류하고 답변을 추천해 대응 속도를 높입니다.",
+    sSec("collect", ["COLLECT → ISSUE", "리뷰가 곧 이슈가 됩니다"], `
+    <div class="ts-split s-body">
+      ${tSteps([
+        ["신규 리뷰 자동 수집", "앱 스토어에 올라온 새 리뷰를 자동으로 모읍니다."],
+        ["부정 리뷰 Jira 티켓 생성", "부정 리뷰는 Jira 티켓으로 자동 등록합니다."]
+      ])}
+      <div class="ts-demo voc" aria-hidden="true">
+        <div class="ts-review"><span class="ts-stars">★★★★☆</span><p>로그인이 자주 풀려요…</p></div>
+        <i class="ts-arrow down"></i>
+        <div class="ts-ticket"><b>이슈 자동 등록 완료</b><span>Ticket: VOC-1242 (Critical)</span></div>
+        <p class="ts-demo-cap">예시 화면</p>
+      </div>
+    </div>`) +
+    sSec("ai", ["AI ANALYSIS", "분류와 답변은 AI가 먼저"], `
+    <div class="s-cards two s-body">
+      <article class="s-card icon"><span class="s-ibox">${ICO.layers}</span><div><span class="s-eyebrow">CLASSIFY</span><h3>리뷰 유형 자동 분류</h3><p>모인 리뷰를 유형별로 자동 분류합니다.</p></div></article>
+      <article class="s-card icon"><span class="s-ibox">${ICO.send}</span><div><span class="s-eyebrow">REPLY</span><h3>AI 추천 답변 생성</h3><p>리뷰에 맞는 답변을 AI가 추천해 대응 속도를 높입니다.</p></div></article>
     </div>
-    <p class="note">출처: 전자신문, SOTEC 2025 (2025.05), QA 코리아 컨퍼런스 2025 (2025.07).</p>`);
+    <p class="s-note">${T_SOURCE}. 티벨은 2020년 금융사 VOC 관리 자동화 프로세스 구축을 시작으로 10여 개 고객사에 VOC 자동화를 구축해 왔습니다(전자신문).</p>`, true) +
+    tOthers("voc"),
+    [["collect", "리뷰 → 이슈"], ["ai", "AI 분석"]]);
 }
 
-function vux() {
-  return page("VUX", "VUX 음성 테스트", "Voice User Experience 기반 AI 고객 상담 검증 자동화입니다. SOTEC 2025와 QA 코리아 컨퍼런스 2025, STK 2025에서 공개됐습니다.", `
-    <div class="list">
-      <article><h3>수행 방식</h3><p>테스터가 직접 말하지 않고 TTS와 STT로 발화합니다. 주변 소음이나 돌발 상황의 영향을 줄이고 상담 시나리오를 반복 검증합니다.</p></article>
-      <article><h3>케이스 선별</h3><p>상담 중 가능한 고객 발화와 그 발화에 따른 시나리오를 분석합니다. 전체 케이스를 검증·응답 유형으로 나눈 뒤, 자동화할 수 있는 케이스를 골라 CI/CD 환경에 넣습니다.</p></article>
-    </div>
-    <p class="note">출처: 전자신문, SOTEC 2025 · STK 2025 · QA 코리아 컨퍼런스 2025.</p>`);
+const T_PAGES = { auto: tAuto, vux: tAuto, gen: tGen, lens, voc };
+
+// Security pages on the s- layout (design.md › Security layout).
+// Detail pages keep a dark hero over a white body; the mode home is dark throughout.
+function sPage(eyebrow, title, lede, body, jumps, extra = "", tone = "light") {
+  const bar = jumps && jumps.length
+    ? `<nav class="s-subnav" aria-label="이 페이지"><div class="s-wrap">${jumps.map(([id, label]) => `<button type="button" data-jump="${id}">${label}</button>`).join("")}</div></nav>`
+    : "";
+  const ledeHtml = lede ? `<p class="lede">${lede}</p>` : "";
+  return `<div class="s-page ${tone}">
+  <section class="s-hero plain"><div class="s-wrap"><div><p class="s-eyebrow">${eyebrow}</p><h1>${title}</h1>${ledeHtml}${extra}</div></div></section>${bar}${body}
+</div>`;
 }
 
+function sSec(id, [eyebrow, title, lede, icon], inner, alt) {
+  const badge = icon ? `<span class="s-badge">${icon}</span>` : "";
+  const ledeHtml = lede ? `<p>${lede}</p>` : "";
+  return `
+  <section class="s-sec${alt ? " alt" : ""}"${id ? ` id="${id}"` : ""}><div class="s-wrap">
+    <div class="s-head">${badge}<p class="s-eyebrow">${eyebrow}</p><h2>${title}</h2>${ledeHtml}</div>
+    ${inner}
+  </div></section>`;
+}
+
+const SEC_CLOCK = [
+  // [date, title, note, state] — state: past / now / next, relative to 기준일 2026.10
+  ["2025.10.31", "ISO/IEC 27001:2013 인증 효력 종료", "2022판 전환 완료 필요", "past"],
+  ["2026.01.22", "AI 기본법 시행", "고영향 AI·생성형 AI 사업자 의무", "past"],
+  ["2026 하반기", "ISMS·ISMS-P 사후관리 강화", "중대 사고 시 특별 사후심사·인증 취소 근거", "now"],
+  ["2027", "ISMS-P 등급제·강화 기준 적용", "간편·표준·강화 3단계, 예비심사·기술심사 도입", "next"],
+  ["2027.07 예정", "중요 개인정보처리자 ISMS-P 의무화", "대상 기준은 고시로 확정 예정", "next"]
+];
+
+const SEC_DOMAIN_LINES = {
+  "domain-a": "ISMS·ISMS-P, ISO 27001 계열의 취득과 유지",
+  "domain-b": "처리 흐름, 수탁사, 가명정보, 국외 이전",
+  "domain-c": "마스터플랜, 공시, Virtual CISO 자문",
+  "domain-d": "AI, 클라우드, 공급망 기술적 진단"
+};
+
+function secDomainItems(d) {
+  return SEC_DOMAIN_LINES[d.id];
+}
+
+// Security home, dark throughout: hero → regulation → start path → four domains → close.
 function securityHome() {
-  return `<section class="detail">
-    <div class="banner">
-      <p class="kicker">TBELL 정보보호 컨설팅</p>
-      <h1>우리 회사에 필요한 보안 인증,<br>2분이면 알 수 있습니다.</h1>
-      <p class="lede">어떤 인증이 의무인지, 기한은 언제인지, 오늘 무엇부터 시작해야 하는지. 질문 몇 개에 답하면 바로 확인할 수 있고, 그 결과를 그대로 보내 주시면 티벨이 컨설팅 계획으로 답합니다.</p>
-      <div class="actions">
-        <a class="pill" href="#security/diagnose">2분 셀프 진단 시작</a>
-        <a class="pill ghost" href="#security/services">서비스 보기</a>
+  const now = SEC_CLOCK.findIndex((row) => row[3] === "now");
+  const fill = (now / (SEC_CLOCK.length - 1)) * 100;
+  const clock = SEC_CLOCK.map(([when, title, note, state]) =>
+    `<li class="is-${state}"><span class="dot" aria-hidden="true"></span><span class="when">${when}</span><h3>${title}</h3><p>${note}</p></li>`).join("");
+  const path = [
+    ["셀프 진단", "업종과 규모를 고르면 해당 의무와 목표 심사일 기준 착수일이 바로 나옵니다.", "#security/diagnose", "진단 시작"],
+    ["서비스·계약", "관리체계, 개인정보, 거버넌스, 신기술 리스크. 진행 단계와 계약 방식까지 한곳에서 확인합니다.", "#security/services", "서비스 보기"],
+    ["인증 컨설팅", "ISMS·ISMS-P·ISO 차이와 2027년 심사 변화, 권장 일정과 인증 이후 3년을 정리했습니다.", "#security/cert", "인증 살펴보기"]
+  ].map(([title, text, href, go], i) =>
+    `<li><a href="${href}"><span class="sh-no">${String(i + 1).padStart(2, "0")}</span><b>${title}</b><p>${text}</p><span class="sh-go">${go}</span></a></li>`).join("");
+  const domains = SVC_DOMAINS.map((d) =>
+    `<li><a href="#security/services" data-jump="${d.id}"><span class="sd-key">${d.key}</span><div><b>${d.title}</b><p>${secDomainItems(d)}</p></div><svg class="inq-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>`).join("");
+  return `<div class="sh s-page dark home" id="svc">
+  <section class="sk-hero">
+    <div class="s-wrap">
+      <div class="sk-copy">
+        <p class="qh-label">TBELL 정보보호 컨설팅</p>
+        <h1>우리 회사에 필요한 보안 인증,<br>2분이면 알 수 있습니다.</h1>
+        <p class="lede">어떤 인증이 의무인지, 기한은 언제인지, 오늘 무엇부터 시작해야 하는지. 질문 몇 개에 답하면 바로 확인할 수 있고, 그 결과를 그대로 보내 주시면 티벨이 컨설팅 계획으로 답합니다.</p>
+        <div class="s-actions"><a class="pill" href="#security/diagnose">2분 셀프 진단 시작</a><a class="pill ghost" href="#security/services">서비스 보기</a></div>
       </div>
-      <ul class="metrics" aria-label="셀프 진단으로 알 수 있는 것">
-        <li><span>WHAT</span><strong>해당되는 의무·인증</strong></li>
-        <li><span>WHEN</span><strong>시행·심사 기한</strong></li>
-        <li><span>START</span><strong>착수해야 할 날짜</strong></li>
-      </ul>
+      <div class="sk-art">${secShield()}</div>
     </div>
-    <div class="sheet">
-      <div class="sec-block" id="clock">
-        <p class="sec-k">기준일 2026.10</p>
-        <h2>지금 바뀌고 있는 규제</h2>
-        <ol class="timeline">
-          <li><span class="when">2025.10.31</span><div><h3>ISO/IEC 27001:2013 인증 효력 종료</h3><p>2022판 전환 완료 필요</p></div></li>
-          <li><span class="when">2026.01.22</span><div><h3>AI 기본법 시행</h3><p>고영향 AI·생성형 AI 사업자 의무</p></div></li>
-          <li><span class="when">2026 하반기</span><div><h3>ISMS·ISMS-P 사후관리 강화</h3><p>중대 사고 시 특별 사후심사·인증 취소 근거</p></div></li>
-          <li><span class="when">2027</span><div><h3>ISMS-P 등급제·강화 기준 적용</h3><p>간편·표준·강화 3단계, 예비심사·기술심사 도입</p></div></li>
-          <li><span class="when">2027.07 예정</span><div><h3>중요 개인정보처리자 ISMS-P 의무화</h3><p>대상 기준은 고시로 확정 예정</p></div></li>
-        </ol>
-        <p class="note">정부 발표·보도 기준이며 세부 일정은 법령·고시 개정에 따라 바뀔 수 있습니다.</p>
-        <p><a href="#security/cert">2027 심사 개편 보기</a></p>
-      </div>
-      <div class="sec-block" id="routes">
-        <p class="sec-k">Start here</p>
-        <h2>필요한 만큼만 골라 보세요</h2>
-        <p>진단, 서비스 범위, 인증 준비는 서로 다른 질문입니다. 지금 궁금한 것부터 보면 됩니다.</p>
-        <div class="sec-grid">
-          <a href="#security/diagnose"><span class="sec-k">01</span><h3>셀프 진단</h3><p>업종과 규모를 고르면 해당 의무와 목표 심사일 기준 착수일이 바로 나옵니다.</p><span class="go">진단 시작</span></a>
-          <a href="#security/services"><span class="sec-k">02</span><h3>서비스·계약</h3><p>관리체계, 개인정보, 거버넌스, 신기술 리스크. 진행 단계와 계약 방식까지 한곳에서 확인합니다.</p><span class="go">서비스 보기</span></a>
-          <a href="#security/cert"><span class="sec-k">03</span><h3>인증 컨설팅</h3><p>ISMS·ISMS-P·ISO 차이와 2027년 심사 변화, 권장 일정과 인증 이후 3년을 정리했습니다.</p><span class="go">인증 살펴보기</span></a>
-        </div>
-      </div>
-      <div class="sec-block" id="principles">
-        <p class="sec-k">How we work</p>
-        <h2>진단 다음은 실행입니다</h2>
-        <p>확인한 의무를 실제 인증과 보안 체계로 만드는 과정에서, 보안 담당자들이 이전 컨설팅에서 겪은 세 가지 아쉬움을 이렇게 해결합니다.</p>
-        <div class="sec-grid">
-          <article><span class="sec-k">01 · 공개</span><h3>일정과 산출물을 먼저 보여 드립니다</h3><p class="pain"><b>아쉬움</b>언제 끝나는지, 무엇을 받는지 계약 후에야 알 수 있었다.</p><p>착수 전에 주 단위 일정표와 단계별 산출물 목록을 확정합니다. 견적은 대상 범위와 투입 인력 기준을 함께 제시합니다.</p></article>
-          <article><span class="sec-k">02 · 통합</span><h3>한 번의 진단으로 여러 기준에 대응합니다</h3><p class="pain"><b>아쉬움</b>ISMS-P, ISO 27001, 공시 대응을 할 때마다 같은 자료를 다시 만들었다.</p><p>자산 목록, 위험평가, 정책 문서를 기준 간 매핑표로 연결해 한 번 만든 증적을 여러 인증과 점검에 다시 씁니다.</p></article>
-          <article><span class="sec-k">03 · 동행</span><h3>인증서 발급 이후까지 함께합니다</h3><p class="pain"><b>아쉬움</b>인증을 받고 나면 컨설턴트가 떠나고, 사후심사는 혼자 준비했다.</p><p>3년 인증 주기 전체를 하나의 계획으로 설계합니다. 사후심사와 갱신심사, 규제 변경 대응까지 같은 컨설턴트가 이어서 맡습니다.</p></article>
-        </div>
-      </div>
-      <div class="sec-block" id="domains-home">
-        <p class="sec-k">Services</p>
-        <h2>네 가지 영역에서 시작합니다</h2>
-        <p>조직의 상황에 맞는 영역을 고르고, 범위는 상담에서 조정합니다.</p>
-        <div class="domain-links">
-          <a href="#security/services" data-jump="domain-a"><span>DOMAIN A</span><strong>관리체계·인증</strong><p>ISMS·ISMS-P, ISO 27001 계열의 취득과 유지</p></a>
-          <a href="#security/services" data-jump="domain-b"><span>DOMAIN B</span><strong>개인정보 보호</strong><p>처리 흐름, 수탁사, 가명정보, 국외 이전</p></a>
-          <a href="#security/services" data-jump="domain-c"><span>DOMAIN C</span><strong>보안 전략·거버넌스</strong><p>마스터플랜, 공시, Virtual CISO 자문</p></a>
-          <a href="#security/services" data-jump="domain-d"><span>DOMAIN D</span><strong>신기술 리스크</strong><p>AI, 클라우드, 공급망 기술적 진단</p></a>
-        </div>
-      </div>
-      <div class="sec-block">
-        <p class="sec-k">Commitments</p>
-        <h2>티벨 컨설팅의 네 가지 약속</h2>
-        <div class="items">
-          <article><h3>착수 전 일정 확정</h3><p>주 단위 일정표와 산출물 목록을 계약 단계에서 확정하고, 변경이 생기면 사유와 함께 먼저 알립니다.</p></article>
-          <article><h3>담당 컨설턴트 고정</h3><p>착수부터 심사 대응, 사후관리까지 같은 책임 컨설턴트가 맡습니다.</p></article>
-          <article><h3>인증서 발급까지 지원</h3><p>심사에서 나온 결함의 보완조치를 마치고 인증서가 발급될 때까지 함께 대응합니다.</p></article>
-          <article><h3>규제 변경 알림</h3><p>계약 기간 중 고객사에 영향을 주는 법령·고시 변경이 생기면 영향 분석과 함께 안내합니다.</p></article>
-        </div>
-      </div>
-      <div class="sec-block">
-        <p class="sec-k">Next</p>
-        <h2>진단 결과를 보내 주시면, 계획으로 답합니다.</h2>
-        <div class="actions">
-          <a class="pill" href="#security/diagnose">셀프 진단 시작</a>
-          <a class="pill ghost" href="#security/inquiry">바로 상담 신청</a>
-        </div>
-      </div>
+    <a class="qh-scroll" href="#security" data-jump="clock" aria-label="아래로 이동"><span></span></a>
+  </section>
+
+  <section class="s-sec sh-clock2" id="clock"><div class="s-wrap">
+    <div class="qh-head center"><p class="qh-label">기준일 2026.10</p><h2>지금 바뀌고 있는 규제</h2></div>
+    <div class="s-htl">
+      <div class="s-htl-track" aria-hidden="true"><i style="--fill:${fill}%"></i></div>
+      <ol>${clock}</ol>
     </div>
-  </section>`;
+    <p class="sh-foot">정부 발표·보도 기준이며 세부 일정은 법령·고시 개정에 따라 바뀔 수 있습니다. <a class="sh-text-link" href="#security/cert">2027 심사 개편 보기</a></p>
+  </div></section>
+
+  <section class="s-sec alt sh-path" id="routes"><div class="s-wrap">
+    <div class="qh-head center"><p class="qh-label">Start here</p><h2>필요한 만큼만 골라 보세요</h2><p>진단, 서비스 범위, 인증 준비는 서로 다른 질문입니다. 지금 궁금한 것부터 보면 됩니다.</p></div>
+    <div class="sh-route"><div class="sh-line" aria-hidden="true"><i></i></div><ol>${path}</ol></div>
+  </div></section>
+
+  <section class="s-sec sh-domains" id="domains-home"><div class="s-wrap">
+    <div class="qh-head"><p class="qh-label">Services</p><h2>네 가지 영역에서 시작합니다</h2><p>조직의 상황에 맞는 영역을 고르고, 범위는 상담에서 조정합니다.</p></div>
+    <ul class="sd-list">${domains}</ul>
+  </div></section>
+
+  <section class="qh-close"><div class="s-wrap">
+    <h2>진단 결과를 보내 주시면,<br>계획으로 답합니다.</h2>
+    <div class="sh-close-actions"><a class="pill" href="#security/diagnose">셀프 진단 시작</a><a class="pill ghost" href="#security/inquiry">바로 상담 신청</a></div>
+  </div></section>
+</div>`;
 }
 
+// Security hero art: a rendered metal shield (assets/shield.png, made by design_demo/hero-options/render_shield.py)
+// inside an orbit that carries the four consulting domains. One pulse travels the orbit; the domain it
+// reaches lights, and the shield answers with a rim glow turned toward that domain and a pulse of its check.
+// Overlay coordinates share the render's 1400px space.
+const SX_ANGLES = [45, 135, 225, 315];
+const SX_C = [700, 700];
+const SX_R = 640;
+
+function sxPoint(deg, r = SX_R) {
+  const a = (deg - 90) * Math.PI / 180;
+  return [SX_C[0] + r * Math.cos(a), SX_C[1] + r * Math.sin(a)];
+}
+
+function secShield() {
+  const ticks = [];
+  for (let k = 0; k < 120; k++) {
+    const [x1, y1] = sxPoint(k * 3, SX_R + 18);
+    const [x2, y2] = sxPoint(k * 3, SX_R + (k % 10 ? 28 : 42));
+    ticks.push(`<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}"${k % 10 ? "" : ' class="major"'}/>`);
+  }
+  const nodes = SVC_DOMAINS.map((d, i) => {
+    const [x, y] = sxPoint(SX_ANGLES[i]);
+    const right = SX_ANGLES[i] < 180;
+    const tx = right ? x + 66 : x - 66;
+    const anchor = right ? "start" : "end";
+    return `<a class="sx-node" href="#security/services" data-jump="${d.id}" data-i="${i}" aria-label="${d.title}">
+        <circle class="sx-node-halo" cx="${x}" cy="${y}" r="52"/>
+        <circle class="sx-node-dot" cx="${x}" cy="${y}" r="36"/>
+        <text class="sx-node-key" x="${x}" y="${y + 14}" text-anchor="middle">${d.key}</text>
+        <text class="sx-node-en" x="${tx}" y="${y - 10}" text-anchor="${anchor}">DOMAIN ${d.key}</text>
+        <text class="sx-node-name" x="${tx}" y="${y + 34}" text-anchor="${anchor}">${d.title}</text>
+      </a>`;
+  }).join("");
+  return `<div class="sx" style="--gx:75%;--gy:25%">
+      <svg class="sx-orbit" viewBox="0 0 1400 1400" aria-hidden="true">
+        <circle class="sx-ring" cx="700" cy="700" r="${SX_R}"/>
+        <circle class="sx-ring-in" cx="700" cy="700" r="${SX_R - 46}"/>
+        <g class="sx-ticks">${ticks.join("")}</g>
+        <g class="sx-pulse"><circle cx="700" cy="${700 - SX_R}" r="12"/><circle class="tail" cx="700" cy="${700 - SX_R}" r="26"/></g>
+      </svg>
+      <div class="sx-body">
+        <img class="sx-shield" src="assets/shield.png?v=3" alt="" width="1000" height="1000">
+        <span class="sx-glow" aria-hidden="true"></span>
+        <span class="sx-sheen" aria-hidden="true"></span>
+        <svg class="sx-mark" viewBox="0 0 1400 1400" aria-hidden="true"><circle class="sx-core" cx="700" cy="640" r="96"/><path class="sx-check" pathLength="100" d="M642 642 L686 686 L766 594"/></svg>
+      </div>
+      <svg class="sx-links" viewBox="0 0 1400 1400" role="group" aria-label="정보보호 컨설팅 4개 영역">${nodes}</svg>
+    </div>
+    <a class="sx-caption" href="#security/services" data-jump="${SVC_DOMAINS[0].id}"><span class="k">DOMAIN ${SVC_DOMAINS[0].key}</span><b>${SVC_DOMAINS[0].title}</b><svg class="inq-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>`;
+}
+
+// One clock drives the whole hero: the pulse moves to the next domain, that domain lights, the shield's
+// glow turns toward it and the check pulses. Pointing at a domain sends the pulse there and holds it.
+function wireSecHome() {
+  if (window.__sxTimer) { clearInterval(window.__sxTimer); window.__sxTimer = null; }
+  const root = document.querySelector(".sh");
+  if (!root) return;
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const sx = root.querySelector(".sx");
+  const body = root.querySelector(".sx-body");
+  const pulse = root.querySelector(".sx-pulse");
+  const nodes = Array.from(root.querySelectorAll(".sx-node"));
+  const caption = root.querySelector(".sx-caption");
+  let lit = -1;
+  let turn = 0;
+  let held = false;
+  const go = (i) => {
+    if (i === lit) return;
+    const target = SX_ANGLES[i];
+    let delta = (target - (turn % 360) + 360) % 360;
+    if (delta === 0 && lit !== -1) delta = 360;
+    turn += delta;
+    pulse.style.transform = `rotate(${turn}deg)`;
+    lit = i;
+    nodes.forEach((n, k) => n.classList.toggle("is-lit", k === i));
+    // Glow sits on the shield image box (10%..90% of the art); convert the orbit point into it.
+    const [x, y] = sxPoint(target, 360);
+    sx.style.setProperty("--gx", ((x / 14 - 10) / 0.8).toFixed(1) + "%");
+    sx.style.setProperty("--gy", ((y / 14 - 7) / 0.8).toFixed(1) + "%");
+    sx.classList.remove("beat");
+    void sx.offsetWidth;
+    sx.classList.add("beat");
+    const d = SVC_DOMAINS[i];
+    caption.dataset.jump = d.id;
+    caption.querySelector(".k").textContent = `DOMAIN ${d.key}`;
+    caption.querySelector("b").textContent = d.title;
+  };
+  go(0);
+  nodes.forEach((n, k) => {
+    const hold = () => { held = true; go(k); };
+    n.addEventListener("mouseenter", hold);
+    n.addEventListener("focus", hold);
+    n.addEventListener("mouseleave", () => { held = false; });
+    n.addEventListener("blur", () => { held = false; });
+  });
+  if (reduce) return;
+  const hero = root.querySelector(".sk-hero");
+  hero.addEventListener("pointermove", (event) => {
+    const box = hero.getBoundingClientRect();
+    body.style.setProperty("--rx", (((event.clientY - box.top) / box.height - 0.5) * -8).toFixed(2) + "deg");
+    body.style.setProperty("--ry", (((event.clientX - box.left) / box.width - 0.5) * 10).toFixed(2) + "deg");
+    body.style.setProperty("--sh", (((event.clientX - box.left) / box.width) * 100).toFixed(1) + "%");
+  });
+  hero.addEventListener("pointerleave", () => {
+    body.style.setProperty("--rx", "0deg");
+    body.style.setProperty("--ry", "0deg");
+  });
+  window.__sxTimer = setInterval(() => {
+    if (!document.body.contains(root)) { clearInterval(window.__sxTimer); window.__sxTimer = null; return; }
+    if (!held) go((lit + 1) % nodes.length);
+  }, 2400);
+}
+
+function mark(body) {
+  return `<svg class="mark" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${body}</svg>`;
+}
+
+const ICO = {
+  form: mark(`<rect x="10" y="8" width="28" height="34" rx="3"/><rect x="18" y="4" width="12" height="8" rx="2"/><path d="M18 24h12M18 30h8"/><path d="M16 22l2 2 4-4" stroke="#27c4d5"/>`),
+  cal: mark(`<rect x="8" y="10" width="32" height="28" rx="3"/><path d="M8 18h32M16 6v8M32 6v8"/><path d="M17 28h5M26 26v6" stroke="#27c4d5"/>`),
+  send: mark(`<rect x="6" y="12" width="36" height="24" rx="3"/><path d="M6 14l18 13L42 14" stroke="#27c4d5"/>`),
+  layers: mark(`<path d="M8 16l16-8 16 8-16 8z"/><path d="M8 24l16 8 16-8"/><path d="M8 32l16 8 16-8" stroke="#27c4d5"/>`),
+  gate: mark(`<path d="M10 42V16l14-8 14 8v26"/><path d="M20 42V28h8v14"/><path d="M21 32l3 3 5-5" stroke="#27c4d5"/>`),
+  scan: mark(`<circle cx="21" cy="21" r="11"/><path d="M29 29l9 9" stroke="#27c4d5"/><path d="M17 21h8M21 17v8"/>`),
+  renew: mark(`<path d="M24 6l14 6v10c0 8-6 14-14 18-8-4-14-10-14-18V12z"/><path d="M24 16v8l5 3" stroke="#27c4d5"/>`),
+  shield: mark(`<path d="M24 6l14 6v10c0 8-6 14-14 18-8-4-14-10-14-18V12z"/><path d="M17 24l4 4 10-10" stroke="#27c4d5"/>`),
+  person: mark(`<circle cx="17" cy="16" r="6"/><path d="M6 38v-2a10 10 0 0 1 10-10h2"/><path d="M30 18l10 4v7c0 6-4 10-10 12-6-2-10-6-10-12v-7z" stroke="#27c4d5"/>`),
+  globe: mark(`<circle cx="24" cy="24" r="14"/><ellipse cx="24" cy="24" rx="6" ry="14"/><path d="M10 24h28"/><path d="M13 17h22M13 31h22" stroke="#27c4d5"/>`),
+  lock: mark(`<rect x="6" y="8" width="22" height="30" rx="2"/><path d="M12 18h10M12 24h10"/><rect x="24" y="24" width="16" height="14" rx="2" stroke="#27c4d5"/><path d="M28 24v-3a4 4 0 0 1 8 0v3" stroke="#27c4d5"/>`),
+  cloud: mark(`<path d="M14 36h20a8 8 0 0 0 1-16 11 11 0 0 0-21 1 8 8 0 0 0 0 15z"/><path d="M20 30h8" stroke="#27c4d5"/>`),
+  nodes: mark(`<circle cx="24" cy="24" r="5" stroke="#27c4d5"/><circle cx="10" cy="12" r="3"/><circle cx="38" cy="12" r="3"/><circle cx="10" cy="36" r="3"/><circle cx="38" cy="36" r="3"/><path d="M13 14l7 7M35 14l-7 7M13 34l7-7M35 34l-7-7"/>`),
+  flag: mark(`<path d="M16 42V8"/><path d="M16 10h18l-4 6 4 6H16" stroke="#27c4d5"/>`),
+  look: mark(`<circle cx="22" cy="22" r="10"/><path d="M30 30l8 8" stroke="#27c4d5"/>`),
+  loop: mark(`<path d="M16 18a10 10 0 0 1 17-2"/><path d="M32 30a10 10 0 0 1-17 2" stroke="#27c4d5"/><path d="M30 10v7h7"/><path d="M18 38v-7h-7" stroke="#27c4d5"/>`),
+  stamp: mark(`<circle cx="24" cy="22" r="12"/><path d="M18 22l4 4 8-8" stroke="#27c4d5"/><path d="M14 40h20"/>`)
+};
+
+// Self-diagnosis, restored to security_demo/diagnose.html: STEP 1 questions beside the live result, then
+// STEP 2 at full width (target date, three metrics, verdict, gantt) and the STEP 3 band. Classes carry a
+// dz- prefix so the older global .navi / .plan-* rules elsewhere in this file can't leak in.
+// design_demo/diagnose-review/README.md lists every difference from the original.
 function diagnose() {
-  return page("Compliance Navigator", "질문에 답하면 의무와 일정이 바로 나옵니다", "STEP 1에서 해당되는 의무를 확인하고, STEP 2에서 목표 심사일을 넣어 착수일을 계산하세요. STEP 3에서 그 결과로 바로 상담을 신청할 수 있습니다.", `
-    <div class="navi" id="step-1">
-      <form class="navi-q" id="navi-form" aria-label="의무 진단 질문">
-        <div><div class="sec-k">STEP 1 · 의무 진단</div><h2>조직 정보를 선택하세요</h2></div>
-        <div class="q-group">
-          <label class="q-label" for="q-sector">업종</label>
-          <select id="q-sector">
-            <option value="online" selected>온라인 서비스·플랫폼</option>
-            <option value="finance">금융·핀테크</option>
-            <option value="medical">의료(병원)</option>
-            <option value="univ">교육(대학)</option>
-            <option value="mfg">제조</option>
-            <option value="public">공공기관</option>
-            <option value="etc">기타</option>
-          </select>
-        </div>
-        <fieldset class="q-group">
-          <legend>해당하는 항목을 모두 고르세요</legend>
-          <label class="check"><input type="checkbox" id="q-rev" checked>정보통신서비스 부문 전년도 매출 100억 원 이상</label>
-          <label class="check"><input type="checkbox" id="q-users">직전 3개월 일평균 이용자 100만 명 이상</label>
-          <label class="check"><input type="checkbox" id="q-infra">전국 단위 통신망 사업(ISP) 또는 데이터센터(IDC) 운영</label>
-          <label class="check"><input type="checkbox" id="q-pii" checked>개인정보 보유 규모가 100만 명 이상</label>
-          <label class="check"><input type="checkbox" id="q-ai" checked>AI 기능이 들어간 서비스를 제공하거나 준비 중</label>
-          <label class="check"><input type="checkbox" id="q-global">해외 고객사가 있거나 해외 진출 예정</label>
-          <label class="check"><input type="checkbox" id="q-cloud">공공기관에 SaaS·클라우드 서비스를 공급하거나 예정</label>
-          <label class="check"><input type="checkbox" id="q-listed">상장사이거나 연 매출 3,000억 원 이상</label>
-        </fieldset>
-        <fieldset class="q-group">
-          <legend>보유 중인 인증</legend>
-          <div class="pills">
-            <label><input type="checkbox" id="h-isms" checked>ISMS</label>
-            <label><input type="checkbox" id="h-ismsp">ISMS-P</label>
-            <label><input type="checkbox" id="h-iso">ISO 27001</label>
+  const sectors = [["online", "온라인 서비스·플랫폼"], ["finance", "금융·핀테크"], ["medical", "의료(병원)"], ["univ", "교육(대학)"], ["mfg", "제조"], ["public", "공공기관"], ["etc", "기타"]];
+  const items = [
+    ["q-rev", "정보통신서비스 부문 전년도 매출 100억 원 이상", true],
+    ["q-users", "직전 3개월 일평균 이용자 100만 명 이상", false],
+    ["q-infra", "전국 단위 통신망 사업(ISP) 또는 데이터센터(IDC) 운영", false],
+    ["q-pii", "개인정보 보유 규모가 100만 명 이상", true],
+    ["q-ai", "AI 기능이 들어간 서비스를 제공하거나 준비 중", true],
+    ["q-global", "해외 고객사가 있거나 해외 진출 예정", false],
+    ["q-cloud", "공공기관에 SaaS·클라우드 서비스를 공급하거나 예정", false],
+    ["q-listed", "상장사이거나 연 매출 3,000억 원 이상", false]
+  ];
+  // Hero and page tabs are the shared detail-page pieces (sPage); the body is security_demo's.
+  return sPage("Compliance Navigator", "질문에 답하면 의무와 일정이 바로 나옵니다",
+    "STEP 1에서 해당되는 의무를 확인하고, STEP 2에서 목표 심사일을 넣어 착수일을 계산하세요. STEP 3에서 그 결과로 바로 상담을 신청할 수 있습니다.",
+    `<div class="dz">
+  <section class="dz-section" id="step-1">
+    <div class="s-wrap">
+      <div class="dz-navi">
+        <form class="dz-navi-q" id="navi-form" aria-label="의무 진단 질문">
+          <div>
+            <div class="dz-panel-k">STEP 1 · 의무 진단</div>
+            <h2 class="dz-panel-h">조직 정보를 선택하세요</h2>
           </div>
-        </fieldset>
-      </form>
-      <div class="navi-r" aria-live="polite">
-        <div><div class="sec-k">결과</div><h2 id="r-title">검토가 필요한 항목</h2></div>
-        <p class="r-sum" id="r-sum"></p>
-        <ul class="r-list" id="r-list"></ul>
-        <p class="note">처음 화면은 예시 선택 상태입니다. 결과는 공개된 법령·정부 발표를 바탕으로 한 참고용이며, 최종 해당 여부는 상담에서 확인합니다.</p>
-      </div>
-    </div>
-    <div class="planner" id="step-2">
-      <div class="plan-top">
-        <div>
-          <div class="sec-k">STEP 2 · 목표일 역산</div>
-          <h2>언제 인증심사를 받을 계획인가요?</h2>
-          <p class="note">목표 심사일을 정하면 착수부터 심사까지 약 30주 권장 일정을 날짜에 맞춰 역산합니다.</p>
+          <div class="dz-q-group">
+            <label class="dz-q-label" for="q-sector">업종</label>
+            <select id="q-sector">${sectors.map(([value, label], i) => `<option value="${value}"${i ? "" : " selected"}>${label}</option>`).join("")}</select>
+          </div>
+          <fieldset class="dz-q-group">
+            <legend>해당하는 항목을 모두 고르세요</legend>
+            ${items.map(([id, label, on]) => `<label class="dz-check"><input type="checkbox" id="${id}"${on ? " checked" : ""}>${label}</label>`).join("\n            ")}
+          </fieldset>
+          <fieldset class="dz-q-group">
+            <legend>보유 중인 인증</legend>
+            <div class="dz-pills">
+              <label><input type="checkbox" id="h-isms" checked>ISMS</label>
+              <label><input type="checkbox" id="h-ismsp">ISMS-P</label>
+              <label><input type="checkbox" id="h-iso">ISO 27001</label>
+            </div>
+          </fieldset>
+        </form>
+        <div class="dz-navi-r" aria-live="polite">
+          <div>
+            <div class="dz-panel-k">결과</div>
+            <h2 class="dz-panel-h" id="r-title">검토가 필요한 항목</h2>
+          </div>
+          <p class="dz-r-sum" id="r-sum"></p>
+          <ul class="dz-r-list" id="r-list"></ul>
+          <p class="dz-note">처음 화면은 예시 선택 상태입니다. 결과는 공개된 법령·정부 발표를 바탕으로 한 참고용이며, 최종 해당 여부는 상담에서 확인합니다.</p>
         </div>
-        <div class="plan-in">
-          <label for="p-target">목표 인증심사 시작일</label>
-          <input type="date" id="p-target" value="2027-05-03">
-        </div>
       </div>
-      <div class="plan-metrics" id="plan-summary" aria-live="polite"></div>
-      <div class="plan-status" id="p-verdict" role="status"></div>
-      <div id="sched-cal" aria-live="polite"></div>
-      <ol class="sr-only" id="p-steps"></ol>
-    </div>
-    <div class="step-cta" id="step-3">
-      <div>
-        <span class="sec-k">STEP 3 · 상담 신청</span>
-        <h2>이 결과로 컨설팅 계획을 받아 보세요</h2>
-        <p>진단 결과와 계산한 일정이 상담 신청서에 자동으로 들어갑니다. 이름과 연락처만 더하면 됩니다.</p>
-      </div>
-      <button type="button" class="pill" id="to-contact">이 결과로 상담 신청</button>
-    </div>`, [
-    ["step-1", "의무 진단"],
-    ["step-2", "일정 역산"],
-    ["step-3", "상담 신청"]
-  ]);
-}
 
-function services() {
-  return page("Services", "네 가지 영역의 정보보호 컨설팅", "관리체계와 인증부터 AI·클라우드 같은 새로운 위험까지, 조직의 상황에 맞는 영역을 골라 시작할 수 있습니다. 진행 단계와 계약 방식은 이 페이지에서 이어서 확인합니다.", `
-    <div id="domains">
-      <article class="domain" id="domain-a">
-        <div class="domain-head"><span class="sec-k">DOMAIN A</span><h2>관리체계·인증</h2><p>국내외 정보보호 인증을 준비하고, 인증을 받은 뒤에도 기준에 맞게 운영되도록 돕습니다.</p></div>
-        <div class="items">
-          <article><h3>ISMS·ISMS-P 인증 <span class="tag alt">2027 개편</span></h3><p>최초·사후·갱신 심사 대응, 등급제·예비심사 대비</p></article>
-          <article><h3>ISO/IEC 27001 계열 인증</h3><p>27001·27701·27017·27018 신규 취득과 통합 운영</p></article>
-          <article><h3>인증 유지 관리</h3><p>연간 내부점검, 변경 영향 분석, 사후심사 결함 조치</p></article>
-          <article><h3>복수 인증 통합</h3><p>ISMS-P와 ISO 인증 간 통제 매핑, 증적 일원화</p></article>
+      <div class="dz-planner" id="step-2">
+        <div class="dz-plan-top">
+          <div>
+            <div class="dz-panel-k">STEP 2 · 목표일 역산</div>
+            <h2 class="dz-panel-h">언제 인증심사를 받을 계획인가요?</h2>
+            <p class="dz-note dz-plan-lede">목표 심사일을 정하면 착수부터 심사까지 약 30주 권장 일정을 날짜에 맞춰 역산합니다.</p>
+          </div>
+          <div class="dz-plan-in">
+            <label for="p-target">목표 인증심사 시작일</label>
+            <input type="date" id="p-target" value="2027-05-03">
+          </div>
         </div>
-      </article>
-      <article class="domain" id="domain-b">
-        <div class="domain-head"><span class="sec-k">DOMAIN B</span><h2>개인정보 보호</h2><p>개인정보가 수집되어 파기될 때까지 흐름을 따라가며 법적 요구사항과 실제 운영의 차이를 찾습니다.</p></div>
-        <div class="items">
-          <article><h3>개인정보 관리수준 진단</h3><p>처리 흐름 분석, 안전성 확보조치 기준 이행 점검</p></article>
-          <article><h3>수탁사·위탁 관리 점검</h3><p>위탁 계약·관리감독 체계 수립, 수탁사 현장 점검</p></article>
-          <article><h3>가명정보 처리 컨설팅</h3><p>가명처리 절차·적정성 검토, 결합 전후 관리 체계</p></article>
-          <article><h3>국외 이전·해외 규제 대응</h3><p>GDPR 등 해외 개인정보 규제 요구사항 갭 분석</p></article>
+        <div class="dz-plan-summary" id="plan-summary" aria-live="polite"></div>
+        <div class="dz-status" id="p-verdict" role="status"></div>
+        <div class="dz-gantt-wrap" id="sched-cal" aria-live="polite"></div>
+        <ol class="sr-only" id="p-steps"></ol>
+      </div>
+
+      <div class="dz-step-cta" id="step-3">
+        <div class="dz-cta-txt">
+          <span class="dz-panel-k">STEP 3 · 상담 신청</span>
+          <strong>이 결과로 컨설팅 계획을 받아 보세요</strong>
+          <p>진단 결과와 계산한 일정이 상담 신청서에 자동으로 들어갑니다. 이름과 연락처만 더하면 됩니다.</p>
         </div>
-      </article>
-      <article class="domain" id="domain-c">
-        <div class="domain-head"><span class="sec-k">DOMAIN C</span><h2>보안 전략·거버넌스</h2><p>경영진이 보안 예산과 우선순위를 결정할 수 있도록 현재 수준과 목표, 그 사이의 경로를 그립니다.</p></div>
-        <div class="items">
-          <article><h3>정보보호 마스터플랜</h3><p>현황 진단, 목표 모델, 3개년 이행 로드맵과 예산안</p></article>
-          <article><h3>제로트러스트·N2SF 전환</h3><p>가이드라인 기반 성숙도 진단, 단계별 전환 계획</p></article>
-          <article><h3>정보보호 공시 대응</h3><p>공시 항목별 현황 정리, 투자·인력 산정 기준 검토</p></article>
-          <article><h3>Virtual CISO 자문 <span class="tag">구독형</span></h3><p>외부 전문가가 정보보호최고책임자(CISO)의 판단과 경영진 보고를 월 단위로 지원</p></article>
-        </div>
-      </article>
-      <article class="domain" id="domain-d">
-        <div class="domain-head"><span class="sec-k">DOMAIN D</span><h2>신기술 리스크</h2><p>기존 인증 기준만으로는 다루기 어려운 AI, 클라우드, 공급망 위험을 따로 진단합니다.</p></div>
-        <div class="items">
-          <article><h3>AI 거버넌스 <span class="tag">AI</span></h3><p>AI 기본법 의무 검토, ISO/IEC 42001 준비, AI 위험·영향평가 체계</p></article>
-          <article><h3>클라우드 보안 아키텍처</h3><p>멀티클라우드 보안 설계 검토, 책임공유모델 기반 통제 정의</p></article>
-          <article><h3>SW 공급망 보안</h3><p>SBOM 관리 정책, 오픈소스 사용 기준, 협력사 보안 평가 체계</p></article>
-          <article><h3>기술적 취약점 진단·모의해킹</h3><p>인프라·웹·모바일 진단으로 관리체계 컨설팅의 기술 근거 확보</p></article>
-        </div>
-      </article>
-    </div>
-    <div class="sec-block" id="method">
-      <p class="sec-k">How it runs</p>
-      <h2>무엇을 받는지, 계약 전에 확인하세요</h2>
-      <p>티벨 컨설팅은 6단계로 진행됩니다. 단계마다 받는 문서가 정해져 있어 진행 상황을 직접 확인할 수 있습니다. 실제 범위는 셀프 진단 결과와 상담 내용에 맞춰 조정합니다.</p>
-      <div class="method">
-        <article><span class="sec-k">STEP 1</span><h3>착수·범위 정의</h3><p>대상 조직, 시스템, 적용 기준과 규제 기한을 확정합니다.</p><ul class="m-out"><li>수행계획서</li><li>범위 정의서</li><li>주 단위 일정표</li></ul></article>
-        <article><span class="sec-k">STEP 2</span><h3>현황 분석·GAP</h3><p>인터뷰와 문서·시스템 검토로 기준 대비 현재 수준을 측정합니다.</p><ul class="m-out"><li>현황 분석서</li><li>GAP 분석 보고서</li><li>기준 간 매핑표</li></ul></article>
-        <article><span class="sec-k">STEP 3</span><h3>위험평가</h3><p>자산과 위협을 평가하고, 경영진과 허용 위험 수준(DoA)을 정합니다.</p><ul class="m-out"><li>정보자산 목록</li><li>위험평가 보고서</li><li>DoA 결정서</li></ul></article>
-        <article><span class="sec-k">STEP 4</span><h3>보호대책·로드맵</h3><p>위험별 대책과 우선순위를 정하고 정책·지침을 정비합니다.</p><ul class="m-out"><li>정보보호 대책서</li><li>정책·지침 제·개정안</li><li>이행 로드맵</li></ul></article>
-        <article><span class="sec-k">STEP 5</span><h3>이행 지원</h3><p>대책이 운영되도록 담당 부서와 함께 증적을 쌓고 교육합니다.</p><ul class="m-out"><li>증적 체크리스트</li><li>임직원 교육 자료</li><li>내부점검 보고서</li></ul></article>
-        <article><span class="sec-k">STEP 6</span><h3>심사·점검 대응</h3><p>모의 예비심사로 미흡 사항을 먼저 찾고, 본심사 결함 보완까지 지원합니다.</p><ul class="m-out"><li>모의심사 결과서</li><li>보완조치 계획·결과</li><li>유지관리 계획</li></ul></article>
+        <button type="button" class="pill" id="to-contact">이 결과로 상담 신청</button>
       </div>
     </div>
-    <div class="sec-block" id="plans">
-      <p class="sec-k">Engagement</p>
-      <h2>조직에 맞는 방식으로 계약하세요</h2>
-      <p>한 번의 진단부터 3년 인증 주기, 상시 자문까지 필요한 만큼 고를 수 있습니다.</p>
-      <div class="plans">
-        <article><div class="plan-tag"><span>PROJECT</span><span>프로젝트형</span></div><h3>단일 과제 컨설팅</h3><p>마스터플랜, 개인정보 진단, 제로트러스트 진단처럼 목표가 하나인 과제를 수행합니다.</p><p>표준 기간 6~12주</p><p>산출물: 과제별 보고서, 이행 로드맵, 경영진 보고 자료</p></article>
-        <article class="featured"><div class="plan-tag"><span>CERT 3-YEAR</span><span>추천</span></div><h3>인증 3년 패키지</h3><p>최초 인증부터 사후심사 2회, 갱신심사까지 한 계약으로 묶습니다.</p><p>표준 기간: 최초 인증 약 9~10개월 + 연간 유지</p><p>산출물: 인증 산출물 일체, 연간 내부점검 보고서, 매핑표 갱신</p></article>
-        <article><div class="plan-tag"><span>ADVISORY</span><span>구독형</span></div><h3>Virtual CISO 상시 자문</h3><p>보안 인력이 부족한 조직에 월 단위로 전담 컨설턴트를 배정해 CISO의 의사결정과 보고를 지원합니다.</p><p>표준 기간: 연간 구독</p><p>산출물: 월간 보안 현황 보고, 규제 변경 알림, 경영진 정례 보고</p></article>
-      </div>
-      <p class="note">표준 기간은 대상 규모에 따라 달라집니다. 견적은 대상 조직·시스템 범위와 투입 인력 기준을 함께 제시합니다.</p>
-      <div class="actions">
-        <a class="pill" href="#security/inquiry">이 범위로 상담 신청</a>
-        <a class="pill ghost" href="#security/cert">인증 일정 보기</a>
-      </div>
-    </div>`, [
-    ["domains", "영역"],
-    ["method", "방법론"],
-    ["plans", "계약 방식"]
-  ]);
+  </section>
+</div>`,
+    [["step-1", "의무 진단"], ["step-2", "일정 역산"], ["step-3", "상담 신청"]]);
 }
 
 function cert() {
-  return page("Certification · ISMS / ISMS-P / ISO", "2027년, 인증 심사가 달라집니다", "인증을 받은 기업에서도 대형 유출 사고가 이어지자 정부는 ISMS·ISMS-P를 서면 심사 중심에서 운영 현장과 기술을 확인하는 심사로 바꾸고 있습니다. 문서만 갖춘 준비로는 통과도, 유지도 어려워집니다.", `
-    <div class="items" id="reform">
-      <article><span class="sec-k">등급제</span><h3>간편·표준·강화 3단계</h3><p>위험도에 따라 기준을 달리 적용합니다. 통신사와 대형 플랫폼은 강화 등급 대상입니다.</p></article>
-      <article><span class="sec-k">예비심사</span><h3>핵심 항목 미충족 시 본심사 불가</h3><p>본심사 전에 핵심 통제를 먼저 확인합니다. 준비가 덜 된 상태로는 심사에 들어갈 수 없습니다.</p></article>
-      <article><span class="sec-k">기술심사</span><h3>취약점 진단·모의침투 적용</h3><p>운영 환경 현장 점검과 함께 취약점 스캐너, 소스코드 진단, 모의침투가 심사에 들어옵니다.</p></article>
-      <article><span class="sec-k">사후관리</span><h3>사후심사 확대·인증 취소</h3><p>사후심사 인력과 기간이 늘고, 중대 사고나 중대 결함 미조치 시 인증이 취소될 수 있습니다.</p></article>
+  return sPage("Certification · ISMS / ISMS-P / ISO", "2027년, 인증 심사가 달라집니다", "인증을 받은 기업에서도 대형 유출 사고가 이어지자 정부는 ISMS·ISMS-P를 서면 심사 중심에서 운영 현장과 기술을 확인하는 심사로 바꾸고 있습니다. 문서만 갖춘 준비로는 통과도, 유지도 어려워집니다.",
+    sSec("reform", ["", "심사 개편"], `
+    <div class="s-cards two s-body">
+      <article class="s-card icon"><span class="s-ibox">${ICO.layers}</span><div><p class="s-eyebrow">등급제</p><h3>간편·표준·강화 3단계</h3><p>위험도에 따라 기준을 달리 적용합니다. 통신사와 대형 플랫폼은 강화 등급 대상입니다.</p></div></article>
+      <article class="s-card icon"><span class="s-ibox">${ICO.gate}</span><div><p class="s-eyebrow">예비심사</p><h3>핵심 항목 미충족 시 본심사 불가</h3><p>본심사 전에 핵심 통제를 먼저 확인합니다. 준비가 덜 된 상태로는 심사에 들어갈 수 없습니다.</p></div></article>
+      <article class="s-card icon"><span class="s-ibox">${ICO.scan}</span><div><p class="s-eyebrow">기술심사</p><h3>취약점 진단·모의침투 적용</h3><p>운영 환경 현장 점검과 함께 취약점 스캐너, 소스코드 진단, 모의침투가 심사에 들어옵니다.</p></div></article>
+      <article class="s-card icon"><span class="s-ibox">${ICO.renew}</span><div><p class="s-eyebrow">사후관리</p><h3>사후심사 확대·인증 취소</h3><p>사후심사 인력과 기간이 늘고, 중대 사고나 중대 결함 미조치 시 인증이 취소될 수 있습니다.</p></div></article>
     </div>
-    <p class="note">출처: 과학기술정보통신부·개인정보보호위원회 발표 보도(바이라인네트워크 2025.12, 뉴시스 2026.03, 보안뉴스). 세부 사항은 고시 개정에 따라 달라질 수 있습니다.</p>
-    <div class="sec-block" id="certs">
-      <h2>지원하는 인증</h2>
-      <p>조직이 이미 가진 인증과 앞으로 필요한 인증을 함께 놓고, 가장 적은 작업으로 모두 대응할 수 있는 순서를 제안합니다.</p>
-      <div class="cert-grid">
-        <article><h3>ISMS <span class="sec-k">인증기준 80개</span></h3><p>정보통신서비스 매출 100억 원 이상 또는 일평균 이용자 100만 명 이상, IDC, 전국 ISP 등 의무대상</p><p>관리체계 수립·운영 16개와 보호대책 64개 항목으로 구성됩니다. 의무대상이 인증을 받지 않으면 3,000만 원 이하의 과태료 대상입니다.</p></article>
-        <article><h3>ISMS-P <span class="sec-k">인증기준 101개</span></h3><p>개인정보를 대량 처리하는 기업·기관, 2027년 의무화 대상 예정 조직</p><p>ISMS 80개 항목에 개인정보 처리 단계별 요구사항 21개가 더해집니다. 수집부터 파기까지 처리 흐름 전체를 다룹니다.</p></article>
-        <article><h3>ISO/IEC 27001 <span class="sec-k">부속서 A 93개</span></h3><p>해외 고객사·글로벌 공급망에 보안 수준을 증명해야 하는 기업</p><p>2022년판 기준으로 조직·인력·물리·기술 4개 영역 93개 통제입니다. 위협 인텔리전스, 클라우드 서비스 이용 보안 등 11개 통제가 새로 추가되었습니다.</p></article>
-        <article><h3>ISO/IEC 27701 <span class="sec-k">개인정보</span></h3><p>GDPR 등 해외 개인정보 규제에 대응해야 하는 기업</p><p>개인정보 관리체계 국제 표준입니다. 개인정보 처리자와 수탁자 역할별 요구사항을 다루며, ISMS-P 개인정보 항목과 겹치는 부분이 많습니다.</p></article>
-        <article><h3>ISO/IEC 27017·27018 <span class="sec-k">클라우드</span></h3><p>SaaS·클라우드 서비스 제공 기업</p><p>27017은 클라우드 보안 통제, 27018은 퍼블릭 클라우드의 개인정보 보호를 다룹니다. 27001 인증 범위에 함께 포함해 받는 경우가 많습니다.</p></article>
-        <article><h3>ISO/IEC 42001 <span class="sec-k">AI 경영</span></h3><p>AI 서비스를 개발·운영하거나 AI 기본법 대응이 필요한 기업</p><p>AI 경영시스템 국제 표준입니다. AI 위험평가와 영향평가, 데이터 관리, AI 시스템 수명주기 관리를 요구합니다.</p></article>
-      </div>
+    <p class="s-note">출처: 과학기술정보통신부·개인정보보호위원회 발표 보도(바이라인네트워크 2025.12, 뉴시스 2026.03, 보안뉴스). 세부 사항은 고시 개정에 따라 달라질 수 있습니다.</p>`) +
+    sSec("certs", ["", "지원하는 인증", "조직이 이미 가진 인증과 앞으로 필요한 인증을 함께 놓고, 가장 적은 작업으로 모두 대응할 수 있는 순서를 제안합니다."], `
+    <div class="s-cards two s-body">
+      <article class="s-card icon"><span class="s-ibox">${ICO.shield}</span><div><p class="s-eyebrow">인증기준 80개</p><h3>ISMS</h3><p class="who">정보통신서비스 매출 100억 원 이상 또는 일평균 이용자 100만 명 이상, IDC, 전국 ISP 등 의무대상</p><p>관리체계 수립·운영 16개와 보호대책 64개 항목으로 구성됩니다. 의무대상이 인증을 받지 않으면 3,000만 원 이하의 과태료 대상입니다.</p></div></article>
+      <article class="s-card icon"><span class="s-ibox">${ICO.person}</span><div><p class="s-eyebrow">인증기준 101개</p><h3>ISMS-P</h3><p class="who">개인정보를 대량 처리하는 기업·기관, 2027년 의무화 대상 예정 조직</p><p>ISMS 80개 항목에 개인정보 처리 단계별 요구사항 21개가 더해집니다. 수집부터 파기까지 처리 흐름 전체를 다룹니다.</p></div></article>
+      <article class="s-card icon"><span class="s-ibox">${ICO.globe}</span><div><p class="s-eyebrow">부속서 A 93개</p><h3>ISO/IEC 27001</h3><p class="who">해외 고객사·글로벌 공급망에 보안 수준을 증명해야 하는 기업</p><p>2022년판 기준으로 조직·인력·물리·기술 4개 영역 93개 통제입니다. 위협 인텔리전스, 클라우드 서비스 이용 보안 등 11개 통제가 새로 추가되었습니다.</p></div></article>
+      <article class="s-card icon"><span class="s-ibox">${ICO.lock}</span><div><p class="s-eyebrow">개인정보</p><h3>ISO/IEC 27701</h3><p class="who">GDPR 등 해외 개인정보 규제에 대응해야 하는 기업</p><p>개인정보 관리체계 국제 표준입니다. 개인정보 처리자와 수탁자 역할별 요구사항을 다루며, ISMS-P 개인정보 항목과 겹치는 부분이 많습니다.</p></div></article>
+      <article class="s-card icon"><span class="s-ibox">${ICO.cloud}</span><div><p class="s-eyebrow">클라우드</p><h3>ISO/IEC 27017·27018</h3><p class="who">SaaS·클라우드 서비스 제공 기업</p><p>27017은 클라우드 보안 통제, 27018은 퍼블릭 클라우드의 개인정보 보호를 다룹니다. 27001 인증 범위에 함께 포함해 받는 경우가 많습니다.</p></div></article>
+      <article class="s-card icon"><span class="s-ibox">${ICO.nodes}</span><div><p class="s-eyebrow">AI 경영</p><h3>ISO/IEC 42001</h3><p class="who">AI 서비스를 개발·운영하거나 AI 기본법 대응이 필요한 기업</p><p>AI 경영시스템 국제 표준입니다. AI 위험평가와 영향평가, 데이터 관리, AI 시스템 수명주기 관리를 요구합니다.</p></div></article>
+    </div>`, true) +
+    sSec("map", ["", "인증 간 통합 매핑", "주요 관리 영역이 각 인증의 어느 조항에 해당하는지 정리한 예시입니다. 같은 영역은 하나의 정책과 증적으로 여러 인증에 대응합니다."], `
+    <div class="s-cmp-wrap s-body">
+      <table class="s-cmp s-map">
+        <caption class="sr-only">인증 간 통제 매핑</caption>
+        <thead><tr><th scope="col">관리 영역</th><th scope="col">ISMS-P</th><th scope="col">ISO/IEC 27001:2022</th><th scope="col">ISO/IEC 27701</th><th scope="col">ISO/IEC 42001</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">정책·조직·경영진 책임</th><td><span class="m-full">●</span> 1.1 관리체계 기반 마련</td><td><span class="m-full">●</span> 5 리더십</td><td><span class="m-full">●</span> 개인정보 관점 확장</td><td><span class="m-full">●</span> 5 리더십 · A.2–A.3</td></tr>
+          <tr><th scope="row">위험평가·위험처리</th><td><span class="m-full">●</span> 1.2 위험 관리</td><td><span class="m-full">●</span> 6.1 위험 대응</td><td><span class="m-full">●</span> 개인정보 위험 포함</td><td><span class="m-full">●</span> 6.1 AI 위험 · A.5 영향평가</td></tr>
+          <tr><th scope="row">외부자·공급자 관리</th><td><span class="m-full">●</span> 2.3 외부자 보안</td><td><span class="m-full">●</span> A.5.19–5.22</td><td><span class="m-full">●</span> 수탁자 요구사항</td><td><span class="m-full">●</span> A.10 제3자 관계</td></tr>
+          <tr><th scope="row">인증·권한·접근통제</th><td><span class="m-full">●</span> 2.5–2.6</td><td><span class="m-full">●</span> A.5.15–5.18, A.8.2–8.5</td><td><span class="m-part">◐</span> 개인정보 접근 제한</td><td><span class="m-none">—</span></td></tr>
+          <tr><th scope="row">로그·모니터링</th><td><span class="m-full">●</span> 2.9 운영관리</td><td><span class="m-full">●</span> A.8.15–8.16</td><td><span class="m-part">◐</span> 처리 기록</td><td><span class="m-part">◐</span> A.6 운영 모니터링</td></tr>
+          <tr><th scope="row">침해사고 대응</th><td><span class="m-full">●</span> 2.11 사고 예방 및 대응</td><td><span class="m-full">●</span> A.5.24–5.28</td><td><span class="m-full">●</span> 개인정보 유출 대응</td><td><span class="m-part">◐</span> AI 사고 보고</td></tr>
+          <tr><th scope="row">개인정보 생명주기</th><td><span class="m-full">●</span> 3 처리 단계별 요구사항</td><td><span class="m-part">◐</span> A.5.34 개인정보 보호</td><td><span class="m-full">●</span> 처리자·수탁자 통제</td><td><span class="m-none">—</span></td></tr>
+          <tr><th scope="row">데이터 품질·AI 수명주기</th><td><span class="m-none">—</span></td><td><span class="m-none">—</span></td><td><span class="m-none">—</span></td><td><span class="m-full">●</span> A.6 수명주기 · A.7 데이터</td></tr>
+        </tbody>
+      </table>
     </div>
-    <div class="sec-block" id="map">
-      <h2>인증 간 통합 매핑</h2>
-      <p>주요 관리 영역이 각 인증의 어느 조항에 해당하는지 정리한 예시입니다. 같은 영역은 하나의 정책과 증적으로 여러 인증에 대응합니다.</p>
-      <div class="map-wrap">
-        <table class="map">
-          <caption class="sr-only">인증 간 통제 매핑</caption>
-          <thead><tr><th>관리 영역</th><th>ISMS-P</th><th>ISO/IEC 27001:2022</th><th>ISO/IEC 27701</th><th>ISO/IEC 42001</th></tr></thead>
-          <tbody>
-            <tr><th>정책·조직·경영진 책임</th><td><span class="m-full">●</span> 1.1 관리체계 기반 마련</td><td><span class="m-full">●</span> 5 리더십</td><td><span class="m-full">●</span> 개인정보 관점 확장</td><td><span class="m-full">●</span> 5 리더십 · A.2–A.3</td></tr>
-            <tr><th>위험평가·위험처리</th><td><span class="m-full">●</span> 1.2 위험 관리</td><td><span class="m-full">●</span> 6.1 위험 대응</td><td><span class="m-full">●</span> 개인정보 위험 포함</td><td><span class="m-full">●</span> 6.1 AI 위험 · A.5 영향평가</td></tr>
-            <tr><th>외부자·공급자 관리</th><td><span class="m-full">●</span> 2.3 외부자 보안</td><td><span class="m-full">●</span> A.5.19–5.22</td><td><span class="m-full">●</span> 수탁자 요구사항</td><td><span class="m-full">●</span> A.10 제3자 관계</td></tr>
-            <tr><th>인증·권한·접근통제</th><td><span class="m-full">●</span> 2.5–2.6</td><td><span class="m-full">●</span> A.5.15–5.18, A.8.2–8.5</td><td><span class="m-part">◐</span> 개인정보 접근 제한</td><td><span class="m-none">—</span></td></tr>
-            <tr><th>로그·모니터링</th><td><span class="m-full">●</span> 2.9 운영관리</td><td><span class="m-full">●</span> A.8.15–8.16</td><td><span class="m-part">◐</span> 처리 기록</td><td><span class="m-part">◐</span> A.6 운영 모니터링</td></tr>
-            <tr><th>침해사고 대응</th><td><span class="m-full">●</span> 2.11 사고 예방 및 대응</td><td><span class="m-full">●</span> A.5.24–5.28</td><td><span class="m-full">●</span> 개인정보 유출 대응</td><td><span class="m-part">◐</span> AI 사고 보고</td></tr>
-            <tr><th>개인정보 생명주기</th><td><span class="m-full">●</span> 3 처리 단계별 요구사항</td><td><span class="m-part">◐</span> A.5.34 개인정보 보호</td><td><span class="m-full">●</span> 처리자·수탁자 통제</td><td><span class="m-none">—</span></td></tr>
-            <tr><th>데이터 품질·AI 수명주기</th><td><span class="m-none">—</span></td><td><span class="m-none">—</span></td><td><span class="m-none">—</span></td><td><span class="m-full">●</span> A.6 수명주기 · A.7 데이터</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="map-legend"><span><b class="m-full">●</b> 직접 대응</span><span><b class="m-part">◐</b> 부분 대응</span><span><b class="m-none">—</b> 해당 없음</span><span>조직 범위에 맞춰 착수 단계에서 항목 단위로 정밀화합니다</span></div>
+    <div class="s-legend"><span><b class="m-full">●</b> 직접 대응</span><span><b class="m-part">◐</b> 부분 대응</span><span><b class="m-none">—</b> 해당 없음</span><span>조직 범위에 맞춰 착수 단계에서 항목 단위로 정밀화합니다</span></div>`) +
+    sSec("schedule", ["", "ISMS-P 최초 인증 권장 일정", "인증을 신청하려면 그 전에 관리체계를 2개월 이상 운영해야 합니다. 또 인증기관은 본심사 6~8주 전에 예비점검을 나옵니다. 티벨은 이 두 조건을 거꾸로 맞춰 착수일을 정하고, 신청 전에 내부점검과 모의심사를 거칩니다."], `
+    <div class="gantt s-body" role="img" aria-label="ISMS-P 최초 인증 32주 권장 일정">
+      <div class="g-row"><div class="g-label">착수·범위 정의<small>W1–2</small></div><div class="g-track"><span class="g-bar" style="grid-column: 1 / 3;"></span></div></div>
+      <div class="g-row"><div class="g-label">현황 분석·GAP<small>W3–6</small></div><div class="g-track"><span class="g-bar" style="grid-column: 3 / 7;"></span></div></div>
+      <div class="g-row"><div class="g-label">위험평가·DoA 결정<small>W7–10</small></div><div class="g-track"><span class="g-bar" style="grid-column: 7 / 11;"></span></div></div>
+      <div class="g-row"><div class="g-label">보호대책·정책 제·개정<small>W9–14</small></div><div class="g-track"><span class="g-bar" style="grid-column: 9 / 15;"></span></div></div>
+      <div class="g-row"><div class="g-label">임직원 인증 교육<small>W13–14</small></div><div class="g-track"><span class="g-bar" style="grid-column: 13 / 15;"></span></div></div>
+      <div class="g-row"><div class="g-label">관리체계 운영·증적 축적<small>W13~ · 신청 전 2개월 이상</small></div><div class="g-track"><span class="g-bar client" style="grid-column: 13 / 33;"></span></div></div>
+      <div class="g-row"><div class="g-label">내부점검·모의심사<small>W19–21</small></div><div class="g-track"><span class="g-bar" style="grid-column: 19 / 22;"></span></div></div>
+      <div class="g-row"><div class="g-label">인증 신청<small>W22</small></div><div class="g-track"><span class="g-bar" style="grid-column: 22 / 23;"></span></div></div>
+      <div class="g-row"><div class="g-label">인증기관 예비점검<small>W25–26 · 심사 6~8주 전</small></div><div class="g-track"><span class="g-bar audit" style="grid-column: 25 / 27;"></span></div></div>
+      <div class="g-row"><div class="g-label">인증심사<small>W31–32</small></div><div class="g-track"><span class="g-bar audit" style="grid-column: 31 / 33;"></span></div></div>
     </div>
-    <div class="sec-block" id="schedule">
-      <h2>ISMS-P 최초 인증 권장 일정</h2>
-      <p>인증을 신청하려면 그 전에 관리체계를 2개월 이상 운영해야 합니다. 또 인증기관은 본심사 6~8주 전에 예비점검을 나옵니다. 티벨은 이 두 조건을 거꾸로 맞춰 착수일을 정하고, 신청 전에 내부점검과 모의심사를 거칩니다.</p>
-      <div class="gantt" role="img" aria-label="ISMS-P 최초 인증 32주 권장 일정">
-        <div class="g-row"><div class="g-label">착수·범위 정의<small>W1–2</small></div><div class="g-track"><span class="g-bar" style="grid-column: 1 / 3;"></span></div></div>
-        <div class="g-row"><div class="g-label">현황 분석·GAP<small>W3–6</small></div><div class="g-track"><span class="g-bar" style="grid-column: 3 / 7;"></span></div></div>
-        <div class="g-row"><div class="g-label">위험평가·DoA 결정<small>W7–10</small></div><div class="g-track"><span class="g-bar" style="grid-column: 7 / 11;"></span></div></div>
-        <div class="g-row"><div class="g-label">보호대책·정책 제·개정<small>W9–14</small></div><div class="g-track"><span class="g-bar" style="grid-column: 9 / 15;"></span></div></div>
-        <div class="g-row"><div class="g-label">임직원 인증 교육<small>W13–14</small></div><div class="g-track"><span class="g-bar" style="grid-column: 13 / 15;"></span></div></div>
-        <div class="g-row"><div class="g-label">관리체계 운영·증적 축적<small>W13~ · 신청 전 2개월 이상</small></div><div class="g-track"><span class="g-bar client" style="grid-column: 13 / 33;"></span></div></div>
-        <div class="g-row"><div class="g-label">내부점검·모의심사<small>W19–21</small></div><div class="g-track"><span class="g-bar" style="grid-column: 19 / 22;"></span></div></div>
-        <div class="g-row"><div class="g-label">인증 신청<small>W22</small></div><div class="g-track"><span class="g-bar" style="grid-column: 22 / 23;"></span></div></div>
-        <div class="g-row"><div class="g-label">인증기관 예비점검<small>W25–26 · 심사 6~8주 전</small></div><div class="g-track"><span class="g-bar audit" style="grid-column: 25 / 27;"></span></div></div>
-        <div class="g-row"><div class="g-label">인증심사<small>W31–32</small></div><div class="g-track"><span class="g-bar audit" style="grid-column: 31 / 33;"></span></div></div>
-      </div>
-      <div class="g-legend"><span><i style="background:#27c4d5"></i>티벨 컨설팅 단계</span><span><i style="background:#2ea090"></i>고객 운영 기간</span><span><i style="background:#969696"></i>인증기관 일정</span><span>심사 후 보완조치(40일 이내, 연장 가능)와 인증위원회 심의를 거쳐 인증서가 발급됩니다. 기간은 조직 규모와 범위에 따라 달라집니다.</span></div>
-      <h2>인증 이후 3년</h2>
-      <p>인증 유효기간은 3년이고 매년 사후심사를 받습니다. 개편 이후에는 인증을 받는 것보다 유지하는 일이 더 어려워집니다.</p>
-      <div class="cycle">
-        <article><span class="yr">YEAR 0</span><h3>최초 인증</h3><ul class="m-out"><li>GAP 분석·위험평가</li><li>정책·지침 제·개정</li><li>모의 예비심사·심사 대응</li></ul></article>
-        <article><span class="yr">YEAR 1</span><h3>1차 사후심사</h3><ul class="m-out"><li>분기 내부점검</li><li>조직·시스템 변경 영향 분석</li><li>최초 심사 결함 재발 점검</li></ul></article>
-        <article><span class="yr">YEAR 2</span><h3>2차 사후심사</h3><ul class="m-out"><li>위험평가 재수행</li><li>신규 서비스 인증 범위 편입</li><li>침해사고 대응 훈련</li></ul></article>
-        <article><span class="yr">YEAR 3</span><h3>갱신심사</h3><ul class="m-out"><li>3년치 운영 증적 정리</li><li>강화된 기준으로 재매핑</li><li>추가 인증(ISO 등) 확장</li></ul></article>
-      </div>
-      <div class="actions">
-        <a class="pill" href="#security/diagnose">우리 조직 인증 일정 계산하기</a>
-        <a class="pill ghost" href="#security/services" data-jump="plans">계약 방식 보기</a>
-      </div>
+    <div class="s-legend"><span><i style="background:#27c4d5"></i>티벨 컨설팅 단계</span><span><i style="background:#2ea090"></i>고객 운영 기간</span><span><i style="background:#969696"></i>인증기관 일정</span><span>심사 후 보완조치(40일 이내, 연장 가능)와 인증위원회 심의를 거쳐 인증서가 발급됩니다. 기간은 조직 규모와 범위에 따라 달라집니다.</span></div>`, true) +
+    sSec("cycle", ["", "인증 이후 3년", "인증 유효기간은 3년이고 매년 사후심사를 받습니다. 개편 이후에는 인증을 받는 것보다 유지하는 일이 더 어려워집니다."], `
+    <div class="s-cards four s-body">
+      <article class="s-card"><span class="s-ibox">${ICO.flag}</span><span class="s-num">YEAR 0</span><h3>최초 인증</h3><ul><li>GAP 분석·위험평가</li><li>정책·지침 제·개정</li><li>모의 예비심사·심사 대응</li></ul></article>
+      <article class="s-card"><span class="s-ibox">${ICO.look}</span><span class="s-num">YEAR 1</span><h3>1차 사후심사</h3><ul><li>분기 내부점검</li><li>조직·시스템 변경 영향 분석</li><li>최초 심사 결함 재발 점검</li></ul></article>
+      <article class="s-card"><span class="s-ibox">${ICO.loop}</span><span class="s-num">YEAR 2</span><h3>2차 사후심사</h3><ul><li>위험평가 재수행</li><li>신규 서비스 인증 범위 편입</li><li>침해사고 대응 훈련</li></ul></article>
+      <article class="s-card"><span class="s-ibox">${ICO.stamp}</span><span class="s-num">YEAR 3</span><h3>갱신심사</h3><ul><li>3년치 운영 증적 정리</li><li>강화된 기준으로 재매핑</li><li>추가 인증(ISO 등) 확장</li></ul></article>
     </div>
-    <div class="sec-block" id="faq">
-      <p class="sec-k">FAQ</p>
-      <h2>자주 묻는 질문</h2>
-      <div class="faq">
-        <details open><summary>ISMS-P 인증까지 얼마나 걸리나요?</summary><p>티벨 권장 일정 기준으로 착수부터 인증심사까지 약 7~8개월, 심사 후 보완조치와 인증위원회 심의를 거쳐 인증서 발급까지 약 9~10개월을 잡습니다. 인증 신청 전에 관리체계를 2개월 이상 운영해야 하므로 이 기간은 줄이기 어렵습니다. ISO 27001 등 기존 인증이 있다면 증적을 다시 써서 앞 단계를 줄일 수 있습니다.</p></details>
-        <details><summary>이미 인증을 받았는데, 개편에 맞춰 무엇을 준비해야 하나요?</summary><p>예비심사와 기술심사가 도입되면 문서와 실제 운영이 일치하는지가 가장 중요해집니다. 보유 인증의 핵심 통제 항목을 먼저 점검하고, 다음 사후심사 전까지 보완할 항목과 순서를 정하는 것부터 시작합니다.</p></details>
-        <details><summary>ISMS-P와 ISO 27001을 함께 받을 수 있나요?</summary><p>가능합니다. 두 인증은 관리체계와 보호대책 상당 부분이 겹칩니다. 매핑표를 기준으로 하나의 위험평가와 정책 체계를 만들어 양쪽 심사에 대응합니다.</p></details>
-        <details><summary>AI 서비스를 운영하는데 어떤 준비가 필요한가요?</summary><p>먼저 우리 서비스가 AI 기본법상 고영향 AI나 생성형 AI 의무 대상에 해당하는지 확인합니다. 이어서 AI 위험·영향평가 체계와 데이터 관리 기준을 마련하고, 필요하면 ISO/IEC 42001 인증까지 단계적으로 준비합니다.</p></details>
-        <details><summary>주요정보통신기반시설 취약점 분석·평가도 맡길 수 있나요?</summary><p>법정 취약점 분석·평가와 개인정보 영향평가는 정부가 지정한 기관이 수행하도록 정해져 있습니다. 티벨은 그 평가를 앞두고 관리체계를 정비하거나, 평가에서 나온 지적 사항의 보호대책 수립과 이행을 지원하는 역할로 함께할 수 있습니다.</p></details>
-        <details><summary>보안 전담 인력이 한 명뿐인 작은 회사도 가능한가요?</summary><p>가능합니다. 범위를 좁힌 프로젝트형으로 시작하거나, Virtual CISO 상시 자문으로 지정된 보안책임자의 판단과 경영진 보고를 지원할 수 있습니다. 정보통신망법상 CISO 지정·신고는 회사가 직접 해야 하며, 외부 자문이 이를 대신하지는 않습니다.</p></details>
-      </div>
-    </div>`, [
+    <div class="s-actions">
+      <a class="pill" href="#security/diagnose">우리 조직 인증 일정 계산하기</a>
+      <a class="pill ghost" href="#security/services" data-jump="plans">계약 방식 보기</a>
+    </div>`) +
+    sSec("faq", ["FAQ", "자주 묻는 질문"], `
+    <div class="s-faq s-body">
+      <details open><summary>ISMS-P 인증까지 얼마나 걸리나요?</summary><p>티벨 권장 일정 기준으로 착수부터 인증심사까지 약 7~8개월, 심사 후 보완조치와 인증위원회 심의를 거쳐 인증서 발급까지 약 9~10개월을 잡습니다. 인증 신청 전에 관리체계를 2개월 이상 운영해야 하므로 이 기간은 줄이기 어렵습니다. ISO 27001 등 기존 인증이 있다면 증적을 다시 써서 앞 단계를 줄일 수 있습니다.</p></details>
+      <details><summary>이미 인증을 받았는데, 개편에 맞춰 무엇을 준비해야 하나요?</summary><p>예비심사와 기술심사가 도입되면 문서와 실제 운영이 일치하는지가 가장 중요해집니다. 보유 인증의 핵심 통제 항목을 먼저 점검하고, 다음 사후심사 전까지 보완할 항목과 순서를 정하는 것부터 시작합니다.</p></details>
+      <details><summary>ISMS-P와 ISO 27001을 함께 받을 수 있나요?</summary><p>가능합니다. 두 인증은 관리체계와 보호대책 상당 부분이 겹칩니다. 매핑표를 기준으로 하나의 위험평가와 정책 체계를 만들어 양쪽 심사에 대응합니다.</p></details>
+      <details><summary>AI 서비스를 운영하는데 어떤 준비가 필요한가요?</summary><p>먼저 우리 서비스가 AI 기본법상 고영향 AI나 생성형 AI 의무 대상에 해당하는지 확인합니다. 이어서 AI 위험·영향평가 체계와 데이터 관리 기준을 마련하고, 필요하면 ISO/IEC 42001 인증까지 단계적으로 준비합니다.</p></details>
+      <details><summary>주요정보통신기반시설 취약점 분석·평가도 맡길 수 있나요?</summary><p>법정 취약점 분석·평가와 개인정보 영향평가는 정부가 지정한 기관이 수행하도록 정해져 있습니다. 티벨은 그 평가를 앞두고 관리체계를 정비하거나, 평가에서 나온 지적 사항의 보호대책 수립과 이행을 지원하는 역할로 함께할 수 있습니다.</p></details>
+      <details><summary>보안 전담 인력이 한 명뿐인 작은 회사도 가능한가요?</summary><p>가능합니다. 범위를 좁힌 프로젝트형으로 시작하거나, Virtual CISO 상시 자문으로 지정된 보안책임자의 판단과 경영진 보고를 지원할 수 있습니다. 정보통신망법상 CISO 지정·신고는 회사가 직접 해야 하며, 외부 자문이 이를 대신하지는 않습니다.</p></details>
+    </div>`, true), [
     ["reform", "심사 개편"],
     ["certs", "지원 인증"],
     ["map", "통합 매핑"],
@@ -775,33 +1311,33 @@ const INQUIRY = {
     title: "진단 결과를 보내 주시면, 계획으로 답합니다",
     lede: "셀프 진단 결과나 준비 중인 인증, 목표 일정을 알려 주세요. 컨설팅 범위와 권장 일정, 단계별로 받으실 문서 목록을 정리해 회신드립니다.",
     mail: "security@tbell.co.kr",
+    labels: ["EMAIL", "TEL", "HQ"],
     phone: "070-7777-9113",
     phoneNote: "월–금 09:30–18:00 · 점심 12:00–13:00",
     place: "서울특별시 강남구 강남대로 354, 9층 (혜천빌딩)",
-    aside: `<article><h3>진단 전</h3><p><a href="#security/diagnose">아직 진단 전이면, 2분 셀프 진단부터</a></p></article>`,
+    aside: `<a class="inq-link" href="#security/diagnose"><div><h3>진단 전</h3><p>아직 진단 전이면, 2분 셀프 진단부터</p></div><svg class="inq-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>`,
     topics: ["ISMS·ISMS-P", "ISO 27001 계열", "개인정보 보호", "마스터플랜·제로트러스트", "AI 거버넌스", "Virtual CISO 자문"],
     messageLabel: "현재 상황과 목표 일정",
     placeholder: "예) ISMS 보유 중, 2027년 ISMS-P 전환 필요. 내년 상반기 심사 목표",
     agree: "상담을 위한 개인정보(이름, 회사명, 이메일, 연락처) 수집·이용에 동의합니다. 상담 종료 후 파기합니다.",
     button: "상담 신청",
     extra: `<p class="import-note" id="import-note" hidden>셀프 진단 결과가 문의 내용에 들어가 있습니다. 이름과 연락처만 더해 주세요.</p>
-    <div class="survey">
-      <p class="kicker">사전 조사 (선택)</p>
-      <p class="note">대략적인 수량이면 충분합니다. 컨설팅 범위와 기간을 정하는 데 씁니다.</p>
-      <div class="survey-grid">
-        <label>서버 (대)<input name="server" type="number" min="0" placeholder="예) 40"></label>
-        <label>DBMS (개)<input name="db" type="number" min="0" placeholder="예) 6"></label>
-        <label>네트워크·보안장비 (대)<input name="net" type="number" min="0" placeholder="예) 15"></label>
-        <label>웹·앱 서비스 (개)<input name="apps" type="number" min="0" placeholder="예) 3"></label>
-        <label>임직원 (명)<input name="staff" type="number" min="0" placeholder="예) 120"></label>
-        <label>개인정보 보유 규모
+    <details class="survey">
+      <summary><span class="kicker">사전 조사 (선택)</span><span class="survey-toggle" aria-hidden="true"></span></summary>
+      <p class="survey-note">대략적인 수량이면 충분합니다. 컨설팅 범위와 기간을 정하는 데 씁니다.</p>
+      <div class="survey-counts">
+        ${[["server", "서버", "대", "40"], ["db", "DBMS", "개", "6"], ["net", "네트워크·보안장비", "대", "15"], ["apps", "웹·앱 서비스", "개", "3"], ["staff", "임직원", "명", "120"]]
+          .map(([name, label, unit, eg]) => `<label><span>${label}</span><span class="unit"><input name="${name}" type="number" min="0" inputmode="numeric" placeholder="${eg}"><em>${unit}</em></span></label>`).join("")}
+      </div>
+      <div class="survey-selects">
+        <label><span>개인정보 보유 규모</span>
           <select name="pii"><option value="">선택</option><option>보유하지 않음</option><option>1만 명 미만</option><option>1만~100만 명 미만</option><option>100만 명 이상</option></select>
         </label>
-        <label>클라우드 이용
+        <label><span>클라우드 이용</span>
           <select name="cloud"><option value="">선택</option><option>사용 안 함 (자체 전산실·IDC)</option><option>퍼블릭 클라우드 (AWS·Azure·GCP·NCP 등)</option><option>하이브리드 (자체 + 클라우드)</option><option>SaaS 위주</option></select>
         </label>
       </div>
-    </div>`
+    </details>`
   }
 };
 
@@ -814,14 +1350,16 @@ function inquiryPage(mode) {
   return page(spec.kicker || "Inquiry", spec.title, spec.lede, `
     <div class="inquiry-grid">
       <div class="list">
-        <article><h3>메일</h3><p>${spec.mail}</p></article>
-        <article><h3>전화</h3><p class="num">${phone}</p><p>${phoneNote}</p></article>
-        <article><h3>받는 곳</h3><p>${place}</p></article>
+        <article><h3>${spec.labels ? spec.labels[0] : "메일"}</h3><p>${spec.mail}</p></article>
+        <article><h3>${spec.labels ? spec.labels[1] : "전화"}</h3><p class="num">${phone}</p><p>${phoneNote}</p></article>
+        <article><h3>${spec.labels ? spec.labels[2] : "받는 곳"}</h3><p>${place}</p></article>
         ${spec.aside || ""}
       </div>
       <form class="form" id="inquiry-form">
-        <label>이름<input name="name" autocomplete="name" required></label>
-        <label>회사명<input name="company" autocomplete="organization" required></label>
+        <div class="form-row">
+          <label>이름<input name="name" autocomplete="name" required></label>
+          <label>회사명<input name="company" autocomplete="organization" required></label>
+        </div>
         <label>이메일<input name="email" type="email" autocomplete="email" required></label>
         <label>연락처<input name="phone" type="tel" autocomplete="tel"></label>
         <fieldset class="chips"><legend>관심 분야 (복수 선택)</legend>${chips}</fieldset>
@@ -844,6 +1382,11 @@ function plain(text) {
     .replace(/&(#x27|#39|nbsp|amp|lt|gt|quot);/g, (all, key) => named[key] || all)
     .replace(/\s+/g, " ")
     .trim();
+}
+
+// Naver 썸네일 CDN은 ?type= 크기 지정이 없으면 404를 돌려준다.
+function blogThumb(url) {
+  return /[?&]type=/.test(url) ? url : url + (url.includes("?") ? "&" : "?") + "type=w773";
 }
 
 function blogPostsFor(cat) {
@@ -881,7 +1424,7 @@ function blogList(mode, child) {
     : "";
   const filterId = leaf ? leaf.id : group ? group.id : "";
   const cards = slice.map((post) => {
-    const img = post.thumb ? `<img src="${esc(post.thumb)}" alt="">` : "";
+    const img = post.thumb ? `<img src="${esc(blogThumb(post.thumb))}" alt="" loading="lazy">` : "";
     const text = plain(post.excerpt);
     const cut = text.length > 36 ? text.slice(0, 36).trim() + "…" : text;
     return `<a class="blog-card" href="${esc(post.url)}" target="_blank" rel="noopener noreferrer">${img}<span class="en">${esc(post.date)} · ${esc(post.category)}</span><h3>${esc(plain(post.title))}</h3><p>${esc(cut)}</p></a>`;
@@ -958,7 +1501,7 @@ const DRAW = {
     "": qaHome,
     types: (child) => serviceDeck(child),
     testops: (child) => testopsDeck(child),
-    tauto: (child) => child === "lens" ? lens() : child === "voc" ? voc() : child === "vux" ? vux() : tautoHome(),
+    tauto: (child) => (T_PAGES[child] || tautoHome)(),
     blog: (child, mode) => blogList(mode, child),
     inquiry: () => inquiryPage("qa"),
     company: drawCompany
@@ -977,6 +1520,7 @@ const DRAW = {
 function activeChild(group, child) {
   if (group === "types") return child || "outsourcing";
   if (group === "testops") return child || "build";
+  if (group === "tauto") return child === "vux" ? "auto" : child || "overview";
   if (group === "blog") {
     const located = blogLocate(parse().mode, child);
     return located.group ? located.group.id : "";
@@ -1141,6 +1685,8 @@ function fillConsult() {
   if (note && data.message) note.hidden = false;
 }
 
+// Ported from security_demo/assets/site.js (diagnose + planner) as is: same rules, copy and markup.
+// Only the consultation hand-off differs, because the inquiry form here is #security/inquiry.
 function wireDiagnose() {
   const navi = document.getElementById("navi-form");
   if (!navi) return;
@@ -1149,28 +1695,6 @@ function wireDiagnose() {
   const BADGE = { must: ["b-must", "의무"], soon: ["b-soon", "예정"], check: ["b-check", "확인 필요"], rec: ["b-rec", "권장"] };
   let lastOut = [];
   let lastPlan = null;
-  const PHASES = [
-    { w: -30, endW: -28, name: "착수·범위 정의", group: "prep" },
-    { w: -28, endW: -24, name: "현황 분석·GAP", group: "prep" },
-    { w: -24, endW: -20, name: "위험평가·DoA 결정", group: "prep" },
-    { w: -22, endW: -16, name: "보호대책·정책 제·개정", group: "prep" },
-    { w: -18, endW: 2, name: "관리체계 운영·증적 축적", group: "ops", note: "신청 전 2개월 이상 운영" },
-    { w: -18, endW: -16, name: "임직원 인증 교육", group: "ops" },
-    { w: -12, endW: -9, name: "내부점검·모의심사", group: "prep" },
-    { w: -9, endW: -8, name: "인증 신청", group: "prep" },
-    { w: -6, endW: -4, name: "인증기관 예비점검", group: "audit", note: "심사 6~8주 전" },
-    { w: 0, endW: 2, name: "인증심사", group: "audit" },
-    { w: 10, endW: 12, name: "인증서 발급 예상", group: "audit", note: "보완조치·인증위원회 심의 후" }
-  ];
-  const DAY = 86400000;
-  let schedRanges = [];
-  const fmt = (d) => `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`;
-  const parseIso = (value) => {
-    if (!value) return null;
-    const parts = value.split("-");
-    return new Date(+parts[0], +parts[1] - 1, +parts[2]);
-  };
-  const addDays = (d, n) => new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
 
   function diagnoseNow() {
     const sector = $("q-sector").value;
@@ -1199,17 +1723,26 @@ function wireDiagnose() {
       out.push(["must", "AI 기본법 의무 검토 (2026.01.22 시행)", "생성형 AI 결과물 표시, 고영향 AI 해당 여부와 사업자 책무를 검토해야 합니다."]);
       if (on("q-global")) out.push(["rec", "ISO/IEC 42001 (AI 경영시스템)", "해외 고객에게 AI 거버넌스 수준을 증명할 수 있는 국제 인증입니다."]);
     }
-    if (on("q-cloud")) out.push(["must", "클라우드 보안인증(CSAP)", "공공기관이 이용하는 클라우드 서비스는 CSAP 인증이 필요합니다. 서비스 유형과 등급에 따라 요건이 다릅니다."]);
-    if (hasIso) out.push(["check", "ISO 27001:2022 전환 여부", "2013판 인증은 2025년 10월 31일에 효력이 끝났습니다. 2022판으로 전환되었는지 확인하세요."]);
-    else if (on("q-global")) out.push(["rec", "ISO/IEC 27001" + (on("q-pii") ? "·27701" : ""), "해외 고객사와 계약할 때 보안 수준 증명 자료로 가장 많이 요구됩니다." + (certified ? " 보유 인증과 매핑해 중복 작업을 줄일 수 있습니다." : "")]);
+    if (on("q-cloud")) {
+      out.push(["must", "클라우드 보안인증(CSAP)", "공공기관이 이용하는 클라우드 서비스는 CSAP 인증이 필요합니다. 서비스 유형과 등급에 따라 요건이 다릅니다."]);
+    }
+    if (hasIso) {
+      out.push(["check", "ISO 27001:2022 전환 여부", "2013판 인증은 2025년 10월 31일에 효력이 끝났습니다. 2022판으로 전환되었는지 확인하세요."]);
+    } else if (on("q-global")) {
+      out.push(["rec", "ISO/IEC 27001" + (on("q-pii") ? "·27701" : ""), "해외 고객사와 계약할 때 보안 수준 증명 자료로 가장 많이 요구됩니다." + (certified ? " 보유 인증과 매핑해 중복 작업을 줄일 수 있습니다." : "")]);
+    }
     if (on("q-listed") || on("q-infra") || on("q-users") || sector === "medical") {
       out.push(["check", "정보보호 공시 의무 여부", "매출·이용자 규모와 업종에 따라 정보보호 투자·인력 현황을 매년 공시해야 할 수 있습니다."]);
     }
-    if (sector === "finance") out.push(["check", "전자금융 관련 규정", "전자금융거래법·전자금융감독규정에 따른 별도 보안 요구사항과 평가 대상 여부를 확인해야 합니다."]);
+    if (sector === "finance") {
+      out.push(["check", "전자금융 관련 규정", "전자금융거래법·전자금융감독규정에 따른 별도 보안 요구사항과 평가 대상 여부를 확인해야 합니다."]);
+    }
+
     const list = $("r-list");
     list.textContent = "";
     if (!out.length) {
       const empty = document.createElement("li");
+      empty.className = "dz-r-empty";
       empty.textContent = "선택한 조건으로는 의무 대상이 보이지 않습니다. 개인정보를 처리한다면 개인정보 보호법의 안전성 확보조치 기준은 모든 조직에 적용됩니다.";
       list.appendChild(empty);
     }
@@ -1217,9 +1750,9 @@ function wireDiagnose() {
     out.forEach((row) => {
       counts[row[0]] += 1;
       const li = document.createElement("li");
-      li.className = "r-item";
+      li.className = "dz-r-item";
       const badge = document.createElement("span");
-      badge.className = "r-badge " + BADGE[row[0]][0];
+      badge.className = "dz-r-badge " + BADGE[row[0]][0];
       badge.textContent = BADGE[row[0]][1];
       const body = document.createElement("div");
       const title = document.createElement("h3");
@@ -1232,15 +1765,52 @@ function wireDiagnose() {
       li.appendChild(body);
       list.appendChild(li);
     });
-    $("r-sum").textContent = out.length ? `의무 ${counts.must} · 예정 ${counts.soon} · 확인 필요 ${counts.check} · 권장 ${counts.rec}` : "";
+    $("r-sum").innerHTML = out.length
+      ? `의무 <b>${counts.must}</b> · 예정 <b>${counts.soon}</b> · 확인 필요 <b>${counts.check}</b> · 권장 <b>${counts.rec}</b>`
+      : "";
   }
+
+  /* Week spans mirror certification.html ISMS-P gantt; start `w` drives reverse calc. */
+  const PHASES = [
+    { w: -30, endW: -28, name: "착수·범위 정의", group: "prep", key: true },
+    { w: -28, endW: -24, name: "현황 분석·GAP", group: "prep" },
+    { w: -24, endW: -20, name: "위험평가·DoA 결정", group: "prep" },
+    { w: -22, endW: -16, name: "보호대책·정책 제·개정", group: "prep" },
+    { w: -18, endW: 2, name: "관리체계 운영·증적 축적", group: "ops", note: "신청 전 2개월 이상 운영" },
+    { w: -18, endW: -16, name: "임직원 인증 교육", group: "ops" },
+    { w: -12, endW: -9, name: "내부점검·모의심사", group: "prep" },
+    { w: -9, endW: -8, name: "인증 신청", group: "prep", key: true },
+    { w: -6, endW: -4, name: "인증기관 예비점검", group: "audit", note: "심사 6~8주 전" },
+    { w: 0, endW: 2, name: "인증심사", group: "audit", key: true },
+    { w: 10, endW: 12, name: "인증서 발급 예상", group: "audit", note: "보완조치·인증위원회 심의 후" }
+  ];
+  const DAY = 86400000;
+  let schedRanges = [];
+  const fmt = (d) => `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`;
+  const parseIso = (value) => {
+    if (!value) return null;
+    const parts = value.split("-");
+    return new Date(+parts[0], +parts[1] - 1, +parts[2]);
+  };
+  const addDays = (d, n) => new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
 
   function buildRanges(target, today) {
     return PHASES.map((phase) => {
       const start = new Date(target.getTime() + phase.w * 7 * DAY);
       let end = addDays(new Date(target.getTime() + phase.endW * 7 * DAY), -1);
       if (end < start) end = start;
-      return { start, end, name: phase.name, note: phase.note || "", group: phase.group, past: end < today, w: phase.w };
+      return {
+        start,
+        end,
+        weeks: Math.max(1, phase.endW - phase.w),
+        name: phase.name,
+        note: phase.note || "",
+        key: !!phase.key,
+        group: phase.group || "prep",
+        past: end < today,
+        w: phase.w,
+        off: (phase.w === 0 ? "심사 주차" : (phase.w < 0 ? "심사 " + (-phase.w) + "주 전 시작" : "심사 " + phase.w + "주 후")) + (phase.note ? " · " + phase.note : "")
+      };
     });
   }
 
@@ -1248,17 +1818,17 @@ function wireDiagnose() {
     const host = $("plan-summary");
     host.textContent = "";
     const cards = [
-      { k: "준비 시작일", v: fmt(start), s: daysLeft >= 0 ? `권장 착수일 · D-${daysLeft}` : "권장 착수일이 지남", cls: daysLeft >= 0 ? "is-ok" : "is-warn" },
+      { k: "준비 시작일", v: fmt(start), s: daysLeft >= 0 ? "권장 착수일 · D-" + daysLeft : "권장 착수일이 지남", cls: daysLeft >= 0 ? "is-focus" : "is-warn" },
       { k: "목표 심사일", v: fmt(target), s: "인증심사 시작 기준", cls: "" },
       daysLeft >= 0
-        ? { k: "일정 여유", v: `D-${daysLeft}`, s: "권장 일정으로 충분합니다", cls: "is-ok" }
-        : { k: "일정 부족", v: `약 ${Math.ceil(-daysLeft / 7)}주`, s: "단축·병행 일정이 필요합니다", cls: "is-warn" }
+        ? { k: "일정 여유", v: "D-" + daysLeft, s: "권장 일정으로 충분합니다", cls: "is-ok" }
+        : { k: "일정 부족", v: "약 " + Math.ceil(-daysLeft / 7) + "주", s: "단축·병행 일정이 필요합니다", cls: "is-warn" }
     ];
     if (target <= today) cards[2] = { k: "일정 상태", v: "목표일 경과", s: "다른 심사일을 선택하세요", cls: "is-warn" };
     cards.forEach((card) => {
       const art = document.createElement("article");
-      art.className = "plan-metric" + (card.cls ? " " + card.cls : "");
-      art.innerHTML = `<div class="sec-k">${card.k}</div><div class="v">${card.v}</div><p>${card.s}</p>`;
+      art.className = "dz-metric" + (card.cls ? " " + card.cls : "");
+      art.innerHTML = `<div class="k">${card.k}</div><div class="v">${card.v}</div><div class="s">${card.s}</div>`;
       host.appendChild(art);
     });
   }
@@ -1267,71 +1837,91 @@ function wireDiagnose() {
     const host = $("sched-cal");
     host.textContent = "";
     if (!schedRanges.length) return;
-    const origin = schedRanges.reduce((min, range) => range.start < min ? range.start : min, schedRanges[0].start);
-    const finish = schedRanges.reduce((max, range) => range.end > max ? range.end : max, schedRanges[0].end);
+    const origin = schedRanges.reduce((min, r) => r.start < min ? r.start : min, schedRanges[0].start);
+    const finish = schedRanges.reduce((max, r) => r.end > max ? r.end : max, schedRanges[0].end);
     const span = Math.max(DAY, finish - origin + DAY);
+
     const gantt = document.createElement("div");
-    gantt.className = "plan-gantt";
+    gantt.className = "dz-gantt";
+    gantt.setAttribute("role", "img");
+    gantt.setAttribute("aria-label", "목표 심사일 기준 역산 준비 일정 간트 차트");
     const head = document.createElement("div");
-    head.className = "plan-gantt-head";
-    head.innerHTML = `<div></div>`;
+    head.className = "dz-gantt-head";
+    head.innerHTML = `<div class="spacer"></div>`;
     const months = document.createElement("div");
-    months.className = "plan-months";
+    months.className = "dz-months";
     let cursor = new Date(origin.getFullYear(), origin.getMonth(), 1);
     const endMonth = new Date(finish.getFullYear(), finish.getMonth(), 1);
     while (cursor <= endMonth) {
       const mark = document.createElement("span");
-      mark.className = "plan-month";
+      mark.className = "dz-month";
       const pct = ((cursor - origin) / span) * 100;
       if (pct >= -2 && pct <= 102) {
         mark.style.left = Math.max(0, Math.min(100, pct)) + "%";
-        mark.textContent = `${cursor.getFullYear()}.${String(cursor.getMonth() + 1).padStart(2, "0")}`;
+        mark.textContent = cursor.getFullYear() + "." + String(cursor.getMonth() + 1).padStart(2, "0");
         months.appendChild(mark);
       }
       cursor = new Date(cursor.getFullYear(), cursor.getMonth() + 1, 1);
     }
     head.appendChild(months);
     gantt.appendChild(head);
+
     schedRanges.forEach((range) => {
       const row = document.createElement("div");
-      row.className = "plan-gantt-row";
+      row.className = "dz-gantt-row";
       const label = document.createElement("div");
-      label.className = "plan-label";
+      label.className = "dz-label";
       label.innerHTML = `<strong>${range.name}</strong><span>${fmt(range.start)}</span>`;
       const track = document.createElement("div");
-      track.className = "plan-track";
+      track.className = "dz-track";
       const bar = document.createElement("span");
-      bar.className = `plan-bar group-${range.group}${range.past ? " is-past" : ""}`;
-      bar.style.left = Math.max(0, ((range.start - origin) / span) * 100) + "%";
-      bar.style.width = Math.max(0.8, ((range.end - range.start + DAY) / span) * 100) + "%";
+      bar.className = "dz-bar group-" + range.group + (range.past ? " is-past" : "");
+      const left = ((range.start - origin) / span) * 100;
+      const width = ((range.end - range.start + DAY) / span) * 100;
+      bar.style.left = Math.max(0, left) + "%";
+      bar.style.width = Math.max(0.8, width) + "%";
+      bar.title = range.name + " · " + fmt(range.start) + " ~ " + fmt(range.end) + (range.off ? " · " + range.off : "");
       track.appendChild(bar);
       row.appendChild(label);
       row.appendChild(track);
       gantt.appendChild(row);
     });
     host.appendChild(gantt);
+
+    const legend = document.createElement("div");
+    legend.className = "dz-gantt-legend";
+    legend.innerHTML =
+      `<span><i class="lg-prep"></i>준비·컨설팅 단계</span>` +
+      `<span><i class="lg-ops"></i>고객 운영 기간</span>` +
+      `<span><i class="lg-audit"></i>인증기관 일정</span>`;
+    host.appendChild(legend);
   }
 
   function renderStatus(target, start, today, daysLeft) {
     const verdict = $("p-verdict");
     verdict.textContent = "";
     if (target <= today) {
-      verdict.className = "plan-status is-warn";
-      verdict.innerHTML = `<p>목표일 경과</p><p>목표 심사일이 오늘 이전입니다. 날짜를 다시 선택해 주세요.</p>`;
+      verdict.className = "dz-status is-warn";
+      verdict.innerHTML = `<p class="status-badge">목표일 경과</p><p class="status-msg">목표 심사일이 오늘 이전입니다. 날짜를 다시 선택해 주세요.</p>`;
       return;
     }
     if (daysLeft >= 0) {
-      verdict.className = "plan-status is-ok";
-      verdict.innerHTML = `<p>일정 가능 · D-${daysLeft}</p><p>권장 착수일 ${fmt(start)}까지 착수하면 권장 일정을 유지할 수 있습니다.</p>`;
+      verdict.className = "dz-status is-ok";
+      verdict.innerHTML = `<p class="status-badge">일정 가능 · D-${daysLeft}</p><p class="status-msg">권장 착수일 <b>${fmt(start)}</b>까지 착수하면 권장 일정을 유지할 수 있습니다.</p>`;
       return;
     }
     const shortWeeks = Math.ceil(-daysLeft / 7);
     let adjustFocus = "현황 분석·GAP ~ 보호대책·정책";
     if (shortWeeks <= 4) adjustFocus = "착수·범위 정의 ~ 현황 분석·GAP";
     else if (shortWeeks >= 12) adjustFocus = "착수 전 범위 축소와 앞 단계 병행";
+    verdict.className = "dz-status is-warn";
     const reuse = (on("h-iso") || on("h-isms")) ? " 보유 인증 증적을 다시 쓰면 앞 준비 단계를 줄일 수 있습니다." : "";
-    verdict.className = "plan-status is-warn";
-    verdict.innerHTML = `<p>부족 약 ${shortWeeks}주</p><p>권장 착수일 ${fmt(start)} 기준으로 일정이 부족합니다.</p><p>우선 조정 구간: ${adjustFocus}. 신청 전 관리체계 운영 2개월은 줄이기 어렵습니다.</p><p>범위를 좁히거나 분석·대책 단계를 병행하는 단축 일정이 필요합니다.${reuse} 목표 심사일을 뒤로 미루면 권장 일정으로 다시 맞출 수 있습니다.</p>`;
+    verdict.innerHTML =
+      `<p class="status-badge">부족 약 ${shortWeeks}주</p>` +
+      `<p class="status-msg">권장 착수일 <b>${fmt(start)}</b> 기준으로 일정이 부족합니다.</p>` +
+      `<p class="status-adjust">우선 조정 구간: <b>${adjustFocus}</b>. 신청 전 관리체계 운영 2개월은 줄이기 어렵습니다.</p>` +
+      `<details><summary>가능한 일정 조정 방안</summary>` +
+      `<p>범위를 좁히거나 분석·대책 단계를 병행하는 단축 일정이 필요합니다.${reuse} 목표 심사일을 뒤로 미루면 권장 일정으로 다시 맞출 수 있습니다.</p></details>`;
   }
 
   function plan() {
@@ -1342,8 +1932,10 @@ function wireDiagnose() {
     $("sched-cal").textContent = "";
     $("p-verdict").textContent = "";
     const target = parseIso(value);
-    if (!target) {
-      $("p-verdict").textContent = "목표 심사 시작일을 선택하세요.";
+    if (!value || !target) {
+      const verdict = $("p-verdict");
+      verdict.className = "dz-status";
+      verdict.textContent = "목표 심사 시작일을 선택하세요.";
       lastPlan = null;
       schedRanges = [];
       return;
@@ -1353,7 +1945,7 @@ function wireDiagnose() {
     schedRanges = buildRanges(target, today);
     schedRanges.forEach((range) => {
       const li = document.createElement("li");
-      li.textContent = `${fmt(range.start)} ~ ${fmt(range.end)} ${range.name}`;
+      li.textContent = fmt(range.start) + " ~ " + fmt(range.end) + " " + range.name;
       steps.appendChild(li);
     });
     const start = new Date(target.getTime() - 30 * 7 * DAY);
@@ -1370,6 +1962,7 @@ function wireDiagnose() {
   $("p-target").addEventListener("input", plan);
   diagnoseNow();
   plan();
+
   $("to-contact").addEventListener("click", () => {
     const sel = $("q-sector");
     const lines = ["[셀프 진단 결과]", "업종: " + sel.options[sel.selectedIndex].text];
@@ -1411,7 +2004,9 @@ function wireDeck() {
 
 function render() {
   const { mode, group, child } = parse();
-  document.getElementById("logo-link").href = "#";
+  // Inside a business area the logo returns to that area's home, not the root gate.
+  logoLink.href = mode ? "#" + mode : "#";
+  logoLink.setAttribute("aria-label", mode ? `TBELL ${MODE_LABEL[mode]} 홈` : "TBELL 홈");
   if (!mode) {
     activeMenu = [];
     logoMode.textContent = "";
@@ -1459,6 +2054,9 @@ function render() {
   wireDeck();
   wireJump();
   wireDiagnose();
+  if (typeof wireSvcMotion === "function") wireSvcMotion();
+  wireQaHome();
+  wireSecHome();
   fillConsult();
 
   const inquiry = document.getElementById("inquiry-form");
@@ -1486,9 +2084,6 @@ function render() {
 let stageObserver = null;
 function wireStages() {
   if (stageObserver) stageObserver.disconnect();
-  document.querySelectorAll("[data-bounce]").forEach((box) => {
-    box.innerHTML = [...box.dataset.bounce].map((ch, i) => `<span style="--i:${i + 1}">${ch}</span>`).join("");
-  });
   stageObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
