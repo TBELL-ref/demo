@@ -1,7 +1,7 @@
 /* ── QA pages (qp-) — origin content-*.png mockups rebuilt in HTML/CSS (assets/qa-pages.js) ──
    Measured from the 3840px originals (= 2× a 1920 screen): 1260px column, 36px/700 section titles,
    18px body, ~200px between sections. Copy: design_demo/qa-content-baseline.md. */
-.qp-sec { width: min(1260px, calc(100% - 64px)); margin: 0 auto; padding-top: clamp(80px, 10.4vw, 200px); text-align: center; color: #333; }
+.qp-sec { width: min(1260px, calc(100% - 2 * var(--gutter))); margin: 0 auto; padding-top: clamp(80px, 10.4vw, 200px); text-align: center; color: #333; }
 .qp-sec.qp-tight { padding-top: clamp(64px, 7vw, 140px); }
 .qp-h { margin: 0; color: #333; font-size: clamp(22px, 1.9vw, 36px); font-weight: 700; line-height: 1.45; text-align: center; }
 .svc-body > .qp-sec:first-child .qp-h { view-transition-name: qp-title; }
@@ -353,7 +353,7 @@
   .qp-voice-ai, .qp-voice-links { width: 100%; }
 }
 @media (max-width: 768px) {
-  .qp-sec { width: calc(100% - 40px); }
+  .qp-sec { width: calc(100% - 2 * var(--gutter)); }
   .qp-br { display: none; }
   .qp-lede { text-align: left; }
   .qp-numcards { grid-template-columns: 1fr 1fr; }
@@ -402,7 +402,7 @@
 
 /* QA detail bodies: one side margin on .svc-body; sections inside use the full width up to 1320px instead
    of adding margins of their own. Photo bands and the origin's full-width images still run edge to edge. */
-.svc-body { --svc-pad: clamp(20px, 4vw, 64px); padding-inline: var(--svc-pad); }
+.svc-body { --svc-pad: var(--gutter); padding-inline: var(--svc-pad); }
 .svc-body > .qp-sec, .svc-body > .qp-h-solo, .svc-body > .expand-row, .svc-body > .contact-row, .svc-body > .way, .svc-body > .apply {
   width: 100%; max-width: 1320px; margin-left: auto; margin-right: auto; padding-left: 0; padding-right: 0;
 }
