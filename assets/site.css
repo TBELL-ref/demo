@@ -2445,9 +2445,15 @@ a.s-card:hover .s-ibox { border-color: var(--active); }
   .md-sec + .md-sec { padding-left: 28px; }
 }
 
-/* Scrollbars: thin cyan everywhere (page and inner scroll areas) */
-* { scrollbar-width: thin; scrollbar-color: var(--active) transparent; }
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--active); border-radius: 6px; }
-::-webkit-scrollbar-thumb:hover { background: #10aacc; }
+/* Scrollbars: a single thin cyan line everywhere (page and inner scroll areas), no arrow buttons.
+   Chrome/Edge/Safari use the ::-webkit-scrollbar rules (the standard properties would bring back Windows'
+   arrow buttons there), so the standard ones are only for Firefox. The thumb is a 2px line that thickens
+   on hover; the transparent border keeps the hit area at 8px. */
+@supports not selector(::-webkit-scrollbar) {
+  * { scrollbar-width: thin; scrollbar-color: var(--active) transparent; }
+}
+::-webkit-scrollbar { width: 8px; height: 8px; background: transparent; }
+::-webkit-scrollbar-button { display: none; width: 0; height: 0; }
+::-webkit-scrollbar-track, ::-webkit-scrollbar-corner { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--active); background-clip: padding-box; border: 3px solid transparent; border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { border-width: 2px; }
