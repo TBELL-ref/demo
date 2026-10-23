@@ -1251,8 +1251,6 @@ function aboutBody() {
       <iframe class="way-map" src="https://maps.google.com/maps?q=${lat},${lng}&amp;z=16&amp;hl=ko&amp;output=embed" title="${name} 지도" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       <h3>${name}</h3>
       <p>${address}</p>
-      <p>070-7777-9113 / 070-7777-6368</p>
-      <p>staff@tbell.co.kr</p>
       <a href="https://map.kakao.com/link/map/${encodeURIComponent(name)},${lat},${lng}" target="_blank" rel="noopener noreferrer">지도 보기</a>
     </article>`).join("");
   return `

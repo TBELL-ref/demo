@@ -281,10 +281,10 @@ html:has(.stage) { scroll-snap-type: y proximity; }
 .blog-card .en, .blog-card h3, .blog-card p { padding: 0 14px; }
 .blog-card h3 { color: #121212; font-size: 1rem; }
 .blog-card p {
-  color: #595959; font-size: 0.9rem;
+  color: #8a8a8a; font-size: 12px; line-height: 1.5;
   display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;
 }
-.blog-card .en { padding-top: 12px; }
+.blog-card .en { padding-top: 12px; color: #0788a4; font-family: var(--num); font-size: 11px; letter-spacing: .02em; }
 .blog-card p:last-child { padding-bottom: 14px; }
 .pager { display: flex; justify-content: center; gap: 14px; margin-top: 28px; }
 .pager a { color: #a1a1a1; font-family: var(--num); }
