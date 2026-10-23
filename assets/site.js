@@ -721,9 +721,7 @@ function tTabs(current) {
   const items = [["overview", "솔루션 개요", "#qa/tauto"], ["auto", "T-AUTO", "#qa/tauto/auto"], ["gen", "T-GEN", "#qa/tauto/gen"], ["lens", "T-LENS", "#qa/tauto/lens"], ["voc", "T-VOC", "#qa/tauto/voc"]];
   return `<nav class="subnav tq-tabs" aria-label="T 솔루션">${items.map(([id, label, href]) => `<a href="${href}"${id === current ? ' aria-current="page"' : ""}>${label}</a>`).join("")}</nav>`;
 }
-// Booth notice for 베스트콘 (T-AUTO · T-GEN); remove after the event.
-const tEvent = () => `<p class="tq-event"><b>EVENT</b><span>베스트콘에서 T-AUTO와 T-GEN을 소개합니다. 부스에서 직접 확인해 보세요.</span><a href="mailto:qa-platform@tbell.co.kr">qa-platform@tbell.co.kr</a></p>`;
-const tPage = (current, eyebrow, title, lede, body) => sPage(eyebrow, title, lede, tTabs(current) + tEvent() + tpBody(body));
+const tPage = (current, eyebrow, title, lede, body) => sPage(eyebrow, title, lede, tTabs(current) + tpBody(body));
 
 function tautoHome() {
   const stages = [["설계", "gen"], ["검증·운영", "auto"], ["평가", "lens"], ["피드백", "voc"]];
@@ -771,6 +769,10 @@ function tAuto() {
         .map(([t, d], i) => `<li${i === 2 ? ' class="is-key"' : ""}><b>${t}</b><p>${d}</p></li>`).join("")}</ul>
       <p class="tq-envs"><span>Android</span><span>iOS</span><span>Web</span><span>API</span></p>
       <p class="tp-note">실기기 팜 · 클라우드 · 직접 연결 단말 기반 End-to-End 검증 · 2021년부터 축적한 TestOps 운영 경험</p>`) +
+    tpSec("how", "HOW IT WORKS", "생성부터 결함 등록까지 한 흐름으로", "", `
+      <ol class="tq-pipe">${[["AI 자동화 생성", "TC 입력 → 자동 생성"], ["자동 실행", "실기기 · 스케줄, 성능 측정 동시"], ["실행 중 복구", "화면 변경 감지, 복구 후보 검증"], ["결과 · 실패 분석", "AI 원인 분류"], ["결함 관리", "검토 · 승인 후 결함 등록"]]
+        .map(([t, d], i) => `<li${i === 2 ? ' class="is-ai"' : i === 4 ? ' class="is-human"' : ""}><span>${i + 1}</span><b>${t}</b><p>${d}</p></li>`).join("")}</ol>
+      <p class="tq-pipe-loop">AI는 실행 중 복구하고, 테스트 자산 변경은 사람의 승인 후 반영합니다</p>`) +
     tpSec("nocode", "NO-CODE", "LLM 기반 No-Code 자동화", "Web 환경 PoC 사례: 시나리오 설정만으로 테스트 전 과정을 자동 수행했습니다.", `
       <div class="tq-split">
         <ol class="tq-vsteps">${[["시나리오 설정", "자연어로 테스트 시나리오를 입력합니다."], ["AI 분석 및 식별 (LLM)", "화면의 UI 요소와 Action을 자동으로 파악합니다."], ["테스트 자동 실행", "식별한 요소를 기준으로 검증을 수행합니다."]]
@@ -808,6 +810,9 @@ function tGen() {
         <span class="tq-ai"><b>AI</b></span>
         <div class="ts-demo gen"><p class="ts-demo-k">TEST CASES</p><ul class="ts-tc"><li><b>TC-001</b> 비밀번호 5회 오류 시 계정 잠금</li><li><b>TC-002</b> 잠금 해제 메일 발송</li><li><b>TC-003</b> 임시 비밀번호 재설정</li></ul></div>
       </div>`) +
+    tpSec("arch", "ARCHITECTURE", "로컬 SLM과 벡터 DB로 생성합니다", "LLM 기반 자연어 처리와 검색 · 분석 기술을 결합해 요구사항 · 시나리오 · 로그 등 다양한 문서에서 테스트 케이스를 만듭니다.", `
+      <ol class="tq-ruled">${[["PDF 문서 파싱", "기획서 · 설명서 등 다양한 문서를 읽어 들입니다."], ["문서 내용 벡터 DB화", "문서 내용을 벡터 DB에 저장해 검색할 수 있게 합니다."], ["Test Case 생성 요청", "로컬 PC의 SLM이 필요한 문서 내용을 찾아 분석합니다."], ["분석 및 TC 생성", "자동 생성 로직이 일관된 형식의 테스트 케이스를 만듭니다."]]
+        .map(([t, d], i) => `<li style="--i:${i}"><span>STEP 0${i + 1}</span><b>${t}</b><p>${d}</p></li>`).join("")}</ol>`) +
     `<section class="tq-band light" data-qp-reveal>
       <div class="tq-band-in">
         <div><p class="tp-eyebrow">OPTIMIZE</p><h2 class="qp-h">중복은 줄이고, 판단은 사람과 함께</h2><div class="qp-lede"><p>AI 에이전트가 겹치는 테스트 케이스를 골라내고, 담당자가 확인한 결과로 다시 생성합니다(Human-in-the-loop).</p></div>
