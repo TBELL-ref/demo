@@ -204,9 +204,9 @@ function gateHome() {
     ${stage("shade-d", stats())}`;
 }
 
-// ── /multi home: QA and 보안 pull from either side of one company ───────────────
-// Copy: each side is its own home hero (verbatim); the centre and the shared band use the company
-// history (history-data.js) and the company figures (stats) as published. No new claims.
+// ── /multi home: what the whole company shares, with no business-area split ─────────
+// Copy is company-level only, taken as published: the MISSION (경영철학), 티벨 코어 (회사소개),
+// milestones from the history data, and the company figures. No QA- or 보안-specific text.
 const MULTI_SINCE = [
   ["2015", "주식회사 티벨 설립"],
   ["2016", "기업부설연구소 설립"],
@@ -215,24 +215,24 @@ const MULTI_SINCE = [
   ["2023", "2023년도 SK텔레콤 최우수파트너사 수상"]
 ];
 function multiHome() {
+  const base = window.TBELL_BASE || "";
   const years = new Date().getFullYear() - 2015;
   const figures = [[1460, "개", "누적 수행 프로젝트 수"], [161, "개사", "이용 고객사 수"], [165, "명", "임직원 수"]];
+  const core = [["core-test", "TEST"], ["core-customer", "CUSTOMER"], ["core-human", "HUMAN"]];
   return `<div class="mh">
-  <section class="mh-tug">
-    <a class="mh-side mh-qa" href="#qa" style="background-image:url('${ORIGIN}banner-main-pc-001.0e1ee99f9660f77d4fe1.png')">
-      <p class="qh-label">SOFTWARE TEST &amp; QUALITY</p>
-      <h2>차별화된 테스트 경험을 제공하는<br>대한민국 대표 품질 서비스 기업</h2>
-      <p class="mh-lede">대한민국 IT 산업에 품질로 기여하고자 테스트 방법론과 서비스를 차별화하여, 테스트 서비스의 패러다임 변화를 주도하고 있습니다.</p>
-      <span class="mh-go">QA 사업 소개 <i aria-hidden="true">→</i></span>
-    </a>
-    <div class="mh-hub" aria-hidden="true"><span class="mh-rope"></span><div class="mh-knot"><small>SINCE</small><b>2015</b><span>TBELL</span></div></div>
-    <a class="mh-side mh-sec" href="#security">
-      <img class="mh-shield" src="${window.TBELL_BASE || ""}assets/shield.png?v=3" alt="">
-      <p class="qh-label">TBELL 정보보호 컨설팅</p>
-      <h2>우리 회사에 필요한 보안 인증,<br>2분이면 알 수 있습니다.</h2>
-      <p class="mh-lede">어떤 인증이 의무인지, 기한은 언제인지, 오늘 무엇부터 시작해야 하는지. 질문 몇 개에 답하면 바로 확인할 수 있고, 그 결과를 그대로 보내 주시면 티벨이 컨설팅 계획으로 답합니다.</p>
-      <span class="mh-go">보안 사업 소개 <i aria-hidden="true">→</i></span>
-    </a>
+  <section class="mh-hero">
+    <span class="mh-rope" aria-hidden="true"></span>
+    <div class="mh-knot"><small>SINCE</small><b>2015</b><span>TBELL</span></div>
+    <p class="qh-label">MISSION</p>
+    <h1>우리는 고객의 소프트웨어 품질 향상을 위해 <br>스마트한 솔루션을 제공하며 <br>고객의 가치 향상에 기여합니다.</h1>
+    <div class="mh-cta"><a class="pill" href="#company/about">기업 정보</a><a class="pill ghost" href="#inquiry/qa">문의하기</a></div>
+  </section>
+  <section class="mh-core" style="background-image:url('${base}assets/qa/photos/core-building.jpg')">
+    <div class="mh-wrap">
+      <p class="qh-label">TBELL CORE</p>
+      <h2>티벨 코어</h2>
+      <ul class="mh-rings">${core.map(([icon, t], i) => `<li style="--i:${i}"><span><img src="${base}assets/qa/icons/${icon}.png" alt=""></span><b>${t}</b></li>`).join("")}</ul>
+    </div>
   </section>
   <section class="mh-since" data-count-zone>
     <div class="mh-wrap">
@@ -247,7 +247,6 @@ function multiHome() {
       <h2>고객과 더불어 성장하는 TBELL</h2>
       <div class="mh-figs">${figures.map(([n, u, l]) => `<div><p>${l}</p><strong><span class="count" data-count="${n}">0</span>${u}</strong></div>`).join("")}</div>
       <div class="mh-places"><p><b>강남 본사</b>서울특별시 강남구 강남대로 354, 9층 (역삼동, 혜천빌딩)</p><p><b>가산 사업장</b>서울특별시 금천구 가산디지털1로 168, A동 601호</p></div>
-      <div class="mh-cta"><a class="pill" href="#inquiry/qa">QA 문의</a><a class="pill ghost" href="#inquiry/security">보안 컨설팅 문의</a></div>
     </div>
   </section>
 </div>`;
@@ -1285,12 +1284,12 @@ const OFFICES = [
 function aboutBody() {
   const cards = OFFICES.map(([name, address, lat, lng]) => `
     <article>
+      <iframe class="way-map" src="https://maps.google.com/maps?q=${lat},${lng}&amp;z=16&amp;hl=ko&amp;output=embed" title="${name} 지도" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       <h3>${name}</h3>
       <p>${address}</p>
       <p>070-7777-9113 / 070-7777-6368</p>
       <p>staff@tbell.co.kr</p>
       <a href="https://map.kakao.com/link/map/${encodeURIComponent(name)},${lat},${lng}" target="_blank" rel="noopener noreferrer">지도 보기</a>
-      <iframe class="way-map" src="https://maps.google.com/maps?q=${lat},${lng}&amp;z=16&amp;hl=ko&amp;output=embed" title="${name} 지도" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </article>`).join("");
   return `
     ${qpAboutIntro()}

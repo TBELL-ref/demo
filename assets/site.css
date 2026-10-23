@@ -2479,33 +2479,28 @@ a.s-card:hover .s-ibox { border-color: var(--active); }
   .svc-tags span { padding: 7px 14px; font-size: 13px; }
 }
 
-/* ── /multi home (mh-): QA | TBELL since 2015 | 보안 — a tug from either side ────────── */
+/* ── /multi home (mh-): company-wide — MISSION, 티벨 코어, since 2015, figures ────────── */
 .mh { background: #121212; color: #fff; }
-.mh-tug { position: relative; display: flex; height: clamp(560px, calc(100vh - var(--header-h)), 820px); overflow: hidden; --pull: 0; }
-.mh-tug:has(.mh-qa:hover, .mh-qa:focus-visible) { --pull: -1; }
-.mh-tug:has(.mh-sec:hover, .mh-sec:focus-visible) { --pull: 1; }
-.mh-side { position: relative; flex: 1 1 0; display: flex; flex-direction: column; justify-content: center; gap: 18px; padding: 80px clamp(40px, 6vw, 110px); color: #fff; overflow: hidden; transition: flex-grow .6s cubic-bezier(.2, .7, .2, 1); }
-.mh-side > * { position: relative; z-index: 1; max-width: 30em; }
-.mh-qa { align-items: flex-start; padding-right: clamp(90px, 9vw, 150px); background-size: auto 130%; background-position: 15% center; background-repeat: no-repeat; background-color: #141414; }
-.mh-qa::before { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(18, 18, 18, .9) 25%, rgba(18, 18, 18, .72) 70%, #121212 100%); }
-.mh-sec { align-items: flex-end; text-align: right; padding-left: clamp(90px, 9vw, 150px); background: radial-gradient(700px 500px at 75% 50%, #232323, #121212 70%); }
-.mh-sec > * { margin-left: auto; }
-.mh-shield { position: absolute !important; right: -6%; top: 50%; width: min(520px, 46vw); max-width: none !important; transform: translateY(-50%); opacity: .16; z-index: 0 !important; pointer-events: none; }
-.mh-tug:has(.mh-qa:hover) .mh-qa, .mh-tug:has(.mh-sec:hover) .mh-sec { flex-grow: 1.22; }
-.mh-side h2 { font-size: clamp(24px, 2.3vw, 36px); font-weight: 700; line-height: 1.35; }
-.mh-lede { color: var(--mist); font-size: clamp(14px, 1vw, 16px); line-height: 1.7; }
-.mh-go { display: inline-flex; align-items: center; gap: 8px; margin-top: 8px; padding: 12px 22px; border: 1px solid #5a5a5a; border-radius: 62px; font-size: 15px; transition: border-color .2s, color .2s, background .2s; }
-.mh-side:hover .mh-go, .mh-side:focus-visible .mh-go { border-color: var(--active); background: var(--active); color: #121212; }
-.mh-side:focus-visible { outline: 2px solid var(--active); outline-offset: -6px; }
-/* centre: the rope across both halves and the knot (TBELL · since 2015) it hangs on */
-.mh-hub { position: absolute; inset: 0; pointer-events: none; z-index: 2; }
-.mh-rope { position: absolute; left: 0; right: 0; top: 50%; height: 2px; background: linear-gradient(90deg, transparent, rgba(39, 196, 213, .55) 25%, rgba(39, 196, 213, .55) 75%, transparent); }
-.mh-knot { position: absolute; left: 50%; top: 50%; display: grid; place-content: center; justify-items: center; width: 150px; height: 150px; border-radius: 50%; background: #121212; border: 2px solid var(--active); box-shadow: 0 0 0 10px rgba(18, 18, 18, .9), 0 0 40px rgba(39, 196, 213, .25); transform: translate(calc(-50% + var(--pull) * 7vw), -50%); transition: transform .6s cubic-bezier(.2, .7, .2, 1); }
+.mh-hero { position: relative; display: grid; justify-items: center; align-content: center; gap: 22px; min-height: clamp(560px, calc(100vh - var(--header-h)), 820px); padding: 80px var(--gutter); text-align: center; overflow: hidden;
+  background: radial-gradient(900px 520px at 50% 38%, #222, #121212 70%); }
+.mh-rope { position: absolute; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, rgba(39, 196, 213, .55) 25%, rgba(39, 196, 213, .55) 75%, transparent); }
+.mh-hero > :not(.mh-rope) { position: relative; }
+.mh-knot { display: grid; place-content: center; justify-items: center; width: 150px; height: 150px; margin-bottom: 18px; border-radius: 50%; background: #121212; border: 2px solid var(--active); box-shadow: 0 0 0 10px rgba(18, 18, 18, .9), 0 0 40px rgba(39, 196, 213, .25); }
 .mh-knot small { color: #969696; font-family: var(--num); font-size: 11px; letter-spacing: .2em; }
 .mh-knot b { font-family: var(--num); font-size: 36px; line-height: 1.1; }
 .mh-knot span { color: var(--active); font-family: var(--num); font-size: 13px; font-weight: 600; letter-spacing: .14em; }
-
+.mh-hero h1 { max-width: 22em; font-size: clamp(24px, 2.6vw, 40px); font-weight: 700; line-height: 1.45; }
+.mh-cta { display: flex; justify-content: center; gap: 12px; margin-top: 12px; }
+.mh .pill.ghost { color: #fff; }
 .mh-wrap { width: min(var(--content-max), calc(100% - 2 * var(--gutter))); margin: 0 auto; text-align: center; }
+.mh-core { position: relative; padding: clamp(80px, 9vw, 130px) 0; background-color: #1d2a36; background-size: cover; background-position: center; }
+.mh-core::before { content: ""; position: absolute; inset: 0; background: rgba(12, 18, 24, .55); }
+.mh-core .mh-wrap { position: relative; }
+.mh-rings { display: flex; justify-content: center; gap: clamp(24px, 5vw, 80px); margin: 44px 0 0; padding: 0; list-style: none; }
+.mh-rings li { display: grid; justify-items: center; gap: 22px; }
+.mh-rings span { display: grid; place-items: center; width: clamp(130px, 13vw, 200px); height: clamp(130px, 13vw, 200px); border-radius: 50%; border: 2px solid #fff; outline: 2px dotted #fff; outline-offset: 8px; }
+.mh-rings img { width: 46%; }
+.mh-rings b { font-family: var(--num); font-size: clamp(18px, 1.6vw, 26px); letter-spacing: .06em; }
 .mh-since, .mh-common { padding: clamp(80px, 9vw, 140px) 0; }
 .mh-common { background: #1a1a1a; }
 .mh h2 { margin-top: 12px; font-size: clamp(24px, 2.4vw, 36px); font-weight: 700; }
@@ -2523,25 +2518,20 @@ a.s-card:hover .s-ibox { border-color: var(--active); }
 .mh-places { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 48px; padding-top: 28px; border-top: 1px solid #2e2e2e; text-align: left; }
 .mh-places p { color: var(--mist); font-size: 14px; }
 .mh-places b { display: block; margin-bottom: 4px; color: #fff; font-size: 16px; }
-.mh-cta { display: flex; justify-content: center; gap: 12px; margin-top: 44px; }
-.mh .pill.ghost { color: #fff; }
-
-@media (prefers-reduced-motion: reduce) {
-  .mh-side, .mh-knot { transition: none; }
-}
 @media (max-width: 768px) {
-  .mh-tug { flex-direction: column; height: auto; }
-  .mh-side { flex: none; padding: 56px var(--gutter); }
-  .mh-sec { align-items: flex-start; text-align: left; }
-  .mh-hub { position: relative; inset: auto; height: 150px; flex: none; }
-  .mh-sec > * { margin-left: 0; }
-  .mh-rope { left: 50%; right: auto; top: 0; bottom: 0; width: 2px; height: auto; background: linear-gradient(180deg, transparent, rgba(39, 196, 213, .5) 30%, rgba(39, 196, 213, .5) 70%, transparent); }
-  .mh-knot { width: 120px; height: 120px; transform: translate(-50%, -50%); }
+  .mh-hero { min-height: 0; padding: 64px var(--gutter) 72px; }
+  .mh-knot { width: 120px; height: 120px; }
   .mh-knot b { font-size: 28px; }
+  .mh-hero h1 br { display: none; }
+  .mh-cta { flex-direction: column; align-items: stretch; width: 100%; }
+  .mh-rings { flex-direction: column; align-items: center; gap: 44px; }
   .mh-line { grid-template-columns: 1fr; gap: 22px; text-align: left; }
   .mh-line::before { left: 8px; right: auto; top: 6px; bottom: 6px; border-top: 0; border-left: 2px solid #333; }
   .mh-line li { grid-template-columns: 56px 1fr; justify-items: start; padding: 0 0 0 30px; }
   .mh-line li::before { left: 1px; top: 4px; }
   .mh-figs, .mh-places { grid-template-columns: 1fr; }
-  .mh-cta { flex-direction: column; align-items: stretch; }
 }
+/* the rope runs through the knot's centre, across the whole hero */
+.mh-hero { isolation: isolate; }
+.mh-rope { display: none; }
+.mh-knot::before { content: ""; position: absolute; top: 50%; left: -50vw; right: -50vw; height: 2px; z-index: -1; background: linear-gradient(90deg, transparent, rgba(39, 196, 213, .55) 30%, rgba(39, 196, 213, .55) 70%, transparent); }
