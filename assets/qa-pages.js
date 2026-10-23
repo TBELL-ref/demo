@@ -1,7 +1,7 @@
 // QA detail page bodies in code, replacing the origin's flattened content-*.png mockups.
 // Copy is design_demo/qa-content-baseline.md (confirmed); " / " marks the origin's desktop line break.
 // Assets: assets/qa/{logos,icons,photos}. Styles: site.css "QA pages (qp-)".
-const QA = "assets/qa/";
+const QA = (window.TBELL_BASE || "") + "assets/qa/";
 
 // " / " → a line break kept on desktop only (phones re-wrap naturally)
 const qpBr = (text) => text.split(" / ").join(' <br class="qp-br">');
@@ -76,7 +76,7 @@ function automationBody() {
     ["적용<br>추천<br>채널", ["고객 인프라 활용 맞춤형<br>APP 및 WEB 자동화 강점", "App 및 증권 MTS<br>자동화 특히 강점", "통합품질관리 강점,<br>ERP 적용 강점", "UI솔루션 기술 기반<br>통합단말(C/S환경) 강점", "통합 품질관리 강점,<br>CICD연계 커스터마이징", "차세대프로젝트 추진 시<br>대량 데이터/성능 검증 강점"], "accent"]
   ];
   const sols = [
-    ["", `<img class="qp-tbell" src="assets/tbell-logo.svg" alt="TBELL">`],
+    ["", `<img class="qp-tbell" src="${window.TBELL_BASE || ""}assets/tbell-logo.svg" alt="TBELL">`],
     ["Ptero, Stego", `<img src="${QA}logos/apptest-ai.png" alt="Apptest.ai">`],
     ["Tosca, Qtest", `<img src="${QA}logos/tricentis.png" alt="Tricentis">`],
     ["3hand", `<img src="${QA}logos/softbase-evolution.png" alt="Softbase EVOLUTION">`],

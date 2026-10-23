@@ -2396,3 +2396,22 @@ a.s-card:hover .s-ibox { border-color: var(--active); }
 .detail .sheet .chip:has(input:checked) { border-color: var(--active); background: rgba(39, 196, 213, .12); color: #0788a4; }
 .detail .sheet .chip:has(input:focus-visible) { outline: 2px solid var(--active); outline-offset: 2px; }
 .detail .sheet .chip input:focus-visible { outline: none; }
+
+/* ── /multi header (multi/index.html): 서비스 · 블로그 · 회사소개 + 문의 ──────────
+   Same header shell; the drop shows only the hovered item's panel. 서비스 lists QA and 보안 side by side,
+   each with its own menu (사업 소개, groups, and their pages). */
+.is-multi .switch { display: none; }
+.is-multi .drop-cols { justify-content: center; }
+.is-multi .drop-col { width: auto; }
+.is-multi .drop-col:not(.is-hover) { display: none; }
+.is-multi .md-panel { flex-direction: row; gap: clamp(32px, 4vw, 72px); padding: 6px 0 10px; }
+.md-sec { display: grid; align-content: start; gap: 12px; }
+.is-multi .drop-col a { min-height: 0; justify-content: flex-start; padding: 6px 0; text-align: left; border-bottom: 0; color: #c8c8c8; font-size: 14px; }
+.is-multi .drop-col a.md-head { padding-bottom: 10px; border-bottom: 1px solid #3a3a3a; color: #fff; font-size: 16px; font-weight: 700; }
+.md-groups { display: flex; gap: clamp(18px, 2vw, 36px); }
+.md-group { display: flex; flex-direction: column; min-width: 92px; }
+.is-multi .drop-col .md-group > a:first-child { color: #fff; font-weight: 500; }
+.is-multi .drop-col a.md-leaf { padding: 4px 0; color: #969696; font-size: 13px; }
+.is-multi .drop-col a:hover, .is-multi .drop-col a[aria-current="page"] { color: var(--active) !important; }
+.nav-sec { padding: 12px 0 2px; color: var(--active); font-family: var(--num); font-size: 12px; letter-spacing: .12em; }
+.inq-switch + .detail .banner { border-top: 0; }

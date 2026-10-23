@@ -1,6 +1,6 @@
 const BLOG_CATS = [
   {
-    id: "qa-insight", name: "QA Insight", modes: ["qa"],
+    id: "qa-insight", name: "QA Insight", modes: ["qa", "all"],
     children: [
       { id: "qa-basic", name: "QA 기본·실무", nos: [22] },
       { id: "auto-tool", name: "테스트 자동화·도구", nos: [23] },
@@ -8,13 +8,19 @@ const BLOG_CATS = [
       { id: "trend", name: "품질 사례·트렌드", nos: [25] }
     ]
   },
-  { id: "security", name: "보안", modes: ["security"], nos: [28] },
-  { id: "newsletter", name: "NewsLetter", modes: ["qa", "security"], nos: [7] },
+  { id: "security", name: "보안", modes: ["security", "all"], nos: [28] },
+  { id: "newsletter", name: "NewsLetter", modes: ["qa", "security", "all"], nos: [7] },
   // 블로그 전시·행사는 QA(30)·보안(31)·공통(10)으로 나뉨. 보안 모드는 보안 전용만 보여 줌.
   { id: "event", name: "전시·행사", modes: ["qa"], nos: [30, 10] },
   { id: "event", name: "전시·행사", modes: ["security"], nos: [31] },
-  { id: "activity", name: "성과·활동", modes: ["qa", "security"], nos: [18] }
+  { id: "event", name: "전시·행사", modes: ["all"], nos: [30, 31, 10] },
+  { id: "activity", name: "성과·활동", modes: ["qa", "security", "all"], nos: [18] }
 ];
+
+// /multi (multi/index.html) shares every file with the root site; only the header and three
+// combined routes differ. "all" is the mode of those routes: #blog, #company/…, #inquiry/qa|security.
+const MULTI = window.TBELL_LAYOUT === "multi";
+const hashBase = (mode) => (mode === "all" ? "#" : "#" + mode + "/");
 
 function blogNodes(mode) {
   return BLOG_CATS.filter((cat) => cat.modes.includes(mode));
@@ -33,11 +39,11 @@ function blogMenu(mode) {
   return {
     id: "blog",
     label: "블로그",
-    href: "#" + mode + "/blog",
+    href: hashBase(mode) + "blog",
     children: blogNodes(mode).map((cat) => ({
       id: cat.id,
       label: cat.name,
-      href: "#" + mode + "/blog/" + cat.id
+      href: hashBase(mode) + "blog/" + cat.id
     }))
   };
 }
@@ -45,29 +51,29 @@ function blogMenu(mode) {
 const COMPANY_MENU = (mode) => ({
   id: "company",
   label: "회사 소개",
-  href: "#" + mode + "/company",
+  href: hashBase(mode) + "company",
   children: [
     {
-      id: "about", label: "회사소개", href: "#" + mode + "/company/about",
+      id: "about", label: "회사소개", href: hashBase(mode) + "company/about",
       children: [
-        { id: "about", label: "회사소개", href: "#" + mode + "/company/about" },
-        { id: "vision", label: "경영철학", href: "#" + mode + "/company/vision" },
-        { id: "history", label: "연혁", href: "#" + mode + "/company/history" }
+        { id: "about", label: "회사소개", href: hashBase(mode) + "company/about" },
+        { id: "vision", label: "경영철학", href: hashBase(mode) + "company/vision" },
+        { id: "history", label: "연혁", href: hashBase(mode) + "company/history" }
       ]
     },
     {
-      id: "recruit", label: "인재채용", href: "#" + mode + "/company/recruit",
+      id: "recruit", label: "인재채용", href: hashBase(mode) + "company/recruit",
       children: [
-        { id: "benefit", label: "복리후생", href: "#" + mode + "/company/benefit" },
-        { id: "recruit", label: "인재채용", href: "#" + mode + "/company/recruit" }
+        { id: "benefit", label: "복리후생", href: hashBase(mode) + "company/benefit" },
+        { id: "recruit", label: "인재채용", href: hashBase(mode) + "company/recruit" }
       ]
     },
     {
-      id: "esg", label: "지속가능경영", href: "#" + mode + "/company/esg",
+      id: "esg", label: "지속가능경영", href: hashBase(mode) + "company/esg",
       children: [
-        { id: "ethical", label: "윤리경영", href: "#" + mode + "/company/ethical" },
-        { id: "social", label: "사회경영", href: "#" + mode + "/company/social" },
-        { id: "environmental", label: "환경경영", href: "#" + mode + "/company/environmental" }
+        { id: "ethical", label: "윤리경영", href: hashBase(mode) + "company/ethical" },
+        { id: "social", label: "사회경영", href: hashBase(mode) + "company/social" },
+        { id: "environmental", label: "환경경영", href: hashBase(mode) + "company/environmental" }
       ]
     }
   ]
@@ -121,7 +127,7 @@ const OTHERS = {
   security: [["#qa", "QA"]]
 };
 
-const MODE_LABEL = { qa: "QA", security: "정보보호" };
+const MODE_LABEL = { qa: "QA", security: "정보보호", all: "TBELL" };
 
 const content = document.getElementById("content");
 const nav = document.getElementById("nav");
@@ -140,6 +146,12 @@ function parse() {
   const raw = (location.hash || "").replace(/^#/, "");
   let [mode, group, child, page] = raw.split("/");
   const known = ["qa", "security"];
+  if (MULTI && ["blog", "company", "inquiry"].includes(mode)) {
+    // #blog[/cat][/n] · #company[/child] · #inquiry/qa|security
+    let [, a = "", b = ""] = raw.split("/");
+    if (mode === "blog" && /^\d+$/.test(a)) { b = a; a = ""; }
+    return { mode: "all", group: mode, child: a, page: mode === "blog" ? b : "" };
+  }
   if (known.includes(mode) && group === "blog" && child && /^\d+$/.test(child) && !page) {
     page = child;
     child = "";
@@ -516,7 +528,7 @@ function wireQaHome() {
 }
 
 
-const ORIGIN = "assets/origin/";
+const ORIGIN = (window.TBELL_BASE || "") + "assets/origin/";
 
 function shot(spec) {
   if (!spec) return "";
@@ -957,7 +969,7 @@ function secShield() {
         <g class="sx-pulse"><circle cx="700" cy="${700 - SX_R}" r="12"/><circle class="tail" cx="700" cy="${700 - SX_R}" r="26"/></g>
       </svg>
       <div class="sx-body">
-        <img class="sx-shield" src="assets/shield.png?v=3" alt="" width="1000" height="1000">
+        <img class="sx-shield" src="${window.TBELL_BASE || ""}assets/shield.png?v=3" alt="" width="1000" height="1000">
         <span class="sx-glow" aria-hidden="true"></span>
         <span class="sx-sheen" aria-hidden="true"></span>
         <svg class="sx-mark" viewBox="0 0 1400 1400" aria-hidden="true"><circle class="sx-core" cx="700" cy="640" r="96"/><path class="sx-check" pathLength="100" d="M642 642 L686 686 L766 594"/></svg>
@@ -1385,7 +1397,7 @@ function blogList(mode, child) {
   if (pageNo > pages) pageNo = pages;
   const slice = posts.slice((pageNo - 1) * size, pageNo * size);
   const hrefFor = (id, n) => {
-    const base = "#" + mode + "/blog" + (id ? "/" + id : "");
+    const base = hashBase(mode) + "blog" + (id ? "/" + id : "");
     return n > 1 ? base + "/" + n : base;
   };
   const chip = (id, name, on) => `<a href="${hrefFor(id, 1)}"${on ? ' aria-current="page"' : ""}>${name}</a>`;
@@ -1402,7 +1414,7 @@ function blogList(mode, child) {
   }).join("");
   const nums = [];
   for (let n = 1; n <= pages; n++) nums.push(`<a href="${hrefFor(filterId, n)}"${n === pageNo ? ' aria-current="page"' : ""}>${n}</a>`);
-  const title = !group ? MODE_LABEL[mode] + " 블로그" : leaf ? group.name + " · " + leaf.name : group.name;
+  const title = !group ? (mode === "all" ? "블로그" : MODE_LABEL[mode] + " 블로그") : leaf ? group.name + " · " + leaf.name : group.name;
   const body = `<div class="blog-level"><span>상위</span><div class="blog-filters">${parents}</div></div>`
     + (kids ? `<div class="blog-level"><span>하위</span><div class="blog-filters">${kids}</div></div>` : "")
     + (cards ? `<div class="blog-grid">${cards}</div>` : `<p class="note">이 분류의 공개 글이 없습니다.</p>`)
@@ -1456,7 +1468,7 @@ function companyLeaves(mode, child) {
 }
 
 function drawCompany(child, mode) {
-  const base = "#" + mode + "/company/";
+  const base = hashBase(mode) + "company/";
   const leaves = companyLeaves(mode, child);
   if (child === "history") return companyHistory(leaves);
   if (child === "recruit" || child === "benefit") return qaDeck(RECRUIT_SLIDES, child === "benefit" ? "benefit" : "recruit", base, leaves);
@@ -1485,8 +1497,88 @@ const DRAW = {
     blog: (child, mode) => blogList(mode, child),
     inquiry: () => inquiryPage("security"),
     company: drawCompany
+  },
+  all: {
+    "": () => blogList("all", ""),
+    blog: (child) => blogList("all", child),
+    company: drawCompany,
+    inquiry: (child) => multiInquiry(child)
   }
 };
+
+// /multi 문의: a QA | 보안 switch above the same inquiry pages as #qa/inquiry and #security/inquiry.
+const inquiryMode = (child) => (child === "security" ? "security" : "qa");
+function multiInquiry(child) {
+  const which = inquiryMode(child);
+  const tab = (id, label) => `<a href="#inquiry/${id}"${id === which ? ' aria-current="page"' : ""}>${label}</a>`;
+  return `<nav class="s-subnav inq-switch" aria-label="문의 분야"><div class="s-wrap">${tab("qa", "QA 문의")}${tab("security", "보안 컨설팅 문의")}</div></nav>${inquiryPage(which)}`;
+}
+
+// /multi header: 서비스 (QA · 보안 → their own menus), 블로그 (combined), 회사소개.
+const MULTI_MENU = [
+  {
+    id: "service", label: "서비스", href: "#qa",
+    sections: [
+      { id: "qa", label: "QA", href: "#qa", groups: [
+        { id: "", label: "사업 소개", href: "#qa" },
+        ...MENUS.qa.filter((item) => ["types", "testops", "tauto"].includes(item.id))
+      ] },
+      { id: "security", label: "보안", href: "#security", groups: [
+        { id: "", label: "사업 소개", href: "#security" },
+        { id: "diagnose", label: "사전 진단", href: "#security/diagnose" },
+        { id: "services", label: "컨설팅", href: "#security/services" },
+        { id: "cert", label: "인증", href: "#security/cert" }
+      ] }
+    ]
+  },
+  blogMenu("all"),
+  COMPANY_MENU("all")
+];
+
+function multiTop(mode, group) {
+  if (mode === "qa" || mode === "security") return "service";
+  return group;
+}
+
+function fillMultiDrop(mode, group, child) {
+  const sub = activeChild(group, child);
+  const link = (href, label, on, cls = "") => `<a href="${href}"${cls ? ` class="${cls}"` : ""}${on ? ' aria-current="page"' : ""}>${label}</a>`;
+  const service = MULTI_MENU[0].sections.map((sec) => `
+    <div class="md-sec">
+      ${link(sec.href, sec.label, mode === sec.id && !group, "md-head")}
+      <div class="md-groups">${sec.groups.map((g) => `
+        <div class="md-group">
+          ${link(g.href, g.label, mode === sec.id && group === g.id && (!g.children || !child))}
+          ${(g.children || []).map((k) => link(k.href, k.label, mode === sec.id && group === g.id && sub === k.id, "md-leaf")).join("")}
+        </div>`).join("")}</div>
+    </div>`).join("");
+  const plainCol = (item) => `<div class="md-groups">${item.children.map((g) => `
+    <div class="md-group">
+      ${link(g.href, g.label, mode === "all" && group === item.id && activeChild(group, child) === g.id)}
+      ${(g.children || []).map((k) => link(k.href, k.label, mode === "all" && group === item.id && (child || "about") === k.id, "md-leaf")).join("")}
+    </div>`).join("")}</div>`;
+  const cols = [
+    `<div class="drop-col md-panel" data-id="service">${service}</div>`,
+    `<div class="drop-col md-panel" data-id="blog">${plainCol(MULTI_MENU[1])}</div>`,
+    `<div class="drop-col md-panel" data-id="company">${plainCol(MULTI_MENU[2])}</div>`
+  ].join("");
+  menuDrop.innerHTML = `<div class="drop-side"></div><div class="drop-cols">${cols}</div><div class="drop-side"></div>`;
+  menuDrop.style.height = "0px";
+  menuDrop.classList.remove("is-open");
+}
+
+function multiNav(mode, group, child) {
+  const top = multiTop(mode, group);
+  const mobile = window.matchMedia("(max-width: 768px)").matches;
+  return MULTI_MENU.map((item) => {
+    const head = `<a href="${item.href}" data-id="${item.id}"${item.id === top ? ' aria-current="page"' : ""}>${item.label}</a>`;
+    if (!mobile) return head;
+    const kids = item.sections
+      ? item.sections.map((sec) => `<span class="nav-sec">${sec.label}</span>` + sec.groups.map((g) => `<a href="${g.href}"${mode === sec.id && group === g.id ? ' aria-current="page"' : ""}>${g.label}</a>`).join("")).join("")
+      : item.children.map((g) => `<a href="${g.href}"${item.id === group && activeChild(group, child) === g.id ? ' aria-current="page"' : ""}>${g.label}</a>`).join("");
+    return head + `<div class="nav-sub">${kids}</div>`;
+  }).join("");
+}
 
 function activeChild(group, child) {
   if (group === "types") return child || "outsourcing";
@@ -1639,7 +1731,9 @@ function wireJump() {
 
 function fillConsult() {
   const form = document.getElementById("inquiry-form");
-  if (!form || parse().mode !== "security") return;
+  const route = parse();
+  const security = route.mode === "security" || (route.mode === "all" && route.group === "inquiry" && route.child === "security");
+  if (!form || !security) return;
   let data = null;
   try {
     const raw = sessionStorage.getItem("tbell-consult-v01");
@@ -1974,7 +2068,14 @@ function wireDeck() {
 }
 
 function render() {
-  const { mode, group, child } = parse();
+  const { mode, group, child, page: pageNo } = parse();
+  // /multi keeps one blog, one company section and one inquiry page: send the per-area URLs there.
+  if (MULTI && (mode === "qa" || mode === "security") && ["blog", "company", "inquiry"].includes(group)) {
+    const to = group === "inquiry" ? "#inquiry/" + mode : "#" + group + (child ? "/" + child : "") + (pageNo ? "/" + pageNo : "");
+    location.replace(to);
+    return;
+  }
+  if (MULTI) return renderMulti(mode, group, child);
   // Inside a business area the logo returns to that area's home, not the root gate.
   logoLink.href = mode ? "#" + mode : "#";
   logoLink.setAttribute("aria-label", mode ? `TBELL ${MODE_LABEL[mode]} 홈` : "TBELL 홈");
@@ -2019,6 +2120,31 @@ function render() {
   navToggle.setAttribute("aria-expanded", "false");
   fillDrop(menu, group, child);
 
+  drawContent(mode, group, child);
+}
+
+function renderMulti(mode, group, child) {
+  logoLink.href = "#";
+  logoLink.setAttribute("aria-label", "TBELL 홈");
+  logoMode.textContent = "";
+  document.title = mode && mode !== "all" ? "TBELL · " + MODE_LABEL[mode] : "TBELL";
+  inquire.hidden = false;
+  inquire.textContent = "문의";
+  inquire.href = "#inquiry/" + (mode === "security" ? "security" : "qa");
+  nav.innerHTML = multiNav(mode, group, child);
+  nav.classList.remove("open");
+  navToggle.setAttribute("aria-expanded", "false");
+  fillMultiDrop(mode, group, child);
+  if (!mode) {
+    content.innerHTML = gateHome();
+    wireStages();
+    window.scrollTo(0, 0);
+    return;
+  }
+  drawContent(mode, group, child);
+}
+
+function drawContent(mode, group, child) {
   const bucket = DRAW[mode];
   const draw = bucket[group] || bucket[""];
   content.innerHTML = draw.length ? draw(child, mode) : draw();
@@ -2040,7 +2166,8 @@ function render() {
       const topics = data.getAll("topic").join(", ") || "선택 없음";
       const box = document.getElementById("inquiry-result");
       box.hidden = false;
-      box.innerHTML = `<p class="kicker">${MODE_LABEL[mode]} 문의</p><p><strong>${data.get("company")}</strong> ${data.get("name")} · ${data.get("email")}</p><p style="margin-top:8px">관심 분야: ${topics}</p><p style="margin-top:8px">${data.get("message")}</p><p class="note">프로토타입이라 메일은 전송되지 않습니다. 실제 접수는 ${INQUIRY[mode].mail} 로 받습니다.</p>`;
+      const formMode = mode === "all" ? inquiryMode(child) : mode;
+      box.innerHTML = `<p class="kicker">${MODE_LABEL[formMode]} 문의</p><p><strong>${data.get("company")}</strong> ${data.get("name")} · ${data.get("email")}</p><p style="margin-top:8px">관심 분야: ${topics}</p><p style="margin-top:8px">${data.get("message")}</p><p class="note">프로토타입이라 메일은 전송되지 않습니다. 실제 접수는 ${INQUIRY[formMode].mail} 로 받습니다.</p>`;
       try { sessionStorage.removeItem("tbell-consult-v01"); } catch (err) { /* ignore */ }
     });
   }
@@ -2111,6 +2238,7 @@ navToggle.addEventListener("click", () => {
 });
 // Moving between pages of one QA deck (테스트 종류, TestOps, 회사…) morphs the shared pieces — the
 // section headings and the box diagram — with a view transition instead of a hard cut.
+if (MULTI) document.body.classList.add("is-multi");
 let lastRoute = parse();
 window.addEventListener("hashchange", () => {
   const prev = lastRoute;

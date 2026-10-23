@@ -1,7 +1,7 @@
 // #security/services — 컨설팅 서비스 페이지.
 // 레이아웃은 site.css의 s- 클래스(design.md › Security layout), 아이콘은 icons.svg.
 
-const SPRITE = "assets/icons.svg?v=1#";
+const SPRITE = (window.TBELL_BASE || "") + "assets/icons.svg?v=1#";
 
 function use(id, attrs = "") {
   return `<svg class="s-ico" aria-hidden="true"${attrs}><use href="${SPRITE}${id}"/></svg>`;
