@@ -635,7 +635,7 @@ function testopsDeck(child) {
   return qaDeck(TESTOPS_SLIDES, child === "ai" ? "ai" : "build", "#qa/testops/");
 }
 
-// ── T 브랜드 솔루션 (source: 「T브랜드솔루션 리플렛 TYPE02」) ─────────────
+// ── T 브랜드 솔루션 (copy from the 「T브랜드솔루션」 leaflet) ─────────────
 // T-AUTO is the platform at the centre; T-GEN, T-LENS, T-VOC and TestOps sit around it by role.
 // T-ASSI is part of the leaflet's map but is left out of the QA menu and pages for now.
 const T_BRANDS = [
@@ -651,184 +651,178 @@ const T_BRANDS = [
     text: "앱 스토어 리뷰를 모아 이슈로 만들고, AI가 유형을 나누고 답변을 추천합니다." }
 ];
 
-const T_SOURCE = "출처: 티벨 「T 브랜드 솔루션」 리플렛";
-
 function tBrand(id) {
   return T_BRANDS.find((b) => b.id === id);
 }
 
-// Other solutions, shown at the foot of each solution page.
-function tOthers(current) {
-  const cards = T_BRANDS.filter((b) => b.id !== current).map((b) =>
-    `<a class="s-card icon" href="${b.href}"><span class="s-ibox">${ICO[b.icon]}</span><div><span class="s-eyebrow">${b.en} · ${b.role}</span><h3>${b.name}</h3><p>${b.tag}</p></div></a>`).join("");
-  return sSec("others", ["T BRAND SOLUTION", "함께 쓰는 T 솔루션"], `<div class="s-cards two s-body">${cards}</div>`);
+// T 솔루션 bodies: the white QA-detail language (big centred titles, ringed nodes, dotted flows, gradient
+// tiles, dark demo screens) in a T-specific set of pieces (tp-). Copy is the leaflet's; no source notes.
+const tpBody = (html) => `<div class="svc-body tp">${html}</div>`;
+const tpSec = (id, eyebrow, title, lede, inner, cls = "") => `
+  <section class="qp-sec tp-sec${cls ? " " + cls : ""}" id="${id}" data-qp-reveal>
+    <p class="tp-eyebrow">${eyebrow}</p>
+    <h2 class="qp-h">${title}</h2>
+    ${lede ? `<div class="qp-lede"><p>${lede}</p></div>` : ""}
+    ${inner}
+  </section>`;
+const tpIco = (name) => `<span class="tp-ico">${ICO[name]}</span>`;
+
+// Numbered steps on a dotted line, each with a ring — the solution's process at a glance.
+function tpFlow(items) {
+  return `<ol class="tp-flow" style="--n:${items.length}">${items.map(([title, text], i) => `
+    <li style="--i:${i}"><span class="tp-step">${String(i + 1).padStart(2, "0")}</span><b>${title}</b><p>${text}</p></li>`).join("")}</ol>`;
 }
 
-function tSteps(items) {
-  return `<ol class="ts-steps">${items.map(([title, text], i) =>
-    `<li style="--i:${i}"><span class="ts-no">${String(i + 1).padStart(2, "0")}</span><div><b>${title}</b><p>${text}</p></div></li>`).join("")}</ol>`;
+// Outline discs with an icon, title and line (value / capability lists).
+function tpDiscs(items) {
+  return `<ul class="tp-discs" style="--n:${items.length}">${items.map(([icon, title, text], i) => `
+    <li style="--i:${i}"><span class="tp-disc">${tpIco(icon)}</span><h3>${title}</h3><p>${text}</p></li>`).join("")}</ul>`;
+}
+
+// The rest of the family as ringed links, at the foot of each page.
+function tOthers(current) {
+  const items = T_BRANDS.filter((b) => b.id !== current).map((b, i) => `
+    <li style="--i:${i}"><a href="${b.href}"><span class="tp-ring">${tpIco(b.icon)}</span><b>${b.name}</b><small>${b.en} · ${b.role}</small><span class="tp-tag">${b.tag}</span></a></li>`).join("");
+  return tpSec("others", "T BRAND SOLUTION", "함께 쓰는 T 솔루션", "", `<ul class="tp-family">${items}</ul>`, "tp-last");
 }
 
 function tautoHome() {
+  const center = tBrand("auto");
   const around = ["gen", "testops", "lens", "voc"].map((id, i) => {
     const b = tBrand(id);
-    return `<a class="ts-node n${i}" href="${b.href}" data-tag="${b.tag}"><span class="ts-role">${b.en}</span><span class="s-ibox">${ICO[b.icon]}</span><b>${b.name}</b><small>${b.role}</small></a>`;
+    return `<a class="tp-node p${i}" href="${b.href}"><span class="tp-ring">${tpIco(b.icon)}</span><b>${b.name}</b><small>${b.en} · ${b.role}</small></a>`;
   }).join("");
-  const center = tBrand("auto");
-  return sPage("T BRAND SOLUTION", "AI 기반 품질 검증 자동화", "IT 고객을 위한 통합 QA 자동화 포트폴리오입니다. T-AUTO를 중심으로 설계부터 평가, 운영, 고객 피드백까지 하나의 품질 플랫폼 생태계로 연결합니다.",
-    sSec("map", ["PORTFOLIO MAP", "설계부터 피드백까지 하나로", "각 솔루션은 품질 주기의 한 단계를 맡고, T-AUTO가 그 사이를 잇습니다."], `
-    <div class="ts-map s-body">
-      <svg class="ts-ring" viewBox="0 0 400 400" aria-hidden="true"><circle cx="200" cy="200" r="150"/><circle class="ts-ring-flow" cx="200" cy="200" r="150" pathLength="100"/></svg>
-      <a class="ts-core" href="${center.href}"><span class="s-ibox">${ICO[center.icon]}</span><b>${center.name}</b><span class="ts-core-tag">${center.tag}</span></a>
-      ${around}
-    </div>
-    <ul class="ts-legend s-body" aria-label="품질 주기">${["설계", "검증·운영", "평가", "피드백"].map((s, i) => `<li><i>${i + 1}</i>${s}</li>`).join("")}</ul>`) +
-    sSec("value", ["VALUE", "도입하면 달라지는 것"], `
-    <div class="s-cards s-body">
-      <article class="s-card"><span class="s-ibox">${ICO.flag}</span><h3>출시 주기 단축</h3><p>설계와 실행을 자동화해 Time-to-Market을 앞당깁니다.</p></article>
-      <article class="s-card"><span class="s-ibox">${ICO.form}</span><h3>No-Code 자동화</h3><p>LLM이 자연어 시나리오를 읽고 테스트를 만들어 실행합니다.</p></article>
-      <article class="s-card"><span class="s-ibox">${ICO.renew}</span><h3>운영·비용 최적화</h3><p>필요한 테스트만 골라 구독형으로 운영해 초기 구축 비용을 줄입니다.</p></article>
-    </div>`, true) +
-    sSec("next", ["NEXT STEP", "이렇게 시작합니다"], `
-    <div class="s-body">${tSteps([
+  return sPage("T BRAND SOLUTION", "AI 기반 품질 검증 자동화", "IT 고객을 위한 통합 QA 자동화 포트폴리오입니다. T-AUTO를 중심으로 설계부터 평가, 운영, 고객 피드백까지 하나의 품질 플랫폼 생태계로 연결합니다.", tpBody(
+    tpSec("map", "PORTFOLIO MAP", "설계부터 피드백까지 하나로", "각 솔루션은 품질 주기의 한 단계를 맡고, T-AUTO가 그 사이를 잇습니다.", `
+      <div class="tp-orbit">
+        <svg viewBox="0 0 600 600" aria-hidden="true"><circle class="tp-orbit-ring" cx="300" cy="300" r="210"/>
+          ${[[300, 90], [510, 300], [300, 510], [90, 300]].map(([x, y]) => `<line class="tp-spoke" x1="300" y1="300" x2="${x}" y2="${y}"/>`).join("")}</svg>
+        <a class="tp-core" href="${center.href}">${tpIco(center.icon)}<b>${center.name}</b><small>${center.tag}</small></a>
+        ${around}
+      </div>
+      <ol class="tp-cycle">${["설계", "검증·운영", "평가", "피드백"].map((s, i) => `<li><span>${i + 1}</span>${s}</li>`).join("")}</ol>`) +
+    tpSec("value", "VALUE", "도입하면 달라지는 것", "", tpDiscs([
+      ["flag", "출시 주기 단축", "설계와 실행을 자동화해 Time-to-Market을 앞당깁니다."],
+      ["form", "No-Code 자동화", "LLM이 자연어 시나리오를 읽고 테스트를 만들어 실행합니다."],
+      ["renew", "운영·비용 최적화", "필요한 테스트만 골라 구독형으로 운영해 초기 구축 비용을 줄입니다."]
+    ])) +
+    tpSec("next", "NEXT STEP", "이렇게 시작합니다", "", tpFlow([
       ["PoC / 파일럿 협의", "도입 가능성을 검토하고 요구사항을 분석합니다."],
       ["우선순위 시나리오 선정", "핵심 기능 위주로 자동화 대상을 고릅니다."],
       ["통합 및 확대 적용", "CI/CD 파이프라인과 연동하고 전사로 넓힙니다."]
-    ])}</div>
-    <div class="s-actions"><a class="pill" href="#qa/inquiry">T 솔루션 도입 문의</a></div>
-    <p class="s-note">${T_SOURCE}</p>`),
+    ]) + `<div class="tp-actions"><a class="pill" href="#qa/inquiry">T 솔루션 도입 문의</a></div>`, "tp-last")),
     [["map", "포트폴리오"], ["value", "도입 효과"], ["next", "시작 방법"]]);
 }
 
 function tAuto() {
   const layers = [
-    ["Quality Analytics Layer", "실패 분석 및 릴리즈 의사결정 지원", ["Failure Analysis AI", "Release Stability Score"], "a"],
-    ["AI Intelligence Layer", "AI Agent 기반 자율 테스트", ["TC Gen", "Explorer", "Self-Healing"], "b"],
-    ["Test Automation Layer", "No-Code 및 멀티 플랫폼 실행", ["No-Code AI QA", "One Runner Platform"], "c"],
-    ["Multi-modal QA Layer", "시각·음성 등 다양한 인터페이스 검증", ["Vision (OBS)", "Voice (STT/TTS)"], "d"]
-  ].map(([name, text, chips, tone], i) =>
-    `<li class="ts-layer t-${tone}" style="--i:${i}"><span class="ts-layer-no">L${4 - i}</span><div><b>${name}</b><p>${text}</p></div><div class="ts-chips">${chips.map((c) => `<span>${c}</span>`).join("")}</div></li>`).join("");
-  return sPage("T-AUTO · PLATFORM", "AI 기반 통합 품질 검증 플랫폼", "T 브랜드 솔루션의 중심입니다. 4계층 아키텍처 위에서 No-Code 자동화, AI 자율 테스트, 품질 분석을 한 플랫폼으로 운영하고, 설계(T-GEN)·평가(T-LENS)·피드백(T-VOC)과 연결합니다.",
-    sSec("layers", ["4-LAYER ARCHITECTURE", "네 개의 계층이 함께 움직입니다", "아래 계층이 다양한 인터페이스를 검증하고, 위로 올라갈수록 AI가 판단과 의사결정을 돕습니다."], `
-    <ol class="ts-layers s-body">${layers}</ol>
-    <p class="s-note">T-AUTO는 소프트웨이브 2024에서 소프트웨어 테스트 자동화 도구로 처음 소개했습니다(전자신문).</p>`) +
-    sSec("nocode", ["NO-CODE", "LLM 기반 No-Code 자동화", "Web 환경 PoC 사례: 시나리오 설정만으로 테스트 전 과정을 자동 수행했습니다."], `
-    <div class="ts-split s-body">
-      ${tSteps([
-        ["시나리오 설정", "자연어로 테스트 시나리오를 입력합니다."],
-        ["AI 분석 및 식별 (LLM)", "화면의 UI 요소와 Action을 자동으로 파악합니다."],
-        ["테스트 자동 실행", "식별한 요소를 기준으로 검증을 수행합니다."]
-      ])}
-      <div class="ts-demo nocode" aria-hidden="true">
-        <p class="ts-demo-k">시나리오</p>
-        <p class="ts-type">“로그인 후 장바구니에 상품을 담고 결제 화면까지 이동”</p>
-        <p class="ts-demo-k">AI 식별</p>
-        <div class="ts-found"><span>#login-id</span><span>#login-pw</span><span>button.cart-add</span><span>a.checkout</span></div>
-        <p class="ts-demo-k">실행</p>
-        <ul class="ts-run"><li>로그인</li><li>상품 담기</li><li>결제 화면 진입</li></ul>
+    ["L4", "Quality Analytics Layer", "실패 분석 및 릴리즈 의사결정 지원", ["Failure Analysis AI", "Release Stability Score"]],
+    ["L3", "AI Intelligence Layer", "AI Agent 기반 자율 테스트", ["TC Gen", "Explorer", "Self-Healing"]],
+    ["L2", "Test Automation Layer", "No-Code 및 멀티 플랫폼 실행", ["No-Code AI QA", "One Runner Platform"]],
+    ["L1", "Multi-modal QA Layer", "시각·음성 등 다양한 인터페이스 검증", ["Vision (OBS)", "Voice (STT/TTS)"]]
+  ];
+  return sPage("T-AUTO · PLATFORM", "AI 기반 통합 품질 검증 플랫폼", "T 브랜드 솔루션의 중심입니다. 4계층 아키텍처 위에서 No-Code 자동화, AI 자율 테스트, 품질 분석을 한 플랫폼으로 운영하고, 설계(T-GEN)·평가(T-LENS)·피드백(T-VOC)과 연결합니다.", tpBody(
+    tpSec("layers", "4-LAYER ARCHITECTURE", "네 개의 계층이 함께 움직입니다", "아래 계층이 다양한 인터페이스를 검증하고, 위로 올라갈수록 AI가 판단과 의사결정을 돕습니다.", `
+      <div class="tp-stack">
+        <p class="tp-stack-axis" aria-hidden="true"><span>AI 판단·의사결정</span><span>인터페이스 검증</span></p>
+        <ol>${layers.map(([no, name, text, chips], i) => `
+          <li class="l${4 - i}" style="--i:${i}"><span class="tp-lno">${no}</span><div class="tp-lname"><b>${name}</b><p>${text}</p></div><div class="tp-lchips">${chips.map((c) => `<span>${c}</span>`).join("")}</div></li>`).join("")}</ol>
       </div>
-    </div>`, true) +
-    sSec("healing", ["SELF-HEALING", "UI가 바뀌어도 테스트가 스스로 복구합니다", "요소 탐색에 실패하면 원인을 분석해 새 경로를 찾아 이어서 실행합니다."], `
-    <div class="ts-split s-body">
-      ${tSteps([
-        ["실패 상태 캡처 및 보존", "요소 탐색 실패 시 UI 스크린샷과 DOM 구조를 즉시 저장합니다."],
-        ["데이터 정제 (Token Optimization)", "LLM 효율을 위해 불필요한 스크립트와 마커를 제거합니다."],
-        ["AI 기반 DOM 차이 분석", "기준(V1)과 현재(V2) XML을 비교해 구조 변경을 파악합니다."],
-        ["대체 경로(XPath) 자동 생성", "바뀐 UI에 맞는 새 Locator를 제안하고 복구합니다."]
-      ])}
-      <div class="ts-impact">
-        <p class="ts-demo-k">Impact &amp; Value</p>
-        <div class="ts-metric"><span>Flaky Test 감소율</span><strong>35% ~ 50%<em>↓</em></strong></div>
-        <div class="ts-metric"><span>자동 복구 성공률</span><strong>75% ~ 90%<em>↑</em></strong></div>
-        <ul><li>테스트 유지보수 비용 절감</li><li>릴리즈 안정성 지표화</li><li>UI 변경 대응 리드타임 단축</li></ul>
-        <p class="s-note">${T_SOURCE} 기재 수치</p>
+      <p class="tp-note">T-AUTO는 소프트웨이브 2024에서 소프트웨어 테스트 자동화 도구로 처음 소개했습니다.</p>`) +
+    tpSec("nocode", "NO-CODE", "LLM 기반 No-Code 자동화", "Web 환경 PoC 사례: 시나리오 설정만으로 테스트 전 과정을 자동 수행했습니다.", tpFlow([
+      ["시나리오 설정", "자연어로 테스트 시나리오를 입력합니다."],
+      ["AI 분석 및 식별 (LLM)", "화면의 UI 요소와 Action을 자동으로 파악합니다."],
+      ["테스트 자동 실행", "식별한 요소를 기준으로 검증을 수행합니다."]
+    ]) + `
+      <div class="ts-demo nocode tp-screen" aria-hidden="true">
+        <div><p class="ts-demo-k">시나리오</p><p class="ts-type">“로그인 후 장바구니에 상품을 담고 결제 화면까지 이동”</p></div>
+        <div><p class="ts-demo-k">AI 식별</p><div class="ts-found"><span>#login-id</span><span>#login-pw</span><span>button.cart-add</span><span>a.checkout</span></div></div>
+        <div><p class="ts-demo-k">실행</p><ul class="ts-run"><li>로그인</li><li>상품 담기</li><li>결제 화면 진입</li></ul></div>
+      </div>`) +
+    tpSec("healing", "SELF-HEALING", "UI가 바뀌어도 테스트가 스스로 복구합니다", "요소 탐색에 실패하면 원인을 분석해 새 경로를 찾아 이어서 실행합니다.", tpFlow([
+      ["실패 상태 캡처 및 보존", "요소 탐색 실패 시 UI 스크린샷과 DOM 구조를 즉시 저장합니다."],
+      ["데이터 정제 (Token Optimization)", "LLM 효율을 위해 불필요한 스크립트와 마커를 제거합니다."],
+      ["AI 기반 DOM 차이 분석", "기준(V1)과 현재(V2) XML을 비교해 구조 변경을 파악합니다."],
+      ["대체 경로(XPath) 자동 생성", "바뀐 UI에 맞는 새 Locator를 제안하고 복구합니다."]
+    ]) + `
+      <div class="tp-impact">
+        <p class="tp-eyebrow">Impact &amp; Value</p>
+        <div class="tp-metrics">
+          <div><span>Flaky Test 감소율</span><strong>35% ~ 50%<em>↓</em></strong></div>
+          <div><span>자동 복구 성공률</span><strong>75% ~ 90%<em>↑</em></strong></div>
+        </div>
+        <ul class="tp-chiprow"><li>테스트 유지보수 비용 절감</li><li>릴리즈 안정성 지표화</li><li>UI 변경 대응 리드타임 단축</li></ul>
+      </div>`) +
+    tpSec("multimodal", "MULTI-MODAL QA", "화면과 음성까지 검증합니다", "", `
+      <div class="tp-duo">
+        <article><span class="tp-ring">${tpIco("look")}</span><p class="tp-eyebrow">VISION</p><h3>AI Vision (OBS)</h3><p>OBS 기반으로 화면의 이상을 탐지합니다.</p></article>
+        <article><span class="tp-ring">${tpIco("loop")}</span><p class="tp-eyebrow">VOICE</p><h3>Voice (STT/TTS)</h3><p>테스터 대신 TTS·STT로 발화해 AI 고객 상담 시나리오의 음성 품질을 반복 검증합니다.</p><p class="tp-who">SOTEC 2025 · STK 2025 · QA 코리아 컨퍼런스 2025에서 음성 테스트 자동화(VUX)로 공개</p></article>
       </div>
-    </div>`) +
-    sSec("multimodal", ["MULTI-MODAL QA", "화면과 음성까지 검증합니다"], `
-    <div class="s-cards two s-body">
-      <article class="s-card icon"><span class="s-ibox">${ICO.look}</span><div><span class="s-eyebrow">VISION</span><h3>AI Vision (OBS)</h3><p>OBS 기반으로 화면의 이상을 탐지합니다.</p></div></article>
-      <article class="s-card icon"><span class="s-ibox">${ICO.loop}</span><div><span class="s-eyebrow">VOICE</span><h3>Voice (STT/TTS)</h3><p>테스터 대신 TTS·STT로 발화해 AI 고객 상담 시나리오의 음성 품질을 반복 검증합니다.</p><p class="who">SOTEC 2025 · STK 2025 · QA 코리아 컨퍼런스 2025에서 음성 테스트 자동화(VUX)로 공개</p></div></article>
-    </div>
-    <div class="s-actions"><a class="pill ghost" href="#qa/testops/build">TestOps에서 운영하는 방식 보기</a></div>`, true) +
-    tOthers("auto"),
+      <div class="tp-actions"><a class="pill ghost" href="#qa/testops/build">TestOps에서 운영하는 방식 보기</a></div>`) +
+    tOthers("auto")),
     [["layers", "아키텍처"], ["nocode", "No-Code"], ["healing", "Self-Healing"], ["multimodal", "멀티모달"]]);
 }
 
 function tGen() {
-  return sPage("T-GEN · DESIGN", "AI 기반 테스트 케이스 설계 자동화", "기획서, Figma, 요구사항 문서를 분석해 테스트 케이스를 자동으로 도출하고, AI 에이전트가 중복을 걸러 설계를 최적화합니다.",
-    sSec("docs", ["DOCS → TC", "문서에서 테스트 케이스를 바로 만듭니다"], `
-    <div class="ts-split s-body">
-      <div class="ts-copy"><p>기획서, Figma 화면, 요구사항 문서를 그대로 넣으면 AI가 기능과 조건을 읽어 테스트 케이스를 도출합니다.</p>
-        <div class="ts-chips"><span>기획서</span><span>Figma</span><span>요구사항 문서</span></div></div>
-      <div class="ts-demo gen" aria-hidden="true">
-        <div class="ts-docs"><span>기획서.pdf</span><span>Figma</span><span>요구사항.xlsx</span></div>
-        <i class="ts-arrow"></i>
-        <ul class="ts-tc"><li><b>TC-001</b> 비밀번호 5회 오류 시 계정 잠금</li><li><b>TC-002</b> 잠금 해제 메일 발송</li><li><b>TC-003</b> 임시 비밀번호 재설정</li></ul>
-      </div>
-    </div>`) +
-    sSec("optimize", ["OPTIMIZE", "중복은 줄이고, 판단은 사람과 함께", "AI 에이전트가 겹치는 테스트 케이스를 골라내고, 담당자가 확인한 결과로 다시 생성합니다(Human-in-the-loop)."], `
-    <div class="ts-split s-body">
-      ${tSteps([
-        ["중복 TC 선별", "AI 에이전트가 겹치는 테스트 케이스를 골라냅니다."],
-        ["담당자 검토", "사람이 결과를 확인합니다(Human-in-the-loop)."],
-        ["재생성", "검토 결과를 반영해 테스트 케이스를 다시 만듭니다."]
-      ])}
-      <div class="ts-demo dedupe" aria-hidden="true">
+  return sPage("T-GEN · DESIGN", "AI 기반 테스트 케이스 설계 자동화", "기획서, Figma, 요구사항 문서를 분석해 테스트 케이스를 자동으로 도출하고, AI 에이전트가 중복을 걸러 설계를 최적화합니다.", tpBody(
+    tpSec("docs", "DOCS → TC", "문서에서 테스트 케이스를 바로 만듭니다", "기획서, Figma 화면, 요구사항 문서를 그대로 넣으면 AI가 기능과 조건을 읽어 테스트 케이스를 도출합니다.", `
+      <div class="tp-convert" aria-hidden="true">
+        <ul class="tp-docs"><li>${tpIco("form")}<b>기획서</b></li><li>${tpIco("layers")}<b>Figma</b></li><li>${tpIco("cal")}<b>요구사항 문서</b></li></ul>
+        <span class="tp-into"><i></i><b>AI</b><i></i></span>
+        <div class="ts-demo gen tp-screen"><p class="ts-demo-k">TEST CASES</p><ul class="ts-tc"><li><b>TC-001</b> 비밀번호 5회 오류 시 계정 잠금</li><li><b>TC-002</b> 잠금 해제 메일 발송</li><li><b>TC-003</b> 임시 비밀번호 재설정</li></ul></div>
+      </div>`) +
+    tpSec("optimize", "OPTIMIZE", "중복은 줄이고, 판단은 사람과 함께", "AI 에이전트가 겹치는 테스트 케이스를 골라내고, 담당자가 확인한 결과로 다시 생성합니다(Human-in-the-loop).", tpFlow([
+      ["중복 TC 선별", "AI 에이전트가 겹치는 테스트 케이스를 골라냅니다."],
+      ["담당자 검토", "사람이 결과를 확인합니다(Human-in-the-loop)."],
+      ["재생성", "검토 결과를 반영해 테스트 케이스를 다시 만듭니다."]
+    ]) + `
+      <div class="ts-demo dedupe tp-screen narrow" aria-hidden="true">
         <ul><li>로그인 실패 시 오류 문구 표시</li><li class="dup">로그인 실패하면 에러 메시지 노출</li><li>비밀번호 5회 오류 시 계정 잠금</li><li class="dup">5회 연속 실패 시 로그인 차단</li></ul>
         <p class="ts-demo-k">중복 2건 병합 제안 · 검토 대기</p>
-      </div>
-    </div>
-    <p class="s-note">${T_SOURCE}</p>`, true) +
-    tOthers("gen"),
+      </div>`) +
+    tOthers("gen")),
     [["docs", "문서 → TC"], ["optimize", "설계 최적화"]]);
 }
 
 function lens() {
-  return sPage("T-LENS · EVAL", "대화형 AI(LLM) 품질 평가 플랫폼", "TBELL LLM Evaluation and Scoring System. LLM-as-a-Judge로 평가 프로세스를 표준화하고 정량·정성 평가를 자동화해 일관성을 확보합니다. 2026년 1월 공식 런칭했습니다.",
-    sSec("judge", ["LLM-AS-A-JUDGE", "평가자에 따라 달라지지 않는 평가"], `
-    <div class="ts-split s-body">
-      <div class="ts-copy"><p>챗봇 검증용 질문·응답 데이터셋으로 평가 프롬프트를 만들고, 여러 Judge 모델이 응답 품질을 점수와 사유로 냅니다. 평가 프로세스를 표준화해 정량·정성 평가의 일관성을 확보합니다.</p>
-        <ul class="ts-list"><li>시나리오 전체 End-to-End 검증</li><li>버전 변경 전후 비교</li><li>새 모델 적용 시 품질 안정성 확인</li></ul></div>
-      <div class="ts-demo lens" aria-hidden="true">
-        <div class="ts-score"><svg viewBox="0 0 80 80"><circle cx="40" cy="40" r="32"/><circle class="v" cx="40" cy="40" r="32" pathLength="100"/></svg><strong>92<small>%</small></strong></div>
-        <div><p class="ts-demo-k">EVALUATION SCORE</p><ul class="ts-eval"><li>정확성 <b class="ok">Pass</b></li><li>안전성 <b class="ok">Pass</b></li><li>일관성 <b class="warn">Warning</b></li></ul></div>
-        <div class="ts-progress"><span>Total Progress</span><i style="--w:75%"></i><b>75%</b></div>
-        <p class="ts-demo-cap">예시 화면</p>
-      </div>
-    </div>`) +
-    sSec("device", ["AWS DEVICE FARM", "여러 기기에서 동시에"], `
-    <div class="s-cards s-body">
-      <article class="s-card"><span class="s-ibox">${ICO.cloud}</span><h3>AWS Device Farm 연동</h3><p>Android, iOS, 웹을 포함한 다양한 디바이스 환경에서 병렬로 테스트합니다.</p></article>
-      <article class="s-card"><span class="s-ibox">${ICO.layers}</span><h3>대시보드</h3><p>평가 점수와 사유를 대시보드에서 확인합니다.</p></article>
-      <article class="s-card"><span class="s-ibox">${ICO.renew}</span><h3>지표 맞춤</h3><p>서비스 특성에 맞게 평가 지표를 바꿀 수 있습니다.</p></article>
-    </div>
-    <p class="s-note">${T_SOURCE} · 전자신문 2026.01.13 「티벨, LLM 평가·검증 자동화 시스템 T-LENS 공식 런칭」</p>`, true) +
-    tOthers("lens"),
+  return sPage("T-LENS · EVAL", "대화형 AI(LLM) 품질 평가 플랫폼", "TBELL LLM Evaluation and Scoring System. LLM-as-a-Judge로 평가 프로세스를 표준화하고 정량·정성 평가를 자동화해 일관성을 확보합니다. 2026년 1월 공식 런칭했습니다.", tpBody(
+    tpSec("judge", "LLM-AS-A-JUDGE", "평가자에 따라 달라지지 않는 평가", "챗봇 검증용 질문·응답 데이터셋으로 평가 프롬프트를 만들고, 여러 Judge 모델이 응답 품질을 점수와 사유로 냅니다. 평가 프로세스를 표준화해 정량·정성 평가의 일관성을 확보합니다.", `
+      <div class="tp-judge">
+        <ul class="tp-checks"><li>${tpIco("look")}<b>시나리오 전체 End-to-End 검증</b></li><li>${tpIco("renew")}<b>버전 변경 전후 비교</b></li><li>${tpIco("shield")}<b>새 모델 적용 시 품질 안정성 확인</b></li></ul>
+        <div class="ts-demo lens tp-screen" aria-hidden="true">
+          <div class="ts-score"><svg viewBox="0 0 80 80"><circle cx="40" cy="40" r="32"/><circle class="v" cx="40" cy="40" r="32" pathLength="100"/></svg><strong>92<small>%</small></strong></div>
+          <div><p class="ts-demo-k">EVALUATION SCORE</p><ul class="ts-eval"><li>정확성 <b class="ok">Pass</b></li><li>안전성 <b class="ok">Pass</b></li><li>일관성 <b class="warn">Warning</b></li></ul></div>
+          <div class="ts-progress"><span>Total Progress</span><i style="--w:75%"></i><b>75%</b></div>
+          <p class="ts-demo-cap">예시 화면</p>
+        </div>
+      </div>`) +
+    tpSec("device", "AWS DEVICE FARM", "여러 기기에서 동시에", "", tpDiscs([
+      ["cloud", "AWS Device Farm 연동", "Android, iOS, 웹을 포함한 다양한 디바이스 환경에서 병렬로 테스트합니다."],
+      ["layers", "대시보드", "평가 점수와 사유를 대시보드에서 확인합니다."],
+      ["renew", "지표 맞춤", "서비스 특성에 맞게 평가 지표를 바꿀 수 있습니다."]
+    ])) +
+    tOthers("lens")),
     [["judge", "평가 방식"], ["device", "실행 환경"]]);
 }
 
 function voc() {
-  return sPage("T-VOC · FEEDBACK", "앱 스토어 VOC 모니터링 시스템", "앱 스토어 리뷰를 자동으로 모으고, 부정 리뷰는 Jira 티켓으로 등록하며, AI가 리뷰 유형을 분류하고 답변을 추천해 대응 속도를 높입니다.",
-    sSec("collect", ["COLLECT → ISSUE", "리뷰가 곧 이슈가 됩니다"], `
-    <div class="ts-split s-body">
-      ${tSteps([
-        ["신규 리뷰 자동 수집", "앱 스토어에 올라온 새 리뷰를 자동으로 모읍니다."],
-        ["부정 리뷰 Jira 티켓 생성", "부정 리뷰는 Jira 티켓으로 자동 등록합니다."]
-      ])}
-      <div class="ts-demo voc" aria-hidden="true">
-        <div class="ts-review"><span class="ts-stars">★★★★☆</span><p>로그인이 자주 풀려요…</p></div>
-        <i class="ts-arrow down"></i>
-        <div class="ts-ticket"><b>이슈 자동 등록 완료</b><span>Ticket: VOC-1242 (Critical)</span></div>
-        <p class="ts-demo-cap">예시 화면</p>
+  return sPage("T-VOC · FEEDBACK", "앱 스토어 VOC 모니터링 시스템", "앱 스토어 리뷰를 자동으로 모으고, 부정 리뷰는 Jira 티켓으로 등록하며, AI가 리뷰 유형을 분류하고 답변을 추천해 대응 속도를 높입니다.", tpBody(
+    tpSec("collect", "COLLECT → ISSUE", "리뷰가 곧 이슈가 됩니다", "", `
+      <div class="tp-convert" aria-hidden="true">
+        <div class="ts-demo voc tp-screen"><p class="ts-demo-k">APP STORE</p><div class="ts-review"><span class="ts-stars">★★★★☆</span><p>로그인이 자주 풀려요…</p></div></div>
+        <span class="tp-into"><i></i><b>AUTO</b><i></i></span>
+        <div class="ts-demo voc tp-screen"><p class="ts-demo-k">JIRA</p><div class="ts-ticket"><b>이슈 자동 등록 완료</b><span>Ticket: VOC-1242 (Critical)</span></div><p class="ts-demo-cap">예시 화면</p></div>
+      </div>` + tpFlow([
+      ["신규 리뷰 자동 수집", "앱 스토어에 올라온 새 리뷰를 자동으로 모읍니다."],
+      ["부정 리뷰 Jira 티켓 생성", "부정 리뷰는 Jira 티켓으로 자동 등록합니다."]
+    ])) +
+    tpSec("ai", "AI ANALYSIS", "분류와 답변은 AI가 먼저", "", `
+      <div class="tp-duo">
+        <article><span class="tp-ring">${tpIco("layers")}</span><p class="tp-eyebrow">CLASSIFY</p><h3>리뷰 유형 자동 분류</h3><p>모인 리뷰를 유형별로 자동 분류합니다.</p></article>
+        <article><span class="tp-ring">${tpIco("send")}</span><p class="tp-eyebrow">REPLY</p><h3>AI 추천 답변 생성</h3><p>리뷰에 맞는 답변을 AI가 추천해 대응 속도를 높입니다.</p></article>
       </div>
-    </div>`) +
-    sSec("ai", ["AI ANALYSIS", "분류와 답변은 AI가 먼저"], `
-    <div class="s-cards two s-body">
-      <article class="s-card icon"><span class="s-ibox">${ICO.layers}</span><div><span class="s-eyebrow">CLASSIFY</span><h3>리뷰 유형 자동 분류</h3><p>모인 리뷰를 유형별로 자동 분류합니다.</p></div></article>
-      <article class="s-card icon"><span class="s-ibox">${ICO.send}</span><div><span class="s-eyebrow">REPLY</span><h3>AI 추천 답변 생성</h3><p>리뷰에 맞는 답변을 AI가 추천해 대응 속도를 높입니다.</p></div></article>
-    </div>
-    <p class="s-note">${T_SOURCE}. 티벨은 2020년 금융사 VOC 관리 자동화 프로세스 구축을 시작으로 10여 개 고객사에 VOC 자동화를 구축해 왔습니다(전자신문).</p>`, true) +
-    tOthers("voc"),
+      <p class="tp-note">티벨은 2020년 금융사 VOC 관리 자동화 프로세스 구축을 시작으로 10여 개 고객사에 VOC 자동화를 구축해 왔습니다.</p>`) +
+    tOthers("voc")),
     [["collect", "리뷰 → 이슈"], ["ai", "AI 분석"]]);
 }
 
@@ -1247,6 +1241,7 @@ function aboutBody() {
       <p>070-7777-9113 / 070-7777-6368</p>
       <p>staff@tbell.co.kr</p>
       <a href="https://map.kakao.com/link/map/${encodeURIComponent(name)},${lat},${lng}" target="_blank" rel="noopener noreferrer">지도 보기</a>
+      <iframe class="way-map" src="https://maps.google.com/maps?q=${lat},${lng}&amp;z=16&amp;hl=ko&amp;output=embed" title="${name} 지도" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </article>`).join("");
   return `
     ${qpAboutIntro()}
@@ -1264,7 +1259,7 @@ function recruitBody() {
 
 function ethicalBody() {
   return `
-    ${qpEthicalCode()}
+    ${shot({ pc: "content-ethical.499a3e6c3c4e30f5294c.png", tablet: "content-tablet-ethical.1ee5a7b40bf4c1b4e6d5.png", mobile: "content-mobile-ethical.34213ea9c12006b11ef3.png" })}
     <div class="apply"><a class="fill" href="https://www.tbell.co.kr/files/${encodeURIComponent("윤리경영정책.pdf")}" target="_blank" rel="noopener noreferrer">PDF 다운로드</a></div>`;
 }
 

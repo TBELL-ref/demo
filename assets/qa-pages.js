@@ -346,7 +346,7 @@ function qpRecruitIntro() {
     ${qpRule("인재상", qpIconList(talents))}
     ${qpSec("인재채용", "<p>티벨은 올바른 생각과 실천을 통해 “우수한 인재를, 일하기 좋은 기업”을 만듭니다.</p>", "", "qp-tight")}
     <div class="qp-mosaic" data-qp-reveal>
-      ${tile("a", "[경력] (주)티벨 SW 테스터 대규모 채용")}
+      ${tile("a", "[경력] (주)티벨 정보보호 전문가 채용")}
       ${tile("b", "[경력] (주)티벨 개발자 채용<small>상시채용</small>")}
       ${tile("c", "인사팀 경력자 채용")}
     </div>
@@ -362,32 +362,12 @@ function benefitBody() {
   return groups.map(([t, items]) => qpRule(t, qpIconList(items))).join("");
 }
 
-function qpPaper(title, inner) {
-  return `<section class="qp-paper" data-qp-reveal style="background-image:url('${QA}photos/paper-texture.jpg')"><div class="qp-paper-in">
-    <h2 class="qp-h">${title}</h2>${inner}
-    <p class="qp-sign"><span>티벨 대표 이사</span><b>김 종 균</b><img src="${QA}raw/ceo-signature.png" alt="서명"></p>
-  </div></section>`;
-}
-
-function qpEthicalCode() {
-  const rows = [
-    ["고객에 대한 윤리", ["01 신용과 정직성을 바탕으로 고객으로부터 신뢰를 얻을 수 있도록 최선을 다한다.<br>02 양질의 제품과 서비스를 통하여 고객의 만족을 제고할 수 있도록 한다.<br>03 업무와 관련되어 취득한 고객의 정보를 보호한다."]],
-    ["고객에 대한 윤리", ["01 자유 경쟁의 원칙에 따라 공정하고 자유로운 시장경제 질서를 존중하고 경쟁사와 공정하게 <br class=\"qp-br\">경쟁하여 공정거래 관련 법규를 준수한다.", "02 거래처, 협력업체 등과의 거래 관계에 있어서 상호 신뢰와 존중을 바탕으로 공정한 거래를 통한 <br class=\"qp-br\">상생을 추구한다. 또한 거래처, 협력업체 등의 지속적인 동반성장을 지원한다."]],
-    ["사회와 국가에 대한 윤리", ["01 효율적인 경영과 혁신을 바탕으로 가치를 창출하여 기업 시민으로서 경제에 기여한다.<br>02 환경 및 보건안전, 인권 등의 국내외 규범 및 법규를 준수한다.<br>03 사회의 일원으로서 사회적 책임을 다하고 건전한 사회 발전에 공헌한다."]]
-  ];
-  return qpPaper("윤리 규범", `<dl class="qp-code">${rows.map(([t, ps]) => `<dt>${t}</dt><dd>${ps.map((p) => `<p>${p}</p>`).join("")}</dd>`).join("")}</dl>`) +
-    qpSec("윤리경영 정책", "<p>윤리경영 정책 파일 다운로드</p>", "", "qp-tight");
-}
-
 function socialBody() {
   const fields = [["social-target-group", "주요 대상", "지역사회 청소년 / 대학교 학생 / 여성 / 장애인"], ["social-activity", "활동 분야", "재능 기부 / 나눔 및 기부 / 채용 / 스포츠 지원"], ["social-contribution", "공헌 활동", "간식 기부 / 전자기계 기부 / 질병관련 용품 기부 / 전문지식 나눔 / 훈련비 지원"]];
   const road = [["social-2022", "2022", "사회공헌 체계확립"], ["social-2023-2024", "2023~2024", "사회공헌 체계 고도화"], ["social-2025", "2025", "가치창출 확대"]];
   const steps = [["접수 및 상담", ""], ["접수 내용 검토", "담당자 접수 : 접수된 제보를 담당자가 접수<br>상담 : 상담 내용 기록 및 고충처리 상담<br>내용검토 : 고충 내용을 확인 및 검토"], ["처리 및 결과 통보", "처리 및 결과 통보<br>고충사항 청취의 경우 10일 이내 조치 및<br>처리결과를 해당 근로자에게 통보"], ["개선 활동", ""]];
   return `
-    ${qpPaper("안전보건 경영 방침", qpParas([
-      "임직원이 안전하고 쾌적하게 일할 수 있는 직업환경 및 근무환경을 조성한다. 안전보건 관련 법규 및 안전보건 관리 규정을 명확히 인지하고 / 철저히 준수한다. 안전보건 경영체계를 구축하여 사전에 유해 위험 요인을 파악 및 제거함으로써 / 기업의 모든 경영 활동 영역에서 안전사고 또는 재해가 발생하지 않도록 노력한다.",
-      "안전보건 교육 및 훈련을 통해 임직원의 안전보건 인식을 제고하고, 안전을 중시하는 문화를 형성한다. / 임직원 및 기타 이해 관계자의 의견을 적극 수렴하여 현장 중심의 안전보건 활동을 수립 및 시행한다. / 안전 사고 또는 재해 발생 시 피해를 최소화하기 위해 비상 대응 체계를 마련한다."
-    ]))}
+    ${shot({ pc: "content-social-01.9d7e25d9e5508740f445.png", tablet: "content-tablet-social-01.7a5073b4f6e570f4863b.png", mobile: "content-mobile-social-01.f68c2567deeef779e297.png" })}
     <section class="qp-sec qp-map" data-qp-reveal style="background-image:url('${QA}photos/worldmap.png')">
       <h2 class="qp-h">사회 공헌</h2>
       <ul class="qp-maprings">
@@ -427,7 +407,7 @@ function envBody() {
 // arrive from its sibling page. Everything is static under prefers-reduced-motion.
 function wireQaPages() {
   const root = document.querySelector(".svc-body");
-  if (!root || !root.querySelector(".qp-sec, .qp-band, .qp-paper, .qp-mosaic, .qp-stairs")) return;
+  if (!root || !root.querySelector(".qp-sec, .qp-band, .qp-mosaic, .qp-stairs")) return;
   const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   document.documentElement.classList.toggle("qp-js", !still);
   const items = root.querySelectorAll("[data-qp-reveal]");
