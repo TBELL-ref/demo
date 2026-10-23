@@ -1641,6 +1641,8 @@ function menuFitHeight() {
 
 function openMenu(id) {
   if (window.matchMedia("(max-width: 768px)").matches) return;
+  // /multi shows one panel per item: entering the nav bar (or a gap in it) must not open an empty sheet.
+  if (MULTI && !id) return;
   const opening = !menuDrop.classList.contains("is-open");
   menuDrop.classList.add("is-open");
   menuDrop.querySelectorAll(".drop-col").forEach((col) => col.classList.toggle("is-hover", col.dataset.id === id));
