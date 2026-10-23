@@ -204,9 +204,10 @@ function gateHome() {
     ${stage("shade-d", stats())}`;
 }
 
-// ── /multi home: what the whole company shares, with no business-area split ─────────
-// Copy is company-level only, taken as published: the MISSION (경영철학), 티벨 코어 (회사소개),
-// milestones from the history data, and the company figures. No QA- or 보안-specific text.
+// ── /multi home (design_demo/multi-home-hero-plan.md) ─────────────────────────────
+// Hero says what the company does without naming the businesses; right below it, two
+// equal entrances into QA and 정보보호 using each home's own h1 and artwork. MISSION and
+// 티벨 코어, the milestones and the offices follow. Figures are the published ones.
 const MULTI_SINCE = [
   ["2015", "주식회사 티벨 설립"],
   ["2016", "기업부설연구소 설립"],
@@ -214,22 +215,54 @@ const MULTI_SINCE = [
   ["2020", "벤처기업 인증"],
   ["2023", "2023년도 SK텔레콤 최우수파트너사 수상"]
 ];
+const MULTI_FIGURES = [[1460, "개", "누적 수행 프로젝트"], [161, "개사", "이용 고객사"], [165, "명", "임직원"]];
+
+// One entrance per business: label, the h1 of that home, its sub-pages from the header menu.
+function multiBizCard(sec, art) {
+  const links = sec.groups.filter((g) => g.id).map((g) => `<li><a href="${g.href}">${g.label}</a></li>`).join("");
+  const name = sec.id === "qa" ? "QA" : "정보보호";
+  const en = sec.id === "qa" ? "SOFTWARE TEST &amp; QUALITY" : "TBELL 정보보호 컨설팅";
+  const title = sec.id === "qa" ? "차별화된 테스트 경험을 제공하는<br>대한민국 대표 품질 서비스 기업" : "우리 회사에 필요한 보안 인증,<br>2분이면 알 수 있습니다.";
+  return `<article class="mb-card mb-${sec.id}">
+      <a class="mb-art" href="${sec.href}" tabindex="-1" aria-hidden="true">${art}</a>
+      <div class="mb-body">
+        <p class="mb-name">${name}<span>${en}</span></p>
+        <h3><a href="${sec.href}">${title}</a></h3>
+        <ul class="mb-links">${links}</ul>
+        <a class="mb-go" href="${sec.href}">${name} 홈으로<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </article>`;
+}
+
 function multiHome() {
   const base = window.TBELL_BASE || "";
   const years = new Date().getFullYear() - 2015;
-  const figures = [[1460, "개", "누적 수행 프로젝트 수"], [161, "개사", "이용 고객사 수"], [165, "명", "임직원 수"]];
   const core = [["core-test", "TEST"], ["core-customer", "CUSTOMER"], ["core-human", "HUMAN"]];
+  const [qaSec, secSec] = MULTI_MENU[0].sections;
+  const qaArt = `<img src="${ORIGIN}banner-main-pc-001.0e1ee99f9660f77d4fe1.png" alt="" loading="lazy">`;
+  const secArt = `<span class="mb-shield"><img src="${base}assets/shield.png?v=3" alt="" loading="lazy"><i></i><svg viewBox="0 0 1400 1400"><path d="M642 642 L686 686 L766 594"/></svg></span>`;
   return `<div class="mh">
-  <section class="mh-hero">
-    <span class="mh-rope" aria-hidden="true"></span>
-    <div class="mh-knot"><small>SINCE</small><b>2015</b><span>TBELL</span></div>
-    <p class="qh-label">MISSION</p>
-    <h1>우리는 고객의 소프트웨어 품질 향상을 위해 <br>스마트한 솔루션을 제공하며 <br>고객의 가치 향상에 기여합니다.</h1>
-    <div class="mh-cta"><a class="pill" href="#company/about">기업 정보</a><a class="pill ghost" href="#inquiry/qa">문의하기</a></div>
+  <section class="mh-top" style="background-image:url('${ORIGIN}bg-vision.2e2c550d96ce302bf12d.png')">
+    <div class="mh-wrap mh-top-in">
+      <p class="qh-label">SINCE 2015 · TBELL</p>
+      <h1>소프트웨어는 제대로 동작하게,<br>정보는 안전하게 관리되게.</h1>
+      <p class="lede">2015년부터 1,460개 프로젝트, 161개 고객사와 함께해 온 기술 전문 기업입니다.</p>
+      <div class="mh-cta"><a class="pill" href="#" data-jump="mh-biz">사업 영역 보기</a><a class="pill ghost" href="#inquiry/qa">문의하기</a></div>
+    </div>
+    <div class="mh-wrap mh-proof" data-count-zone>${MULTI_FIGURES.map(([n, u, l]) => `<p><strong><span class="count" data-count="${n}">0</span>${u}</strong><span>${l}</span></p>`).join("")}</div>
+  </section>
+  <section class="mh-biz" id="mh-biz">
+    <div class="mh-wrap">
+      <p class="qh-label">BUSINESS</p>
+      <h2>두 개의 전문 영역에서 일합니다</h2>
+      <div class="mb-grid">${multiBizCard(qaSec, qaArt)}${multiBizCard(secSec, secArt)}</div>
+    </div>
   </section>
   <section class="mh-core" style="background-image:url('${base}assets/qa/photos/core-building.jpg')">
     <div class="mh-wrap">
-      <p class="qh-label">TBELL CORE</p>
+      <p class="qh-label">MISSION</p>
+      <p class="mh-mission">우리는 고객의 소프트웨어 품질 향상을 위해 <br>스마트한 솔루션을 제공하며 <br>고객의 가치 향상에 기여합니다.</p>
+      <p class="qh-label mh-core-label">TBELL CORE</p>
       <h2>티벨 코어</h2>
       <ul class="mh-rings">${core.map(([icon, t], i) => `<li style="--i:${i}"><span><img src="${base}assets/qa/icons/${icon}.png" alt=""></span><b>${t}</b></li>`).join("")}</ul>
     </div>
@@ -241,12 +274,12 @@ function multiHome() {
       <ol class="mh-line">${MULTI_SINCE.map(([y, t], i) => `<li style="--i:${i}"><b>${y}</b><span>${t}</span></li>`).join("")}</ol>
     </div>
   </section>
-  <section class="mh-common" data-count-zone>
+  <section class="mh-common">
     <div class="mh-wrap">
-      <p class="qh-label">TBELL</p>
-      <h2>고객과 더불어 성장하는 TBELL</h2>
-      <div class="mh-figs">${figures.map(([n, u, l]) => `<div><p>${l}</p><strong><span class="count" data-count="${n}">0</span>${u}</strong></div>`).join("")}</div>
+      <p class="qh-label">CONTACT</p>
+      <h2>찾아오시는 길</h2>
       <div class="mh-places"><p><b>강남 본사</b>서울특별시 강남구 강남대로 354, 9층 (역삼동, 혜천빌딩)</p><p><b>가산 사업장</b>서울특별시 금천구 가산디지털1로 168, A동 601호</p></div>
+      <div class="mh-cta"><a class="pill" href="#inquiry/qa">문의하기</a><a class="pill ghost" href="#company/about">기업 정보</a></div>
     </div>
   </section>
 </div>`;
@@ -2182,6 +2215,7 @@ function renderMulti(mode, group, child) {
   if (!mode) {
     content.innerHTML = multiHome();
     wireStages();
+    wireJump();
     window.scrollTo(0, 0);
     return;
   }
