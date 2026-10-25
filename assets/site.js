@@ -269,7 +269,7 @@ function multiHome() {
   const [qaSec, secSec] = MULTI_MENU[0].sections;
   return `<div class="mh">
   <section class="mh-doors">
-    <h1 class="door-title">소프트웨어는 제대로 동작하게, <br>정보는 안전하게 관리되게.</h1>
+    <h1 class="sr-only">TBELL</h1>
     ${multiDoor(qaSec)}${multiDoor(secSec)}
   </section>
   <section class="mh-core" style="background-image:url('${base}assets/qa/photos/core-building.jpg')">
