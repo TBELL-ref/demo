@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@200;400;500;700&family=Oxanium:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="../../assets/site.css?v=123">
-  <link rel="stylesheet" href="../../re-menu/re.css?v=4">
+  <link rel="stylesheet" href="../../re-menu/re.css?v=5">
   <link rel="icon" href="../../assets/tbell-logo.svg">
   <script type="application/ld+json">
 {
@@ -47,7 +47,7 @@
         "Performance Testing",
         "스트레스 테스트"
       ],
-      "description": "성능 테스트(부하 테스트)는 처리량·응답시간·자원 사용량을 측정해 시스템의 한계와 임계점을 검증하는 테스트입니다.",
+      "description": "처리량·응답시간·자원 사용량을 측정해, 사용자가 몰려도 시스템이 버티는지와 한계·임계점을 검증합니다.",
       "serviceType": "Software Testing",
       "provider": {
         "@id": "https://tbell-ref.github.io/demo/#org"
@@ -83,14 +83,6 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "성능 테스트란 무엇인가요?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "시스템의 처리량, 응답시간, 자원 사용 등 성능 지표를 측정하고 분석해, 요구사항을 만족하는지와 시스템의 한계·임계점을 검증하는 테스트입니다. 운영 중 발생할 수 있는 문제를 사전에 파악할 수 있습니다."
-          }
-        },
-        {
-          "@type": "Question",
           "name": "성능 테스트와 부하 테스트는 같은 말인가요?",
           "acceptedAnswer": {
             "@type": "Answer",
@@ -110,7 +102,7 @@
           "name": "어떤 도구를 사용하나요?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "LoadRunner, Apache JMeter 등 대표적인 성능 테스트 도구를 사용하며, 대상 시스템과 목적에 맞춰 최적의 도구를 선정합니다."
+            "text": "LoadRunner, Apache JMeter 등 대표적인 성능 테스트 도구를 사용하며, 개발 연구소가 대상 시스템과 목적에 맞는 도구 선정부터 테스트까지 함께합니다."
           }
         }
       ]
@@ -181,25 +173,28 @@
   </header>
   </div>
   <main id="content" class="rm">
-    <section class="rm-hero copy-right" style="--pos:20%">
-      <picture class="rm-hero-bg"><source media="(max-width: 768px)" srcset="../../assets/origin/bg-mobile-perfomance.4b266306d8c200a4bea8.png"><source media="(max-width: 1024px)" srcset="../../assets/origin/bg-tablet-perfomance.defe2610687b7c8a7569.png"><img src="../../assets/origin/bg-perfomance.970f68cd64a2613d1c03.png" alt=""></picture>
-      <div class="rm-wrap">
-        <div class="rm-hero-copy">
-          <ol class="rm-crumb" aria-label="현재 위치"><li><a href="../../re-menu/#qa">QA</a></li><li><a href="../../re-menu/types/">테스트 종류</a></li><li aria-current="page">성능 테스트</li></ol>
-          <p class="rm-eyebrow">Performance Testing</p>
-          <h1><span>성능 테스트 ·</span> <span>부하 테스트</span></h1>
-          <p class="lede"><strong>성능 테스트(부하 테스트)는 처리량·응답시간·자원 사용량을 측정해 시스템의 한계와 임계점을 검증하는 테스트입니다.</strong></p>
-          <div class="rm-actions"><a class="pill" href="../../re-menu/#inquiry/qa">테스트 문의하기</a><a class="pill ghost" href="#faq">자주 묻는 질문</a></div>
-        </div>
+    <section class="detail svc-page">
+      <div class="svc-banner">
+        <div class="svc-track"><article class="svc-slide">
+          <picture class="svc-bg"><source media="(max-width: 768px)" srcset="../../assets/origin/bg-mobile-perfomance.4b266306d8c200a4bea8.png"><source media="(max-width: 1024px)" srcset="../../assets/origin/bg-tablet-perfomance.defe2610687b7c8a7569.png"><img src="../../assets/origin/bg-perfomance.970f68cd64a2613d1c03.png" alt=""></picture>
+          <div><h1>성능 테스트 · 부하 테스트</h1><p>처리량·응답시간·자원 사용량을 측정해, 사용자가 몰려도 시스템이 버티는지와 한계·임계점을 검증합니다.</p><div class="svc-tags"><span>#부하</span><span>#스트레스</span><span>#확장성</span></div></div>
+        </article></div>
+        <a class="svc-nav prev" href="../../re-menu/api/" aria-label="이전: API 테스트"><svg viewBox="0 0 32 56" width="32" height="56" aria-hidden="true"><path fill="currentColor" d="M3.44 27.65 29.28 2.69 28.56 2 2 27.65l.72.7L29.28 54l.72-.7L3.44 27.65Z"/></svg></a><span class="svc-nav next is-off" aria-hidden="true"><svg viewBox="0 0 32 56" width="32" height="56" aria-hidden="true"><path fill="currentColor" d="M3.44 27.65 29.28 2.69 28.56 2 2 27.65l.72.7L29.28 54l.72-.7L3.44 27.65Z"/></svg></span>
       </div>
     </section>
-    <nav class="rm-tabs" aria-label="테스트 종류"><ul class="rm-wrap"><li><a href="../../re-menu/outsourcing/">QA 아웃소싱</a></li><li><a href="../../re-menu/automation/">테스트 자동화</a></li><li><a href="../../re-menu/blackbox/">블랙박스 테스트</a></li><li><a href="../../re-menu/whitebox/">화이트박스 테스트</a></li><li><a href="../../re-menu/api/">API 테스트</a></li><li><a href="../../re-menu/performance/" aria-current="page">성능 테스트</a></li></ul></nav>
-    <section class="rm-sec rm-needs" aria-labelledby="need"><div class="rm-wrap">
-      <h2 id="need">이럴 때 필요합니다</h2>
-      <ol><li><b>01</b><p>서비스 오픈이나 이벤트로 사용자가 몰릴 때</p></li><li><b>02</b><p>차세대 전환·인프라 변경을 앞두고 있을 때</p></li><li><b>03</b><p>느리다는 사용자 불만이 늘어날 때</p></li><li><b>04</b><p>서버 증설 규모의 근거가 필요할 때</p></li></ol>
+    <div class="qh rm">
+    <section class="s-sec qh-light" aria-labelledby="def"><div class="s-wrap">
+      <div class="qh-head"><p class="qh-label">DEFINITION</p><h2 id="def">성능 테스트란?</h2><p>성능 테스트(Performance Testing)는 시스템의 성능을 측정하고 분석해, 요구사항을 만족하는 데 필요한 처리량과 응답시간, 자원 사용 등의 지표를 산출하고 평가하는 테스트입니다. 운영 중 발생할 수 있는 문제를 미리 파악하고, 시스템의 한계와 임계점을 확인해 안정적인 운영 기반을 마련합니다.</p></div>
     </div></section>
-    <section class="rm-sec rm-how" aria-labelledby="how"><div class="rm-wrap">
-      <figure class="rm-dgpanel"><svg class="dg" viewBox="0 0 480 360" role="img" aria-label="성능 테스트: 동시 사용자가 늘수록 응답시간이 늘고, 목표를 넘는 임계점을 찾습니다">
+    <section class="s-sec" aria-labelledby="need"><div class="s-wrap">
+      <div class="qh-head"><p class="qh-label">WHEN YOU NEED IT</p><h2 id="need">이럴 때 필요합니다</h2></div>
+      <ol class="rm-list"><li><span class="n">01</span><div>서비스 오픈이나 이벤트로 사용자가 몰릴 때</div></li><li><span class="n">02</span><div>차세대 전환·인프라 변경을 앞두고 있을 때</div></li><li><span class="n">03</span><div>느리다는 사용자 불만이 늘어날 때</div></li><li><span class="n">04</span><div>서버 증설 규모의 근거가 필요할 때</div></li></ol>
+    </div></section>
+    <section class="s-sec qh-light" aria-labelledby="how"><div class="s-wrap">
+      <div class="qh-head"><p class="qh-label">HOW WE TEST</p><h2 id="how">목적에 맞는 성능 테스트를 고릅니다</h2></div>
+      <div class="qt-panel">
+        <div class="qt-copy"><p class="qt-kind"><span>PERFORMANCE</span>성능 테스트</p><h3>LoadRunner · JMeter로 실제 부하를 재현합니다</h3><ol class="rm-list"><li><span class="n">01</span><div><b>부하 · 스트레스</b> 예상 사용자 수의 응답시간, 한계를 넘을 때의 동작</div></li><li><span class="n">02</span><div><b>확장성 · 안정성</b> 자원 증설 효과, 장시간 운영 시 성능 유지</div></li><li><span class="n">03</span><div><b>볼륨 · 구성</b> 대량 데이터 처리, 설정·환경에 따른 차이</div></li><li><span class="n">04</span><div><b>개발 연구소</b> 도구 선정부터 테스트까지 함께 참여</div></li></ol></div>
+        <div class="qh-demo rm-demo"><svg class="dg" viewBox="0 0 480 360" role="img" aria-label="성능 테스트: 동시 사용자가 늘수록 응답시간이 늘고, 목표를 넘는 임계점을 찾습니다">
   <defs>
     <linearGradient id="dg-box" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#262626"/><stop offset="1" stop-color="#121212"/></linearGradient>
     <linearGradient id="dg-hi" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f3a40"/><stop offset="1" stop-color="#121a1c"/></linearGradient>
@@ -215,29 +210,19 @@
   <path class="mark" d="M344 196V300"/>
   <circle class="pulse" cx="344" cy="196" r="7"/><circle class="dot" cx="344" cy="196" r="7"/>
   <text class="hot" x="300" y="182">임계점</text>
-</svg></figure>
-      <div class="rm-how-list">
-        <h2 id="how">목적에 맞는 성능 테스트를 고릅니다</h2>
-        <ol style="--cols:2"><li><h3>부하 테스트</h3><p>예상 사용자 수에서 응답시간과 처리량</p></li><li><h3>스트레스 테스트</h3><p>한계를 넘을 때 무너지고 회복하는 방식</p></li><li><h3>확장성 테스트</h3><p>자원을 늘린 만큼 성능이 느는지</p></li><li><h3>안정성 테스트</h3><p>오래 운영해도 성능이 유지되는지</p></li><li><h3>볼륨 테스트</h3><p>대량 데이터에서도 빠르고 정확한지</p></li><li><h3>구성 테스트</h3><p>설정과 환경에 따른 성능 차이</p></li></ol>
+</svg></div>
       </div>
-      <p class="rm-how-note">주요 도구 <b>LoadRunner</b> · <b>Apache JMeter</b> — 개발 연구소가 도구 선정부터 테스트까지 함께합니다</p>
     </div></section>
-    <section class="rm-proof" aria-label="티벨과 함께하는 고객사">
-      <p class="rm-wrap">티벨과 함께하는 <b>고객사</b></p>
-      <div class="rm-marquee"><ul><li><img src="../../assets/origin/01_sk_telecom.ae25244966926033ab37.png" alt="SK텔레콤" loading="lazy"></li><li><img src="../../assets/origin/02_logo.26e3f50ed53544c1c7ac.png" alt="" loading="lazy"></li><li><img src="../../assets/origin/03_lg.a96d12b90e0b1d8e2a5a.png" alt="LG" loading="lazy"></li><li><img src="../../assets/origin/04_lgu+.5aa452b3620888b8180c.png" alt="LG유플러스" loading="lazy"></li><li><img src="../../assets/origin/05_woongjin.4b5f79bcf32c2b52d4c0.png" alt="웅진" loading="lazy"></li><li><img src="../../assets/origin/06_gs.b4937c30866898d5978d.png" alt="GS" loading="lazy"></li><li><img src="../../assets/origin/07_olive_young.e63706f5f90bed782755.png" alt="올리브영" loading="lazy"></li><li><img src="../../assets/origin/08_kakaopay.ec0feddaf22e913c7e02.png" alt="카카오페이" loading="lazy"></li><li><img src="../../assets/origin/10_logo.903a4c7c9aa13d6268ce.png" alt="" loading="lazy"></li><li><img src="../../assets/origin/11_theres.78c038692ae02eeeb8b8.png" alt="" loading="lazy"></li><li><img src="../../assets/origin/12_11street.ce145ee69dde686b285c.png" alt="11번가" loading="lazy"></li><li><img src="../../assets/origin/14_kt.626d843890e82319cfb2.png" alt="KT" loading="lazy"></li><li><img src="../../assets/origin/15_tripstore.35fd24420f22a807102d.png" alt="트립스토어" loading="lazy"></li><li><img src="../../assets/origin/16_cyberlogitec.21555d984495dfddc26d.png" alt="사이버로지텍" loading="lazy"></li><li><img src="../../assets/origin/17_lig.c81d0240fab7968ff357.png" alt="LIG넥스원" loading="lazy"></li><li><img src="../../assets/origin/18_hmm.18d13a82edd9e11b5231.png" alt="HMM" loading="lazy"></li><li><img src="../../assets/origin/19_nuri.9e846a18d466c945442b.png" alt="누리플렉스" loading="lazy"></li></ul><ul aria-hidden="true"><li><img src="../../assets/origin/01_sk_telecom.ae25244966926033ab37.png" alt="SK텔레콤" loading="lazy"></li><li><img src="../../assets/origin/02_logo.26e3f50ed53544c1c7ac.png" alt="" loading="lazy"></li><li><img src="../../assets/origin/03_lg.a96d12b90e0b1d8e2a5a.png" alt="LG" loading="lazy"></li><li><img src="../../assets/origin/04_lgu+.5aa452b3620888b8180c.png" alt="LG유플러스" loading="lazy"></li><li><img src="../../assets/origin/05_woongjin.4b5f79bcf32c2b52d4c0.png" alt="웅진" loading="lazy"></li><li><img src="../../assets/origin/06_gs.b4937c30866898d5978d.png" alt="GS" loading="lazy"></li><li><img src="../../assets/origin/07_olive_young.e63706f5f90bed782755.png" alt="올리브영" loading="lazy"></li><li><img src="../../assets/origin/08_kakaopay.ec0feddaf22e913c7e02.png" alt="카카오페이" loading="lazy"></li><li><img src="../../assets/origin/10_logo.903a4c7c9aa13d6268ce.png" alt="" loading="lazy"></li><li><img src="../../assets/origin/11_theres.78c038692ae02eeeb8b8.png" alt="" loading="lazy"></li><li><img src="../../assets/origin/12_11street.ce145ee69dde686b285c.png" alt="11번가" loading="lazy"></li><li><img src="../../assets/origin/14_kt.626d843890e82319cfb2.png" alt="KT" loading="lazy"></li><li><img src="../../assets/origin/15_tripstore.35fd24420f22a807102d.png" alt="트립스토어" loading="lazy"></li><li><img src="../../assets/origin/16_cyberlogitec.21555d984495dfddc26d.png" alt="사이버로지텍" loading="lazy"></li><li><img src="../../assets/origin/17_lig.c81d0240fab7968ff357.png" alt="LIG넥스원" loading="lazy"></li><li><img src="../../assets/origin/18_hmm.18d13a82edd9e11b5231.png" alt="HMM" loading="lazy"></li><li><img src="../../assets/origin/19_nuri.9e846a18d466c945442b.png" alt="누리플렉스" loading="lazy"></li></ul></div>
-    </section>
-    <section class="rm-sec rm-end" aria-labelledby="faq"><div class="rm-wrap">
-      <div class="rm-end-side">
-        <h2 id="faq">자주 묻는 질문</h2>
-        <div class="rm-cta">
-          <h3>사용자가 몰려도 버티나요?</h3>
-          <p>예상 사용자 수와 대상 시스템을 알려 주시면 성능 목표와 시나리오를 함께 설계해 드립니다.</p>
-          <a class="pill" href="../../re-menu/#inquiry/qa">프로젝트 문의</a>
-          <small>staff@tbell.co.kr · 070-7777-9113</small>
-        </div>
-      </div>
-      <div class="rm-faq"><details><summary>성능 테스트란 무엇인가요?</summary><p>시스템의 처리량, 응답시간, 자원 사용 등 성능 지표를 측정하고 분석해, 요구사항을 만족하는지와 시스템의 한계·임계점을 검증하는 테스트입니다. 운영 중 발생할 수 있는 문제를 사전에 파악할 수 있습니다.</p></details><details><summary>성능 테스트와 부하 테스트는 같은 말인가요?</summary><p>부하 테스트는 성능 테스트의 한 종류입니다. 성능 테스트는 부하, 스트레스, 확장성, 안정성, 볼륨, 구성 테스트를 모두 포함하는 더 넓은 개념입니다.</p></details><details><summary>언제 성능 테스트를 해야 하나요?</summary><p>서비스 오픈이나 대규모 이벤트처럼 사용자가 몰리기 전, 차세대 시스템 전환이나 인프라 변경 전에 수행하는 것이 좋습니다.</p></details><details><summary>어떤 도구를 사용하나요?</summary><p>LoadRunner, Apache JMeter 등 대표적인 성능 테스트 도구를 사용하며, 대상 시스템과 목적에 맞춰 최적의 도구를 선정합니다.</p></details></div>
+    <section class="s-sec" aria-labelledby="faq"><div class="s-wrap">
+      <div class="qh-head"><p class="qh-label">FAQ</p><h2 id="faq">자주 묻는 질문</h2></div>
+      <div class="rm-faq"><details><summary>성능 테스트와 부하 테스트는 같은 말인가요?</summary><p>부하 테스트는 성능 테스트의 한 종류입니다. 성능 테스트는 부하, 스트레스, 확장성, 안정성, 볼륨, 구성 테스트를 모두 포함하는 더 넓은 개념입니다.</p></details><details><summary>언제 성능 테스트를 해야 하나요?</summary><p>서비스 오픈이나 대규모 이벤트처럼 사용자가 몰리기 전, 차세대 시스템 전환이나 인프라 변경 전에 수행하는 것이 좋습니다.</p></details><details><summary>어떤 도구를 사용하나요?</summary><p>LoadRunner, Apache JMeter 등 대표적인 성능 테스트 도구를 사용하며, 개발 연구소가 대상 시스템과 목적에 맞는 도구 선정부터 테스트까지 함께합니다.</p></details></div>
     </div></section>
+    <section class="qh-close"><div class="s-wrap">
+      <h2>사용자가 몰려도 버티나요?</h2>
+      <p>예상 사용자 수와 대상 시스템을 알려 주시면 성능 목표와 시나리오를 함께 설계해 드립니다.</p>
+      <a class="pill" href="../../re-menu/#inquiry/qa">프로젝트 문의</a>
+    </div></section>
+    </div>
   </main>
   <footer class="footer">
     <img src="../../assets/tbell-logo.svg" alt="" width="88" height="18">
@@ -246,6 +231,6 @@
     <p>가산사업장 서울특별시 금천구 가산디지털1로 168, A동 601호</p>
     <p class="num">Tel 070-7777-9113 / 070-7777-6368 · staff@tbell.co.kr</p>
   </footer>
-  <script src="../../re-menu/re-menu.js?v=2"></script>
+  <script src="../../re-menu/re-menu.js?v=3"></script>
 </body>
 </html>

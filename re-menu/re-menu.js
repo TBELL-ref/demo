@@ -69,10 +69,48 @@
   window.addEventListener("resize", () => { if (drop.classList.contains("is-open")) drop.style.height = fit() + "px"; });
   toggle.addEventListener("click", () => toggle.setAttribute("aria-expanded", String(nav.classList.toggle("open"))));
 
-  // Centre the current tab inside the tab strip only; scrollIntoView would also scroll the page.
-  const current = document.querySelector('.rm-tabs [aria-current="page"]');
-  if (current) {
-    const strip = current.closest("ul");
-    strip.scrollLeft = current.offsetLeft - (strip.clientWidth - current.offsetWidth) / 2;
+  // 테스트 종류 explorer (site.js wireExplorer, static): the chosen photo wipes in, its info block shows.
+  const qx = document.querySelector(".qx");
+  if (qx) {
+    const tabs = [...qx.querySelectorAll(".qx-list button")];
+    const shots = [...qx.querySelectorAll(".qx-shot")];
+    const infos = [...qx.querySelectorAll(".qx-info")];
+    const bar = qx.querySelector(".qx-bar");
+    const panel = qx.querySelector(".qx-panel");
+    let at = 0;
+    const moveBar = () => {
+      bar.style.transform = `translateY(${tabs[at].offsetTop}px)`;
+      bar.style.height = tabs[at].offsetHeight + "px";
+    };
+    const pick = (i, focus) => {
+      if (i === at) return;
+      shots.forEach((shot) => shot.classList.remove("was"));
+      shots[at].classList.replace("is-on", "was");
+      shots[i].classList.add("is-on");
+      tabs.forEach((tab, k) => {
+        tab.setAttribute("aria-selected", String(k === i));
+        tab.tabIndex = k === i ? 0 : -1;
+      });
+      infos.forEach((info, k) => { info.hidden = k !== i; });
+      infos[i].classList.remove("swap");
+      void infos[i].offsetWidth;
+      infos[i].classList.add("swap");
+      panel.setAttribute("aria-labelledby", tabs[i].id);
+      at = i;
+      moveBar();
+      if (focus) tabs[i].focus();
+    };
+    tabs.forEach((tab, i) => {
+      tab.addEventListener("click", () => pick(i));
+      tab.addEventListener("mouseenter", () => pick(i));
+      tab.addEventListener("keydown", (event) => {
+        const step = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[event.key];
+        if (!step) return;
+        event.preventDefault();
+        pick((at + step + tabs.length) % tabs.length, true);
+      });
+    });
+    moveBar();
+    window.addEventListener("resize", moveBar, { passive: true });
   }
 })();

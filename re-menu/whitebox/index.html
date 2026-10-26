@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@200;400;500;700&family=Oxanium:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="../../assets/site.css?v=123">
-  <link rel="stylesheet" href="../../re-menu/re.css?v=4">
+  <link rel="stylesheet" href="../../re-menu/re.css?v=5">
   <link rel="icon" href="../../assets/tbell-logo.svg">
   <script type="application/ld+json">
 {
@@ -47,7 +47,7 @@
         "정적 분석",
         "코드 검증"
       ],
-      "description": "화이트박스 테스트는 소스코드의 내부 구조와 동작을 직접 보며 검증하는 테스트입니다. 숨은 결함과 코딩 표준 위배를 출시 전에 찾아냅니다.",
+      "description": "소스코드의 내부 구조와 동작을 직접 보며 검증하는 테스트입니다. 숨은 결함과 코딩 표준 위배를 출시 전에 찾아냅니다.",
       "serviceType": "Software Testing",
       "provider": {
         "@id": "https://tbell-ref.github.io/demo/#org"
@@ -81,14 +81,6 @@
     {
       "@type": "FAQPage",
       "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "화이트박스 테스트란 무엇인가요?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "소프트웨어의 내부 구조와 동작을 아는 상태에서 소스코드를 기반으로 수행하는 테스트 기법입니다. 코드 검토를 비롯해 경계조건, 결정, 경로 테스트 등 대상에 맞는 테스트를 수행하며, 동작의 결과뿐 아니라 실행되는 과정까지 살펴봅니다."
-          }
-        },
         {
           "@type": "Question",
           "name": "정적 분석(정적 테스트)은 무엇인가요?",
@@ -189,25 +181,28 @@
   </header>
   </div>
   <main id="content" class="rm">
-    <section class="rm-hero copy-right">
-      <picture class="rm-hero-bg"><source media="(max-width: 768px)" srcset="../../assets/origin/bg-mobile-whitebox.5a13073380c9706e9e8a.png"><source media="(max-width: 1024px)" srcset="../../assets/origin/bg-tablet-whitebox.237c155d7035df71b7b8.png"><img src="../../assets/origin/bg-whitebox.dd0f3a71aa3621b95657.png" alt=""></picture>
-      <div class="rm-wrap">
-        <div class="rm-hero-copy">
-          <ol class="rm-crumb" aria-label="현재 위치"><li><a href="../../re-menu/#qa">QA</a></li><li><a href="../../re-menu/types/">테스트 종류</a></li><li aria-current="page">화이트박스 테스트</li></ol>
-          <p class="rm-eyebrow">White-Box Testing</p>
-          <h1><span>화이트박스 테스트</span></h1>
-          <p class="lede"><strong>화이트박스 테스트는 소스코드의 내부 구조와 동작을 직접 보며 검증하는 테스트입니다.</strong> 숨은 결함과 코딩 표준 위배를 출시 전에 찾아냅니다.</p>
-          <div class="rm-actions"><a class="pill" href="../../re-menu/#inquiry/qa">테스트 문의하기</a><a class="pill ghost" href="#faq">자주 묻는 질문</a></div>
-        </div>
+    <section class="detail svc-page">
+      <div class="svc-banner">
+        <div class="svc-track"><article class="svc-slide">
+          <picture class="svc-bg"><source media="(max-width: 768px)" srcset="../../assets/origin/bg-mobile-whitebox.5a13073380c9706e9e8a.png"><source media="(max-width: 1024px)" srcset="../../assets/origin/bg-tablet-whitebox.237c155d7035df71b7b8.png"><img src="../../assets/origin/bg-whitebox.dd0f3a71aa3621b95657.png" alt=""></picture>
+          <div><h1>화이트박스 테스트</h1><p>소스코드의 내부 구조와 동작을 직접 보며 검증하는 테스트입니다. 숨은 결함과 코딩 표준 위배를 출시 전에 찾아냅니다.</p><div class="svc-tags"><span>#Static</span><span>#Dynamic</span></div></div>
+        </article></div>
+        <a class="svc-nav prev" href="../../re-menu/blackbox/" aria-label="이전: 블랙박스 테스트"><svg viewBox="0 0 32 56" width="32" height="56" aria-hidden="true"><path fill="currentColor" d="M3.44 27.65 29.28 2.69 28.56 2 2 27.65l.72.7L29.28 54l.72-.7L3.44 27.65Z"/></svg></a><a class="svc-nav next" href="../../re-menu/api/" aria-label="다음: API 테스트"><svg viewBox="0 0 32 56" width="32" height="56" aria-hidden="true"><path fill="currentColor" d="M3.44 27.65 29.28 2.69 28.56 2 2 27.65l.72.7L29.28 54l.72-.7L3.44 27.65Z"/></svg></a>
       </div>
     </section>
-    <nav class="rm-tabs" aria-label="테스트 종류"><ul class="rm-wrap"><li><a href="../../re-menu/outsourcing/">QA 아웃소싱</a></li><li><a href="../../re-menu/automation/">테스트 자동화</a></li><li><a href="../../re-menu/blackbox/">블랙박스 테스트</a></li><li><a href="../../re-menu/whitebox/" aria-current="page">화이트박스 테스트</a></li><li><a href="../../re-menu/api/">API 테스트</a></li><li><a href="../../re-menu/performance/">성능 테스트</a></li></ul></nav>
-    <section class="rm-sec rm-needs" aria-labelledby="need"><div class="rm-wrap">
-      <h2 id="need">이럴 때 필요합니다</h2>
-      <ol><li><b>01</b><p>높은 신뢰성이 필요한 제품일 때</p></li><li><b>02</b><p>코딩 표준을 지켰다는 근거가 필요할 때</p></li><li><b>03</b><p>기능은 통과했지만 코드가 불안할 때</p></li><li><b>04</b><p>출시 후 수정 비용을 줄이고 싶을 때</p></li></ol>
+    <div class="qh rm">
+    <section class="s-sec qh-light" aria-labelledby="def"><div class="s-wrap">
+      <div class="qh-head"><p class="qh-label">DEFINITION</p><h2 id="def">화이트박스 테스트란?</h2><p>화이트박스 테스트(White-Box Testing)는 소프트웨어의 내부 구조와 동작을 아는 상태에서 소스코드를 기반으로 수행하는 테스트 기법입니다. 코드 검토를 비롯해 경계조건, 결정, 경로 테스트 등 대상에 맞는 테스트를 수행해, 동작의 결과뿐 아니라 실행되는 과정까지 살펴봅니다.</p></div>
     </div></section>
-    <section class="rm-sec rm-how" aria-labelledby="how"><div class="rm-wrap">
-      <figure class="rm-dgpanel"><svg class="dg" viewBox="0 0 480 360" role="img" aria-label="화이트박스 테스트: 소스코드를 한 줄씩 살펴 결함을 찾고 실행 경로를 확인합니다">
+    <section class="s-sec" aria-labelledby="need"><div class="s-wrap">
+      <div class="qh-head"><p class="qh-label">WHEN YOU NEED IT</p><h2 id="need">이럴 때 필요합니다</h2></div>
+      <ol class="rm-list"><li><span class="n">01</span><div>높은 신뢰성이 필요한 제품일 때</div></li><li><span class="n">02</span><div>코딩 표준을 지켰다는 근거가 필요할 때</div></li><li><span class="n">03</span><div>기능은 통과했지만 코드가 불안할 때</div></li><li><span class="n">04</span><div>출시 후 수정 비용을 줄이고 싶을 때</div></li></ol>
+    </div></section>
+    <section class="s-sec qh-light" aria-labelledby="how"><div class="s-wrap">
+      <div class="qh-head"><p class="qh-label">HOW WE TEST</p><h2 id="how">두 가지 방법으로 코드를 봅니다</h2></div>
+      <div class="qt-panel">
+        <div class="qt-copy"><p class="qt-kind"><span>WHITE-BOX</span>화이트박스 테스트</p><h3>고객 맞춤형 도구로 정적·동적 테스트를 수행합니다</h3><ol class="rm-list"><li><span class="n">01</span><div><b>정적 테스트</b> 실행하지 않고 검토 · 코딩 규칙 점검과 리포트</div></li><li><span class="n">02</span><div><b>동적 테스트</b> 실행하며 검증 · 경계조건 · 결정 · 경로</div></li><li><span class="n">03</span><div><b>잠재 결함 사전 검출</b> 출시 전에 숨은 결함과 표준 위배를 찾음</div></li><li><span class="n">04</span><div><b>수정 비용 절감</b> 코드 단계에서 잡아 수정 범위를 줄임</div></li></ol></div>
+        <div class="qh-demo rm-demo"><svg class="dg" viewBox="0 0 480 360" role="img" aria-label="화이트박스 테스트: 소스코드를 한 줄씩 살펴 결함을 찾고 실행 경로를 확인합니다">
   <defs>
     <linearGradient id="dg-box" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#262626"/><stop offset="1" stop-color="#121212"/></linearGradient>
     <linearGradient id="dg-hi" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f3a40"/><stop offset="1" stop-color="#121a1c"/></linearGradient>
@@ -225,33 +220,19 @@
     <circle cx="394" cy="70" r="10"/><path class="dia" d="M394 122l22 22-22 22-22-22z"/><circle cx="356" cy="238" r="10"/><circle cx="432" cy="238" r="10"/><circle cx="394" cy="304" r="10"/>
   </g>
   <text x="394" y="346">실행 경로</text>
-</svg></figure>
-      <div class="rm-how-list">
-        <h2 id="how">두 가지 방법으로 코드를 봅니다</h2>
-        <ol style="--cols:1"><li><h3>정적 테스트</h3><p>실행하지 않고 검토합니다 · 코딩 규칙 점검과 리포트</p></li><li><h3>동적 테스트</h3><p>실행하며 검증합니다 · 경계조건 · 결정 · 경로 테스트</p></li><li><h3>고객 맞춤형 도구</h3><p>다양한 업무 영역의 경험으로 환경에 맞는 도구를 고릅니다</p></li></ol>
+</svg></div>
       </div>
-      
-      <ul class="rm-photos">
-        <li><img src="../../assets/qa/photos/whitebox-static.jpg" alt="정적 테스트" loading="lazy"><span>STATIC TEST</span></li>
-        <li><img src="../../assets/qa/photos/whitebox-dynamic.jpg" alt="동적 테스트" loading="lazy"><span>DYNAMIC TEST</span></li>
-      </ul>
     </div></section>
-    <section class="rm-proof" aria-label="티벨과 함께하는 고객사">
-      <p class="rm-wrap">티벨과 함께하는 <b>고객사</b></p>
-      <div class="rm-marquee"><ul><li><img src="../../assets/origin/01_sk_telecom.ae25244966926033ab37.png" alt="SK텔레콤" loading="lazy"></li><li><img src="../../assets/origin/02_logo.26e3f50ed53544c1c7ac.png" alt="" loading="lazy"></li><li><img src="../../assets/origin/03_lg.a96d12b90e0b1d8e2a5a.png" alt="LG" loading="lazy"></li><li><img src="../../assets/origin/04_lgu+.5aa452b3620888b8180c.png" alt="LG유플러스" loading="lazy"></li><li><img src="../../assets/origin/05_woongjin.4b5f79bcf32c2b52d4c0.png" alt="웅진" loading="lazy"></li><li><img src="../../assets/origin/06_gs.b4937c30866898d5978d.png" alt="GS" loading="lazy"></li><li><img src="../../assets/origin/07_olive_young.e63706f5f90bed782755.png" alt="올리브영" loading="lazy"></li><li><img src="../../assets/origin/08_kakaopay.ec0feddaf22e913c7e02.png" alt="카카오페이" loading="lazy"></li><li><img src="../../assets/origin/10_logo.903a4c7c9aa13d6268ce.png" alt="" loading="lazy"></li><li><img src="../../assets/origin/11_theres.78c038692ae02eeeb8b8.png" alt="" loading="lazy"></li><li><img src="../../assets/origin/12_11street.ce145ee69dde686b285c.png" alt="11번가" loading="lazy"></li><li><img src="../../assets/origin/14_kt.626d843890e82319cfb2.png" alt="KT" loading="lazy"></li><li><img src="../../assets/origin/15_tripstore.35fd24420f22a807102d.png" alt="트립스토어" loading="lazy"></li><li><img src="../../assets/origin/16_cyberlogitec.21555d984495dfddc26d.png" alt="사이버로지텍" loading="lazy"></li><li><img src="../../assets/origin/17_lig.c81d0240fab7968ff357.png" alt="LIG넥스원" loading="lazy"></li><li><img src="../../assets/origin/18_hmm.18d13a82edd9e11b5231.png" alt="HMM" loading="lazy"></li><li><img src="../../assets/origin/19_nuri.9e846a18d466c945442b.png" alt="누리플렉스" loading="lazy"></li></ul><ul aria-hidden="true"><li><img src="../../assets/origin/01_sk_telecom.ae25244966926033ab37.png" alt="SK텔레콤" loading="lazy"></li><li><img src="../../assets/origin/02_logo.26e3f50ed53544c1c7ac.png" alt="" loading="lazy"></li><li><img src="../../assets/origin/03_lg.a96d12b90e0b1d8e2a5a.png" alt="LG" loading="lazy"></li><li><img src="../../assets/origin/04_lgu+.5aa452b3620888b8180c.png" alt="LG유플러스" loading="lazy"></li><li><img src="../../assets/origin/05_woongjin.4b5f79bcf32c2b52d4c0.png" alt="웅진" loading="lazy"></li><li><img src="../../assets/origin/06_gs.b4937c30866898d5978d.png" alt="GS" loading="lazy"></li><li><img src="../../assets/origin/07_olive_young.e63706f5f90bed782755.png" alt="올리브영" loading="lazy"></li><li><img src="../../assets/origin/08_kakaopay.ec0feddaf22e913c7e02.png" alt="카카오페이" loading="lazy"></li><li><img src="../../assets/origin/10_logo.903a4c7c9aa13d6268ce.png" alt="" loading="lazy"></li><li><img src="../../assets/origin/11_theres.78c038692ae02eeeb8b8.png" alt="" loading="lazy"></li><li><img src="../../assets/origin/12_11street.ce145ee69dde686b285c.png" alt="11번가" loading="lazy"></li><li><img src="../../assets/origin/14_kt.626d843890e82319cfb2.png" alt="KT" loading="lazy"></li><li><img src="../../assets/origin/15_tripstore.35fd24420f22a807102d.png" alt="트립스토어" loading="lazy"></li><li><img src="../../assets/origin/16_cyberlogitec.21555d984495dfddc26d.png" alt="사이버로지텍" loading="lazy"></li><li><img src="../../assets/origin/17_lig.c81d0240fab7968ff357.png" alt="LIG넥스원" loading="lazy"></li><li><img src="../../assets/origin/18_hmm.18d13a82edd9e11b5231.png" alt="HMM" loading="lazy"></li><li><img src="../../assets/origin/19_nuri.9e846a18d466c945442b.png" alt="누리플렉스" loading="lazy"></li></ul></div>
-    </section>
-    <section class="rm-sec rm-end" aria-labelledby="faq"><div class="rm-wrap">
-      <div class="rm-end-side">
-        <h2 id="faq">자주 묻는 질문</h2>
-        <div class="rm-cta">
-          <h3>코드 단계에서 결함을 잡으세요</h3>
-          <p>소스코드의 언어와 규모, 적용할 코딩 표준을 알려 주시면 분석 방법을 제안해 드립니다.</p>
-          <a class="pill" href="../../re-menu/#inquiry/qa">프로젝트 문의</a>
-          <small>staff@tbell.co.kr · 070-7777-9113</small>
-        </div>
-      </div>
-      <div class="rm-faq"><details><summary>화이트박스 테스트란 무엇인가요?</summary><p>소프트웨어의 내부 구조와 동작을 아는 상태에서 소스코드를 기반으로 수행하는 테스트 기법입니다. 코드 검토를 비롯해 경계조건, 결정, 경로 테스트 등 대상에 맞는 테스트를 수행하며, 동작의 결과뿐 아니라 실행되는 과정까지 살펴봅니다.</p></details><details><summary>정적 분석(정적 테스트)은 무엇인가요?</summary><p>코드를 실행하지 않고 소스코드 자체를 검토해 코딩 규칙 위배와 잠재 결함 등을 찾는 방법입니다. 도구를 이용한 자동 점검과 사람의 코드 리뷰를 함께 사용합니다.</p></details><details><summary>화이트박스 테스트를 하면 무엇이 좋아지나요?</summary><p>소스코드에 잠재된 결함과 코딩 표준 위배를 사전에 검출해 소프트웨어의 안정성을 강화하고, 오류 수정에 드는 비용을 줄일 수 있습니다.</p></details><details><summary>블랙박스 테스트와 무엇이 다른가요?</summary><p>블랙박스 테스트는 내부를 보지 않고 입력과 출력으로 기능을 검증하고, 화이트박스 테스트는 코드를 직접 보고 내부 로직을 검증합니다. <a href="../blackbox/">블랙박스 테스트 보기</a></p></details><details><summary>어떤 제품에 특히 필요한가요?</summary><p>자동차, 임베디드, 금융처럼 작은 오류가 큰 사고로 이어질 수 있어 높은 신뢰성이 요구되는 분야에서 특히 중요합니다.</p></details></div>
+    <section class="s-sec" aria-labelledby="faq"><div class="s-wrap">
+      <div class="qh-head"><p class="qh-label">FAQ</p><h2 id="faq">자주 묻는 질문</h2></div>
+      <div class="rm-faq"><details><summary>정적 분석(정적 테스트)은 무엇인가요?</summary><p>코드를 실행하지 않고 소스코드 자체를 검토해 코딩 규칙 위배와 잠재 결함 등을 찾는 방법입니다. 도구를 이용한 자동 점검과 사람의 코드 리뷰를 함께 사용합니다.</p></details><details><summary>화이트박스 테스트를 하면 무엇이 좋아지나요?</summary><p>소스코드에 잠재된 결함과 코딩 표준 위배를 사전에 검출해 소프트웨어의 안정성을 강화하고, 오류 수정에 드는 비용을 줄일 수 있습니다.</p></details><details><summary>블랙박스 테스트와 무엇이 다른가요?</summary><p>블랙박스 테스트는 내부를 보지 않고 입력과 출력으로 기능을 검증하고, 화이트박스 테스트는 코드를 직접 보고 내부 로직을 검증합니다. <a href="../blackbox/">블랙박스 테스트 보기</a></p></details><details><summary>어떤 제품에 특히 필요한가요?</summary><p>자동차, 임베디드, 금융처럼 작은 오류가 큰 사고로 이어질 수 있어 높은 신뢰성이 요구되는 분야에서 특히 중요합니다.</p></details></div>
     </div></section>
+    <section class="qh-close"><div class="s-wrap">
+      <h2>코드 단계에서 결함을 잡으세요</h2>
+      <p>소스코드의 언어와 규모, 적용할 코딩 표준을 알려 주시면 분석 방법을 제안해 드립니다.</p>
+      <a class="pill" href="../../re-menu/#inquiry/qa">프로젝트 문의</a>
+    </div></section>
+    </div>
   </main>
   <footer class="footer">
     <img src="../../assets/tbell-logo.svg" alt="" width="88" height="18">
@@ -260,6 +241,6 @@
     <p>가산사업장 서울특별시 금천구 가산디지털1로 168, A동 601호</p>
     <p class="num">Tel 070-7777-9113 / 070-7777-6368 · staff@tbell.co.kr</p>
   </footer>
-  <script src="../../re-menu/re-menu.js?v=2"></script>
+  <script src="../../re-menu/re-menu.js?v=3"></script>
 </body>
 </html>

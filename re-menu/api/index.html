@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@200;400;500;700&family=Oxanium:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="../../assets/site.css?v=123">
-  <link rel="stylesheet" href="../../re-menu/re.css?v=4">
+  <link rel="stylesheet" href="../../re-menu/re.css?v=5">
   <link rel="icon" href="../../assets/tbell-logo.svg">
   <script type="application/ld+json">
 {
@@ -46,7 +46,7 @@
         "연동 테스트",
         "인터페이스 테스트"
       ],
-      "description": "API 테스트는 시스템끼리 주고받는 요청과 응답을 검증하는 테스트입니다. 연동이 기능·안정성·성능·보안성 면에서 문제없는지 확인합니다.",
+      "description": "시스템끼리 주고받는 요청과 응답을 검증해, 연동이 기능·안정성·성능·보안성 면에서 문제없는지 확인합니다.",
       "serviceType": "Software Testing",
       "provider": {
         "@id": "https://tbell-ref.github.io/demo/#org"
@@ -80,14 +80,6 @@
     {
       "@type": "FAQPage",
       "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "API 테스트란 무엇인가요?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "서로 다른 소프트웨어 시스템이 통신하고 연동하기 위해 주고받는 API의 요청과 응답을 검증하는 테스트입니다. 기능, 안정성, 성능, 보안성을 함께 평가합니다."
-          }
-        },
         {
           "@type": "Question",
           "name": "화면(UI) 테스트와 무엇이 다른가요?",
@@ -180,25 +172,28 @@
   </header>
   </div>
   <main id="content" class="rm">
-    <section class="rm-hero copy-right">
-      <picture class="rm-hero-bg"><source media="(max-width: 768px)" srcset="../../assets/origin/bg-mobile-api.f4098575a7ef1dc638a9.png"><source media="(max-width: 1024px)" srcset="../../assets/origin/bg-tablet-api.0d2bd87a550607f6f885.png"><img src="../../assets/origin/bg-api.c29a3eb4a94183fda704.png" alt=""></picture>
-      <div class="rm-wrap">
-        <div class="rm-hero-copy">
-          <ol class="rm-crumb" aria-label="현재 위치"><li><a href="../../re-menu/#qa">QA</a></li><li><a href="../../re-menu/types/">테스트 종류</a></li><li aria-current="page">API 테스트</li></ol>
-          <p class="rm-eyebrow">API Testing</p>
-          <h1><span>API 테스트</span></h1>
-          <p class="lede"><strong>API 테스트는 시스템끼리 주고받는 요청과 응답을 검증하는 테스트입니다.</strong> 연동이 기능·안정성·성능·보안성 면에서 문제없는지 확인합니다.</p>
-          <div class="rm-actions"><a class="pill" href="../../re-menu/#inquiry/qa">테스트 문의하기</a><a class="pill ghost" href="#faq">자주 묻는 질문</a></div>
-        </div>
+    <section class="detail svc-page">
+      <div class="svc-banner">
+        <div class="svc-track"><article class="svc-slide">
+          <picture class="svc-bg"><source media="(max-width: 768px)" srcset="../../assets/origin/bg-mobile-api.f4098575a7ef1dc638a9.png"><source media="(max-width: 1024px)" srcset="../../assets/origin/bg-tablet-api.0d2bd87a550607f6f885.png"><img src="../../assets/origin/bg-api.c29a3eb4a94183fda704.png" alt=""></picture>
+          <div><h1>API 테스트</h1><p>시스템끼리 주고받는 요청과 응답을 검증해, 연동이 기능·안정성·성능·보안성 면에서 문제없는지 확인합니다.</p><div class="svc-tags"><span>#기능</span><span>#안정성</span><span>#성능</span></div></div>
+        </article></div>
+        <a class="svc-nav prev" href="../../re-menu/whitebox/" aria-label="이전: 화이트박스 테스트"><svg viewBox="0 0 32 56" width="32" height="56" aria-hidden="true"><path fill="currentColor" d="M3.44 27.65 29.28 2.69 28.56 2 2 27.65l.72.7L29.28 54l.72-.7L3.44 27.65Z"/></svg></a><a class="svc-nav next" href="../../re-menu/performance/" aria-label="다음: 성능 테스트"><svg viewBox="0 0 32 56" width="32" height="56" aria-hidden="true"><path fill="currentColor" d="M3.44 27.65 29.28 2.69 28.56 2 2 27.65l.72.7L29.28 54l.72-.7L3.44 27.65Z"/></svg></a>
       </div>
     </section>
-    <nav class="rm-tabs" aria-label="테스트 종류"><ul class="rm-wrap"><li><a href="../../re-menu/outsourcing/">QA 아웃소싱</a></li><li><a href="../../re-menu/automation/">테스트 자동화</a></li><li><a href="../../re-menu/blackbox/">블랙박스 테스트</a></li><li><a href="../../re-menu/whitebox/">화이트박스 테스트</a></li><li><a href="../../re-menu/api/" aria-current="page">API 테스트</a></li><li><a href="../../re-menu/performance/">성능 테스트</a></li></ul></nav>
-    <section class="rm-sec rm-needs" aria-labelledby="need"><div class="rm-wrap">
-      <h2 id="need">이럴 때 필요합니다</h2>
-      <ol><li><b>01</b><p>결제·지도·인증 등 외부 서비스와 연동할 때</p></li><li><b>02</b><p>앱과 웹이 같은 서버를 쓸 때</p></li><li><b>03</b><p>다른 회사에 API를 제공할 때</p></li><li><b>04</b><p>화면보다 서버 로직을 먼저 검증할 때</p></li></ol>
+    <div class="qh rm">
+    <section class="s-sec qh-light" aria-labelledby="def"><div class="s-wrap">
+      <div class="qh-head"><p class="qh-label">DEFINITION</p><h2 id="def">API 테스트란?</h2><p>API 테스트(Application Programming Interface Testing)는 서로 다른 소프트웨어 시스템 사이의 통신과 연동을 위해 주고받는 API를 검증하는 테스트입니다. 다양한 오픈 플랫폼이 등장하고 기업 간 서비스 연동이 늘면서 중요도가 커지고 있으며, 기능·안정성·성능·보안성을 함께 평가합니다.</p></div>
     </div></section>
-    <section class="rm-sec rm-how" aria-labelledby="how"><div class="rm-wrap">
-      <figure class="rm-dgpanel"><svg class="dg" viewBox="0 0 480 360" role="img" aria-label="API 테스트: 클라이언트의 요청과 서버의 응답을 오가는 데이터로 검증합니다">
+    <section class="s-sec" aria-labelledby="need"><div class="s-wrap">
+      <div class="qh-head"><p class="qh-label">WHEN YOU NEED IT</p><h2 id="need">이럴 때 필요합니다</h2></div>
+      <ol class="rm-list"><li><span class="n">01</span><div>결제·지도·인증 등 외부 서비스와 연동할 때</div></li><li><span class="n">02</span><div>앱과 웹이 같은 서버를 쓸 때</div></li><li><span class="n">03</span><div>다른 회사에 API를 제공할 때</div></li><li><span class="n">04</span><div>화면보다 서버 로직을 먼저 검증할 때</div></li></ol>
+    </div></section>
+    <section class="s-sec qh-light" aria-labelledby="how"><div class="s-wrap">
+      <div class="qh-head"><p class="qh-label">HOW WE TEST</p><h2 id="how">네 가지 관점으로 검증합니다</h2></div>
+      <div class="qt-panel">
+        <div class="qt-copy"><p class="qt-kind"><span>API</span>API 테스트</p><h3>요청이 서버를 거쳐 응답으로 돌아오는 흐름 전체를 봅니다</h3><ol class="rm-list"><li><span class="n">01</span><div><b>기능</b> 약속된 형식과 값으로 응답하는지</div></li><li><span class="n">02</span><div><b>안정성</b> 반복 호출과 예외에도 일관되게 동작하는지</div></li><li><span class="n">03</span><div><b>성능</b> 호출이 몰려도 응답이 빠른지</div></li><li><span class="n">04</span><div><b>보안성</b> 인증·권한 처리와 데이터 노출 점검</div></li></ol></div>
+        <div class="qh-demo rm-demo"><svg class="dg" viewBox="0 0 480 360" role="img" aria-label="API 테스트: 클라이언트의 요청과 서버의 응답을 오가는 데이터로 검증합니다">
   <defs>
     <linearGradient id="dg-box" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#262626"/><stop offset="1" stop-color="#121212"/></linearGradient>
     <linearGradient id="dg-hi" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f3a40"/><stop offset="1" stop-color="#121a1c"/></linearGradient>
@@ -215,29 +210,19 @@
   <rect class="pkt res" x="333" y="192" width="26" height="16" rx="6" style="--dx:-212px;animation-delay:0.6s"/><rect class="pkt res" x="333" y="192" width="26" height="16" rx="6" style="--dx:-212px;animation-delay:1.8s"/>
   <text class="en" x="240" y="146">REQUEST →</text><text class="en" x="240" y="228">← RESPONSE</text>
   <g class="chips"><rect x="62" y="286" width="76" height="30" rx="15"/><text x="100" y="306">기능</text><rect x="148" y="286" width="84" height="30" rx="15"/><text x="190" y="306">안정성</text><rect x="242" y="286" width="76" height="30" rx="15"/><text x="280" y="306">성능</text><rect x="328" y="286" width="84" height="30" rx="15"/><text x="370" y="306">보안성</text></g>
-</svg></figure>
-      <div class="rm-how-list">
-        <h2 id="how">네 가지 관점으로 검증합니다</h2>
-        <ol style="--cols:2"><li><h3>기능</h3><p>약속된 형식과 값으로 응답하는지</p></li><li><h3>안정성</h3><p>반복 호출과 예외에도 일관되게 동작하는지</p></li><li><h3>성능</h3><p>호출이 몰려도 응답이 빠른지</p></li><li><h3>보안성</h3><p>인증·권한 처리와 데이터 노출을 점검</p></li></ol>
+</svg></div>
       </div>
-      
     </div></section>
-    <section class="rm-proof" aria-label="티벨과 함께하는 고객사">
-      <p class="rm-wrap">티벨과 함께하는 <b>고객사</b></p>
-      <div class="rm-marquee"><ul><li><img src="../../assets/origin/01_sk_telecom.ae25244966926033ab37.png" alt="SK텔레콤" loading="lazy"></li><li><img src="../../assets/origin/02_logo.26e3f50ed53544c1c7ac.png" alt="" loading="lazy"></li><li><img src="../../assets/origin/03_lg.a96d12b90e0b1d8e2a5a.png" alt="LG" loading="lazy"></li><li><img src="../../assets/origin/04_lgu+.5aa452b3620888b8180c.png" alt="LG유플러스" loading="lazy"></li><li><img src="../../assets/origin/05_woongjin.4b5f79bcf32c2b52d4c0.png" alt="웅진" loading="lazy"></li><li><img src="../../assets/origin/06_gs.b4937c30866898d5978d.png" alt="GS" loading="lazy"></li><li><img src="../../assets/origin/07_olive_young.e63706f5f90bed782755.png" alt="올리브영" loading="lazy"></li><li><img src="../../assets/origin/08_kakaopay.ec0feddaf22e913c7e02.png" alt="카카오페이" loading="lazy"></li><li><img src="../../assets/origin/10_logo.903a4c7c9aa13d6268ce.png" alt="" loading="lazy"></li><li><img src="../../assets/origin/11_theres.78c038692ae02eeeb8b8.png" alt="" loading="lazy"></li><li><img src="../../assets/origin/12_11street.ce145ee69dde686b285c.png" alt="11번가" loading="lazy"></li><li><img src="../../assets/origin/14_kt.626d843890e82319cfb2.png" alt="KT" loading="lazy"></li><li><img src="../../assets/origin/15_tripstore.35fd24420f22a807102d.png" alt="트립스토어" loading="lazy"></li><li><img src="../../assets/origin/16_cyberlogitec.21555d984495dfddc26d.png" alt="사이버로지텍" loading="lazy"></li><li><img src="../../assets/origin/17_lig.c81d0240fab7968ff357.png" alt="LIG넥스원" loading="lazy"></li><li><img src="../../assets/origin/18_hmm.18d13a82edd9e11b5231.png" alt="HMM" loading="lazy"></li><li><img src="../../assets/origin/19_nuri.9e846a18d466c945442b.png" alt="누리플렉스" loading="lazy"></li></ul><ul aria-hidden="true"><li><img src="../../assets/origin/01_sk_telecom.ae25244966926033ab37.png" alt="SK텔레콤" loading="lazy"></li><li><img src="../../assets/origin/02_logo.26e3f50ed53544c1c7ac.png" alt="" loading="lazy"></li><li><img src="../../assets/origin/03_lg.a96d12b90e0b1d8e2a5a.png" alt="LG" loading="lazy"></li><li><img src="../../assets/origin/04_lgu+.5aa452b3620888b8180c.png" alt="LG유플러스" loading="lazy"></li><li><img src="../../assets/origin/05_woongjin.4b5f79bcf32c2b52d4c0.png" alt="웅진" loading="lazy"></li><li><img src="../../assets/origin/06_gs.b4937c30866898d5978d.png" alt="GS" loading="lazy"></li><li><img src="../../assets/origin/07_olive_young.e63706f5f90bed782755.png" alt="올리브영" loading="lazy"></li><li><img src="../../assets/origin/08_kakaopay.ec0feddaf22e913c7e02.png" alt="카카오페이" loading="lazy"></li><li><img src="../../assets/origin/10_logo.903a4c7c9aa13d6268ce.png" alt="" loading="lazy"></li><li><img src="../../assets/origin/11_theres.78c038692ae02eeeb8b8.png" alt="" loading="lazy"></li><li><img src="../../assets/origin/12_11street.ce145ee69dde686b285c.png" alt="11번가" loading="lazy"></li><li><img src="../../assets/origin/14_kt.626d843890e82319cfb2.png" alt="KT" loading="lazy"></li><li><img src="../../assets/origin/15_tripstore.35fd24420f22a807102d.png" alt="트립스토어" loading="lazy"></li><li><img src="../../assets/origin/16_cyberlogitec.21555d984495dfddc26d.png" alt="사이버로지텍" loading="lazy"></li><li><img src="../../assets/origin/17_lig.c81d0240fab7968ff357.png" alt="LIG넥스원" loading="lazy"></li><li><img src="../../assets/origin/18_hmm.18d13a82edd9e11b5231.png" alt="HMM" loading="lazy"></li><li><img src="../../assets/origin/19_nuri.9e846a18d466c945442b.png" alt="누리플렉스" loading="lazy"></li></ul></div>
-    </section>
-    <section class="rm-sec rm-end" aria-labelledby="faq"><div class="rm-wrap">
-      <div class="rm-end-side">
-        <h2 id="faq">자주 묻는 질문</h2>
-        <div class="rm-cta">
-          <h3>연동 오류, 출시 전에 잡으세요</h3>
-          <p>연동 대상과 API 명세를 알려 주시면 검증 범위와 방법을 제안해 드립니다.</p>
-          <a class="pill" href="../../re-menu/#inquiry/qa">프로젝트 문의</a>
-          <small>staff@tbell.co.kr · 070-7777-9113</small>
-        </div>
-      </div>
-      <div class="rm-faq"><details><summary>API 테스트란 무엇인가요?</summary><p>서로 다른 소프트웨어 시스템이 통신하고 연동하기 위해 주고받는 API의 요청과 응답을 검증하는 테스트입니다. 기능, 안정성, 성능, 보안성을 함께 평가합니다.</p></details><details><summary>화면(UI) 테스트와 무엇이 다른가요?</summary><p>UI 테스트는 사용자가 보는 화면을 통해 확인하고, API 테스트는 화면 뒤에서 시스템끼리 주고받는 데이터를 직접 확인합니다. 화면이 완성되기 전에도 서버 로직을 먼저 검증할 수 있습니다.</p></details><details><summary>API 테스트도 자동화할 수 있나요?</summary><p>API는 입력과 출력이 명확해 자동화에 잘 맞습니다. <a href="../automation/">테스트 자동화</a>와 함께 구성하면 배포마다 연동을 자동으로 확인할 수 있습니다.</p></details><details><summary>왜 API 테스트가 점점 중요해지나요?</summary><p>다양한 오픈 플랫폼이 등장하고 많은 기업이 서로의 서비스를 연동하고 있어, 한 곳의 연동 오류가 전체 서비스 장애로 이어질 수 있기 때문입니다.</p></details></div>
+    <section class="s-sec" aria-labelledby="faq"><div class="s-wrap">
+      <div class="qh-head"><p class="qh-label">FAQ</p><h2 id="faq">자주 묻는 질문</h2></div>
+      <div class="rm-faq"><details><summary>화면(UI) 테스트와 무엇이 다른가요?</summary><p>UI 테스트는 사용자가 보는 화면을 통해 확인하고, API 테스트는 화면 뒤에서 시스템끼리 주고받는 데이터를 직접 확인합니다. 화면이 완성되기 전에도 서버 로직을 먼저 검증할 수 있습니다.</p></details><details><summary>API 테스트도 자동화할 수 있나요?</summary><p>API는 입력과 출력이 명확해 자동화에 잘 맞습니다. <a href="../automation/">테스트 자동화</a>와 함께 구성하면 배포마다 연동을 자동으로 확인할 수 있습니다.</p></details><details><summary>왜 API 테스트가 점점 중요해지나요?</summary><p>다양한 오픈 플랫폼이 등장하고 많은 기업이 서로의 서비스를 연동하고 있어, 한 곳의 연동 오류가 전체 서비스 장애로 이어질 수 있기 때문입니다.</p></details></div>
     </div></section>
+    <section class="qh-close"><div class="s-wrap">
+      <h2>연동 오류, 출시 전에 잡으세요</h2>
+      <p>연동 대상과 API 명세를 알려 주시면 검증 범위와 방법을 제안해 드립니다.</p>
+      <a class="pill" href="../../re-menu/#inquiry/qa">프로젝트 문의</a>
+    </div></section>
+    </div>
   </main>
   <footer class="footer">
     <img src="../../assets/tbell-logo.svg" alt="" width="88" height="18">
@@ -246,6 +231,6 @@
     <p>가산사업장 서울특별시 금천구 가산디지털1로 168, A동 601호</p>
     <p class="num">Tel 070-7777-9113 / 070-7777-6368 · staff@tbell.co.kr</p>
   </footer>
-  <script src="../../re-menu/re-menu.js?v=2"></script>
+  <script src="../../re-menu/re-menu.js?v=3"></script>
 </body>
 </html>

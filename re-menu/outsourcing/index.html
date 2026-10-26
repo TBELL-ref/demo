@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@200;400;500;700&family=Oxanium:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="../../assets/site.css?v=123">
-  <link rel="stylesheet" href="../../re-menu/re.css?v=4">
+  <link rel="stylesheet" href="../../re-menu/re.css?v=5">
   <link rel="icon" href="../../assets/tbell-logo.svg">
   <script type="application/ld+json">
 {
@@ -48,7 +48,7 @@
         "소프트웨어 테스트 아웃소싱",
         "아웃소싱 테스트"
       ],
-      "description": "QA 아웃소싱(테스트 외주)은 소프트웨어 품질 검증을 외부 전문 테스트 기업에 맡기는 서비스입니다. 티벨은 분야별 테스트 전문가가 개발자와 직접 소통하며 테스트합니다.",
+      "description": "소프트웨어 품질 검증을 외부 전문 테스트 기업에 맡기는 서비스입니다. 티벨은 분야별 테스트 전문가가 개발자와 직접 소통하며 테스트합니다.",
       "serviceType": "Software Testing",
       "provider": {
         "@id": "https://tbell-ref.github.io/demo/#org"
@@ -84,14 +84,6 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "QA 아웃소싱(테스트 외주)이란 무엇인가요?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "소프트웨어의 품질 검증 업무를 외부 전문 테스트 기업에 맡기는 방식입니다. 내부 QA 인력이 부족하거나 특정 분야의 전문성이 필요할 때, 출시 일정에 맞춰 테스트 인력을 빠르게 늘려야 할 때 활용합니다."
-          }
-        },
-        {
-          "@type": "Question",
           "name": "QA 아웃소싱 비용은 어떻게 정해지나요?",
           "acceptedAnswer": {
             "@type": "Answer",
@@ -120,6 +112,14 @@
           "acceptedAnswer": {
             "@type": "Answer",
             "text": "투입 인력과 단가만이 아니라 해당 업무 도메인 경험, 품질 목표에 맞춰 테스트 전략과 우선순위를 조정할 수 있는 역량, 개발팀과의 소통 방식, 결과 보고 체계를 함께 확인하는 것이 좋습니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "어떤 분야를 테스트하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Web/App, IoT/AI, 임베디드, 금융, 자동차 분야를 중심으로 영상, 보안, 전자, 전자상거래, 통신, 플랫폼, 공공 분야까지 테스트합니다."
           }
         }
       ]
@@ -190,25 +190,28 @@
   </header>
   </div>
   <main id="content" class="rm">
-    <section class="rm-hero copy-right">
-      <picture class="rm-hero-bg"><source media="(max-width: 768px)" srcset="../../assets/origin/bg-mobile-outsourcing.bf9d543859738afb6936.png"><source media="(max-width: 1024px)" srcset="../../assets/origin/bg-tablet-outsourcing.b7693ae7435210848e2c.png"><img src="../../assets/origin/bg-outsourcing.b46a027c427ae59d3db3.png" alt=""></picture>
-      <div class="rm-wrap">
-        <div class="rm-hero-copy">
-          <ol class="rm-crumb" aria-label="현재 위치"><li><a href="../../re-menu/#qa">QA</a></li><li><a href="../../re-menu/types/">테스트 종류</a></li><li aria-current="page">QA 아웃소싱</li></ol>
-          <p class="rm-eyebrow">Outsourcing Test</p>
-          <h1><span>QA 아웃소싱 ·</span> <span>테스트 외주</span></h1>
-          <p class="lede"><strong>QA 아웃소싱(테스트 외주)은 소프트웨어 품질 검증을 외부 전문 테스트 기업에 맡기는 서비스입니다.</strong> 티벨은 분야별 테스트 전문가가 개발자와 직접 소통하며 테스트합니다.</p>
-          <div class="rm-actions"><a class="pill" href="../../re-menu/#inquiry/qa">테스트 문의하기</a><a class="pill ghost" href="#faq">자주 묻는 질문</a></div>
-        </div>
+    <section class="detail svc-page">
+      <div class="svc-banner">
+        <div class="svc-track"><article class="svc-slide">
+          <picture class="svc-bg"><source media="(max-width: 768px)" srcset="../../assets/origin/bg-mobile-outsourcing.bf9d543859738afb6936.png"><source media="(max-width: 1024px)" srcset="../../assets/origin/bg-tablet-outsourcing.b7693ae7435210848e2c.png"><img src="../../assets/origin/bg-outsourcing.b46a027c427ae59d3db3.png" alt=""></picture>
+          <div><h1>QA 아웃소싱 · 테스트 외주</h1><p>소프트웨어 품질 검증을 외부 전문 테스트 기업에 맡기는 서비스입니다. 티벨은 분야별 테스트 전문가가 개발자와 직접 소통하며 테스트합니다.</p><div class="svc-tags"><span>#Web/App</span><span>#IoT/AI</span><span>#Embedded</span><span>#Finance</span><span>#Automotive</span></div></div>
+        </article></div>
+        <span class="svc-nav prev is-off" aria-hidden="true"><svg viewBox="0 0 32 56" width="32" height="56" aria-hidden="true"><path fill="currentColor" d="M3.44 27.65 29.28 2.69 28.56 2 2 27.65l.72.7L29.28 54l.72-.7L3.44 27.65Z"/></svg></span><a class="svc-nav next" href="../../re-menu/automation/" aria-label="다음: 테스트 자동화"><svg viewBox="0 0 32 56" width="32" height="56" aria-hidden="true"><path fill="currentColor" d="M3.44 27.65 29.28 2.69 28.56 2 2 27.65l.72.7L29.28 54l.72-.7L3.44 27.65Z"/></svg></a>
       </div>
     </section>
-    <nav class="rm-tabs" aria-label="테스트 종류"><ul class="rm-wrap"><li><a href="../../re-menu/outsourcing/" aria-current="page">QA 아웃소싱</a></li><li><a href="../../re-menu/automation/">테스트 자동화</a></li><li><a href="../../re-menu/blackbox/">블랙박스 테스트</a></li><li><a href="../../re-menu/whitebox/">화이트박스 테스트</a></li><li><a href="../../re-menu/api/">API 테스트</a></li><li><a href="../../re-menu/performance/">성능 테스트</a></li></ul></nav>
-    <section class="rm-sec rm-needs" aria-labelledby="need"><div class="rm-wrap">
-      <h2 id="need">이럴 때 필요합니다</h2>
-      <ol><li><b>01</b><p>개발자가 테스트까지 떠안고 있을 때</p></li><li><b>02</b><p>QA 인력 채용과 교육이 부담될 때</p></li><li><b>03</b><p>출시 직전에만 인력이 더 필요할 때</p></li><li><b>04</b><p>금융·자동차처럼 도메인 지식이 필요할 때</p></li></ol>
+    <div class="qh rm">
+    <section class="s-sec qh-light" aria-labelledby="def"><div class="s-wrap">
+      <div class="qh-head"><p class="qh-label">DEFINITION</p><h2 id="def">QA 아웃소싱이란?</h2><p>QA 아웃소싱(테스트 아웃소싱, 테스트 외주)은 웹·모바일 앱·임베디드 등 소프트웨어의 품질 검증 업무를 외부 전문 테스트 기업에 맡기는 방식입니다. 내부 QA 인력이 부족하거나 특정 분야의 전문성이 필요할 때, 출시 일정에 맞춰 테스트 인력을 빠르게 늘려야 할 때 활용합니다.</p></div>
     </div></section>
-    <section class="rm-sec rm-how" aria-labelledby="how"><div class="rm-wrap">
-      <figure class="rm-dgpanel"><svg class="dg" viewBox="0 0 480 360" role="img" aria-label="QA 아웃소싱: 티벨의 테스트 전문가가 고객 개발팀과 직접 소통하며 테스트합니다">
+    <section class="s-sec" aria-labelledby="need"><div class="s-wrap">
+      <div class="qh-head"><p class="qh-label">WHEN YOU NEED IT</p><h2 id="need">이럴 때 필요합니다</h2></div>
+      <ol class="rm-list"><li><span class="n">01</span><div>개발자가 테스트까지 떠안고 있을 때</div></li><li><span class="n">02</span><div>QA 인력 채용과 교육이 부담될 때</div></li><li><span class="n">03</span><div>출시 직전에만 테스트 인력이 더 필요할 때</div></li><li><span class="n">04</span><div>금융·자동차처럼 도메인 지식이 필요할 때</div></li></ol>
+    </div></section>
+    <section class="s-sec qh-light" aria-labelledby="how"><div class="s-wrap">
+      <div class="qh-head"><p class="qh-label">HOW WE TEST</p><h2 id="how">프로젝트에 맞는 방식으로 맡깁니다</h2></div>
+      <div class="qt-panel">
+        <div class="qt-copy"><p class="qt-kind"><span>OUTSOURCING</span>QA 아웃소싱</p><h3>분야별 전문가가 개발자와 직접 소통합니다</h3><ol class="rm-list"><li><span class="n">01</span><div><b>인력 파견형</b> 전문가가 프로젝트에 합류해 지정된 테스트를 수행</div></li><li><span class="n">02</span><div><b>프로젝트 전담형</b> 전략 수립부터 결과 보고·출시 판단까지 책임</div></li><li><span class="n">03</span><div><b>크라우드 테스팅</b> 여러 테스터가 다양한 기기·환경에서 검증</div></li><li><span class="n">04</span><div><b>진행</b> 요구 분석 → 전략·설계 → 수행·결함 관리 → 결과 보고</div></li></ol></div>
+        <div class="qh-demo rm-demo"><svg class="dg" viewBox="0 0 480 360" role="img" aria-label="QA 아웃소싱: 티벨의 테스트 전문가가 고객 개발팀과 직접 소통하며 테스트합니다">
   <defs>
     <linearGradient id="dg-box" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#262626"/><stop offset="1" stop-color="#121212"/></linearGradient>
     <linearGradient id="dg-hi" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f3a40"/><stop offset="1" stop-color="#121a1c"/></linearGradient>
@@ -226,29 +229,19 @@
   <rect class="pkt " x="173" y="152" width="26" height="16" rx="6" style="--dx:108px;animation-delay:0s"/><rect class="pkt res" x="281" y="196" width="26" height="16" rx="6" style="--dx:-108px;animation-delay:0.9s"/>
   <text class="hot" x="240" y="136">직접 소통</text>
   <text x="240" y="316">분야별 전문가가 프로젝트에 합류합니다</text>
-</svg></figure>
-      <div class="rm-how-list">
-        <h2 id="how">세 가지 방식으로 맡길 수 있습니다</h2>
-        <ol style="--cols:1"><li><h3>인력 파견형</h3><p>전문가가 프로젝트에 합류해 지정된 테스트를 수행합니다</p><div class="rm-bar" style="--v:34%"><span>책임 범위</span></div></li><li><h3>프로젝트 전담형</h3><p>전략 수립부터 결과 보고·출시 판단까지 책임집니다</p><div class="rm-bar" style="--v:100%"><span>책임 범위</span></div></li><li><h3>크라우드 테스팅</h3><p>여러 테스터가 다양한 기기·환경에서 검증합니다</p><div class="rm-bar" style="--v:58%"><span>책임 범위</span></div></li></ol>
+</svg></div>
       </div>
-      <p class="rm-how-note">진행 순서 <b>요구 분석</b> → <b>전략 · 설계</b> → <b>수행 · 결함 관리</b> → <b>결과 보고</b></p>
     </div></section>
-    <section class="rm-proof" aria-label="금융 · 자동차 · 임베디드 · 통신 · 공공 등 10개 산업의 고객과 함께합니다">
-      <p class="rm-wrap">금융 · 자동차 · 임베디드 · 통신 · 공공 등 <b>10개 산업</b>의 고객과 함께합니다</p>
-      <div class="rm-marquee"><ul><li><img src="../../assets/origin/01_sk_telecom.ae25244966926033ab37.png" alt="SK텔레콤" loading="lazy"></li><li><img src="../../assets/origin/02_logo.26e3f50ed53544c1c7ac.png" alt="" loading="lazy"></li><li><img src="../../assets/origin/03_lg.a96d12b90e0b1d8e2a5a.png" alt="LG" loading="lazy"></li><li><img src="../../assets/origin/04_lgu+.5aa452b3620888b8180c.png" alt="LG유플러스" loading="lazy"></li><li><img src="../../assets/origin/05_woongjin.4b5f79bcf32c2b52d4c0.png" alt="웅진" loading="lazy"></li><li><img src="../../assets/origin/06_gs.b4937c30866898d5978d.png" alt="GS" loading="lazy"></li><li><img src="../../assets/origin/07_olive_young.e63706f5f90bed782755.png" alt="올리브영" loading="lazy"></li><li><img src="../../assets/origin/08_kakaopay.ec0feddaf22e913c7e02.png" alt="카카오페이" loading="lazy"></li><li><img src="../../assets/origin/10_logo.903a4c7c9aa13d6268ce.png" alt="" loading="lazy"></li><li><img src="../../assets/origin/11_theres.78c038692ae02eeeb8b8.png" alt="" loading="lazy"></li><li><img src="../../assets/origin/12_11street.ce145ee69dde686b285c.png" alt="11번가" loading="lazy"></li><li><img src="../../assets/origin/14_kt.626d843890e82319cfb2.png" alt="KT" loading="lazy"></li><li><img src="../../assets/origin/15_tripstore.35fd24420f22a807102d.png" alt="트립스토어" loading="lazy"></li><li><img src="../../assets/origin/16_cyberlogitec.21555d984495dfddc26d.png" alt="사이버로지텍" loading="lazy"></li><li><img src="../../assets/origin/17_lig.c81d0240fab7968ff357.png" alt="LIG넥스원" loading="lazy"></li><li><img src="../../assets/origin/18_hmm.18d13a82edd9e11b5231.png" alt="HMM" loading="lazy"></li><li><img src="../../assets/origin/19_nuri.9e846a18d466c945442b.png" alt="누리플렉스" loading="lazy"></li></ul><ul aria-hidden="true"><li><img src="../../assets/origin/01_sk_telecom.ae25244966926033ab37.png" alt="SK텔레콤" loading="lazy"></li><li><img src="../../assets/origin/02_logo.26e3f50ed53544c1c7ac.png" alt="" loading="lazy"></li><li><img src="../../assets/origin/03_lg.a96d12b90e0b1d8e2a5a.png" alt="LG" loading="lazy"></li><li><img src="../../assets/origin/04_lgu+.5aa452b3620888b8180c.png" alt="LG유플러스" loading="lazy"></li><li><img src="../../assets/origin/05_woongjin.4b5f79bcf32c2b52d4c0.png" alt="웅진" loading="lazy"></li><li><img src="../../assets/origin/06_gs.b4937c30866898d5978d.png" alt="GS" loading="lazy"></li><li><img src="../../assets/origin/07_olive_young.e63706f5f90bed782755.png" alt="올리브영" loading="lazy"></li><li><img src="../../assets/origin/08_kakaopay.ec0feddaf22e913c7e02.png" alt="카카오페이" loading="lazy"></li><li><img src="../../assets/origin/10_logo.903a4c7c9aa13d6268ce.png" alt="" loading="lazy"></li><li><img src="../../assets/origin/11_theres.78c038692ae02eeeb8b8.png" alt="" loading="lazy"></li><li><img src="../../assets/origin/12_11street.ce145ee69dde686b285c.png" alt="11번가" loading="lazy"></li><li><img src="../../assets/origin/14_kt.626d843890e82319cfb2.png" alt="KT" loading="lazy"></li><li><img src="../../assets/origin/15_tripstore.35fd24420f22a807102d.png" alt="트립스토어" loading="lazy"></li><li><img src="../../assets/origin/16_cyberlogitec.21555d984495dfddc26d.png" alt="사이버로지텍" loading="lazy"></li><li><img src="../../assets/origin/17_lig.c81d0240fab7968ff357.png" alt="LIG넥스원" loading="lazy"></li><li><img src="../../assets/origin/18_hmm.18d13a82edd9e11b5231.png" alt="HMM" loading="lazy"></li><li><img src="../../assets/origin/19_nuri.9e846a18d466c945442b.png" alt="누리플렉스" loading="lazy"></li></ul></div>
-    </section>
-    <section class="rm-sec rm-end" aria-labelledby="faq"><div class="rm-wrap">
-      <div class="rm-end-side">
-        <h2 id="faq">자주 묻는 질문</h2>
-        <div class="rm-cta">
-          <h3>테스트 인력이 필요하신가요?</h3>
-          <p>일정과 범위를 알려 주시면 맞는 방식과 투입 계획을 제안해 드립니다.</p>
-          <a class="pill" href="../../re-menu/#inquiry/qa">프로젝트 문의</a>
-          <small>staff@tbell.co.kr · 070-7777-9113</small>
-        </div>
-      </div>
-      <div class="rm-faq"><details><summary>QA 아웃소싱(테스트 외주)이란 무엇인가요?</summary><p>소프트웨어의 품질 검증 업무를 외부 전문 테스트 기업에 맡기는 방식입니다. 내부 QA 인력이 부족하거나 특정 분야의 전문성이 필요할 때, 출시 일정에 맞춰 테스트 인력을 빠르게 늘려야 할 때 활용합니다.</p></details><details><summary>QA 아웃소싱 비용은 어떻게 정해지나요?</summary><p>테스트 대상(웹, 모바일 앱, API, 임베디드 등)과 테스트 유형(기능, 회귀, 성능, 보안, 자동화)을 먼저 정의한 뒤, 필요한 인력 규모와 기간으로 공수를 산정합니다. 범위가 명확할수록 견적도 정확해집니다.</p></details><details><summary>인력 파견형과 프로젝트 전담형은 무엇이 다른가요?</summary><p>인력 파견형은 테스트 전문가가 고객사 프로젝트에 합류해 지정된 테스트를 수행하고, 프로젝트 전담형은 테스트 전략 수립부터 설계, 수행, 결함 관리, 결과 보고까지 전담 팀이 책임집니다.</p></details><details><summary>QA 아웃소싱의 단점은 없나요?</summary><p>외부 인력과의 커뮤니케이션 비용, 담당자 역량에 따른 품질 편차가 대표적인 우려입니다. 티벨은 분야별 테스트 전문가가 개발자와 직접 소통하고, 업무 도메인 경험을 갖춘 인력을 투입하며, 고객 환경에 맞춘 실무자 교육을 함께 진행합니다.</p></details><details><summary>테스트 외주 업체는 무엇을 보고 골라야 하나요?</summary><p>투입 인력과 단가만이 아니라 해당 업무 도메인 경험, 품질 목표에 맞춰 테스트 전략과 우선순위를 조정할 수 있는 역량, 개발팀과의 소통 방식, 결과 보고 체계를 함께 확인하는 것이 좋습니다.</p></details></div>
+    <section class="s-sec" aria-labelledby="faq"><div class="s-wrap">
+      <div class="qh-head"><p class="qh-label">FAQ</p><h2 id="faq">자주 묻는 질문</h2></div>
+      <div class="rm-faq"><details><summary>QA 아웃소싱 비용은 어떻게 정해지나요?</summary><p>테스트 대상(웹, 모바일 앱, API, 임베디드 등)과 테스트 유형(기능, 회귀, 성능, 보안, 자동화)을 먼저 정의한 뒤, 필요한 인력 규모와 기간으로 공수를 산정합니다. 범위가 명확할수록 견적도 정확해집니다.</p></details><details><summary>인력 파견형과 프로젝트 전담형은 무엇이 다른가요?</summary><p>인력 파견형은 테스트 전문가가 고객사 프로젝트에 합류해 지정된 테스트를 수행하고, 프로젝트 전담형은 테스트 전략 수립부터 설계, 수행, 결함 관리, 결과 보고까지 전담 팀이 책임집니다.</p></details><details><summary>QA 아웃소싱의 단점은 없나요?</summary><p>외부 인력과의 커뮤니케이션 비용, 담당자 역량에 따른 품질 편차가 대표적인 우려입니다. 티벨은 분야별 테스트 전문가가 개발자와 직접 소통하고, 업무 도메인 경험을 갖춘 인력을 투입하며, 고객 환경에 맞춘 실무자 교육을 함께 진행합니다.</p></details><details><summary>테스트 외주 업체는 무엇을 보고 골라야 하나요?</summary><p>투입 인력과 단가만이 아니라 해당 업무 도메인 경험, 품질 목표에 맞춰 테스트 전략과 우선순위를 조정할 수 있는 역량, 개발팀과의 소통 방식, 결과 보고 체계를 함께 확인하는 것이 좋습니다.</p></details><details><summary>어떤 분야를 테스트하나요?</summary><p>Web/App, IoT/AI, 임베디드, 금융, 자동차 분야를 중심으로 영상, 보안, 전자, 전자상거래, 통신, 플랫폼, 공공 분야까지 테스트합니다.</p></details></div>
     </div></section>
+    <section class="qh-close"><div class="s-wrap">
+      <h2>테스트 인력이 필요하신가요?</h2>
+      <p>일정과 범위를 알려 주시면 맞는 방식과 투입 계획을 제안해 드립니다.</p>
+      <a class="pill" href="../../re-menu/#inquiry/qa">프로젝트 문의</a>
+    </div></section>
+    </div>
   </main>
   <footer class="footer">
     <img src="../../assets/tbell-logo.svg" alt="" width="88" height="18">
@@ -257,6 +250,6 @@
     <p>가산사업장 서울특별시 금천구 가산디지털1로 168, A동 601호</p>
     <p class="num">Tel 070-7777-9113 / 070-7777-6368 · staff@tbell.co.kr</p>
   </footer>
-  <script src="../../re-menu/re-menu.js?v=2"></script>
+  <script src="../../re-menu/re-menu.js?v=3"></script>
 </body>
 </html>
