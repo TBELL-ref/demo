@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>블랙박스 테스트(기능 테스트) | 통합·회귀·인수 테스트 - 티벨</title>
+  <meta name="description" content="블랙박스 테스트는 내부 코드를 보지 않고 요구사항과 명세서를 기준으로 입력과 출력을 확인해 기능을 검증하는 테스트입니다. 테스트 종류, 화이트박스 테스트와의 차이, 티벨의 10개 산업 도메인 테스트 경험을 소개합니다.">
+  <link rel="canonical" href="https://tbell-ref.github.io/demo/re-menu/blackbox/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TBELL 티벨">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:title" content="블랙박스 테스트(기능 테스트) | 통합·회귀·인수 테스트 - 티벨">
+  <meta property="og:description" content="블랙박스 테스트는 내부 코드를 보지 않고 요구사항과 명세서를 기준으로 입력과 출력을 확인해 기능을 검증하는 테스트입니다. 테스트 종류, 화이트박스 테스트와의 차이, 티벨의 10개 산업 도메인 테스트 경험을 소개합니다.">
+  <meta property="og:url" content="https://tbell-ref.github.io/demo/re-menu/blackbox/">
+  <meta property="og:image" content="https://tbell-ref.github.io/demo/assets/origin/bg-tablet-blackbox.08b799c93405378cd9f7.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@200;400;500;700&family=Oxanium:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="../../assets/site.css?v=123">
+  <link rel="stylesheet" href="../../re-menu/re.css?v=1">
+  <link rel="icon" href="../../assets/tbell-logo.svg">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://tbell-ref.github.io/demo/#org",
+      "name": "티벨",
+      "alternateName": "TBELL",
+      "url": "https://tbell-ref.github.io/demo/",
+      "email": "staff@tbell.co.kr",
+      "telephone": "+82-70-7777-9113",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "강남대로 354, 9층",
+        "addressLocality": "서울특별시 강남구",
+        "addressCountry": "KR"
+      }
+    },
+    {
+      "@type": "Service",
+      "name": "블랙박스 테스트",
+      "alternateName": [
+        "블랙박스 테스트",
+        "기능 테스트",
+        "Black-Box Testing",
+        "명세 기반 테스트"
+      ],
+      "description": "블랙박스 테스트는 내부 코드를 보지 않고 요구사항과 명세서를 기준으로 입력과 출력을 확인해 기능을 검증하는 테스트입니다. 테스트 종류, 화이트박스 테스트와의 차이, 티벨의 10개 산업 도메인 테스트 경험을 소개합니다.",
+      "serviceType": "Software Testing",
+      "provider": {
+        "@id": "https://tbell-ref.github.io/demo/#org"
+      },
+      "areaServed": "KR",
+      "url": "https://tbell-ref.github.io/demo/re-menu/blackbox/"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "QA",
+          "item": "https://tbell-ref.github.io/demo/#qa"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "테스트 서비스",
+          "item": "https://tbell-ref.github.io/demo/re-menu/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "블랙박스 테스트",
+          "item": "https://tbell-ref.github.io/demo/re-menu/blackbox/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "블랙박스 테스트란 무엇인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "소프트웨어의 내부 코드를 보지 않고, 요구사항과 명세서를 기준으로 입력을 넣고 출력을 확인해 기능이 의도대로 동작하는지 검증하는 테스트 기법입니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "기능 테스트와 같은 말인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "기능 테스트는 대부분 블랙박스 기법으로 수행되기 때문에 비슷한 의미로 쓰입니다. 다만 블랙박스는 '내부를 보지 않는다'는 접근 방식을 뜻하므로, 성능처럼 기능이 아닌 특성을 확인할 때도 쓰일 수 있습니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "언제부터 블랙박스 테스트를 할 수 있나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "요구사항과 명세서가 나오면 테스트 설계를 시작할 수 있어, 설계부터 구현까지 모든 소프트웨어 개발 단계에서 테스트가 가능합니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "반복되는 회귀 테스트도 맡길 수 있나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "네. 반복 비중이 큰 회귀 테스트는 테스트 자동화와 함께 운영하면 시간과 비용을 줄일 수 있습니다."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <a class="skip" href="#content">본문으로 건너뛰기</a>
+  <div class="site-head">
+  <header class="header">
+    <a class="logo" href="../../#qa" aria-label="TBELL QA 홈">
+      <img src="../../assets/tbell-logo.svg" alt="TBELL" width="110" height="22">
+      <span class="logo-mode">QA</span>
+    </a>
+    <nav class="nav" id="nav" aria-label="상위 메뉴"><a href="../../re-menu/" aria-current="page">테스트 서비스</a><a href="../../#qa/testops">TestOps</a><a href="../../#qa/tauto">T 솔루션</a><a href="../../#qa/blog">블로그</a><a href="../../#qa/company">회사 소개</a></nav>
+    <div class="tools">
+      <a class="pill" href="../../#qa/inquiry">문의</a>
+      <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="nav">
+        <span></span><span></span><span></span>
+        <span class="sr-only">메뉴</span>
+      </button>
+    </div>
+  </header>
+  </div>
+  <main id="content" class="rm">
+    <section class="rm-hero">
+      <div class="rm-wrap">
+        <div>
+          <ol class="rm-crumb" aria-label="현재 위치"><li><a href="../../#qa">QA</a></li><li><a href="../../re-menu/">테스트 서비스</a></li><li aria-current="page">블랙박스 테스트</li></ol>
+          <p class="rm-eyebrow">Black-Box Testing</p>
+          <h1><span>블랙박스 테스트</span></h1>
+          <p class="lede">내부 코드를 보지 않고 요구사항과 명세서를 기준으로 입력과 출력을 확인해, 소프트웨어가 기획대로 동작하는지 사용자 관점에서 검증합니다.</p>
+          <ul class="rm-tags" aria-label="키워드"><li>#기능 테스트</li><li>#통합 테스트</li><li>#회귀 테스트</li><li>#인수 테스트</li></ul>
+          <div class="rm-actions"><a class="pill" href="../../#qa/inquiry">테스트 문의하기</a><a class="pill ghost" href="../../re-menu/">다른 테스트 보기</a></div>
+        </div>
+        <figure class="rm-hero-art"><picture><source media="(max-width: 768px)" srcset="../../assets/origin/bg-mobile-blackbox.deb03514f8108bd54281.png"><img src="../../assets/origin/bg-tablet-blackbox.08b799c93405378cd9f7.png" alt="블랙박스 테스트" width="1280" height="800"></picture></figure>
+      </div>
+    </section>
+    <nav class="rm-tabs" aria-label="테스트 서비스"><ul class="rm-wrap"><li><a href="../../re-menu/outsourcing/">QA 아웃소싱</a></li><li><a href="../../re-menu/automation/">테스트 자동화</a></li><li><a href="../../re-menu/blackbox/" aria-current="page">블랙박스 테스트</a></li><li><a href="../../re-menu/whitebox/">화이트박스 테스트</a></li><li><a href="../../re-menu/api/">API 테스트</a></li><li><a href="../../re-menu/performance/">성능 테스트</a></li></ul></nav>
+    <section class="rm-sec" aria-labelledby="def"><div class="rm-wrap">
+      <div class="rm-def">
+        <div class="rm-head"><p class="rm-eyebrow">DEFINITION</p><h2 id="def">블랙박스 테스트란?</h2></div>
+        <div class="rm-prose"><p><strong>블랙박스 테스트(Black-Box Testing)는 소프트웨어의 요구사항과 명세서를 기반으로 테스트를 설계하고, 입력과 출력 데이터를 분석해 시스템이 올바르게 동작하는지 확인하는 동적 테스트입니다.</strong></p><p>내부 구조를 몰라도 '이 입력에는 이 결과가 나와야 한다'는 기준으로 검증하기 때문에 실제 사용자의 관점에 가깝습니다. 버그와 오류를 찾는 것은 물론 사용성을 개선하고 사용자 만족도를 높이는 데에도 도움이 되며, 설계부터 구현까지 모든 개발 단계에서 수행할 수 있습니다.</p><dl class="rm-summary"><dt>한 줄 정의</dt><dd>요구사항 기준으로 입력·출력을 확인해 기능을 검증하는 테스트</dd><dt>관점</dt><dd>사용자 관점 (내부 코드는 보지 않음)</dd><dt>함께 쓰는 말</dt><dd>기능 테스트, 명세 기반 테스트</dd></dl></div>
+      </div>
+    </div></section>
+    <section class="rm-sec tint" aria-labelledby="need"><div class="rm-wrap">
+      <div class="rm-head"><p class="rm-eyebrow">WHEN YOU NEED IT</p><h2 id="need">이럴 때 블랙박스 테스트가 필요합니다</h2></div>
+      <ul class="rm-checks"><li>기획서와 명세서대로 기능이 동작하는지 출시 전에 확인하고 싶다</li><li>새 기능을 붙인 뒤 기존 기능이 망가지지 않았는지 걱정된다</li><li>외부 시스템과 연결한 뒤 전체가 제대로 돌아가는지 확인해야 한다</li><li>발주처 인수 전에 사용자 입장에서 최종 점검이 필요하다</li></ul>
+    </div></section>
+    <section class="rm-sec" aria-labelledby="what"><div class="rm-wrap">
+      <div class="rm-head"><p class="rm-eyebrow">TEST LEVELS</p><h2 id="what">블랙박스 테스트로 무엇을 확인하나요?</h2><p>티벨은 개발 명세서를 바탕으로 시나리오를 작성하고, 개발 단계에 맞춰 아래 테스트를 수행합니다.</p></div>
+      <ol class="rm-rows"><li><h3>인터페이스 테스트<small>INTERFACE TEST</small></h3><p>모듈이나 시스템 사이에 데이터가 올바르게 오가는지 확인합니다.</p></li><li><h3>통합 테스트<small>INTEGRATION TEST</small></h3><p>따로 개발한 기능을 합쳤을 때 함께 제대로 동작하는지 검증합니다.</p></li><li><h3>시스템 테스트<small>SYSTEM TEST</small></h3><p>완성된 전체 시스템이 요구사항을 만족하는지 실제와 가까운 환경에서 확인합니다.</p></li><li><h3>새니티 테스트<small>SANITY TEST</small></h3><p>수정이나 빌드 직후 핵심 기능이 정상인지 빠르게 점검합니다.</p></li><li><h3>회귀 테스트<small>REGRESSION TEST</small></h3><p>변경 후에도 기존 기능이 망가지지 않았는지 다시 확인합니다.</p></li><li><h3>인수 테스트<small>ACCEPTANCE TEST</small></h3><p>사용자나 발주처 입장에서 제품을 받아들일 수 있는지 최종 확인합니다.</p></li></ol>
+    </div></section>
+    <section class="rm-sec tint" aria-labelledby="compare"><div class="rm-wrap">
+      <div class="rm-head"><p class="rm-eyebrow">COMPARE</p><h2 id="compare">블랙박스 테스트와 화이트박스 테스트의 차이</h2></div>
+      <div class="rm-scroll"><table class="rm-compare"><thead><tr><td></td><th scope="col">블랙박스 테스트</th><th scope="col"><a href="../../re-menu/whitebox/">화이트박스 테스트</a></th></tr></thead><tbody><tr><th scope="row">보는 것</th><td>입력과 출력 (내부 코드는 보지 않음)</td><td>소스코드의 내부 구조와 동작</td></tr><tr><th scope="row">기준</th><td>요구사항, 기능 명세서</td><td>코드, 코딩 표준, 실행 경로</td></tr><tr><th scope="row">찾는 결함</th><td>기능 누락, 잘못된 동작, 사용성 문제</td><td>숨은 로직 오류, 코딩 표준 위배, 미실행 코드</td></tr><tr><th scope="row">수행자</th><td>테스트 전문가, 기획·현업 담당자도 참여 가능</td><td>코드를 읽을 수 있는 테스트 전문가·개발자</td></tr></tbody></table></div>
+      <p class="rm-note">두 방법은 서로 보완합니다. 기능은 블랙박스로, 코드 품질은 화이트박스로 함께 검증하는 것이 일반적입니다.</p>
+    </div></section>
+    <section class="rm-sec dark" aria-labelledby="why"><div class="rm-wrap">
+      <div class="rm-head"><p class="rm-eyebrow">WHY TBELL</p><h2 id="why">업무를 아는 전문가가 테스트합니다</h2></div>
+      <ol class="rm-points" style="--cols:3"><li><b>01</b><h3>분야별 테스트 전문가가 개발자와 직접 소통</h3><p>결함을 문서로만 넘기지 않습니다. 분야별 전문가가 개발자와 바로 이야기하며 원인을 좁혀 갑니다.</p></li><li><b>02</b><h3>10개 산업 도메인의 업무 경험</h3><p>금융, 자동차, 임베디드, 통신, 공공 등 업종마다 다른 품질 기준을 이해하고 테스트를 설계합니다.</p></li><li><b>03</b><h3>고객 환경에 맞춘 실무자 교육</h3><p>테스트가 끝난 뒤에도 품질이 유지되도록 고객사 실무자에게 필요한 교육을 함께 진행합니다.</p></li></ol>
+      <ul class="s-industries" style="margin-top:clamp(40px,4vw,64px)"><li><img src="../../assets/origin/item-domain-01.657f4accf550f6f53133.png" alt="" loading="lazy"><span>금융</span></li><li><img src="../../assets/origin/item-domain-02.310b2adff2480c6bd1c8.png" alt="" loading="lazy"><span>영상</span></li><li><img src="../../assets/origin/item-domain-03.2b2f52f82891bf0fd798.png" alt="" loading="lazy"><span>보안</span></li><li><img src="../../assets/origin/item-domain-04.943d20fbfe29b20cf765.png" alt="" loading="lazy"><span>자동차</span></li><li><img src="../../assets/origin/item-domain-05.768a0a12ce755ab346f1.png" alt="" loading="lazy"><span>전자</span></li><li><img src="../../assets/origin/item-domain-06.93cca89e281e530f78cc.png" alt="" loading="lazy"><span>임베디드</span></li><li><img src="../../assets/origin/item-domain-07.0961a345935842059296.png" alt="" loading="lazy"><span>전자상거래</span></li><li><img src="../../assets/origin/item-domain-08.c7a0bdf21c469ad3834a.png" alt="" loading="lazy"><span>통신</span></li><li><img src="../../assets/origin/item-domain-09.5bc39232228fe04a4509.png" alt="" loading="lazy"><span>플랫폼</span></li><li><img src="../../assets/origin/item-domain-10.d6371b14798b730b7281.png" alt="" loading="lazy"><span>공공분야</span></li></ul>
+    </div></section>
+    <section class="rm-sec"><div class="rm-wrap">
+      <div class="rm-head"><p class="rm-eyebrow">CLIENTS</p><h2>티벨과 함께하는 고객사</h2></div>
+      <ul class="rm-logos"><li><img src="../../assets/qa/logos/tmap-mobility.png" alt="TMAP MOBILITY" loading="lazy"></li><li><img src="../../assets/qa/logos/sk-telecom.png" alt="SK telecom" loading="lazy"></li><li><img src="../../assets/qa/logos/lig-nex1.png" alt="LIG넥스원" loading="lazy"></li><li><img src="../../assets/qa/logos/woongjin-thinkbig.png" alt="웅진씽크빅" loading="lazy"></li><li><img src="../../assets/qa/logos/hmm.png" alt="HMM" loading="lazy"></li><li><img src="../../assets/qa/logos/cyberlogitec.png" alt="CyberLogitec" loading="lazy"></li><li><img src="../../assets/qa/logos/nuriflex.png" alt="Nuri Flex" loading="lazy"></li></ul>
+    </div></section>
+    <section class="rm-sec tint" aria-labelledby="faq"><div class="rm-wrap">
+      <div class="rm-head center"><p class="rm-eyebrow">FAQ</p><h2 id="faq">자주 묻는 질문</h2></div>
+      <div class="rm-faq"><details open><summary>블랙박스 테스트란 무엇인가요?</summary><p>소프트웨어의 내부 코드를 보지 않고, 요구사항과 명세서를 기준으로 입력을 넣고 출력을 확인해 기능이 의도대로 동작하는지 검증하는 테스트 기법입니다.</p></details><details><summary>기능 테스트와 같은 말인가요?</summary><p>기능 테스트는 대부분 블랙박스 기법으로 수행되기 때문에 비슷한 의미로 쓰입니다. 다만 블랙박스는 '내부를 보지 않는다'는 접근 방식을 뜻하므로, 성능처럼 기능이 아닌 특성을 확인할 때도 쓰일 수 있습니다.</p></details><details><summary>언제부터 블랙박스 테스트를 할 수 있나요?</summary><p>요구사항과 명세서가 나오면 테스트 설계를 시작할 수 있어, 설계부터 구현까지 모든 소프트웨어 개발 단계에서 테스트가 가능합니다.</p></details><details><summary>반복되는 회귀 테스트도 맡길 수 있나요?</summary><p>네. 반복 비중이 큰 회귀 테스트는 <a href="../automation/">테스트 자동화</a>와 함께 운영하면 시간과 비용을 줄일 수 있습니다.</p></details></div>
+    </div></section>
+    <section class="rm-sec" aria-labelledby="related"><div class="rm-wrap">
+      <div class="rm-related-row"><h2 id="related">함께 보면 좋은 테스트</h2><ul class="rm-related"><li><a href="../../re-menu/outsourcing/">QA 아웃소싱</a></li><li><a href="../../re-menu/automation/">테스트 자동화</a></li><li><a href="../../re-menu/whitebox/">화이트박스 테스트</a></li><li><a href="../../re-menu/api/">API 테스트</a></li><li><a href="../../re-menu/performance/">성능 테스트</a></li><li><a href="../../#qa/testops/build">TestOps 구축</a></li></ul></div>
+    </div></section>
+    <section class="rm-close"><div class="rm-wrap">
+      <h2>기능이 기획대로 동작하는지 확인하세요</h2>
+      <p>요구사항 문서와 일정을 알려 주시면 테스트 범위와 시나리오 설계 방향을 제안해 드립니다.</p>
+      <div class="rm-actions"><a class="pill" href="../../#qa/inquiry">프로젝트 문의</a><a class="pill ghost" href="mailto:staff@tbell.co.kr">staff@tbell.co.kr</a></div>
+      <p class="rm-contact">070-7777-9113 · 월–금 09:30–18:00 (점심 12:00–13:00)</p>
+    </div></section>
+  </main>
+  <footer class="footer">
+    <img src="../../assets/tbell-logo.svg" alt="" width="88" height="18">
+    <p>대표이사 김종균 · 사업자등록번호 376-81-00089</p>
+    <p>강남본사 서울특별시 강남구 강남대로 354, 9층 (역삼동, 혜천빌딩)</p>
+    <p>가산사업장 서울특별시 금천구 가산디지털1로 168, A동 601호</p>
+    <p class="num">Tel 070-7777-9113 / 070-7777-6368 · staff@tbell.co.kr</p>
+  </footer>
+  <script>
+    (() => {
+      const toggle = document.getElementById("nav-toggle");
+      const nav = document.getElementById("nav");
+      toggle.addEventListener("click", () => toggle.setAttribute("aria-expanded", String(nav.classList.toggle("open"))));
+      const current = document.querySelector('.rm-tabs [aria-current="page"]');
+      if (current) current.scrollIntoView({ block: "nearest", inline: "center" });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>성능 테스트(부하 테스트) | 스트레스·확장성 테스트 - 티벨</title>
+  <meta name="description" content="성능 테스트는 처리량·응답시간·자원 사용 등 성능 지표를 측정해 시스템의 한계와 임계점을 검증하는 테스트입니다. 부하·스트레스·확장성·안정성·볼륨·구성 테스트와 LoadRunner·JMeter 기반 티벨 성능 테스트를 소개합니다.">
+  <link rel="canonical" href="https://tbell-ref.github.io/demo/re-menu/performance/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="TBELL 티벨">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:title" content="성능 테스트(부하 테스트) | 스트레스·확장성 테스트 - 티벨">
+  <meta property="og:description" content="성능 테스트는 처리량·응답시간·자원 사용 등 성능 지표를 측정해 시스템의 한계와 임계점을 검증하는 테스트입니다. 부하·스트레스·확장성·안정성·볼륨·구성 테스트와 LoadRunner·JMeter 기반 티벨 성능 테스트를 소개합니다.">
+  <meta property="og:url" content="https://tbell-ref.github.io/demo/re-menu/performance/">
+  <meta property="og:image" content="https://tbell-ref.github.io/demo/assets/origin/bg-tablet-perfomance.defe2610687b7c8a7569.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@200;400;500;700&family=Oxanium:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="../../assets/site.css?v=123">
+  <link rel="stylesheet" href="../../re-menu/re.css?v=1">
+  <link rel="icon" href="../../assets/tbell-logo.svg">
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://tbell-ref.github.io/demo/#org",
+      "name": "티벨",
+      "alternateName": "TBELL",
+      "url": "https://tbell-ref.github.io/demo/",
+      "email": "staff@tbell.co.kr",
+      "telephone": "+82-70-7777-9113",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "강남대로 354, 9층",
+        "addressLocality": "서울특별시 강남구",
+        "addressCountry": "KR"
+      }
+    },
+    {
+      "@type": "Service",
+      "name": "성능 테스트",
+      "alternateName": [
+        "성능 테스트",
+        "부하 테스트",
+        "Performance Testing",
+        "스트레스 테스트"
+      ],
+      "description": "성능 테스트는 처리량·응답시간·자원 사용 등 성능 지표를 측정해 시스템의 한계와 임계점을 검증하는 테스트입니다. 부하·스트레스·확장성·안정성·볼륨·구성 테스트와 LoadRunner·JMeter 기반 티벨 성능 테스트를 소개합니다.",
+      "serviceType": "Software Testing",
+      "provider": {
+        "@id": "https://tbell-ref.github.io/demo/#org"
+      },
+      "areaServed": "KR",
+      "url": "https://tbell-ref.github.io/demo/re-menu/performance/"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "QA",
+          "item": "https://tbell-ref.github.io/demo/#qa"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "테스트 서비스",
+          "item": "https://tbell-ref.github.io/demo/re-menu/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "성능 테스트",
+          "item": "https://tbell-ref.github.io/demo/re-menu/performance/"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "성능 테스트란 무엇인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "시스템의 처리량, 응답시간, 자원 사용 등 성능 지표를 측정하고 분석해, 요구사항을 만족하는지와 시스템의 한계·임계점을 검증하는 테스트입니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "성능 테스트와 부하 테스트는 같은 말인가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "부하 테스트는 성능 테스트의 한 종류입니다. 성능 테스트는 부하, 스트레스, 확장성, 안정성, 볼륨, 구성 테스트 등을 모두 포함하는 더 넓은 개념입니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "언제 성능 테스트를 해야 하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "서비스 오픈이나 대규모 이벤트처럼 사용자가 몰리기 전, 차세대 시스템 전환이나 인프라 변경 전에 수행하는 것이 좋습니다. 운영 중 발생할 수 있는 문제를 사전에 파악할 수 있습니다."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "어떤 도구를 사용하나요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "LoadRunner, Apache JMeter 등 대표적인 성능 테스트 도구를 사용하며, 대상 시스템과 목적에 맞춰 최적의 도구를 선정합니다."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+</head>
+<body>
+  <a class="skip" href="#content">본문으로 건너뛰기</a>
+  <div class="site-head">
+  <header class="header">
+    <a class="logo" href="../../#qa" aria-label="TBELL QA 홈">
+      <img src="../../assets/tbell-logo.svg" alt="TBELL" width="110" height="22">
+      <span class="logo-mode">QA</span>
+    </a>
+    <nav class="nav" id="nav" aria-label="상위 메뉴"><a href="../../re-menu/" aria-current="page">테스트 서비스</a><a href="../../#qa/testops">TestOps</a><a href="../../#qa/tauto">T 솔루션</a><a href="../../#qa/blog">블로그</a><a href="../../#qa/company">회사 소개</a></nav>
+    <div class="tools">
+      <a class="pill" href="../../#qa/inquiry">문의</a>
+      <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="nav">
+        <span></span><span></span><span></span>
+        <span class="sr-only">메뉴</span>
+      </button>
+    </div>
+  </header>
+  </div>
+  <main id="content" class="rm">
+    <section class="rm-hero">
+      <div class="rm-wrap">
+        <div>
+          <ol class="rm-crumb" aria-label="현재 위치"><li><a href="../../#qa">QA</a></li><li><a href="../../re-menu/">테스트 서비스</a></li><li aria-current="page">성능 테스트</li></ol>
+          <p class="rm-eyebrow">Performance Testing</p>
+          <h1><span>성능 테스트 ·</span> <span>부하 테스트</span></h1>
+          <p class="lede">처리량과 응답시간, 자원 사용량을 측정해 사용자가 몰려도 시스템이 버티는지, 한계와 임계점이 어디인지 출시 전에 확인합니다.</p>
+          <ul class="rm-tags" aria-label="키워드"><li>#부하 테스트</li><li>#스트레스 테스트</li><li>#확장성</li><li>#LoadRunner</li><li>#JMeter</li></ul>
+          <div class="rm-actions"><a class="pill" href="../../#qa/inquiry">테스트 문의하기</a><a class="pill ghost" href="../../re-menu/">다른 테스트 보기</a></div>
+        </div>
+        <figure class="rm-hero-art"><picture><source media="(max-width: 768px)" srcset="../../assets/origin/bg-mobile-perfomance.4b266306d8c200a4bea8.png"><img src="../../assets/origin/bg-tablet-perfomance.defe2610687b7c8a7569.png" alt="성능 테스트 · 부하 테스트" width="1280" height="800"></picture></figure>
+      </div>
+    </section>
+    <nav class="rm-tabs" aria-label="테스트 서비스"><ul class="rm-wrap"><li><a href="../../re-menu/outsourcing/">QA 아웃소싱</a></li><li><a href="../../re-menu/automation/">테스트 자동화</a></li><li><a href="../../re-menu/blackbox/">블랙박스 테스트</a></li><li><a href="../../re-menu/whitebox/">화이트박스 테스트</a></li><li><a href="../../re-menu/api/">API 테스트</a></li><li><a href="../../re-menu/performance/" aria-current="page">성능 테스트</a></li></ul></nav>
+    <section class="rm-sec" aria-labelledby="def"><div class="rm-wrap">
+      <div class="rm-def">
+        <div class="rm-head"><p class="rm-eyebrow">DEFINITION</p><h2 id="def">성능 테스트란?</h2></div>
+        <div class="rm-prose"><p><strong>성능 테스트(Performance Testing)는 시스템의 성능을 측정하고 분석해, 요구사항을 만족하는 데 필요한 처리량과 응답시간, 자원 사용 등의 지표를 산출하고 평가하는 테스트입니다.</strong></p><p>개발된 시스템의 성능을 미리 검증하면 운영 중 발생할 수 있는 문제를 사전에 파악할 수 있습니다. 시스템의 한계와 임계점을 확인해 두면 안정적인 운영을 위한 기틀을 마련할 수 있습니다.</p><dl class="rm-summary"><dt>한 줄 정의</dt><dd>처리량·응답시간·자원 사용을 측정해 한계를 검증하는 테스트</dd><dt>핵심 지표</dt><dd>처리량(TPS), 응답시간, CPU·메모리 등 자원 사용률</dd><dt>함께 쓰는 말</dt><dd>부하 테스트, 스트레스 테스트, 성능 검증</dd></dl></div>
+      </div>
+    </div></section>
+    <section class="rm-sec tint" aria-labelledby="need"><div class="rm-wrap">
+      <div class="rm-head"><p class="rm-eyebrow">WHEN YOU NEED IT</p><h2 id="need">이럴 때 성능 테스트가 필요합니다</h2></div>
+      <ul class="rm-checks"><li>서비스 오픈이나 이벤트 때 사용자가 한꺼번에 몰릴 예정이다</li><li>차세대 시스템 전환이나 인프라 변경을 앞두고 있다</li><li>‘느리다’는 사용자 불만이 늘고 있다</li><li>서버를 얼마나 늘려야 할지 근거가 필요하다</li></ul>
+    </div></section>
+    <section class="rm-sec" aria-labelledby="what"><div class="rm-wrap">
+      <div class="rm-head"><p class="rm-eyebrow">SCOPE</p><h2 id="what">성능 테스트의 종류</h2><p>티벨은 각 분야의 전문가와 개발 연구소가 도구 선정부터 테스트까지 참여해, 목적에 맞는 성능 테스트를 수행합니다.</p></div>
+      <ul class="rm-icons"><li><img src="../../assets/qa/icons/perf-load.png" alt=""><h3>부하 테스트</h3><p>예상되는 사용자 수와 요청량에서 응답시간과 처리량이 기준을 만족하는지 확인합니다.</p></li><li><img src="../../assets/qa/icons/perf-stress.png" alt=""><h3>스트레스 테스트</h3><p>한계를 넘는 부하를 걸어 시스템이 어디서, 어떻게 무너지고 회복하는지 확인합니다.</p></li><li><img src="../../assets/qa/icons/perf-scalability.png" alt=""><h3>확장성 테스트</h3><p>서버나 자원을 늘렸을 때 성능이 그만큼 함께 늘어나는지 확인합니다.</p></li><li><img src="../../assets/qa/icons/perf-stability.png" alt=""><h3>안정성 테스트</h3><p>오랜 시간 운영해도 메모리 누수나 성능 저하 없이 버티는지 확인합니다.</p></li><li><img src="../../assets/qa/icons/perf-volume.png" alt=""><h3>볼륨 테스트</h3><p>대량의 데이터가 쌓였을 때도 처리 속도와 정확성이 유지되는지 확인합니다.</p></li><li><img src="../../assets/qa/icons/perf-configuration.png" alt=""><h3>구성 테스트</h3><p>설정과 환경 구성에 따라 성능이 어떻게 달라지는지 비교합니다.</p></li></ul>
+    </div></section>
+    <section class="rm-sec tint"><div class="rm-wrap">
+      <div class="rm-head"><p class="rm-eyebrow">TOOLS</p><h2>주요 활동 도구</h2><p>대표적인 성능 테스트 도구로 실제 사용자 부하를 재현합니다.</p></div>
+      <ul class="rm-logos" style="max-width:420px"><li><img src="../../assets/qa/logos/loadrunner.png" alt="LoadRunner"></li><li><img src="../../assets/qa/logos/apache-jmeter.png" alt="Apache JMeter"></li></ul>
+    </div></section>
+    <section class="rm-sec dark" aria-labelledby="why"><div class="rm-wrap">
+      <div class="rm-head"><p class="rm-eyebrow">WHY TBELL</p><h2 id="why">운영 중 장애를 미리 막습니다</h2></div>
+      <ol class="rm-points" style="--cols:3"><li><b>01</b><h3>핵심 지표 측정</h3><p>처리량, 응답시간, 자원 사용량 등 요구사항을 판단할 수 있는 성능 지표를 산출합니다.</p></li><li><b>02</b><h3>한계와 임계점 검증</h3><p>시스템이 버틸 수 있는 한계를 미리 확인해 안정적인 운영 기반을 마련합니다.</p></li><li><b>03</b><h3>도구 선정부터 참여</h3><p>개발 연구소가 최적의 도구 선정과 테스트 과정 전반에 참여합니다.</p></li></ol>
+    </div></section>
+    <section class="rm-sec tint" aria-labelledby="faq"><div class="rm-wrap">
+      <div class="rm-head center"><p class="rm-eyebrow">FAQ</p><h2 id="faq">자주 묻는 질문</h2></div>
+      <div class="rm-faq"><details open><summary>성능 테스트란 무엇인가요?</summary><p>시스템의 처리량, 응답시간, 자원 사용 등 성능 지표를 측정하고 분석해, 요구사항을 만족하는지와 시스템의 한계·임계점을 검증하는 테스트입니다.</p></details><details><summary>성능 테스트와 부하 테스트는 같은 말인가요?</summary><p>부하 테스트는 성능 테스트의 한 종류입니다. 성능 테스트는 부하, 스트레스, 확장성, 안정성, 볼륨, 구성 테스트 등을 모두 포함하는 더 넓은 개념입니다.</p></details><details><summary>언제 성능 테스트를 해야 하나요?</summary><p>서비스 오픈이나 대규모 이벤트처럼 사용자가 몰리기 전, 차세대 시스템 전환이나 인프라 변경 전에 수행하는 것이 좋습니다. 운영 중 발생할 수 있는 문제를 사전에 파악할 수 있습니다.</p></details><details><summary>어떤 도구를 사용하나요?</summary><p>LoadRunner, Apache JMeter 등 대표적인 성능 테스트 도구를 사용하며, 대상 시스템과 목적에 맞춰 최적의 도구를 선정합니다.</p></details></div>
+    </div></section>
+    <section class="rm-sec" aria-labelledby="related"><div class="rm-wrap">
+      <div class="rm-related-row"><h2 id="related">함께 보면 좋은 테스트</h2><ul class="rm-related"><li><a href="../../re-menu/outsourcing/">QA 아웃소싱</a></li><li><a href="../../re-menu/automation/">테스트 자동화</a></li><li><a href="../../re-menu/blackbox/">블랙박스 테스트</a></li><li><a href="../../re-menu/whitebox/">화이트박스 테스트</a></li><li><a href="../../re-menu/api/">API 테스트</a></li><li><a href="../../#qa/testops/build">TestOps 구축</a></li></ul></div>
+    </div></section>
+    <section class="rm-close"><div class="rm-wrap">
+      <h2>사용자가 몰려도 버티는지 확인하세요</h2>
+      <p>예상 사용자 수와 대상 시스템을 알려 주시면 성능 목표와 테스트 시나리오를 함께 설계해 드립니다.</p>
+      <div class="rm-actions"><a class="pill" href="../../#qa/inquiry">프로젝트 문의</a><a class="pill ghost" href="mailto:staff@tbell.co.kr">staff@tbell.co.kr</a></div>
+      <p class="rm-contact">070-7777-9113 · 월–금 09:30–18:00 (점심 12:00–13:00)</p>
+    </div></section>
+  </main>
+  <footer class="footer">
+    <img src="../../assets/tbell-logo.svg" alt="" width="88" height="18">
+    <p>대표이사 김종균 · 사업자등록번호 376-81-00089</p>
+    <p>강남본사 서울특별시 강남구 강남대로 354, 9층 (역삼동, 혜천빌딩)</p>
+    <p>가산사업장 서울특별시 금천구 가산디지털1로 168, A동 601호</p>
+    <p class="num">Tel 070-7777-9113 / 070-7777-6368 · staff@tbell.co.kr</p>
+  </footer>
+  <script>
+    (() => {
+      const toggle = document.getElementById("nav-toggle");
+      const nav = document.getElementById("nav");
+      toggle.addEventListener("click", () => toggle.setAttribute("aria-expanded", String(nav.classList.toggle("open"))));
+      const current = document.querySelector('.rm-tabs [aria-current="page"]');
+      if (current) current.scrollIntoView({ block: "nearest", inline: "center" });
+    })();
+  </script>
+</body>
+</html>
