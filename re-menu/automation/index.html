@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@200;400;500;700&family=Oxanium:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="../../assets/site.css?v=123">
-  <link rel="stylesheet" href="../../re-menu/re.css?v=2">
+  <link rel="stylesheet" href="../../re-menu/re.css?v=3">
   <link rel="icon" href="../../assets/tbell-logo.svg">
   <script type="application/ld+json">
 {
@@ -47,7 +47,7 @@
         "테스트 자동화 구축",
         "BDD 테스트 자동화"
       ],
-      "description": "테스트 자동화는 반복되는 소프트웨어 테스트를 도구와 스크립트로 자동 실행하는 것입니다. 티벨은 오픈소스 맞춤형 자동화와 Apptest.ai·Tricentis·LG CNS 등 파트너 솔루션으로 앱·웹·통합단말 자동화를 구축합니다.",
+      "description": "테스트 자동화는 반복되는 소프트웨어 테스트를 도구와 스크립트로 자동 실행하는 것입니다. 티벨은 오픈소스 맞춤 구축부터 파트너 솔루션까지 프로젝트에 맞는 방식을 제안합니다.",
       "serviceType": "Software Testing",
       "provider": {
         "@id": "https://tbell-ref.github.io/demo/#org"
@@ -99,6 +99,14 @@
         },
         {
           "@type": "Question",
+          "name": "BDD 기반 자동화는 무엇이 다른가요?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "BDD(행위 주도 개발) 시나리오는 업무 언어로 작성되어 기획·운영 인력도 테스트에 참여할 수 있고, 개발팀과 운영팀이 같은 시나리오를 기준으로 소통할 수 있습니다."
+          }
+        },
+        {
+          "@type": "Question",
           "name": "코딩을 몰라도 자동화를 할 수 있나요?",
           "acceptedAnswer": {
             "@type": "Answer",
@@ -110,7 +118,7 @@
           "name": "자동화 구축 비용이 부담됩니다.",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "티벨은 오픈소스를 활용한 맞춤형 자동화를 직접 구축할 수 있어, 개발비 외에 별도의 솔루션 유지비용이 들지 않는 방식도 선택할 수 있습니다."
+            "text": "티벨은 오픈소스를 활용한 맞춤형 자동화를 직접 구축할 수 있어, 개발비 외에 별도의 솔루션 유지비용이 들지 않는 방식도 선택할 수 있습니다. 개발 흐름 전체에 연결하려면 TestOps 구축도 함께 보세요."
           }
         }
       ]
@@ -183,57 +191,51 @@
   <main id="content" class="rm">
     <section class="rm-hero">
       <div class="rm-wrap">
-        <div>
+        <div class="rm-hero-copy">
           <ol class="rm-crumb" aria-label="현재 위치"><li><a href="../../re-menu/#qa">QA</a></li><li><a href="../../re-menu/types/">테스트 종류</a></li><li aria-current="page">테스트 자동화</li></ol>
           <p class="rm-eyebrow">Test Automation</p>
           <h1><span>테스트 자동화</span></h1>
-          <p class="lede">업데이트마다 반복되는 테스트를 자동으로 실행해 빠르고 일관되게 품질을 확인합니다. 오픈소스 맞춤 구축부터 파트너 솔루션까지 프로젝트에 맞는 방식을 제안합니다.</p>
-          <ul class="rm-tags" aria-label="키워드"><li>#회귀 테스트</li><li>#BDD</li><li>#CI/CD</li><li>#노코드 자동화</li><li>#비용 절감</li></ul>
-          <div class="rm-actions"><a class="pill" href="../../re-menu/#inquiry/qa">테스트 문의하기</a><a class="pill ghost" href="../../re-menu/types/">테스트 종류 전체 보기</a></div>
+          <p class="lede"><strong>테스트 자동화는 반복되는 소프트웨어 테스트를 도구와 스크립트로 자동 실행하는 것입니다.</strong> 티벨은 오픈소스 맞춤 구축부터 파트너 솔루션까지 프로젝트에 맞는 방식을 제안합니다.</p>
+          <ul class="rm-chips" aria-label="키워드"><li>회귀 테스트</li><li>BDD</li><li>CI/CD</li></ul>
+          <div class="rm-actions"><a class="pill" href="../../re-menu/#inquiry/qa">테스트 문의하기</a><a class="pill ghost" href="#faq">자주 묻는 질문</a></div>
         </div>
-        <figure class="rm-hero-art"><picture><source media="(max-width: 768px)" srcset="../../assets/origin/bg-mobile-automation.981f021b70be98f47f4a.png"><img src="../../assets/origin/bg-tablet-automation.42cf3238c4db4de3a5c2.png" alt="테스트 자동화" width="1280" height="800"></picture></figure>
+        <figure class="rm-hero-art"><svg class="dg" viewBox="0 0 480 360" role="img" aria-label="테스트 자동화: 코드가 바뀌면 테스트가 자동으로 실행되고 결과가 돌아오는 순환">
+  <circle class="ring" cx="240" cy="180" r="120"/>
+  <g class="orbit"><circle class="runner" cx="240" cy="60" r="7"/></g>
+  <g class="node n1"><circle cx="240" cy="60" r="26"/><text class="en" x="240" y="65">01</text></g>
+  <g class="node n2"><circle cx="360" cy="180" r="26"/><text class="en" x="360" y="185">02</text></g>
+  <g class="node n3"><circle cx="240" cy="300" r="26"/><text class="en" x="240" y="305">03</text></g>
+  <g class="node n4"><circle cx="120" cy="180" r="26"/><text class="en" x="120" y="185">04</text></g>
+  <text x="240" y="22">코드 변경</text><text x="396" y="185" style="text-anchor:start">자동 실행</text>
+  <text x="240" y="350">결과 리포트</text><text x="84" y="185" style="text-anchor:end">회귀 확인</text>
+  <text class="big" x="240" y="180">CI/CD</text><text class="en" x="240" y="204">TESTOPS</text>
+</svg></figure>
       </div>
     </section>
-    <nav class="rm-tabs" aria-label="테스트 서비스"><ul class="rm-wrap"><li><a href="../../re-menu/outsourcing/">QA 아웃소싱</a></li><li><a href="../../re-menu/automation/" aria-current="page">테스트 자동화</a></li><li><a href="../../re-menu/blackbox/">블랙박스 테스트</a></li><li><a href="../../re-menu/whitebox/">화이트박스 테스트</a></li><li><a href="../../re-menu/api/">API 테스트</a></li><li><a href="../../re-menu/performance/">성능 테스트</a></li></ul></nav>
-    <section class="rm-sec" aria-labelledby="def"><div class="rm-wrap">
-      <div class="rm-def">
-        <div class="rm-head"><p class="rm-eyebrow">DEFINITION</p><h2 id="def">테스트 자동화란?</h2></div>
-        <div class="rm-prose"><p><strong>테스트 자동화는 사람이 반복 수행하던 소프트웨어 테스트를 자동화 도구와 스크립트로 실행하는 것입니다.</strong></p><p>배포할 때마다 기존 기능이 망가지지 않았는지 확인하는 회귀 테스트처럼 같은 테스트를 여러 번 반복해야 할 때 효과가 큽니다. 사람이 할 때보다 빠르고 결과가 일정하며, CI/CD 파이프라인에 연결하면 코드가 바뀔 때마다 테스트가 자동으로 실행됩니다.</p><dl class="rm-summary"><dt>한 줄 정의</dt><dd>반복 테스트를 도구와 스크립트로 자동 실행하는 것</dd><dt>효과</dt><dd>테스트 시간 단축, 결과 일관성, 잦은 배포에도 품질 유지</dd><dt>함께 쓰는 말</dt><dd>자동화 테스트, 테스트 자동화 구축, BDD 테스트</dd></dl></div>
+    <nav class="rm-tabs" aria-label="테스트 종류"><ul class="rm-wrap"><li><a href="../../re-menu/outsourcing/">QA 아웃소싱</a></li><li><a href="../../re-menu/automation/" aria-current="page">테스트 자동화</a></li><li><a href="../../re-menu/blackbox/">블랙박스 테스트</a></li><li><a href="../../re-menu/whitebox/">화이트박스 테스트</a></li><li><a href="../../re-menu/api/">API 테스트</a></li><li><a href="../../re-menu/performance/">성능 테스트</a></li></ul></nav>
+    <section class="rm-sec rm-needs" aria-labelledby="need"><div class="rm-wrap">
+      <h2 id="need">이럴 때 자동화하세요</h2>
+      <ul><li><svg class="rm-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11V9a3 3 0 0 1 3-3h12l-3-3M20 13v2a3 3 0 0 1-3 3H5l3 3"/></svg><p>배포마다 같은 테스트를 손으로 반복할 때</p></li><li><svg class="rm-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><p>테스트 시간이 출시를 늦출 때</p></li><li><svg class="rm-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M7 20h10M5 8h14M5 8l-3 6a3 3 0 0 0 6 0zM19 8l-3 6a3 3 0 0 0 6 0z"/></svg><p>담당자마다 결과가 다르게 나올 때</p></li><li><svg class="rm-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="5" r="2"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="8" r="2"/><path d="M6 7v10M18 10c0 4-6 3-12 7"/></svg><p>CI/CD에 테스트를 연결하고 싶을 때</p></li></ul>
+    </div></section>
+    <section class="rm-sec tint" aria-labelledby="how"><div class="rm-wrap">
+      <div class="rm-split"><h2 id="how">프로젝트에 맞는 자동화 방식</h2><p>오픈소스 맞춤 구축부터 파트너 솔루션까지, 환경과 예산에 맞춰 고릅니다.</p></div>
+      <ul class="rm-soltiles"><li><div class="logo"><img class="tb" src="../../assets/tbell-logo.svg" alt="TBELL"></div><b>OPEN SOURCE</b><p>유지비용 없는 맞춤 구축</p></li><li><div class="logo"><img src="../../assets/qa/logos/apptest-ai.png" alt="Apptest.ai"></div><b>NO-CODE</b><p>AI 인식 · 앱과 증권 MTS</p></li><li><div class="logo"><img src="../../assets/qa/logos/tricentis.png" alt="Tricentis"></div><b>NO-CODE</b><p>통합 테스트 관리 · ERP</p></li><li><div class="logo"><img src="../../assets/qa/logos/softbase-evolution.png" alt="Softbase"></div><b>CODE</b><p>은행 등 통합단말 자동화</p></li><li><div class="logo"><img src="../../assets/qa/logos/symation.png" alt="Symation"></div><b>CODE</b><p>CI/CD 연계 품질관리</p></li><li><div class="logo"><img src="../../assets/qa/logos/lgcns-perfectwin.png" alt="LG CNS PerfecTwin"></div><b>CODE</b><p>대량 데이터 정합성</p></li></ul>
+    </div></section>
+    <section class="rm-proof" aria-label="BDD 테스트 자동화 · TestOps · DevOps 주요 수행 실적"><div class="rm-wrap">
+      <p>BDD 테스트 자동화 · TestOps · DevOps <b>주요 수행 실적</b></p>
+      <div class="rm-ticker"><ul><li>TMAP AUTO Speech 테스트 자동화 ’23</li><li>TMAP AUTO Core 고도화 · OEM 테스트 자동화 ’22</li><li>TMAP AUTO Core 테스트 자동화 ’21</li><li>웅진씽크빅 북클럽 앱 테스트 자동화 ’22</li><li>AMI 테스트 자동화 ’22</li><li>TMAP AUTO Issue Sync System ’23</li><li>SKT TDE DevOps Data Migration ’22</li><li>LIG넥스원 DevOps 업그레이드 ’21</li><li>BizDevOps 시스템(EMS) 구축 ’20</li><li>HMM 전사 ITSM 구축 ’20</li></ul><ul aria-hidden="true"><li>TMAP AUTO Speech 테스트 자동화 ’23</li><li>TMAP AUTO Core 고도화 · OEM 테스트 자동화 ’22</li><li>TMAP AUTO Core 테스트 자동화 ’21</li><li>웅진씽크빅 북클럽 앱 테스트 자동화 ’22</li><li>AMI 테스트 자동화 ’22</li><li>TMAP AUTO Issue Sync System ’23</li><li>SKT TDE DevOps Data Migration ’22</li><li>LIG넥스원 DevOps 업그레이드 ’21</li><li>BizDevOps 시스템(EMS) 구축 ’20</li><li>HMM 전사 ITSM 구축 ’20</li></ul></div>
+    </div></section>
+    <section class="rm-sec rm-end" aria-labelledby="faq"><div class="rm-wrap">
+      <div class="rm-end-side">
+        <h2 id="faq">자주 묻는 질문</h2>
+        <div class="rm-cta">
+          <h3>반복 테스트, 자동으로 돌리세요</h3>
+          <p>지금의 테스트 환경을 알려 주시면 자동화 대상과 맞는 도구를 진단해 드립니다.</p>
+          <a class="pill" href="../../re-menu/#inquiry/qa">프로젝트 문의</a>
+          <small>staff@tbell.co.kr · 070-7777-9113</small>
+        </div>
       </div>
-    </div></section>
-    <section class="rm-sec tint" aria-labelledby="need"><div class="rm-wrap">
-      <div class="rm-head"><p class="rm-eyebrow">WHEN YOU NEED IT</p><h2 id="need">이럴 때 테스트 자동화가 필요합니다</h2></div>
-      <ul class="rm-checks"><li>배포 때마다 같은 회귀 테스트를 손으로 반복한다</li><li>화면과 기능이 많아 테스트 시간이 출시를 늦춘다</li><li>같은 테스트인데 담당자마다 결과가 다르게 나온다</li><li>CI/CD 파이프라인에 테스트를 연결하고 싶다</li></ul>
-    </div></section>
-    <section class="rm-sec" aria-labelledby="what"><div class="rm-wrap">
-      <div class="rm-head"><p class="rm-eyebrow">SOLUTIONS</p><h2 id="what">프로젝트에 맞는 자동화 방식을 고릅니다</h2><p>티벨은 최소 비용의 오픈소스 자동화를 직접 구축하고, Apptest.ai, Tricentis, Softbase, Symation, LG CNS와 협업해 고객별 요건에 맞는 솔루션을 제안합니다.</p></div>
-      <ol class="rm-rows"><li><h3>티벨 맞춤형 자동화<small>OPEN SOURCE</small></h3><p>고객 요구사항을 분석해 오픈소스로 개발합니다. 개발비 외 유지비용이 없고, 고객 인프라를 활용한 앱·웹 자동화에 강합니다.</p></li><li><h3>Apptest.ai Ptero · Stego<small>NO-CODE</small></h3><p>코딩 없이 시나리오를 작성합니다. AI 학습 기반의 높은 인식률로 앱과 증권 MTS 자동화에 특히 강하며 단말 성능도 측정합니다.</p></li><li><h3>Tricentis Tosca · qTest<small>NO-CODE</small></h3><p>AI Vision 인식률이 높고 계획부터 결과까지 통합 테스트 관리가 가능합니다. 통합 품질관리와 ERP 적용, RPA 구축에 강합니다.</p></li><li><h3>Softbase 3hand<small>CODE</small></h3><p>UI 솔루션 인식률이 높아 은행 등 통합단말(C/S 환경) 자동화에 강하며 RPA 구축을 지원합니다.</p></li><li><h3>Symation Checkmate<small>CODE</small></h3><p>개발 라이프사이클 통합 품질관리와 CI/CD 연계 커스터마이징, RPA 구축과 단말 성능 측정을 지원합니다.</p></li><li><h3>LG CNS PerfecTwin<small>CODE</small></h3><p>많은 화면의 기능과 대량 데이터 정합성을 점검해 차세대 프로젝트의 데이터·성능 검증에 강합니다.</p></li></ol>
-    </div></section>
-    <section class="rm-sec tint"><div class="rm-wrap">
-      <div class="rm-head"><p class="rm-eyebrow">PARTNERS</p><h2>함께하는 자동화 파트너</h2></div>
-      <ul class="rm-logos"><li><img src="../../assets/qa/logos/apptest-ai.png" alt="Apptest.ai"></li><li><img src="../../assets/qa/logos/tricentis.png" alt="Tricentis"></li><li><img src="../../assets/qa/logos/softbase-evolution.png" alt="Softbase EVOLUTION"></li><li><img src="../../assets/qa/logos/symation.png" alt="SYMATION"></li><li><img src="../../assets/qa/logos/lgcns-perfectwin.png" alt="LG CNS PerfecTwin"></li></ul>
-    </div></section>
-    <section class="rm-sec dark" aria-labelledby="why"><div class="rm-wrap">
-      <div class="rm-head"><p class="rm-eyebrow">WHY TBELL</p><h2 id="why">BDD 기반 자동화로 비즈니스와 개발을 잇습니다</h2></div>
-      <ol class="rm-points" style="--cols:3"><li><b>01</b><h3>비즈니스 인력도 참여하는 테스트</h3><p>BDD(행위 주도 개발) 시나리오는 업무 언어로 작성되어 기획·운영 인력도 테스트에 참여할 수 있습니다.</p></li><li><b>02</b><h3>개발팀과 운영팀의 원활한 소통</h3><p>같은 시나리오를 기준으로 이야기하므로 요구사항과 결과에 대한 오해가 줄어듭니다.</p></li><li><b>03</b><h3>TestOps로 개발 흐름 안에</h3><p>CI/CD와 관리 도구를 연동해 변경마다 테스트가 자동 실행되는 환경까지 구축합니다.</p></li></ol>
-      <div class="rm-records">
-        <div><h3>BDD 테스트 자동화 · TestOps</h3><ul><li>TMAP AUTO Speech 테스트 자동화 (’23)</li><li>TMAP AUTO Core 고도화 및 OEM 테스트 자동화 (’22)</li><li>TMAP AUTO Core 테스트 자동화 개발 (’21)</li><li>웅진씽크빅 북클럽 앱 테스트 자동화 (’22)</li><li>AMI(Advanced Metering Infrastructure) 테스트 자동화 (’22)</li></ul></div>
-        <div><h3>DevOps · ITSM</h3><ul><li>TMAP AUTO Issue Sync System 개발 (’23)</li><li>SKT TDE DevOps Data Migration to TMAP Mobility (’22)</li><li>LIG넥스원 DevOps(SLM 시스템) 업그레이드 및 프로세스 개선 (’21)</li><li>BizDevOps 시스템(EMS) 구축 (’20)</li><li>HMM 전사 ITSM 구축 (’20)</li><li>SKT TDE(DevOps) 전사 운영 (’16–’20)</li></ul></div>
-      </div>
-    </div></section>
-    <section class="rm-sec" aria-labelledby="process"><div class="rm-wrap">
-      <div class="rm-head"><p class="rm-eyebrow">PROCESS</p><h2 id="process">테스트 자동화는 이렇게 도입합니다</h2></div>
-      <ol class="rm-steps" style="--n:4"><li><h3>대상 선정</h3><p>자주 반복되고 결과 판정이 명확한 테스트부터 자동화 대상을 고릅니다.</p></li><li><h3>도구 · 방식 결정</h3><p>앱·웹·통합단말 등 환경과 예산에 맞춰 오픈소스 또는 솔루션을 정합니다.</p></li><li><h3>시나리오 · 스크립트 구축</h3><p>BDD 시나리오와 자동화 스크립트를 만들고 안정화합니다.</p></li><li><h3>파이프라인 연계 · 운영</h3><p>CI/CD와 연동해 변경마다 실행하고, 결과와 결함을 관리합니다.</p></li></ol>
-    </div></section>
-    <section class="rm-sec tint" aria-labelledby="faq"><div class="rm-wrap">
-      <div class="rm-head center"><p class="rm-eyebrow">FAQ</p><h2 id="faq">자주 묻는 질문</h2></div>
-      <div class="rm-faq"><details open><summary>테스트 자동화란 무엇인가요?</summary><p>사람이 반복해서 수행하던 테스트를 자동화 도구와 스크립트로 실행하는 것입니다. 업데이트마다 같은 기능을 다시 확인하는 회귀 테스트에 특히 효과적이며, CI/CD 파이프라인에 연결하면 코드가 바뀔 때마다 자동으로 실행됩니다.</p></details><details><summary>모든 테스트를 자동화할 수 있나요?</summary><p>자주 반복되고 결과 판정이 명확한 테스트가 자동화에 적합합니다. 새로운 기능의 탐색이나 사용성 평가처럼 사람의 판단이 필요한 영역은 수동 테스트와 함께 운영하는 것이 효과적입니다.</p></details><details><summary>코딩을 몰라도 자동화를 할 수 있나요?</summary><p>Apptest.ai Ptero·Stego처럼 코딩 없이 시나리오를 작성하는 솔루션이 있습니다. 환경과 목적에 맞춰 코딩 방식과 노코드 방식 중 적합한 방법을 제안합니다.</p></details><details><summary>자동화 구축 비용이 부담됩니다.</summary><p>티벨은 오픈소스를 활용한 맞춤형 자동화를 직접 구축할 수 있어, 개발비 외에 별도의 솔루션 유지비용이 들지 않는 방식도 선택할 수 있습니다.</p></details></div>
-    </div></section>
-    <section class="rm-close"><div class="rm-wrap">
-      <h2>반복 테스트, 이제 자동으로 돌리세요</h2>
-      <p>지금 테스트 환경과 반복 업무를 알려 주시면 자동화 대상과 맞는 도구를 진단해 드립니다.</p>
-      <div class="rm-actions"><a class="pill" href="../../re-menu/#inquiry/qa">프로젝트 문의</a><a class="pill ghost" href="mailto:staff@tbell.co.kr">staff@tbell.co.kr</a></div>
-      <p class="rm-contact">070-7777-9113 · 월–금 09:30–18:00 (점심 12:00–13:00)</p>
+      <div class="rm-faq"><details><summary>테스트 자동화란 무엇인가요?</summary><p>사람이 반복해서 수행하던 테스트를 자동화 도구와 스크립트로 실행하는 것입니다. 업데이트마다 같은 기능을 다시 확인하는 회귀 테스트에 특히 효과적이며, CI/CD 파이프라인에 연결하면 코드가 바뀔 때마다 자동으로 실행됩니다.</p></details><details><summary>모든 테스트를 자동화할 수 있나요?</summary><p>자주 반복되고 결과 판정이 명확한 테스트가 자동화에 적합합니다. 새로운 기능의 탐색이나 사용성 평가처럼 사람의 판단이 필요한 영역은 수동 테스트와 함께 운영하는 것이 효과적입니다.</p></details><details><summary>BDD 기반 자동화는 무엇이 다른가요?</summary><p>BDD(행위 주도 개발) 시나리오는 업무 언어로 작성되어 기획·운영 인력도 테스트에 참여할 수 있고, 개발팀과 운영팀이 같은 시나리오를 기준으로 소통할 수 있습니다.</p></details><details><summary>코딩을 몰라도 자동화를 할 수 있나요?</summary><p>Apptest.ai Ptero·Stego처럼 코딩 없이 시나리오를 작성하는 솔루션이 있습니다. 환경과 목적에 맞춰 코딩 방식과 노코드 방식 중 적합한 방법을 제안합니다.</p></details><details><summary>자동화 구축 비용이 부담됩니다.</summary><p>티벨은 오픈소스를 활용한 맞춤형 자동화를 직접 구축할 수 있어, 개발비 외에 별도의 솔루션 유지비용이 들지 않는 방식도 선택할 수 있습니다. 개발 흐름 전체에 연결하려면 <a href="../../re-menu/#qa/testops/build">TestOps 구축</a>도 함께 보세요.</p></details></div>
     </div></section>
   </main>
   <footer class="footer">

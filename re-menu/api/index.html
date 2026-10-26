@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@200;400;500;700&family=Oxanium:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="../../assets/site.css?v=123">
-  <link rel="stylesheet" href="../../re-menu/re.css?v=2">
+  <link rel="stylesheet" href="../../re-menu/re.css?v=3">
   <link rel="icon" href="../../assets/tbell-logo.svg">
   <script type="application/ld+json">
 {
@@ -46,7 +46,7 @@
         "연동 테스트",
         "인터페이스 테스트"
       ],
-      "description": "API 테스트는 서로 다른 소프트웨어 시스템이 주고받는 요청과 응답을 검증하는 테스트입니다. 기능·안정성·성능·보안성 관점의 API 검증과 UI 테스트와의 차이, 자동화 연계를 소개합니다.",
+      "description": "API 테스트는 시스템끼리 주고받는 요청과 응답을 검증하는 테스트입니다. 연동이 기능·안정성·성능·보안성 면에서 문제없는지 확인합니다.",
       "serviceType": "Software Testing",
       "provider": {
         "@id": "https://tbell-ref.github.io/demo/#org"
@@ -182,51 +182,51 @@
   <main id="content" class="rm">
     <section class="rm-hero">
       <div class="rm-wrap">
-        <div>
+        <div class="rm-hero-copy">
           <ol class="rm-crumb" aria-label="현재 위치"><li><a href="../../re-menu/#qa">QA</a></li><li><a href="../../re-menu/types/">테스트 종류</a></li><li aria-current="page">API 테스트</li></ol>
           <p class="rm-eyebrow">API Testing</p>
           <h1><span>API 테스트</span></h1>
-          <p class="lede">시스템끼리 주고받는 요청과 응답을 직접 검증해, 서비스 연동이 기능·안정성·성능·보안 면에서 문제없는지 확인합니다.</p>
-          <ul class="rm-tags" aria-label="키워드"><li>#연동 테스트</li><li>#인터페이스</li><li>#기능</li><li>#안정성</li><li>#성능</li></ul>
-          <div class="rm-actions"><a class="pill" href="../../re-menu/#inquiry/qa">테스트 문의하기</a><a class="pill ghost" href="../../re-menu/types/">테스트 종류 전체 보기</a></div>
+          <p class="lede"><strong>API 테스트는 시스템끼리 주고받는 요청과 응답을 검증하는 테스트입니다.</strong> 연동이 기능·안정성·성능·보안성 면에서 문제없는지 확인합니다.</p>
+          <ul class="rm-chips" aria-label="키워드"><li>연동 테스트</li><li>인터페이스</li><li>자동화</li></ul>
+          <div class="rm-actions"><a class="pill" href="../../re-menu/#inquiry/qa">테스트 문의하기</a><a class="pill ghost" href="#faq">자주 묻는 질문</a></div>
         </div>
-        <figure class="rm-hero-art"><picture><source media="(max-width: 768px)" srcset="../../assets/origin/bg-mobile-api.f4098575a7ef1dc638a9.png"><img src="../../assets/origin/bg-tablet-api.0d2bd87a550607f6f885.png" alt="API 테스트" width="1280" height="800"></picture></figure>
+        <figure class="rm-hero-art"><svg class="dg" viewBox="0 0 480 360" role="img" aria-label="API 테스트: 클라이언트의 요청과 서버의 응답을 오가는 데이터로 검증합니다">
+  <rect class="box" x="14" y="112" width="112" height="136" rx="16"/>
+  <rect class="glyph" x="56" y="140" width="28" height="48" rx="6"/><text class="en" x="70" y="222">CLIENT</text>
+  <rect class="box hi" x="354" y="112" width="112" height="136" rx="16"/>
+  <rect class="glyph" x="382" y="140" width="56" height="18" rx="4"/><rect class="glyph" x="382" y="164" width="56" height="18" rx="4"/><text class="en" x="410" y="222">SERVER</text>
+  <path class="flow" d="M134 160H346"/><path class="flow back" d="M346 200H134"/>
+  <rect class="pkt " x="121" y="152" width="26" height="16" rx="6" style="--dx:212px;animation-delay:0s"/><rect class="pkt " x="121" y="152" width="26" height="16" rx="6" style="--dx:212px;animation-delay:1.2s"/>
+  <rect class="pkt res" x="333" y="192" width="26" height="16" rx="6" style="--dx:-212px;animation-delay:0.6s"/><rect class="pkt res" x="333" y="192" width="26" height="16" rx="6" style="--dx:-212px;animation-delay:1.8s"/>
+  <text class="en" x="240" y="146">REQUEST →</text><text class="en" x="240" y="228">← RESPONSE</text>
+  <g class="chips"><rect x="62" y="286" width="76" height="30" rx="15"/><text x="100" y="306">기능</text><rect x="148" y="286" width="84" height="30" rx="15"/><text x="190" y="306">안정성</text><rect x="242" y="286" width="76" height="30" rx="15"/><text x="280" y="306">성능</text><rect x="328" y="286" width="84" height="30" rx="15"/><text x="370" y="306">보안성</text></g>
+</svg></figure>
       </div>
     </section>
-    <nav class="rm-tabs" aria-label="테스트 서비스"><ul class="rm-wrap"><li><a href="../../re-menu/outsourcing/">QA 아웃소싱</a></li><li><a href="../../re-menu/automation/">테스트 자동화</a></li><li><a href="../../re-menu/blackbox/">블랙박스 테스트</a></li><li><a href="../../re-menu/whitebox/">화이트박스 테스트</a></li><li><a href="../../re-menu/api/" aria-current="page">API 테스트</a></li><li><a href="../../re-menu/performance/">성능 테스트</a></li></ul></nav>
-    <section class="rm-sec" aria-labelledby="def"><div class="rm-wrap">
-      <div class="rm-def">
-        <div class="rm-head"><p class="rm-eyebrow">DEFINITION</p><h2 id="def">API 테스트란?</h2></div>
-        <div class="rm-prose"><p><strong>API 테스트(Application Programming Interface Testing)는 서로 다른 소프트웨어 시스템 사이의 통신과 연동을 위해 주고받는 API를 검증하는 테스트입니다.</strong></p><p>다양한 오픈 플랫폼이 등장하고 많은 기업이 서로의 서비스를 연동하면서 API 테스트의 중요도는 날로 커지고 있습니다. API 테스트는 기능, 안정성, 성능, 보안성 등을 함께 평가합니다.</p><dl class="rm-summary"><dt>한 줄 정의</dt><dd>시스템 간 요청·응답을 검증하는 연동 테스트</dd><dt>검증 관점</dt><dd>기능, 안정성, 성능, 보안성</dd><dt>함께 쓰는 말</dt><dd>연동 테스트, 인터페이스 테스트</dd></dl></div>
+    <nav class="rm-tabs" aria-label="테스트 종류"><ul class="rm-wrap"><li><a href="../../re-menu/outsourcing/">QA 아웃소싱</a></li><li><a href="../../re-menu/automation/">테스트 자동화</a></li><li><a href="../../re-menu/blackbox/">블랙박스 테스트</a></li><li><a href="../../re-menu/whitebox/">화이트박스 테스트</a></li><li><a href="../../re-menu/api/" aria-current="page">API 테스트</a></li><li><a href="../../re-menu/performance/">성능 테스트</a></li></ul></nav>
+    <section class="rm-sec rm-needs" aria-labelledby="need"><div class="rm-wrap">
+      <h2 id="need">이럴 때 필요합니다</h2>
+      <ul><li><svg class="rm-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3v5M15 3v5M6 8h12v3a6 6 0 0 1-12 0zM12 17v4"/></svg><p>결제·지도·인증 등 외부와 연동할 때</p></li><li><svg class="rm-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg><p>앱과 웹이 같은 서버를 쓸 때</p></li><li><svg class="rm-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.2 10.8l7.6-3.6M8.2 13.2l7.6 3.6"/></svg><p>다른 회사에 API를 제공할 때</p></li><li><svg class="rm-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="7" rx="1.5"/><rect x="4" y="13" width="16" height="7" rx="1.5"/><path d="M8 7.5h.01M8 16.5h.01"/></svg><p>화면보다 서버 로직을 먼저 볼 때</p></li></ul>
+    </div></section>
+    <section class="rm-sec tint" aria-labelledby="how"><div class="rm-wrap">
+      <div class="rm-split"><h2 id="how">네 가지 관점으로 검증합니다</h2><p>요청이 서버를 거쳐 응답으로 돌아오는 흐름 전체가 대상입니다.</p></div>
+      <ul class="rm-igrid"><li><svg class="rm-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg><h3>기능</h3><p>약속된 형식과 값으로 응답하는지</p></li><li><svg class="rm-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9 5-9 5-9-5zM3 13l9 5 9-5"/></svg><h3>안정성</h3><p>반복 호출과 예외에도 일관된지</p></li><li><svg class="rm-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg><h3>성능</h3><p>호출이 몰려도 응답이 빠른지</p></li><li><svg class="rm-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg><h3>보안성</h3><p>인증·권한과 데이터 노출 점검</p></li></ul>
+    </div></section>
+    <section class="rm-proof" aria-label="연동이 많은 서비스일수록 전문가의 검증이 필요합니다"><div class="rm-wrap">
+      <p>연동이 많은 서비스일수록 <b>전문가의 검증</b>이 필요합니다</p>
+      <ul class="rm-logos"><li><img src="../../assets/qa/logos/tmap-mobility.png" alt="TMAP MOBILITY" loading="lazy"></li><li><img src="../../assets/qa/logos/sk-telecom.png" alt="SK telecom" loading="lazy"></li><li><img src="../../assets/qa/logos/lig-nex1.png" alt="LIG넥스원" loading="lazy"></li><li><img src="../../assets/qa/logos/woongjin-thinkbig.png" alt="웅진씽크빅" loading="lazy"></li><li><img src="../../assets/qa/logos/hmm.png" alt="HMM" loading="lazy"></li><li><img src="../../assets/qa/logos/cyberlogitec.png" alt="CyberLogitec" loading="lazy"></li><li><img src="../../assets/qa/logos/nuriflex.png" alt="Nuri Flex" loading="lazy"></li></ul>
+    </div></section>
+    <section class="rm-sec rm-end" aria-labelledby="faq"><div class="rm-wrap">
+      <div class="rm-end-side">
+        <h2 id="faq">자주 묻는 질문</h2>
+        <div class="rm-cta">
+          <h3>연동 오류, 출시 전에 잡으세요</h3>
+          <p>연동 대상과 API 명세를 알려 주시면 검증 범위와 방법을 제안해 드립니다.</p>
+          <a class="pill" href="../../re-menu/#inquiry/qa">프로젝트 문의</a>
+          <small>staff@tbell.co.kr · 070-7777-9113</small>
+        </div>
       </div>
-    </div></section>
-    <section class="rm-sec tint" aria-labelledby="need"><div class="rm-wrap">
-      <div class="rm-head"><p class="rm-eyebrow">WHEN YOU NEED IT</p><h2 id="need">이럴 때 API 테스트가 필요합니다</h2></div>
-      <ul class="rm-checks"><li>결제·지도·인증 같은 외부 서비스와 연동한다</li><li>앱과 웹이 같은 서버(백엔드)를 함께 쓴다</li><li>다른 회사에 우리 API를 제공하고 있다</li><li>화면이 나오기 전에 서버 로직부터 검증하고 싶다</li></ul>
-    </div></section>
-    <section class="rm-sec" aria-labelledby="what"><div class="rm-wrap">
-      <div class="rm-head"><p class="rm-eyebrow">WHAT WE CHECK</p><h2 id="what">API 테스트는 네 가지 관점으로 검증합니다</h2><p>요청이 서버를 거쳐 응답으로 돌아오는 흐름 전체를 대상으로, 기능부터 보안까지 함께 평가합니다.</p></div>
-      <ol class="rm-flow" aria-label="API 테스트 흐름"><li><b>01</b><span>애플리케이션 · 클라이언트</span></li><li><b>02</b><span>API 요청 (Request)</span></li><li><b>03</b><span>서버 · 데이터 소스</span></li><li><b>04</b><span>API 응답 (Response)</span></li></ol>
-      <ol class="rm-rows">
-        <li><h3>기능<small>FUNCTIONALITY</small></h3><p>요청에 대해 약속된 형식과 값의 응답이 돌아오는지, 잘못된 요청에는 올바른 오류를 돌려주는지 확인합니다.</p></li>
-        <li><h3>안정성<small>RELIABILITY</small></h3><p>연동 시스템이 반복 호출과 예외 상황에서도 일관되게 동작하는지 확인합니다.</p></li>
-        <li><h3>성능<small>PERFORMANCE</small></h3><p>호출이 몰릴 때 응답시간과 처리량이 기준을 만족하는지 측정합니다.</p></li>
-        <li><h3>보안성<small>SECURITY</small></h3><p>인증·권한 처리와 데이터 노출 여부 등 연동 지점의 보안 문제를 점검합니다.</p></li>
-      </ol>
-    </div></section>
-    <section class="rm-sec dark" aria-labelledby="why"><div class="rm-wrap">
-      <div class="rm-head"><p class="rm-eyebrow">WHY TBELL</p><h2 id="why">연동이 많을수록 전문가의 검증이 필요합니다</h2></div>
-      <ol class="rm-points" style="--cols:3"><li><b>01</b><h3>분야별 테스트 전문가가 개발자와 직접 소통</h3><p>결함을 문서로만 넘기지 않습니다. 분야별 전문가가 개발자와 바로 이야기하며 원인을 좁혀 갑니다.</p></li><li><b>02</b><h3>10개 산업 도메인의 업무 경험</h3><p>금융, 자동차, 임베디드, 통신, 공공 등 업종마다 다른 품질 기준을 이해하고 테스트를 설계합니다.</p></li><li><b>03</b><h3>고객 환경에 맞춘 실무자 교육</h3><p>테스트가 끝난 뒤에도 품질이 유지되도록 고객사 실무자에게 필요한 교육을 함께 진행합니다.</p></li></ol>
-    </div></section>
-    <section class="rm-sec tint" aria-labelledby="faq"><div class="rm-wrap">
-      <div class="rm-head center"><p class="rm-eyebrow">FAQ</p><h2 id="faq">자주 묻는 질문</h2></div>
-      <div class="rm-faq"><details open><summary>API 테스트란 무엇인가요?</summary><p>서로 다른 소프트웨어 시스템이 통신하고 연동하기 위해 주고받는 API의 요청과 응답을 검증하는 테스트입니다. 기능, 안정성, 성능, 보안성을 함께 평가합니다.</p></details><details><summary>화면(UI) 테스트와 무엇이 다른가요?</summary><p>UI 테스트는 사용자가 보는 화면을 통해 확인하고, API 테스트는 화면 뒤에서 시스템끼리 주고받는 데이터를 직접 확인합니다. 화면이 완성되기 전에도 서버 로직을 먼저 검증할 수 있습니다.</p></details><details><summary>API 테스트도 자동화할 수 있나요?</summary><p>API는 입력과 출력이 명확해 자동화에 잘 맞습니다. <a href="../automation/">테스트 자동화</a>와 함께 구성하면 배포마다 연동을 자동으로 확인할 수 있습니다.</p></details><details><summary>왜 API 테스트가 점점 중요해지나요?</summary><p>다양한 오픈 플랫폼이 등장하고 많은 기업이 서로의 서비스를 연동하고 있어, 한 곳의 연동 오류가 전체 서비스 장애로 이어질 수 있기 때문입니다.</p></details></div>
-    </div></section>
-    <section class="rm-close"><div class="rm-wrap">
-      <h2>연동 오류, 출시 전에 잡으세요</h2>
-      <p>연동 대상과 API 명세를 알려 주시면 검증 범위와 방법을 제안해 드립니다.</p>
-      <div class="rm-actions"><a class="pill" href="../../re-menu/#inquiry/qa">프로젝트 문의</a><a class="pill ghost" href="mailto:staff@tbell.co.kr">staff@tbell.co.kr</a></div>
-      <p class="rm-contact">070-7777-9113 · 월–금 09:30–18:00 (점심 12:00–13:00)</p>
+      <div class="rm-faq"><details><summary>API 테스트란 무엇인가요?</summary><p>서로 다른 소프트웨어 시스템이 통신하고 연동하기 위해 주고받는 API의 요청과 응답을 검증하는 테스트입니다. 기능, 안정성, 성능, 보안성을 함께 평가합니다.</p></details><details><summary>화면(UI) 테스트와 무엇이 다른가요?</summary><p>UI 테스트는 사용자가 보는 화면을 통해 확인하고, API 테스트는 화면 뒤에서 시스템끼리 주고받는 데이터를 직접 확인합니다. 화면이 완성되기 전에도 서버 로직을 먼저 검증할 수 있습니다.</p></details><details><summary>API 테스트도 자동화할 수 있나요?</summary><p>API는 입력과 출력이 명확해 자동화에 잘 맞습니다. <a href="../automation/">테스트 자동화</a>와 함께 구성하면 배포마다 연동을 자동으로 확인할 수 있습니다.</p></details><details><summary>왜 API 테스트가 점점 중요해지나요?</summary><p>다양한 오픈 플랫폼이 등장하고 많은 기업이 서로의 서비스를 연동하고 있어, 한 곳의 연동 오류가 전체 서비스 장애로 이어질 수 있기 때문입니다.</p></details></div>
     </div></section>
   </main>
   <footer class="footer">
