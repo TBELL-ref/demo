@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@200;400;500;700&family=Oxanium:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="../../assets/site.css?v=123">
-  <link rel="stylesheet" href="../../re-menu/re.css?v=1">
+  <link rel="stylesheet" href="../../re-menu/re.css?v=2">
   <link rel="icon" href="../../assets/tbell-logo.svg">
   <script type="application/ld+json">
 {
@@ -62,13 +62,13 @@
           "@type": "ListItem",
           "position": 1,
           "name": "QA",
-          "item": "https://tbell-ref.github.io/demo/#qa"
+          "item": "https://tbell-ref.github.io/demo/re-menu/#qa"
         },
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "테스트 서비스",
-          "item": "https://tbell-ref.github.io/demo/re-menu/"
+          "name": "테스트 종류",
+          "item": "https://tbell-ref.github.io/demo/re-menu/types/"
         },
         {
           "@type": "ListItem",
@@ -119,34 +119,77 @@
 }
   </script>
 </head>
-<body>
+<body class="is-multi" data-rm="static">
   <a class="skip" href="#content">본문으로 건너뛰기</a>
   <div class="site-head">
   <header class="header">
-    <a class="logo" href="../../#qa" aria-label="TBELL QA 홈">
+    <a class="logo" href="../../re-menu/" id="logo-link" aria-label="TBELL 홈">
       <img src="../../assets/tbell-logo.svg" alt="TBELL" width="110" height="22">
-      <span class="logo-mode">QA</span>
+      <span class="logo-mode" id="logo-mode"></span>
     </a>
-    <nav class="nav" id="nav" aria-label="상위 메뉴"><a href="../../re-menu/" aria-current="page">테스트 서비스</a><a href="../../#qa/testops">TestOps</a><a href="../../#qa/tauto">T 솔루션</a><a href="../../#qa/blog">블로그</a><a href="../../#qa/company">회사 소개</a></nav>
+    <nav class="nav" id="nav" aria-label="상위 메뉴"><a href="../../re-menu/#qa" data-id="service" aria-current="page">서비스</a><div class="nav-sub"><span class="nav-sec">QA</span><a href="../../re-menu/#qa">사업 소개</a><a href="../../re-menu/types/" aria-current="page">테스트 종류</a><a href="../../re-menu/#qa/testops">TestOps</a><a href="../../re-menu/#qa/tauto">T 솔루션</a><span class="nav-sec">보안</span><a href="../../re-menu/#security">사업 소개</a><a href="../../re-menu/#security/diagnose">사전 진단</a><a href="../../re-menu/#security/services">컨설팅</a><a href="../../re-menu/#security/cert">인증</a></div><a href="../../re-menu/#blog" data-id="blog">블로그</a><div class="nav-sub"><a href="../../re-menu/#blog/qa-insight">QA Insight</a><a href="../../re-menu/#blog/security">보안</a><a href="../../re-menu/#blog/newsletter">NewsLetter</a><a href="../../re-menu/#blog/event">전시·행사</a><a href="../../re-menu/#blog/activity">성과·활동</a></div><a href="../../re-menu/#company" data-id="company">회사 소개</a><div class="nav-sub"><a href="../../re-menu/#company/about">기업 정보</a><a href="../../re-menu/#company/recruit">인재채용</a><a href="../../re-menu/#company/esg">지속가능경영</a></div></nav>
     <div class="tools">
-      <a class="pill" href="../../#qa/inquiry">문의</a>
+      <div class="switch">
+        <button class="switch-btn" id="switch-btn" type="button" aria-expanded="false" aria-controls="switch-panel">사업영역</button>
+        <div class="switch-panel" id="switch-panel" hidden></div>
+      </div>
+      <a class="pill" id="inquire" href="../../re-menu/#inquiry/qa">문의</a>
       <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="nav">
         <span></span><span></span><span></span>
         <span class="sr-only">메뉴</span>
       </button>
     </div>
+    <div class="menu-drop" id="menu-drop"><div class="drop-cols"><div class="drop-col md-panel md-service" data-id="service">
+    <section class="md-sec md-qa is-here" aria-label="QA">
+      <header class="md-sec-head">
+        <p class="md-eyebrow">SOFTWARE TEST &amp; QUALITY</p>
+        <div class="md-title"><b>QA</b><a href="../../re-menu/#qa" class="md-home">사업 소개<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></div>
+      </header>
+      <div class="md-groups">
+          <div class="md-group">
+            <a href="../../re-menu/types/" class="md-gtitle">테스트 종류</a>
+            <a href="../../re-menu/outsourcing/" class="md-leaf">아웃소싱</a><a href="../../re-menu/automation/" class="md-leaf">자동화</a><a href="../../re-menu/blackbox/" class="md-leaf">블랙박스</a><a href="../../re-menu/whitebox/" class="md-leaf">화이트박스</a><a href="../../re-menu/api/" class="md-leaf">API</a><a href="../../re-menu/performance/" class="md-leaf" aria-current="page">성능</a>
+          </div>
+          <div class="md-group">
+            <a href="../../re-menu/#qa/testops" class="md-gtitle">TestOps</a>
+            <a href="../../re-menu/#qa/testops/build" class="md-leaf">TestOps 구축</a><a href="../../re-menu/#qa/testops/ai" class="md-leaf">AI 기반 검증 자동화</a>
+          </div>
+          <div class="md-group">
+            <a href="../../re-menu/#qa/tauto" class="md-gtitle">T 솔루션</a>
+            <a href="../../re-menu/#qa/tauto" class="md-leaf">솔루션 개요</a><a href="../../re-menu/#qa/tauto/auto" class="md-leaf">T-AUTO</a><a href="../../re-menu/#qa/tauto/gen" class="md-leaf">T-GEN</a><a href="../../re-menu/#qa/tauto/lens" class="md-leaf">T-LENS</a><a href="../../re-menu/#qa/tauto/voc" class="md-leaf">T-VOC</a>
+          </div></div>
+    </section>
+    <section class="md-sec md-security" aria-label="보안 컨설팅">
+      <header class="md-sec-head">
+        <p class="md-eyebrow">TBELL 정보보호 컨설팅</p>
+        <div class="md-title"><b>보안 컨설팅</b><a href="../../re-menu/#security" class="md-home">사업 소개<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></div>
+      </header>
+      <div class="md-rows"><a href="../../re-menu/#security/diagnose" class="md-row"><span>사전 진단</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a><a href="../../re-menu/#security/services" class="md-row"><span>컨설팅</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a><a href="../../re-menu/#security/cert" class="md-row"><span>인증</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></div>
+    </section></div><div class="drop-col md-panel" data-id="blog"><div class="md-rows md-flat"><a href="../../re-menu/#blog/qa-insight" class="md-row"><span>QA Insight</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a><a href="../../re-menu/#blog/security" class="md-row"><span>보안</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a><a href="../../re-menu/#blog/newsletter" class="md-row"><span>NewsLetter</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a><a href="../../re-menu/#blog/event" class="md-row"><span>전시·행사</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a><a href="../../re-menu/#blog/activity" class="md-row"><span>성과·활동</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></div></div><div class="drop-col md-panel" data-id="company"><div class="md-groups md-plain">
+    <div class="md-group">
+      <a href="../../re-menu/#company/about" class="md-gtitle">기업 정보</a>
+      <a href="../../re-menu/#company/about" class="md-leaf">기업 정보</a><a href="../../re-menu/#company/vision" class="md-leaf">경영철학</a><a href="../../re-menu/#company/history" class="md-leaf">연혁</a>
+    </div>
+    <div class="md-group">
+      <a href="../../re-menu/#company/recruit" class="md-gtitle">인재채용</a>
+      <a href="../../re-menu/#company/benefit" class="md-leaf">복리후생</a><a href="../../re-menu/#company/recruit" class="md-leaf">인재채용</a>
+    </div>
+    <div class="md-group">
+      <a href="../../re-menu/#company/esg" class="md-gtitle">지속가능경영</a>
+      <a href="../../re-menu/#company/ethical" class="md-leaf">윤리경영</a><a href="../../re-menu/#company/social" class="md-leaf">사회경영</a><a href="../../re-menu/#company/environmental" class="md-leaf">환경경영</a>
+    </div></div></div></div></div>
   </header>
   </div>
   <main id="content" class="rm">
     <section class="rm-hero">
       <div class="rm-wrap">
         <div>
-          <ol class="rm-crumb" aria-label="현재 위치"><li><a href="../../#qa">QA</a></li><li><a href="../../re-menu/">테스트 서비스</a></li><li aria-current="page">성능 테스트</li></ol>
+          <ol class="rm-crumb" aria-label="현재 위치"><li><a href="../../re-menu/#qa">QA</a></li><li><a href="../../re-menu/types/">테스트 종류</a></li><li aria-current="page">성능 테스트</li></ol>
           <p class="rm-eyebrow">Performance Testing</p>
           <h1><span>성능 테스트 ·</span> <span>부하 테스트</span></h1>
           <p class="lede">처리량과 응답시간, 자원 사용량을 측정해 사용자가 몰려도 시스템이 버티는지, 한계와 임계점이 어디인지 출시 전에 확인합니다.</p>
           <ul class="rm-tags" aria-label="키워드"><li>#부하 테스트</li><li>#스트레스 테스트</li><li>#확장성</li><li>#LoadRunner</li><li>#JMeter</li></ul>
-          <div class="rm-actions"><a class="pill" href="../../#qa/inquiry">테스트 문의하기</a><a class="pill ghost" href="../../re-menu/">다른 테스트 보기</a></div>
+          <div class="rm-actions"><a class="pill" href="../../re-menu/#inquiry/qa">테스트 문의하기</a><a class="pill ghost" href="../../re-menu/types/">테스트 종류 전체 보기</a></div>
         </div>
         <figure class="rm-hero-art"><picture><source media="(max-width: 768px)" srcset="../../assets/origin/bg-mobile-perfomance.4b266306d8c200a4bea8.png"><img src="../../assets/origin/bg-tablet-perfomance.defe2610687b7c8a7569.png" alt="성능 테스트 · 부하 테스트" width="1280" height="800"></picture></figure>
       </div>
@@ -178,13 +221,10 @@
       <div class="rm-head center"><p class="rm-eyebrow">FAQ</p><h2 id="faq">자주 묻는 질문</h2></div>
       <div class="rm-faq"><details open><summary>성능 테스트란 무엇인가요?</summary><p>시스템의 처리량, 응답시간, 자원 사용 등 성능 지표를 측정하고 분석해, 요구사항을 만족하는지와 시스템의 한계·임계점을 검증하는 테스트입니다.</p></details><details><summary>성능 테스트와 부하 테스트는 같은 말인가요?</summary><p>부하 테스트는 성능 테스트의 한 종류입니다. 성능 테스트는 부하, 스트레스, 확장성, 안정성, 볼륨, 구성 테스트 등을 모두 포함하는 더 넓은 개념입니다.</p></details><details><summary>언제 성능 테스트를 해야 하나요?</summary><p>서비스 오픈이나 대규모 이벤트처럼 사용자가 몰리기 전, 차세대 시스템 전환이나 인프라 변경 전에 수행하는 것이 좋습니다. 운영 중 발생할 수 있는 문제를 사전에 파악할 수 있습니다.</p></details><details><summary>어떤 도구를 사용하나요?</summary><p>LoadRunner, Apache JMeter 등 대표적인 성능 테스트 도구를 사용하며, 대상 시스템과 목적에 맞춰 최적의 도구를 선정합니다.</p></details></div>
     </div></section>
-    <section class="rm-sec" aria-labelledby="related"><div class="rm-wrap">
-      <div class="rm-related-row"><h2 id="related">함께 보면 좋은 테스트</h2><ul class="rm-related"><li><a href="../../re-menu/outsourcing/">QA 아웃소싱</a></li><li><a href="../../re-menu/automation/">테스트 자동화</a></li><li><a href="../../re-menu/blackbox/">블랙박스 테스트</a></li><li><a href="../../re-menu/whitebox/">화이트박스 테스트</a></li><li><a href="../../re-menu/api/">API 테스트</a></li><li><a href="../../#qa/testops/build">TestOps 구축</a></li></ul></div>
-    </div></section>
     <section class="rm-close"><div class="rm-wrap">
       <h2>사용자가 몰려도 버티는지 확인하세요</h2>
       <p>예상 사용자 수와 대상 시스템을 알려 주시면 성능 목표와 테스트 시나리오를 함께 설계해 드립니다.</p>
-      <div class="rm-actions"><a class="pill" href="../../#qa/inquiry">프로젝트 문의</a><a class="pill ghost" href="mailto:staff@tbell.co.kr">staff@tbell.co.kr</a></div>
+      <div class="rm-actions"><a class="pill" href="../../re-menu/#inquiry/qa">프로젝트 문의</a><a class="pill ghost" href="mailto:staff@tbell.co.kr">staff@tbell.co.kr</a></div>
       <p class="rm-contact">070-7777-9113 · 월–금 09:30–18:00 (점심 12:00–13:00)</p>
     </div></section>
   </main>
@@ -195,14 +235,6 @@
     <p>가산사업장 서울특별시 금천구 가산디지털1로 168, A동 601호</p>
     <p class="num">Tel 070-7777-9113 / 070-7777-6368 · staff@tbell.co.kr</p>
   </footer>
-  <script>
-    (() => {
-      const toggle = document.getElementById("nav-toggle");
-      const nav = document.getElementById("nav");
-      toggle.addEventListener("click", () => toggle.setAttribute("aria-expanded", String(nav.classList.toggle("open"))));
-      const current = document.querySelector('.rm-tabs [aria-current="page"]');
-      if (current) current.scrollIntoView({ block: "nearest", inline: "center" });
-    })();
-  </script>
+  <script src="../../re-menu/re-menu.js?v=2"></script>
 </body>
 </html>
