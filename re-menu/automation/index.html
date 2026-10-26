@@ -12,12 +12,12 @@
   <meta property="og:title" content="테스트 자동화 | 앱·웹 자동화 테스트 구축, BDD·TestOps - 티벨">
   <meta property="og:description" content="테스트 자동화는 반복되는 소프트웨어 테스트를 도구와 스크립트로 자동 실행하는 것입니다. 티벨은 오픈소스 맞춤형 자동화와 Apptest.ai·Tricentis·LG CNS 등 파트너 솔루션으로 앱·웹·통합단말 자동화를 구축합니다.">
   <meta property="og:url" content="https://tbell-ref.github.io/demo/re-menu/automation/">
-  <meta property="og:image" content="https://tbell-ref.github.io/demo/assets/origin/bg-tablet-automation.42cf3238c4db4de3a5c2.png">
+  <meta property="og:image" content="https://tbell-ref.github.io/demo/assets/origin/bg-automation.eebf3b3db228963a7d7e.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@200;400;500;700&family=Oxanium:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="../../assets/site.css?v=123">
-  <link rel="stylesheet" href="../../re-menu/re.css?v=3">
+  <link rel="stylesheet" href="../../re-menu/re.css?v=4">
   <link rel="icon" href="../../assets/tbell-logo.svg">
   <script type="application/ld+json">
 {
@@ -189,17 +189,32 @@
   </header>
   </div>
   <main id="content" class="rm">
-    <section class="rm-hero">
+    <section class="rm-hero copy-right" style="--pos:22%">
+      <picture class="rm-hero-bg"><source media="(max-width: 768px)" srcset="../../assets/origin/bg-mobile-automation.981f021b70be98f47f4a.png"><source media="(max-width: 1024px)" srcset="../../assets/origin/bg-tablet-automation.42cf3238c4db4de3a5c2.png"><img src="../../assets/origin/bg-automation.eebf3b3db228963a7d7e.png" alt=""></picture>
       <div class="rm-wrap">
         <div class="rm-hero-copy">
           <ol class="rm-crumb" aria-label="현재 위치"><li><a href="../../re-menu/#qa">QA</a></li><li><a href="../../re-menu/types/">테스트 종류</a></li><li aria-current="page">테스트 자동화</li></ol>
           <p class="rm-eyebrow">Test Automation</p>
           <h1><span>테스트 자동화</span></h1>
           <p class="lede"><strong>테스트 자동화는 반복되는 소프트웨어 테스트를 도구와 스크립트로 자동 실행하는 것입니다.</strong> 티벨은 오픈소스 맞춤 구축부터 파트너 솔루션까지 프로젝트에 맞는 방식을 제안합니다.</p>
-          <ul class="rm-chips" aria-label="키워드"><li>회귀 테스트</li><li>BDD</li><li>CI/CD</li></ul>
           <div class="rm-actions"><a class="pill" href="../../re-menu/#inquiry/qa">테스트 문의하기</a><a class="pill ghost" href="#faq">자주 묻는 질문</a></div>
         </div>
-        <figure class="rm-hero-art"><svg class="dg" viewBox="0 0 480 360" role="img" aria-label="테스트 자동화: 코드가 바뀌면 테스트가 자동으로 실행되고 결과가 돌아오는 순환">
+      </div>
+    </section>
+    <nav class="rm-tabs" aria-label="테스트 종류"><ul class="rm-wrap"><li><a href="../../re-menu/outsourcing/">QA 아웃소싱</a></li><li><a href="../../re-menu/automation/" aria-current="page">테스트 자동화</a></li><li><a href="../../re-menu/blackbox/">블랙박스 테스트</a></li><li><a href="../../re-menu/whitebox/">화이트박스 테스트</a></li><li><a href="../../re-menu/api/">API 테스트</a></li><li><a href="../../re-menu/performance/">성능 테스트</a></li></ul></nav>
+    <section class="rm-sec rm-needs" aria-labelledby="need"><div class="rm-wrap">
+      <h2 id="need">이럴 때 필요합니다</h2>
+      <ol><li><b>01</b><p>배포마다 같은 테스트를 손으로 반복할 때</p></li><li><b>02</b><p>테스트 시간이 출시를 늦출 때</p></li><li><b>03</b><p>담당자마다 결과가 다르게 나올 때</p></li><li><b>04</b><p>CI/CD에 테스트를 연결하고 싶을 때</p></li></ol>
+    </div></section>
+    <section class="rm-sec rm-how" aria-labelledby="how"><div class="rm-wrap">
+      <figure class="rm-dgpanel"><svg class="dg" viewBox="0 0 480 360" role="img" aria-label="테스트 자동화: 코드가 바뀌면 테스트가 자동으로 실행되고 결과가 돌아오는 순환">
+  <defs>
+    <linearGradient id="dg-box" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#262626"/><stop offset="1" stop-color="#121212"/></linearGradient>
+    <linearGradient id="dg-hi" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f3a40"/><stop offset="1" stop-color="#121a1c"/></linearGradient>
+    <linearGradient id="dg-area" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#27c4d5" stop-opacity=".35"/><stop offset="1" stop-color="#27c4d5" stop-opacity="0"/></linearGradient>
+    <radialGradient id="dg-core"><stop offset="0" stop-color="#27c4d5" stop-opacity=".45"/><stop offset="1" stop-color="#27c4d5" stop-opacity=".04"/></radialGradient>
+    <filter id="dg-glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
   <circle class="ring" cx="240" cy="180" r="120"/>
   <g class="orbit"><circle class="runner" cx="240" cy="60" r="7"/></g>
   <g class="node n1"><circle cx="240" cy="60" r="26"/><text class="en" x="240" y="65">01</text></g>
@@ -210,21 +225,16 @@
   <text x="240" y="350">결과 리포트</text><text x="84" y="185" style="text-anchor:end">회귀 확인</text>
   <text class="big" x="240" y="180">CI/CD</text><text class="en" x="240" y="204">TESTOPS</text>
 </svg></figure>
+      <div class="rm-how-list">
+        <h2 id="how">프로젝트에 맞는 자동화 방식</h2>
+        <ol style="--cols:2"><li><h3>티벨 맞춤형 · 오픈소스</h3><p>요구사항 분석 후 직접 개발, 유지비용 없음</p></li><li><h3>Apptest.ai Ptero · Stego</h3><p>노코드, AI 인식 · 앱과 증권 MTS</p></li><li><h3>Tricentis Tosca · qTest</h3><p>노코드, 통합 테스트 관리 · ERP</p></li><li><h3>Softbase 3hand</h3><p>은행 등 통합단말(C/S) 자동화</p></li><li><h3>Symation Checkmate</h3><p>CI/CD 연계 · 통합 품질관리</p></li><li><h3>LG CNS PerfecTwin</h3><p>대량 데이터 정합성 · 차세대 검증</p></li></ol>
       </div>
+      <ul class="rm-partners" aria-label="자동화 파트너"><li><img src="../../assets/qa/logos/apptest-ai.png" alt="Apptest.ai" loading="lazy"></li><li><img src="../../assets/qa/logos/tricentis.png" alt="Tricentis" loading="lazy"></li><li><img src="../../assets/qa/logos/softbase-evolution.png" alt="Softbase" loading="lazy"></li><li><img src="../../assets/qa/logos/symation.png" alt="Symation" loading="lazy"></li><li><img src="../../assets/qa/logos/lgcns-perfectwin.png" alt="LG CNS PerfecTwin" loading="lazy"></li></ul>
+    </div></section>
+    <section class="rm-proof" aria-label="주요 수행 실적">
+      <p class="rm-wrap">BDD 테스트 자동화 · TestOps · DevOps <b>주요 수행 실적</b></p>
+      <div class="rm-marquee text"><ul><li>TMAP AUTO Speech 테스트 자동화 ’23</li><li>TMAP AUTO Core 고도화 · OEM 테스트 자동화 ’22</li><li>TMAP AUTO Core 테스트 자동화 ’21</li><li>웅진씽크빅 북클럽 앱 테스트 자동화 ’22</li><li>AMI 테스트 자동화 ’22</li><li>TMAP AUTO Issue Sync System ’23</li><li>SKT TDE DevOps Data Migration ’22</li><li>LIG넥스원 DevOps 업그레이드 ’21</li><li>BizDevOps 시스템(EMS) 구축 ’20</li><li>HMM 전사 ITSM 구축 ’20</li></ul><ul aria-hidden="true"><li>TMAP AUTO Speech 테스트 자동화 ’23</li><li>TMAP AUTO Core 고도화 · OEM 테스트 자동화 ’22</li><li>TMAP AUTO Core 테스트 자동화 ’21</li><li>웅진씽크빅 북클럽 앱 테스트 자동화 ’22</li><li>AMI 테스트 자동화 ’22</li><li>TMAP AUTO Issue Sync System ’23</li><li>SKT TDE DevOps Data Migration ’22</li><li>LIG넥스원 DevOps 업그레이드 ’21</li><li>BizDevOps 시스템(EMS) 구축 ’20</li><li>HMM 전사 ITSM 구축 ’20</li></ul></div>
     </section>
-    <nav class="rm-tabs" aria-label="테스트 종류"><ul class="rm-wrap"><li><a href="../../re-menu/outsourcing/">QA 아웃소싱</a></li><li><a href="../../re-menu/automation/" aria-current="page">테스트 자동화</a></li><li><a href="../../re-menu/blackbox/">블랙박스 테스트</a></li><li><a href="../../re-menu/whitebox/">화이트박스 테스트</a></li><li><a href="../../re-menu/api/">API 테스트</a></li><li><a href="../../re-menu/performance/">성능 테스트</a></li></ul></nav>
-    <section class="rm-sec rm-needs" aria-labelledby="need"><div class="rm-wrap">
-      <h2 id="need">이럴 때 자동화하세요</h2>
-      <ul><li><svg class="rm-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11V9a3 3 0 0 1 3-3h12l-3-3M20 13v2a3 3 0 0 1-3 3H5l3 3"/></svg><p>배포마다 같은 테스트를 손으로 반복할 때</p></li><li><svg class="rm-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><p>테스트 시간이 출시를 늦출 때</p></li><li><svg class="rm-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M7 20h10M5 8h14M5 8l-3 6a3 3 0 0 0 6 0zM19 8l-3 6a3 3 0 0 0 6 0z"/></svg><p>담당자마다 결과가 다르게 나올 때</p></li><li><svg class="rm-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="5" r="2"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="8" r="2"/><path d="M6 7v10M18 10c0 4-6 3-12 7"/></svg><p>CI/CD에 테스트를 연결하고 싶을 때</p></li></ul>
-    </div></section>
-    <section class="rm-sec tint" aria-labelledby="how"><div class="rm-wrap">
-      <div class="rm-split"><h2 id="how">프로젝트에 맞는 자동화 방식</h2><p>오픈소스 맞춤 구축부터 파트너 솔루션까지, 환경과 예산에 맞춰 고릅니다.</p></div>
-      <ul class="rm-soltiles"><li><div class="logo"><img class="tb" src="../../assets/tbell-logo.svg" alt="TBELL"></div><b>OPEN SOURCE</b><p>유지비용 없는 맞춤 구축</p></li><li><div class="logo"><img src="../../assets/qa/logos/apptest-ai.png" alt="Apptest.ai"></div><b>NO-CODE</b><p>AI 인식 · 앱과 증권 MTS</p></li><li><div class="logo"><img src="../../assets/qa/logos/tricentis.png" alt="Tricentis"></div><b>NO-CODE</b><p>통합 테스트 관리 · ERP</p></li><li><div class="logo"><img src="../../assets/qa/logos/softbase-evolution.png" alt="Softbase"></div><b>CODE</b><p>은행 등 통합단말 자동화</p></li><li><div class="logo"><img src="../../assets/qa/logos/symation.png" alt="Symation"></div><b>CODE</b><p>CI/CD 연계 품질관리</p></li><li><div class="logo"><img src="../../assets/qa/logos/lgcns-perfectwin.png" alt="LG CNS PerfecTwin"></div><b>CODE</b><p>대량 데이터 정합성</p></li></ul>
-    </div></section>
-    <section class="rm-proof" aria-label="BDD 테스트 자동화 · TestOps · DevOps 주요 수행 실적"><div class="rm-wrap">
-      <p>BDD 테스트 자동화 · TestOps · DevOps <b>주요 수행 실적</b></p>
-      <div class="rm-ticker"><ul><li>TMAP AUTO Speech 테스트 자동화 ’23</li><li>TMAP AUTO Core 고도화 · OEM 테스트 자동화 ’22</li><li>TMAP AUTO Core 테스트 자동화 ’21</li><li>웅진씽크빅 북클럽 앱 테스트 자동화 ’22</li><li>AMI 테스트 자동화 ’22</li><li>TMAP AUTO Issue Sync System ’23</li><li>SKT TDE DevOps Data Migration ’22</li><li>LIG넥스원 DevOps 업그레이드 ’21</li><li>BizDevOps 시스템(EMS) 구축 ’20</li><li>HMM 전사 ITSM 구축 ’20</li></ul><ul aria-hidden="true"><li>TMAP AUTO Speech 테스트 자동화 ’23</li><li>TMAP AUTO Core 고도화 · OEM 테스트 자동화 ’22</li><li>TMAP AUTO Core 테스트 자동화 ’21</li><li>웅진씽크빅 북클럽 앱 테스트 자동화 ’22</li><li>AMI 테스트 자동화 ’22</li><li>TMAP AUTO Issue Sync System ’23</li><li>SKT TDE DevOps Data Migration ’22</li><li>LIG넥스원 DevOps 업그레이드 ’21</li><li>BizDevOps 시스템(EMS) 구축 ’20</li><li>HMM 전사 ITSM 구축 ’20</li></ul></div>
-    </div></section>
     <section class="rm-sec rm-end" aria-labelledby="faq"><div class="rm-wrap">
       <div class="rm-end-side">
         <h2 id="faq">자주 묻는 질문</h2>

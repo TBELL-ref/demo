@@ -12,12 +12,12 @@
   <meta property="og:title" content="블랙박스 테스트(기능 테스트) | 통합·회귀·인수 테스트 - 티벨">
   <meta property="og:description" content="블랙박스 테스트는 내부 코드를 보지 않고 요구사항과 명세서를 기준으로 입력과 출력을 확인해 기능을 검증하는 테스트입니다. 테스트 종류, 화이트박스 테스트와의 차이, 티벨의 10개 산업 도메인 테스트 경험을 소개합니다.">
   <meta property="og:url" content="https://tbell-ref.github.io/demo/re-menu/blackbox/">
-  <meta property="og:image" content="https://tbell-ref.github.io/demo/assets/origin/bg-tablet-blackbox.08b799c93405378cd9f7.png">
+  <meta property="og:image" content="https://tbell-ref.github.io/demo/assets/origin/bg-blackbox.93002ce8bac79cfd0f1f.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@200;400;500;700&family=Oxanium:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="../../assets/site.css?v=123">
-  <link rel="stylesheet" href="../../re-menu/re.css?v=3">
+  <link rel="stylesheet" href="../../re-menu/re.css?v=4">
   <link rel="icon" href="../../assets/tbell-logo.svg">
   <script type="application/ld+json">
 {
@@ -189,17 +189,32 @@
   </header>
   </div>
   <main id="content" class="rm">
-    <section class="rm-hero">
+    <section class="rm-hero copy-right">
+      <picture class="rm-hero-bg"><source media="(max-width: 768px)" srcset="../../assets/origin/bg-mobile-blackbox.deb03514f8108bd54281.png"><source media="(max-width: 1024px)" srcset="../../assets/origin/bg-tablet-blackbox.08b799c93405378cd9f7.png"><img src="../../assets/origin/bg-blackbox.93002ce8bac79cfd0f1f.png" alt=""></picture>
       <div class="rm-wrap">
         <div class="rm-hero-copy">
           <ol class="rm-crumb" aria-label="현재 위치"><li><a href="../../re-menu/#qa">QA</a></li><li><a href="../../re-menu/types/">테스트 종류</a></li><li aria-current="page">블랙박스 테스트</li></ol>
           <p class="rm-eyebrow">Black-Box Testing</p>
           <h1><span>블랙박스 테스트</span></h1>
           <p class="lede"><strong>블랙박스 테스트는 내부 코드를 보지 않고 요구사항과 명세서를 기준으로 입력과 출력을 확인해 기능을 검증하는 테스트입니다.</strong></p>
-          <ul class="rm-chips" aria-label="키워드"><li>기능 테스트</li><li>회귀 테스트</li><li>인수 테스트</li></ul>
           <div class="rm-actions"><a class="pill" href="../../re-menu/#inquiry/qa">테스트 문의하기</a><a class="pill ghost" href="#faq">자주 묻는 질문</a></div>
         </div>
-        <figure class="rm-hero-art"><svg class="dg" viewBox="0 0 480 360" role="img" aria-label="블랙박스 테스트: 입력을 넣고, 내부는 보지 않고, 출력만 요구사항과 비교합니다">
+      </div>
+    </section>
+    <nav class="rm-tabs" aria-label="테스트 종류"><ul class="rm-wrap"><li><a href="../../re-menu/outsourcing/">QA 아웃소싱</a></li><li><a href="../../re-menu/automation/">테스트 자동화</a></li><li><a href="../../re-menu/blackbox/" aria-current="page">블랙박스 테스트</a></li><li><a href="../../re-menu/whitebox/">화이트박스 테스트</a></li><li><a href="../../re-menu/api/">API 테스트</a></li><li><a href="../../re-menu/performance/">성능 테스트</a></li></ul></nav>
+    <section class="rm-sec rm-needs" aria-labelledby="need"><div class="rm-wrap">
+      <h2 id="need">이럴 때 필요합니다</h2>
+      <ol><li><b>01</b><p>기능이 기획서대로 동작하는지 확인할 때</p></li><li><b>02</b><p>새 기능을 붙인 뒤 기존 기능이 걱정될 때</p></li><li><b>03</b><p>외부 연동 후 전체 동작을 확인할 때</p></li><li><b>04</b><p>인수 전 사용자 관점의 점검이 필요할 때</p></li></ol>
+    </div></section>
+    <section class="rm-sec rm-how" aria-labelledby="how"><div class="rm-wrap">
+      <figure class="rm-dgpanel"><svg class="dg" viewBox="0 0 480 360" role="img" aria-label="블랙박스 테스트: 입력을 넣고, 내부는 보지 않고, 출력만 요구사항과 비교합니다">
+  <defs>
+    <linearGradient id="dg-box" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#262626"/><stop offset="1" stop-color="#121212"/></linearGradient>
+    <linearGradient id="dg-hi" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f3a40"/><stop offset="1" stop-color="#121a1c"/></linearGradient>
+    <linearGradient id="dg-area" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#27c4d5" stop-opacity=".35"/><stop offset="1" stop-color="#27c4d5" stop-opacity="0"/></linearGradient>
+    <radialGradient id="dg-core"><stop offset="0" stop-color="#27c4d5" stop-opacity=".45"/><stop offset="1" stop-color="#27c4d5" stop-opacity=".04"/></radialGradient>
+    <filter id="dg-glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
   <rect class="box" x="10" y="148" width="104" height="64" rx="12"/><text class="en" x="62" y="185">INPUT</text>
   <path class="flow" d="M120 180H176"/><circle class="pkt " cx="120" cy="180" r="4.5" style="--dx:56px;animation-delay:0s"/><circle class="pkt " cx="120" cy="180" r="4.5" style="--dx:56px;animation-delay:1s"/>
   <g class="cube"><path class="f-top" d="M240 108 L304 144 L240 180 L176 144Z"/><path class="f-left" d="M176 144 L240 180 L240 254 L176 218Z"/><path class="f-right" d="M304 144 L240 180 L240 254 L304 218Z"/></g>
@@ -209,26 +224,16 @@
   <circle class="ok" cx="466" cy="148" r="11"/><path class="ok-mark" d="M461 148l4 4 6-7"/>
   <text x="240" y="300">내부 코드는 보지 않고</text><text x="240" y="322">결과가 요구사항과 같은지 확인</text>
 </svg></figure>
+      <div class="rm-how-list">
+        <h2 id="how">개발 단계마다 이렇게 검증합니다</h2>
+        <ol style="--cols:2"><li><h3>인터페이스 테스트</h3><p>모듈 사이에 데이터가 바르게 오가는지</p></li><li><h3>통합 테스트</h3><p>합친 기능이 함께 동작하는지</p></li><li><h3>시스템 테스트</h3><p>전체 시스템이 요구사항을 만족하는지</p></li><li><h3>새니티 테스트</h3><p>빌드 직후 핵심 기능이 정상인지</p></li><li><h3>회귀 테스트</h3><p>변경 후에도 기존 기능이 그대로인지</p></li><li><h3>인수 테스트</h3><p>사용자 입장에서 받아들일 수 있는지</p></li></ol>
       </div>
+      <p class="rm-how-note">내부 코드까지 보려면 <a href="../../re-menu/whitebox/">화이트박스 테스트 →</a></p>
+    </div></section>
+    <section class="rm-proof" aria-label="업무를 아는 전문가가 테스트합니다 · 10개 산업 도메인">
+      <p class="rm-wrap">업무를 아는 전문가가 테스트합니다 · <b>10개 산업 도메인</b></p>
+      <div class="rm-marquee"><ul><li><img src="../../assets/origin/01_sk_telecom.ae25244966926033ab37.png" alt="SK텔레콤" loading="lazy"></li><li><img src="../../assets/origin/02_logo.26e3f50ed53544c1c7ac.png" alt="" loading="lazy"></li><li><img src="../../assets/origin/03_lg.a96d12b90e0b1d8e2a5a.png" alt="LG" loading="lazy"></li><li><img src="../../assets/origin/04_lgu+.5aa452b3620888b8180c.png" alt="LG유플러스" loading="lazy"></li><li><img src="../../assets/origin/05_woongjin.4b5f79bcf32c2b52d4c0.png" alt="웅진" loading="lazy"></li><li><img src="../../assets/origin/06_gs.b4937c30866898d5978d.png" alt="GS" loading="lazy"></li><li><img src="../../assets/origin/07_olive_young.e63706f5f90bed782755.png" alt="올리브영" loading="lazy"></li><li><img src="../../assets/origin/08_kakaopay.ec0feddaf22e913c7e02.png" alt="카카오페이" loading="lazy"></li><li><img src="../../assets/origin/10_logo.903a4c7c9aa13d6268ce.png" alt="" loading="lazy"></li><li><img src="../../assets/origin/11_theres.78c038692ae02eeeb8b8.png" alt="" loading="lazy"></li><li><img src="../../assets/origin/12_11street.ce145ee69dde686b285c.png" alt="11번가" loading="lazy"></li><li><img src="../../assets/origin/14_kt.626d843890e82319cfb2.png" alt="KT" loading="lazy"></li><li><img src="../../assets/origin/15_tripstore.35fd24420f22a807102d.png" alt="트립스토어" loading="lazy"></li><li><img src="../../assets/origin/16_cyberlogitec.21555d984495dfddc26d.png" alt="사이버로지텍" loading="lazy"></li><li><img src="../../assets/origin/17_lig.c81d0240fab7968ff357.png" alt="LIG넥스원" loading="lazy"></li><li><img src="../../assets/origin/18_hmm.18d13a82edd9e11b5231.png" alt="HMM" loading="lazy"></li><li><img src="../../assets/origin/19_nuri.9e846a18d466c945442b.png" alt="누리플렉스" loading="lazy"></li></ul><ul aria-hidden="true"><li><img src="../../assets/origin/01_sk_telecom.ae25244966926033ab37.png" alt="SK텔레콤" loading="lazy"></li><li><img src="../../assets/origin/02_logo.26e3f50ed53544c1c7ac.png" alt="" loading="lazy"></li><li><img src="../../assets/origin/03_lg.a96d12b90e0b1d8e2a5a.png" alt="LG" loading="lazy"></li><li><img src="../../assets/origin/04_lgu+.5aa452b3620888b8180c.png" alt="LG유플러스" loading="lazy"></li><li><img src="../../assets/origin/05_woongjin.4b5f79bcf32c2b52d4c0.png" alt="웅진" loading="lazy"></li><li><img src="../../assets/origin/06_gs.b4937c30866898d5978d.png" alt="GS" loading="lazy"></li><li><img src="../../assets/origin/07_olive_young.e63706f5f90bed782755.png" alt="올리브영" loading="lazy"></li><li><img src="../../assets/origin/08_kakaopay.ec0feddaf22e913c7e02.png" alt="카카오페이" loading="lazy"></li><li><img src="../../assets/origin/10_logo.903a4c7c9aa13d6268ce.png" alt="" loading="lazy"></li><li><img src="../../assets/origin/11_theres.78c038692ae02eeeb8b8.png" alt="" loading="lazy"></li><li><img src="../../assets/origin/12_11street.ce145ee69dde686b285c.png" alt="11번가" loading="lazy"></li><li><img src="../../assets/origin/14_kt.626d843890e82319cfb2.png" alt="KT" loading="lazy"></li><li><img src="../../assets/origin/15_tripstore.35fd24420f22a807102d.png" alt="트립스토어" loading="lazy"></li><li><img src="../../assets/origin/16_cyberlogitec.21555d984495dfddc26d.png" alt="사이버로지텍" loading="lazy"></li><li><img src="../../assets/origin/17_lig.c81d0240fab7968ff357.png" alt="LIG넥스원" loading="lazy"></li><li><img src="../../assets/origin/18_hmm.18d13a82edd9e11b5231.png" alt="HMM" loading="lazy"></li><li><img src="../../assets/origin/19_nuri.9e846a18d466c945442b.png" alt="누리플렉스" loading="lazy"></li></ul></div>
     </section>
-    <nav class="rm-tabs" aria-label="테스트 종류"><ul class="rm-wrap"><li><a href="../../re-menu/outsourcing/">QA 아웃소싱</a></li><li><a href="../../re-menu/automation/">테스트 자동화</a></li><li><a href="../../re-menu/blackbox/" aria-current="page">블랙박스 테스트</a></li><li><a href="../../re-menu/whitebox/">화이트박스 테스트</a></li><li><a href="../../re-menu/api/">API 테스트</a></li><li><a href="../../re-menu/performance/">성능 테스트</a></li></ul></nav>
-    <section class="rm-sec rm-needs" aria-labelledby="need"><div class="rm-wrap">
-      <h2 id="need">이럴 때 필요합니다</h2>
-      <ul><li><svg class="rm-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 14l2 2 4-4"/></svg><p>기능이 기획서대로 동작하는지 확인할 때</p></li><li><svg class="rm-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.6M20 4v5h-5"/></svg><p>새 기능 뒤 기존 기능이 걱정될 때</p></li><li><svg class="rm-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg><p>외부 연동 후 전체 동작을 볼 때</p></li><li><svg class="rm-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg><p>인수 전 사용자 관점 점검이 필요할 때</p></li></ul>
-    </div></section>
-    <section class="rm-sec tint" aria-labelledby="how"><div class="rm-wrap">
-      <div class="rm-split"><h2 id="how">개발 단계마다 이렇게 검증합니다</h2><p>개발 명세서로 시나리오를 만들고, 단계에 맞춰 여섯 가지 테스트를 수행합니다.</p></div>
-      <ol class="rm-ladder"><li><svg class="rm-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg><h3>인터페이스 테스트</h3><p>모듈 사이 데이터 전달</p></li><li><svg class="rm-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9 5-9 5-9-5zM3 13l9 5 9-5"/></svg><h3>통합 테스트</h3><p>합친 기능의 동작</p></li><li><svg class="rm-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="7" rx="1.5"/><rect x="4" y="13" width="16" height="7" rx="1.5"/><path d="M8 7.5h.01M8 16.5h.01"/></svg><h3>시스템 테스트</h3><p>전체 시스템의 요구사항</p></li><li><svg class="rm-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg><h3>새니티 테스트</h3><p>빌드 직후 핵심 기능</p></li><li><svg class="rm-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.6M20 4v5h-5"/></svg><h3>회귀 테스트</h3><p>변경 후 기존 기능</p></li><li><svg class="rm-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></svg><h3>인수 테스트</h3><p>사용자 입장 최종 확인</p></li></ol>
-      <div class="rm-vs">
-        <div><b>블랙박스</b><p>입력과 출력만 봅니다</p><small>기준: 요구사항 · 명세서</small></div>
-        <span>VS</span>
-        <a href="../../re-menu/whitebox/"><b>화이트박스</b><p>소스코드 내부를 봅니다</p><small>기준: 코드 · 실행 경로 →</small></a>
-      </div>
-    </div></section>
-    <section class="rm-proof" aria-label="업무를 아는 전문가가 테스트합니다 · 10개 산업 도메인"><div class="rm-wrap">
-      <p>업무를 아는 전문가가 테스트합니다 · <b>10개 산업 도메인</b></p>
-      <ul class="rm-domains"><li>금융</li><li>영상</li><li>보안</li><li>자동차</li><li>전자</li><li>임베디드</li><li>전자상거래</li><li>통신</li><li>플랫폼</li><li>공공분야</li></ul><ul class="rm-logos"><li><img src="../../assets/qa/logos/tmap-mobility.png" alt="TMAP MOBILITY" loading="lazy"></li><li><img src="../../assets/qa/logos/sk-telecom.png" alt="SK telecom" loading="lazy"></li><li><img src="../../assets/qa/logos/lig-nex1.png" alt="LIG넥스원" loading="lazy"></li><li><img src="../../assets/qa/logos/woongjin-thinkbig.png" alt="웅진씽크빅" loading="lazy"></li><li><img src="../../assets/qa/logos/hmm.png" alt="HMM" loading="lazy"></li><li><img src="../../assets/qa/logos/cyberlogitec.png" alt="CyberLogitec" loading="lazy"></li><li><img src="../../assets/qa/logos/nuriflex.png" alt="Nuri Flex" loading="lazy"></li></ul>
-    </div></section>
     <section class="rm-sec rm-end" aria-labelledby="faq"><div class="rm-wrap">
       <div class="rm-end-side">
         <h2 id="faq">자주 묻는 질문</h2>

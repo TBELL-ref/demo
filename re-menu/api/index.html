@@ -12,12 +12,12 @@
   <meta property="og:title" content="API 테스트 | 시스템 연동·인터페이스 테스트 - 티벨">
   <meta property="og:description" content="API 테스트는 서로 다른 소프트웨어 시스템이 주고받는 요청과 응답을 검증하는 테스트입니다. 기능·안정성·성능·보안성 관점의 API 검증과 UI 테스트와의 차이, 자동화 연계를 소개합니다.">
   <meta property="og:url" content="https://tbell-ref.github.io/demo/re-menu/api/">
-  <meta property="og:image" content="https://tbell-ref.github.io/demo/assets/origin/bg-tablet-api.0d2bd87a550607f6f885.png">
+  <meta property="og:image" content="https://tbell-ref.github.io/demo/assets/origin/bg-api.c29a3eb4a94183fda704.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@200;400;500;700&family=Oxanium:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="../../assets/site.css?v=123">
-  <link rel="stylesheet" href="../../re-menu/re.css?v=3">
+  <link rel="stylesheet" href="../../re-menu/re.css?v=4">
   <link rel="icon" href="../../assets/tbell-logo.svg">
   <script type="application/ld+json">
 {
@@ -180,17 +180,32 @@
   </header>
   </div>
   <main id="content" class="rm">
-    <section class="rm-hero">
+    <section class="rm-hero copy-right">
+      <picture class="rm-hero-bg"><source media="(max-width: 768px)" srcset="../../assets/origin/bg-mobile-api.f4098575a7ef1dc638a9.png"><source media="(max-width: 1024px)" srcset="../../assets/origin/bg-tablet-api.0d2bd87a550607f6f885.png"><img src="../../assets/origin/bg-api.c29a3eb4a94183fda704.png" alt=""></picture>
       <div class="rm-wrap">
         <div class="rm-hero-copy">
           <ol class="rm-crumb" aria-label="현재 위치"><li><a href="../../re-menu/#qa">QA</a></li><li><a href="../../re-menu/types/">테스트 종류</a></li><li aria-current="page">API 테스트</li></ol>
           <p class="rm-eyebrow">API Testing</p>
           <h1><span>API 테스트</span></h1>
           <p class="lede"><strong>API 테스트는 시스템끼리 주고받는 요청과 응답을 검증하는 테스트입니다.</strong> 연동이 기능·안정성·성능·보안성 면에서 문제없는지 확인합니다.</p>
-          <ul class="rm-chips" aria-label="키워드"><li>연동 테스트</li><li>인터페이스</li><li>자동화</li></ul>
           <div class="rm-actions"><a class="pill" href="../../re-menu/#inquiry/qa">테스트 문의하기</a><a class="pill ghost" href="#faq">자주 묻는 질문</a></div>
         </div>
-        <figure class="rm-hero-art"><svg class="dg" viewBox="0 0 480 360" role="img" aria-label="API 테스트: 클라이언트의 요청과 서버의 응답을 오가는 데이터로 검증합니다">
+      </div>
+    </section>
+    <nav class="rm-tabs" aria-label="테스트 종류"><ul class="rm-wrap"><li><a href="../../re-menu/outsourcing/">QA 아웃소싱</a></li><li><a href="../../re-menu/automation/">테스트 자동화</a></li><li><a href="../../re-menu/blackbox/">블랙박스 테스트</a></li><li><a href="../../re-menu/whitebox/">화이트박스 테스트</a></li><li><a href="../../re-menu/api/" aria-current="page">API 테스트</a></li><li><a href="../../re-menu/performance/">성능 테스트</a></li></ul></nav>
+    <section class="rm-sec rm-needs" aria-labelledby="need"><div class="rm-wrap">
+      <h2 id="need">이럴 때 필요합니다</h2>
+      <ol><li><b>01</b><p>결제·지도·인증 등 외부 서비스와 연동할 때</p></li><li><b>02</b><p>앱과 웹이 같은 서버를 쓸 때</p></li><li><b>03</b><p>다른 회사에 API를 제공할 때</p></li><li><b>04</b><p>화면보다 서버 로직을 먼저 검증할 때</p></li></ol>
+    </div></section>
+    <section class="rm-sec rm-how" aria-labelledby="how"><div class="rm-wrap">
+      <figure class="rm-dgpanel"><svg class="dg" viewBox="0 0 480 360" role="img" aria-label="API 테스트: 클라이언트의 요청과 서버의 응답을 오가는 데이터로 검증합니다">
+  <defs>
+    <linearGradient id="dg-box" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#262626"/><stop offset="1" stop-color="#121212"/></linearGradient>
+    <linearGradient id="dg-hi" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f3a40"/><stop offset="1" stop-color="#121a1c"/></linearGradient>
+    <linearGradient id="dg-area" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#27c4d5" stop-opacity=".35"/><stop offset="1" stop-color="#27c4d5" stop-opacity="0"/></linearGradient>
+    <radialGradient id="dg-core"><stop offset="0" stop-color="#27c4d5" stop-opacity=".45"/><stop offset="1" stop-color="#27c4d5" stop-opacity=".04"/></radialGradient>
+    <filter id="dg-glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
   <rect class="box" x="14" y="112" width="112" height="136" rx="16"/>
   <rect class="glyph" x="56" y="140" width="28" height="48" rx="6"/><text class="en" x="70" y="222">CLIENT</text>
   <rect class="box hi" x="354" y="112" width="112" height="136" rx="16"/>
@@ -201,21 +216,16 @@
   <text class="en" x="240" y="146">REQUEST →</text><text class="en" x="240" y="228">← RESPONSE</text>
   <g class="chips"><rect x="62" y="286" width="76" height="30" rx="15"/><text x="100" y="306">기능</text><rect x="148" y="286" width="84" height="30" rx="15"/><text x="190" y="306">안정성</text><rect x="242" y="286" width="76" height="30" rx="15"/><text x="280" y="306">성능</text><rect x="328" y="286" width="84" height="30" rx="15"/><text x="370" y="306">보안성</text></g>
 </svg></figure>
+      <div class="rm-how-list">
+        <h2 id="how">네 가지 관점으로 검증합니다</h2>
+        <ol style="--cols:2"><li><h3>기능</h3><p>약속된 형식과 값으로 응답하는지</p></li><li><h3>안정성</h3><p>반복 호출과 예외에도 일관되게 동작하는지</p></li><li><h3>성능</h3><p>호출이 몰려도 응답이 빠른지</p></li><li><h3>보안성</h3><p>인증·권한 처리와 데이터 노출을 점검</p></li></ol>
       </div>
+      
+    </div></section>
+    <section class="rm-proof" aria-label="티벨과 함께하는 고객사">
+      <p class="rm-wrap">티벨과 함께하는 <b>고객사</b></p>
+      <div class="rm-marquee"><ul><li><img src="../../assets/origin/01_sk_telecom.ae25244966926033ab37.png" alt="SK텔레콤" loading="lazy"></li><li><img src="../../assets/origin/02_logo.26e3f50ed53544c1c7ac.png" alt="" loading="lazy"></li><li><img src="../../assets/origin/03_lg.a96d12b90e0b1d8e2a5a.png" alt="LG" loading="lazy"></li><li><img src="../../assets/origin/04_lgu+.5aa452b3620888b8180c.png" alt="LG유플러스" loading="lazy"></li><li><img src="../../assets/origin/05_woongjin.4b5f79bcf32c2b52d4c0.png" alt="웅진" loading="lazy"></li><li><img src="../../assets/origin/06_gs.b4937c30866898d5978d.png" alt="GS" loading="lazy"></li><li><img src="../../assets/origin/07_olive_young.e63706f5f90bed782755.png" alt="올리브영" loading="lazy"></li><li><img src="../../assets/origin/08_kakaopay.ec0feddaf22e913c7e02.png" alt="카카오페이" loading="lazy"></li><li><img src="../../assets/origin/10_logo.903a4c7c9aa13d6268ce.png" alt="" loading="lazy"></li><li><img src="../../assets/origin/11_theres.78c038692ae02eeeb8b8.png" alt="" loading="lazy"></li><li><img src="../../assets/origin/12_11street.ce145ee69dde686b285c.png" alt="11번가" loading="lazy"></li><li><img src="../../assets/origin/14_kt.626d843890e82319cfb2.png" alt="KT" loading="lazy"></li><li><img src="../../assets/origin/15_tripstore.35fd24420f22a807102d.png" alt="트립스토어" loading="lazy"></li><li><img src="../../assets/origin/16_cyberlogitec.21555d984495dfddc26d.png" alt="사이버로지텍" loading="lazy"></li><li><img src="../../assets/origin/17_lig.c81d0240fab7968ff357.png" alt="LIG넥스원" loading="lazy"></li><li><img src="../../assets/origin/18_hmm.18d13a82edd9e11b5231.png" alt="HMM" loading="lazy"></li><li><img src="../../assets/origin/19_nuri.9e846a18d466c945442b.png" alt="누리플렉스" loading="lazy"></li></ul><ul aria-hidden="true"><li><img src="../../assets/origin/01_sk_telecom.ae25244966926033ab37.png" alt="SK텔레콤" loading="lazy"></li><li><img src="../../assets/origin/02_logo.26e3f50ed53544c1c7ac.png" alt="" loading="lazy"></li><li><img src="../../assets/origin/03_lg.a96d12b90e0b1d8e2a5a.png" alt="LG" loading="lazy"></li><li><img src="../../assets/origin/04_lgu+.5aa452b3620888b8180c.png" alt="LG유플러스" loading="lazy"></li><li><img src="../../assets/origin/05_woongjin.4b5f79bcf32c2b52d4c0.png" alt="웅진" loading="lazy"></li><li><img src="../../assets/origin/06_gs.b4937c30866898d5978d.png" alt="GS" loading="lazy"></li><li><img src="../../assets/origin/07_olive_young.e63706f5f90bed782755.png" alt="올리브영" loading="lazy"></li><li><img src="../../assets/origin/08_kakaopay.ec0feddaf22e913c7e02.png" alt="카카오페이" loading="lazy"></li><li><img src="../../assets/origin/10_logo.903a4c7c9aa13d6268ce.png" alt="" loading="lazy"></li><li><img src="../../assets/origin/11_theres.78c038692ae02eeeb8b8.png" alt="" loading="lazy"></li><li><img src="../../assets/origin/12_11street.ce145ee69dde686b285c.png" alt="11번가" loading="lazy"></li><li><img src="../../assets/origin/14_kt.626d843890e82319cfb2.png" alt="KT" loading="lazy"></li><li><img src="../../assets/origin/15_tripstore.35fd24420f22a807102d.png" alt="트립스토어" loading="lazy"></li><li><img src="../../assets/origin/16_cyberlogitec.21555d984495dfddc26d.png" alt="사이버로지텍" loading="lazy"></li><li><img src="../../assets/origin/17_lig.c81d0240fab7968ff357.png" alt="LIG넥스원" loading="lazy"></li><li><img src="../../assets/origin/18_hmm.18d13a82edd9e11b5231.png" alt="HMM" loading="lazy"></li><li><img src="../../assets/origin/19_nuri.9e846a18d466c945442b.png" alt="누리플렉스" loading="lazy"></li></ul></div>
     </section>
-    <nav class="rm-tabs" aria-label="테스트 종류"><ul class="rm-wrap"><li><a href="../../re-menu/outsourcing/">QA 아웃소싱</a></li><li><a href="../../re-menu/automation/">테스트 자동화</a></li><li><a href="../../re-menu/blackbox/">블랙박스 테스트</a></li><li><a href="../../re-menu/whitebox/">화이트박스 테스트</a></li><li><a href="../../re-menu/api/" aria-current="page">API 테스트</a></li><li><a href="../../re-menu/performance/">성능 테스트</a></li></ul></nav>
-    <section class="rm-sec rm-needs" aria-labelledby="need"><div class="rm-wrap">
-      <h2 id="need">이럴 때 필요합니다</h2>
-      <ul><li><svg class="rm-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3v5M15 3v5M6 8h12v3a6 6 0 0 1-12 0zM12 17v4"/></svg><p>결제·지도·인증 등 외부와 연동할 때</p></li><li><svg class="rm-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg><p>앱과 웹이 같은 서버를 쓸 때</p></li><li><svg class="rm-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.2 10.8l7.6-3.6M8.2 13.2l7.6 3.6"/></svg><p>다른 회사에 API를 제공할 때</p></li><li><svg class="rm-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="7" rx="1.5"/><rect x="4" y="13" width="16" height="7" rx="1.5"/><path d="M8 7.5h.01M8 16.5h.01"/></svg><p>화면보다 서버 로직을 먼저 볼 때</p></li></ul>
-    </div></section>
-    <section class="rm-sec tint" aria-labelledby="how"><div class="rm-wrap">
-      <div class="rm-split"><h2 id="how">네 가지 관점으로 검증합니다</h2><p>요청이 서버를 거쳐 응답으로 돌아오는 흐름 전체가 대상입니다.</p></div>
-      <ul class="rm-igrid"><li><svg class="rm-ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg><h3>기능</h3><p>약속된 형식과 값으로 응답하는지</p></li><li><svg class="rm-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l9 5-9 5-9-5zM3 13l9 5 9-5"/></svg><h3>안정성</h3><p>반복 호출과 예외에도 일관된지</p></li><li><svg class="rm-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg><h3>성능</h3><p>호출이 몰려도 응답이 빠른지</p></li><li><svg class="rm-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg><h3>보안성</h3><p>인증·권한과 데이터 노출 점검</p></li></ul>
-    </div></section>
-    <section class="rm-proof" aria-label="연동이 많은 서비스일수록 전문가의 검증이 필요합니다"><div class="rm-wrap">
-      <p>연동이 많은 서비스일수록 <b>전문가의 검증</b>이 필요합니다</p>
-      <ul class="rm-logos"><li><img src="../../assets/qa/logos/tmap-mobility.png" alt="TMAP MOBILITY" loading="lazy"></li><li><img src="../../assets/qa/logos/sk-telecom.png" alt="SK telecom" loading="lazy"></li><li><img src="../../assets/qa/logos/lig-nex1.png" alt="LIG넥스원" loading="lazy"></li><li><img src="../../assets/qa/logos/woongjin-thinkbig.png" alt="웅진씽크빅" loading="lazy"></li><li><img src="../../assets/qa/logos/hmm.png" alt="HMM" loading="lazy"></li><li><img src="../../assets/qa/logos/cyberlogitec.png" alt="CyberLogitec" loading="lazy"></li><li><img src="../../assets/qa/logos/nuriflex.png" alt="Nuri Flex" loading="lazy"></li></ul>
-    </div></section>
     <section class="rm-sec rm-end" aria-labelledby="faq"><div class="rm-wrap">
       <div class="rm-end-side">
         <h2 id="faq">자주 묻는 질문</h2>
