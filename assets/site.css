@@ -2842,3 +2842,5 @@ p, li, dd, h1, h2, h3, h4 { text-wrap: pretty; }
 @media (max-width: 768px) { .way-grid { grid-template-columns: minmax(0, 1fr); } }
 /* Kakao's map layer is also called .map; our table rule of that name must not reach it. */
 .way-map .map { min-width: 0; }
+/* Ledes: when a paragraph flows (qpFitBreaks) its lines are evened out. */
+.qp-lede p.is-flow, .qp-left p.is-flow { text-wrap: pretty; }

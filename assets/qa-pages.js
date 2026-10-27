@@ -408,9 +408,37 @@ function envBody() {
 // ── Motion ─────────────────────────────────────────────────
 // Sections reveal once; diagrams draw their links; the box diagram morphs black ↔ white when you
 // arrive from its sibling page. Everything is static under prefers-reduced-motion.
+// Ledes keep the origin's hand-set line breaks only while every hand-set line fits on one line. Once a line
+// would wrap (narrower windows), that paragraph drops its <br>s and flows, so no short stub is left in front of
+// a forced break. Checked again when the window is resized.
+function qpFitBreaks(root) {
+  root.querySelectorAll(".qp-lede p, .qp-left p").forEach((p) => {
+    if (p.dataset.qpHtml === undefined) {
+      if (!p.querySelector("br")) return;
+      p.dataset.qpHtml = p.innerHTML;
+    }
+    p.innerHTML = p.dataset.qpHtml;
+    p.classList.remove("is-flow");
+    const hard = [...p.querySelectorAll("br")].filter((br) => getComputedStyle(br).display !== "none").length + 1;
+    const range = document.createRange();
+    range.selectNodeContents(p);
+    const tops = new Set([...range.getClientRects()].filter((r) => r.width > 1).map((r) => Math.round(r.top)));
+    if (tops.size > hard) {
+      p.innerHTML = p.dataset.qpHtml.replace(/\s*<br[^>]*>\s*/g, " ");
+      p.classList.add("is-flow");
+    }
+  });
+}
+let qpFitTimer = 0;
+if (typeof window.addEventListener === "function") window.addEventListener("resize", () => {
+  clearTimeout(qpFitTimer);
+  qpFitTimer = setTimeout(() => { const root = document.querySelector(".svc-body"); if (root) qpFitBreaks(root); }, 150);
+});
+
 function wireQaPages() {
   const root = document.querySelector(".svc-body");
   if (!root || !root.querySelector(".qp-sec, .qp-band, .qp-mosaic, .qp-stairs")) return;
+  qpFitBreaks(root);
   const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   document.documentElement.classList.toggle("qp-js", !still);
   const items = root.querySelectorAll("[data-qp-reveal]");
