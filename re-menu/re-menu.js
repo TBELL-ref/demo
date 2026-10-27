@@ -69,6 +69,9 @@
   window.addEventListener("resize", () => { if (drop.classList.contains("is-open")) drop.style.height = fit() + "px"; });
   toggle.addEventListener("click", () => toggle.setAttribute("aria-expanded", String(nav.classList.toggle("open"))));
 
+  // QA test pages: the SPA's section reveal and diagram motion (qa-pages.js, loaded before this file).
+  if (typeof wireQaPages === "function") wireQaPages();
+
   // 테스트 분야 photo cards (site.js wireDeck): the clicked card opens, the others close.
   document.querySelectorAll(".expand-card").forEach((card) => {
     card.addEventListener("click", () => {
