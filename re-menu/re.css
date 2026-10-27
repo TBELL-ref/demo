@@ -183,11 +183,17 @@
 .ra-cols p { margin: 0; color: #595959; font-size: clamp(14px, .92vw, 16px); line-height: 1.75; word-break: keep-all; }
 .ra-two { grid-template-columns: repeat(2, minmax(0, 1fr)); width: 83%; margin: 40px auto 0; }
 .ra-two h3 span { margin-right: 12px; font-family: var(--num); font-weight: 600; color: #969696; }
+/* API 테스트 › 기본 테스트 절차: three ruled columns, each with one fragment of a real request. */
+.ra-steps { width: 83%; margin: 40px auto 0; }
+.ra-steps h3 span { margin-right: 12px; font-family: var(--num); font-weight: 600; color: #969696; }
+.ra-steps code { display: inline-block; margin-top: 14px; padding: 5px 12px; border: 1px solid #cfcfcf; border-radius: 6px; color: #333; font-family: ui-monospace, Consolas, monospace; font-size: 13px; }
+.ra-steps li:last-child code { border-color: #27c4d5; color: #0788a4; }
 .qp-flow-art svg text { font-weight: 600; }
 
 @media (max-width: 768px) {
   .ra-cols, .ra-two { grid-template-columns: 1fr; width: 100%; gap: 28px; margin-top: 48px; }
   .ra-cols li { padding: 0; border-left: 0; }
+  .ra-steps { width: 100%; }
 }
 
 /* ── 블랙박스 · 화이트박스 (rx- shared, rb- blackbox, rw- whitebox) ─────────────────────────

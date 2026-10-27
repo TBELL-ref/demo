@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@200;400;500;700&family=Oxanium:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="../../assets/site.css?v=123">
   <link rel="stylesheet" href="../../assets/qa-pages.css?v=19">
-  <link rel="stylesheet" href="../../re-menu/re.css?v=28">
+  <link rel="stylesheet" href="../../re-menu/re.css?v=29">
   <link rel="icon" href="../../assets/tbell-logo.svg">
   <script type="application/ld+json">
 {
@@ -189,6 +189,10 @@
       <figcaption>API testing</figcaption>
       <ol><li style="--i:0"><div class="qp-flow-art"><svg viewBox="0 0 120 96" aria-hidden="true"><rect x="4" y="4" width="112" height="66" rx="4" fill="#6b6b6b"/><rect x="10" y="10" width="100" height="54" fill="#f6f8fa"/><rect x="10" y="38" width="100" height="26" fill="#b7c7d1"/><rect x="20" y="16" width="40" height="3" fill="#b7c7d1"/><rect x="20" y="22" width="40" height="3" fill="#b7c7d1"/><rect x="22" y="42" width="20" height="18" fill="#fff"/><circle cx="32" cy="48" r="3" fill="#b7c7d1"/><rect x="50" y="42" width="20" height="18" fill="#fff"/><circle cx="60" cy="48" r="3" fill="#b7c7d1"/><rect x="78" y="42" width="20" height="18" fill="#fff"/><circle cx="88" cy="48" r="3" fill="#b7c7d1"/><rect x="4" y="70" width="112" height="9" fill="#d9d9d9"/><path d="M50 79 h20 l4 10 h-28z" fill="#6b6b6b"/><rect x="38" y="89" width="44" height="4" rx="2" fill="#6b6b6b"/></svg></div><p>Application<br>/Client</p></li><li style="--i:1"><div class="qp-flow-art"><span class="qp-api">{ api }</span></div><p>API<br>Requests</p></li><li style="--i:2"><div class="qp-flow-art"><svg viewBox="0 0 120 96" aria-hidden="true"><rect x="10" y="6" width="100" height="24" rx="2" fill="#d9d9d9"/><circle cx="21" cy="14" r="4" fill="#6b6b6b"/><circle cx="32" cy="14" r="4" fill="#6b6b6b"/><rect x="68" y="11" width="34" height="3" fill="#fff"/><rect x="68" y="17" width="34" height="3" fill="#fff"/><rect x="68" y="23" width="34" height="3" fill="#fff"/><rect x="10" y="34" width="100" height="24" rx="2" fill="#d9d9d9"/><circle cx="21" cy="42" r="4" fill="#6b6b6b"/><circle cx="32" cy="42" r="4" fill="#6b6b6b"/><rect x="68" y="39" width="34" height="3" fill="#fff"/><rect x="68" y="45" width="34" height="3" fill="#fff"/><rect x="68" y="51" width="34" height="3" fill="#fff"/><rect x="56" y="58" width="8" height="18" fill="#b0b0b0"/><rect x="24" y="74" width="72" height="12" fill="#b0b0b0"/><circle cx="60" cy="80" r="9" fill="#8f8f8f" stroke="#d9d9d9" stroke-width="2"/></svg></div><p>Server/Data<br>Source</p></li><li style="--i:3"><div class="qp-flow-art"><span class="qp-api">{ api }</span></div><p>API<br>Response</p></li></ol>
     </figure>
+  </section>
+  <section class="qp-sec qp-ruled" data-qp-reveal aria-labelledby="steps">
+    <h2 class="qp-h" id="steps">기본 테스트 절차</h2>
+    <ol class="ra-cols ra-steps"><li><h3><span>01</span>엔드포인트 · 메서드 설정</h3><p>대상 URL을 정하고 GET, POST, PUT, DELETE 중 알맞은 메서드를 고릅니다.</p><code>GET /users/1</code></li><li><h3><span>02</span>헤더 · 바디 작성</h3><p>인증 토큰과 요청 헤더를 설정하고, 필요한 경우 JSON 데이터를 바디에 담습니다.</p><code>Authorization: Bearer …</code></li><li><h3><span>03</span>응답 검증</h3><p>HTTP 상태 코드와 돌아온 데이터가 예상과 일치하는지 확인합니다.</p><code>200 OK</code></li></ol>
   </section>
         <section class="qp-sec" data-qp-reveal aria-labelledby="faq">
           <h2 class="qp-h" id="faq">자주 묻는 질문</h2>
