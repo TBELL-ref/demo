@@ -19,7 +19,9 @@
   /* Side padding that centres a 1180px column and never drops below the gutter. */
   /* White-background pages follow the origin: content spans 66% of the window (17% each side), capped at
      1260px; 88% on tablets; on phones only the gutter remains. */
-  --white-w: min(1260px, 66vw);
+  /* The white column widens with the window, from 88vw at 1024 to 1260px at 1920, with no jump in between
+     (it used to be 66vw above 1024, which made 1025-1300 narrower than a tablet). */
+  --white-w: min(1260px, calc(100vw - 2 * clamp(48px, calc(30vw - 246px), 330px)));
   --side: max(var(--gutter), calc((100% - var(--white-w)) / 2));
   --section-pad: 96px;
   --subnav-h: 54px;
@@ -2762,3 +2764,18 @@ a.s-card:hover .s-ibox { border-color: var(--active); }
   .mg-roles { grid-template-columns: 1fr; }
   .mg-roles p { min-height: 0; }
 }
+
+/* ── Wrapping: Korean breaks between words only, short lines are evened out, and the grids that
+   crushed their text at 1025-1300 step down in columns. ─────────────────────────────────────── */
+body { word-break: keep-all; overflow-wrap: break-word; }
+p, li, dd, h1, h2, h3, h4 { text-wrap: pretty; }
+.qp-h, .s-head h2, .qh-head h2, .iq-intro h1 { text-wrap: balance; }
+.subnav { overflow-x: auto; scrollbar-width: none; }
+.subnav a, .subnav button { white-space: nowrap; flex: none; }
+.s-items { grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); }
+@media (max-width: 1280px) {
+  .qp-ilist[style*="--cols:3"], .qp-ilist[style*="--cols: 3"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .qp-ilist li { grid-template-columns: clamp(64px, 7vw, 110px) minmax(0, 1fr); gap: 18px; }
+  .qp-numcards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+.qp-scroll table { min-width: 1120px; }

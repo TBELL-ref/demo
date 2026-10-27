@@ -1391,7 +1391,7 @@ function managementBody() {
       </div>`).join("");
   const roles = MG_ROLES.map(([name, items]) => `<article><h3>${name}</h3><p>${items.join("<br>")}</p></article>`).join("");
   return `
-    ${qpSec("CEO MESSAGE", "<p>티벨 이해 관계자 여러분. 티벨은 기후 변화, 중대 재해, 경제 위기 등 새로운 경영 환경에 대응하고, 기업의 지속가능한 성장을 위해 ESG 경영을 추진하며, 기업의 사회적 책임(CSR)을 다하기 위해 노력할 것입니다. 법과 국제 가이드 라인에 기반한 ESG 경영전략 수립과 추진 체계를 구축하고, ESG Agenda를 발굴하고 논의하여 실천할 수 있도록 추진해 나가겠습니다.</p>")}
+    ${qpSec("CEO MESSAGE", "<p>티벨 이해 관계자 여러분. 티벨은 기후 변화, 중대 재해, 경제 위기 등 새로운 경영 환경에 대응하고, 기업의 지속가능한 성장을 위해<br class='qp-br'> ESG 경영을 추진하며, 기업의 사회적 책임(CSR)을 다하기 위해 노력할 것입니다. 법과 국제 가이드 라인에 기반한 ESG 경영전략 수립과<br class='qp-br'> 추진 체계를 구축하고, ESG Agenda를 발굴하고 논의하여 실천할 수 있도록 추진해 나가겠습니다.</p>")}
     <picture class="mg-pledge">
       <source media="(max-width: 500px)" srcset="${QA}photos/esg-pledge-mobile.jpg">
       <source media="(max-width: 1023px)" srcset="${QA}photos/esg-pledge-tablet.jpg">
