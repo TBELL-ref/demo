@@ -2831,3 +2831,14 @@ p, li, dd, h1, h2, h3, h4 { text-wrap: pretty; }
   .contact-row > div > img + div { margin-left: 31px; }
   .contact-row > div > img + div::before { left: -16.5px; height: 31px; margin-top: -15.5px; }
 }
+/* 찾아오시는 길: the Kakao maps fill their card; the map box keeps its height while it loads. */
+.way-map { width: 100%; min-height: 200px; background: #f2f2f2; }
+.way-map.root_daum_roughmap { width: 100% !important; }
+.way-map .wrap_map, .way-map .wrap_controllers, .way-map .cont { max-width: 100%; }
+.way-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.way article { min-width: 0; }
+.way-map { overflow: hidden; }
+.way-map .cont { display: none; }
+@media (max-width: 768px) { .way-grid { grid-template-columns: minmax(0, 1fr); } }
+/* Kakao's map layer is also called .map; our table rule of that name must not reach it. */
+.way-map .map { min-width: 0; }

@@ -1313,10 +1313,51 @@ const OFFICES = [
   ["가산 사업장", "서울특별시 금천구 가산디지털1로 168, A동 601호 (우림라이온스밸리 A동)", "37.480764409783355", "126.88213997302407"]
 ];
 
+// 찾아오시는 길: Kakao Map "지도 퍼가기" maps (made on map.kakao.com, labelled 티벨 강남 본사 / 티벨 가산 사업장).
+const KAKAO_MAPS = { "강남 본사": ["1793086125333", "3ysattynnkw"], "가산 사업장": ["1793086161933", "3ysbp7wgifn"] };
+
+// Kakao's loader adds its renderer with document.write, which does nothing once the page has loaded (pages
+// here are drawn by script), so that one call is caught and turned into a normal script tag.
+let kakaoMapLoad = null;
+function loadKakaoMaps() {
+  if (window.daum && window.daum.roughmap && window.daum.roughmap.Lander) return Promise.resolve();
+  if (!kakaoMapLoad) kakaoMapLoad = new Promise((resolve, reject) => {
+    const write = document.write;
+    document.write = (html) => {
+      const src = /src="([^"]+)"/.exec(html);
+      if (!src) return;
+      document.write = write;
+      const lander = document.createElement("script");
+      lander.charset = "UTF-8";
+      lander.src = src[1];
+      lander.onload = resolve;
+      lander.onerror = reject;
+      document.head.appendChild(lander);
+    };
+    const loader = document.createElement("script");
+    loader.charset = "UTF-8";
+    loader.src = "https://t1.kakaocdn.net/kakaomapweb/roughmap/loader/prod/roughmapLoader.js";
+    loader.onerror = () => { document.write = write; reject(); };
+    document.head.appendChild(loader);
+  });
+  return kakaoMapLoad;
+}
+
+function wireKakaoMaps() {
+  const boxes = [...document.querySelectorAll("[data-kakao-map]")];
+  if (!boxes.length) return;
+  loadKakaoMaps().then(() => boxes.forEach((box) => {
+    if (!box.isConnected || box.childElementCount) return;
+    const [timestamp, key] = box.dataset.kakaoMap.split(":");
+    const width = Math.round(box.clientWidth);
+    new window.daum.roughmap.Lander({ timestamp, key, mapWidth: String(width), mapHeight: String(Math.round(width * 0.62)) }).render();
+  })).catch(() => {});
+}
+
 function aboutBody() {
   const cards = OFFICES.map(([name, address, lat, lng]) => `
     <article>
-      <iframe class="way-map" src="https://maps.google.com/maps?q=${lat},${lng}&amp;z=16&amp;hl=ko&amp;output=embed" title="${name} 지도" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <div class="way-map root_daum_roughmap root_daum_roughmap_landing" id="daumRoughmapContainer${KAKAO_MAPS[name][0]}" data-kakao-map="${KAKAO_MAPS[name].join(":")}" aria-label="${name} 지도"></div>
       <h3>${name}</h3>
       <p>${address}</p>
       <a href="https://map.kakao.com/link/map/${encodeURIComponent(name)},${lat},${lng}" target="_blank" rel="noopener noreferrer">지도 보기</a>
@@ -2270,6 +2311,7 @@ function drawContent(mode, group, child, pageNo) {
     });
   }
   wireStages();
+  wireKakaoMaps();
   pathLinks();
   const jump = sessionStorage.getItem("tbell-jump");
   window.scrollTo(0, 0);
