@@ -1366,7 +1366,14 @@ const RECRUIT_SLIDES = [
   { id: "recruit", title: "Good Player, Great Work", desc: "티벨은 올바른 생각과 실천을 통해 “우수한 인재를, 일하기 좋은 기업”을 만듭니다.", tags: [], bg: ["bg-recruit.96e2ea0dae220b78e221.png", "bg-tablet-recruit.95364057a4fd3ee61e20.png", "bg-mobile-recruit.89efb893fcee0ae88828.png"], body: recruitBody }
 ];
 
+// 지속가능경영 opens on the origin's overview slide (its own banner and content image); like the origin it is
+// not one of the 윤리 · 사회 · 환경 tabs.
+function managementBody() {
+  return shot({ pc: "content-management.feb8dfe64927768a33b6.png", tablet: "content-tablet-management.561be7aa074f2115ebb8.png", mobile: "content-mobile-management.08406d76c6339ad0c066.png" });
+}
+
 const ESG_SLIDES = [
+  { id: "esg", title: "지속가능 경영", desc: "", tags: [], bg: ["bg-management.7c040906499d5d3883e5.png", "bg-tablet-management.29e5be4deabe819673cb.png", "bg-mobile-management.2a770bc2a5cd8dcfc473.png"], body: managementBody },
   { id: "ethical", title: "윤리 경영", desc: "", tags: [], bg: ["bg-ethical.4ee79d2ecc425576aabf.png", "bg-tablet-ethical.3ee09f7000c4ffa90a44.png", "bg-mobile-ethical.6ca0468a4dffddfbd2d7.png"], body: ethicalBody },
   { id: "social", title: "사회 경영", desc: "", tags: [], bg: ["bg-social.18fa9508d7893696bec6.png", "bg-tablet-social.12a02e3c7d934095805f.png", "bg-mobile-social.e1f4c148af28514f5139.png"], body: socialBody },
   { id: "environmental", title: "환경 경영", desc: "친환경 제품 및 서비스, 에너지 소비 분야를 중심으로 친환경 ICT 기업 도약을 추진합니다.", tags: [], bg: ["bg-environ.9fef7398af46aa8d3846.png", "bg-tablet-environmental.b52a1a9ba527c8536088.png", "bg-mobile-environmental.890cbb7f7a60a4853a15.png"], body: envBody }
@@ -1580,7 +1587,7 @@ function drawCompany(child, mode) {
   if (child === "history") return companyHistory(leaves);
   if (child === "recruit" || child === "benefit") return qaDeck(RECRUIT_SLIDES, child === "benefit" ? "benefit" : "recruit", base, leaves);
   if (child === "esg" || child === "social" || child === "environmental" || child === "ethical") {
-    const id = ["ethical", "social", "environmental"].includes(child) ? child : "ethical";
+    const id = ["ethical", "social", "environmental"].includes(child) ? child : "esg";
     return qaDeck(ESG_SLIDES, id, base, leaves);
   }
   return qaDeck(ABOUT_SLIDES, child === "vision" ? "vision" : "about", base, leaves);
