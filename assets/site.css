@@ -19,9 +19,9 @@
   /* Side padding that centres a 1180px column and never drops below the gutter. */
   /* White-background pages follow the origin: content spans 66% of the window (17% each side), capped at
      1260px; 88% on tablets; on phones only the gutter remains. */
-  /* The white column widens with the window, from 88vw at 1024 to 1260px at 1920, with no jump in between
-     (it used to be 66vw above 1024, which made 1025-1300 narrower than a tablet). */
-  --white-w: min(1260px, calc(100vw - 2 * clamp(48px, calc(30vw - 246px), 330px)));
+  /* The origin's white column: 66vw above 1024 (88vw / full width below, further down). Dense grids
+     step down in columns between 1025 and 1280 instead of the column widening. */
+  --white-w: min(1260px, 66vw);
   --side: max(var(--gutter), calc((100% - var(--white-w)) / 2));
   --section-pad: 96px;
   --subnav-h: 54px;
@@ -2779,3 +2779,53 @@ p, li, dd, h1, h2, h3, h4 { text-wrap: pretty; }
   .qp-numcards { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 .qp-scroll table { min-width: 1120px; }
+
+/* ── Outsourcing body, matched to the origin's layout rules (/service, measured at 1440 / 1048 / 768 / 375):
+   both rows run edge to edge with their own side padding — 17% on pc, 5% on tablet; on phones the domain
+   cards stack inside 17% and the contact boxes stack inside 5%. The 01 card row stays a row on tablet. ── */
+.detail .svc-body > .expand-row, .detail .svc-body > .contact-row { width: auto; margin-left: calc(-1 * var(--svc-pad)); margin-right: calc(-1 * var(--svc-pad)); padding: 0 17vw; }
+.detail .svc-body > .contact-row { margin-top: 50px; margin-bottom: 20%; }
+.contact-row > div { width: 48%; margin-bottom: 20px; padding: 3% 4%; background: #f5f5f5; }
+@media (max-width: 1023px) {
+  .detail .svc-body > .expand-row, .detail .svc-body > .contact-row { padding: 0 5vw; }
+}
+@media (max-width: 768px) {
+  .expand-row { flex-direction: row; }
+  .expand-card { width: 12vw; height: 24vw; }
+  .expand-card.is-open { width: 36vw; height: 24vw; }
+  .expand-card img { width: auto; height: 100%; }
+  .contact-row { flex-direction: row; gap: 0; }
+  .contact-row > div { width: 48%; height: 25vw; padding: 5% 7%; }
+}
+@media (max-width: 500px) {
+  .detail .svc-body > .expand-row { flex-direction: column; gap: 12px; padding: 0 17vw; }
+  .expand-card, .expand-card.is-open { width: 100%; height: 20vw; }
+  .expand-card.is-open { height: auto; }
+  .expand-card img { width: 100%; height: auto; }
+  .contact-row { flex-direction: column; }
+  .contact-row > div { width: 100%; }
+}
+/* 테스트 의뢰 box: the origin's icon (45px), a 2px #333 divider at .6 opacity with 19px either side, then the text. */
+.contact-row > div { gap: 0; }
+.contact-row > div > img { flex: none; width: 57px; height: 45px; object-fit: contain; }
+.contact-row > div > img + div { position: relative; margin-left: 40px; }
+.contact-row > div > img + div::before { content: ""; position: absolute; left: -21px; top: 50%; width: 2px; height: 46px; margin-top: -23px; background: #333; opacity: .6; }
+@media (max-width: 768px) {
+  .contact-row > div > img { width: 50px; height: auto; }
+  .contact-row > div > img + div { margin-left: 26px; }
+  .contact-row > div > img + div::before { left: -14px; }
+}
+/* The origin scales the icon and the divider gaps with the window: ~3.96vw / 1.32vw on pc, 6.5vw / 1.62vw below 768. */
+.contact-row > div > img { width: 3.96vw; height: auto; }
+.contact-row > div > img + div { margin-left: calc(2.64vw + 2px); }
+.contact-row > div > img + div::before { left: calc(-1.32vw - 2px); }
+@media (max-width: 768px) {
+  .contact-row > div > img { width: 6.5vw; }
+  .contact-row > div > img + div { margin-left: calc(3.24vw + 2px); }
+  .contact-row > div > img + div::before { left: calc(-1.62vw - 2px); }
+}
+@media (max-width: 500px) {
+  .contact-row > div > img { width: 58px; }
+  .contact-row > div > img + div { margin-left: 31px; }
+  .contact-row > div > img + div::before { left: -16.5px; height: 31px; margin-top: -15.5px; }
+}

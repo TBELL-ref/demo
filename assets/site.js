@@ -707,35 +707,20 @@ function qaDeck(slides, id, base, leaves) {
   </section>`;
 }
 
-// 서비스: QA 아웃소싱 alone; 테스트 유형 = the four test-type pages as tabs; 테스트 자동화 = the
-// automation page plus the two TestOps pages. Each page keeps its banner and body as before.
+// 서비스: like the origin's /service, the six test services are one deck in the origin's order — the banner
+// arrows step through them and there is no tab strip. TestOps 구축 and AI 기반 검증 자동화 are the origin's
+// /testops deck. URLs stay as they are (qa/service/…, qa/service/types/…, qa/service/automation/…).
 const svcSlide = (slides, id, extra) => ({ ...slides.find((slide) => slide.id === id), ...extra });
-const TYPE_SLIDES = [
-  svcSlide(SERVICE_SLIDES, "blackbox", { tab: "블랙박스 테스트" }),
-  svcSlide(SERVICE_SLIDES, "whitebox", { tab: "화이트박스 테스트" }),
-  svcSlide(SERVICE_SLIDES, "api", { tab: "API 테스트" }),
-  svcSlide(SERVICE_SLIDES, "perfomance", { id: "performance", tab: "성능 테스트" })
+const SERVICE_DECK = SERVICE_SLIDES.map((slide) => ({ ...slide, id: slide.id === "perfomance" ? "performance" : slide.id, href: qaServiceHref(slide.id) }));
+const TESTOPS_DECK = [
+  svcSlide(TESTOPS_SLIDES, "build", { id: "testops", href: "#qa/service/automation/testops" }),
+  svcSlide(TESTOPS_SLIDES, "ai", { href: "#qa/service/automation/ai" })
 ];
-const AUTOMATION_SLIDES = [
-  svcSlide(SERVICE_SLIDES, "automation", { href: "#qa/service/automation", tab: "테스트 자동화" }),
-  svcSlide(TESTOPS_SLIDES, "build", { id: "testops", tab: "TestOps 구축" }),
-  svcSlide(TESTOPS_SLIDES, "ai", { tab: "AI 기반 검증 자동화" })
-];
-
-function svcTabs(slides, base) {
-  return slides.map((slide) => ({ id: slide.id, label: slide.tab, href: slide.href || base + slide.id }));
-}
 
 function serviceDeck(child, page) {
-  if (child === "types") {
-    const id = TYPE_SLIDES.some((slide) => slide.id === page) ? page : "blackbox";
-    return qaDeck(TYPE_SLIDES, id, "#qa/service/types/", svcTabs(TYPE_SLIDES, "#qa/service/types/"));
-  }
-  if (child === "automation") {
-    const id = AUTOMATION_SLIDES.some((slide) => slide.id === page) ? page : "automation";
-    return qaDeck(AUTOMATION_SLIDES, id, "#qa/service/automation/", svcTabs(AUTOMATION_SLIDES, "#qa/service/automation/"));
-  }
-  return qaDeck([SERVICE_SLIDES[0]], "outsourcing", "#qa/service/");
+  if (child === "automation" && (page === "testops" || page === "ai")) return qaDeck(TESTOPS_DECK, page, "#qa/service/automation/");
+  if (child === "types") return qaDeck(SERVICE_DECK, SERVICE_DECK.some((slide) => slide.id === page) ? page : "blackbox", "#qa/service/");
+  return qaDeck(SERVICE_DECK, child === "automation" ? "automation" : "outsourcing", "#qa/service/");
 }
 
 // Old QA URLs (테스트 종류 · TestOps menus) and where each now lives, so bookmarks keep working.
