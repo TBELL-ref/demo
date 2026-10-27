@@ -395,10 +395,10 @@ function socialBody() {
 }
 
 function envBody() {
-  const card = (photo) => `<article class="qp-photocard" style="background-image:url('${QA}photos/${photo}.jpg')"><h3>친환경 제품 및 서비스</h3><p>친환경 제품 사용<br>친환경 서비스 개발</p></article>`;
+  const card = (photo, title, lines) => `<article class="qp-photocard" style="background-image:url('${QA}photos/${photo}.jpg')"><h3>${title}</h3><p>${lines.join("<br>")}</p></article>`;
   const road = [["env-2022", "2022", "환경경영 정책 수립 및 / 추진체계 구축", "down"], ["env-2023", "2023", "환경경영 / Agenda 발굴", "up"], ["env-2024", "2024", "환경경영 / 시스템 구축", "down"], ["env-2025", "2025", "친환경 / ICT 기업 도약", "up"]];
   return `
-    ${qpSec("목표", '<p class="qp-goal">친환경 ICT 기업</p>', `<div class="qp-cards2">${card("env-esg")}${card("env-solar")}</div>`)}
+    ${qpSec("목표", '<p class="qp-goal">친환경 ICT 기업</p>', `<div class="qp-cards2">${card("env-esg", "친환경 제품 및 서비스", ["친환경 제품 사용", "친환경 서비스 개발"])}${card("env-solar", "에너지 소비", ["에너지 소비 절감", "탄소 배출 최소화"])}</div>`)}
     <section class="qp-sec qp-timeline" data-qp-reveal style="background-image:url('${QA}photos/worldmap.png')">
       <h2 class="qp-h">중장기 로드맵</h2>
       <ol>${road.map(([i, y, t, side], n) => `<li class="is-${side}${n % 2 ? " is-fill" : ""}" style="--i:${n}"><span class="qp-node">${qpIcon(i)}</span><div><b>${y}</b><p>${t.split(" / ").join("<br>")}</p></div></li>`).join("")}</ol>
