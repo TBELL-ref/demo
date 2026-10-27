@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@200;400;500;700&family=Oxanium:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="../../assets/site.css?v=123">
   <link rel="stylesheet" href="../../assets/qa-pages.css?v=19">
-  <link rel="stylesheet" href="../../re-menu/re.css?v=12">
+  <link rel="stylesheet" href="../../re-menu/re.css?v=13">
   <link rel="icon" href="../../assets/tbell-logo.svg">
   <script type="application/ld+json">
 {
@@ -205,28 +205,32 @@
     <div class="qp-lede"><p>소프트웨어의 요구사항과 명세서를 기반으로 테스트 설계 및 테스트를 수행하며, 이 과정에서 입출력 데이터를 분석하여 <br class="qp-br">시스템의 적정성을 확인하는 동적 테스트 서비스입니다. 설계 및 구현 단계에 이르기까지 모든 소프트웨어 개발 단계에서 테스트가 가능합니다.</p><p>블랙박스 테스트는 소프트웨어의 품질을 보장하는 데 필수적인 방법입니다. 블랙박스 테스트를 통해 소프트웨어의 버그와 <br class="qp-br">오류를 발견하고 수정할 수 있습니다. 또한 블랙박스 테스트는 소프트웨어의 사용성을 개선하고 사용자 만족도를 높이는 데에도 도움이 됩니다.</p></div>
     <figure class="rb-box" aria-label="Black Box Testing: 아이디·비밀번호 입력과 로그인 클릭을 넣고, 내부는 보지 않은 채 기대 결과와 실제 결과를 비교합니다">
       <figcaption>Black Box Testing</figcaption>
-      <div class="rb-io">
-        <div class="rb-in"><p class="rb-io-h">Input</p><ul><li style="--i:0">아이디 입력</li><li style="--i:1">비밀번호 입력</li><li style="--i:2">로그인 클릭</li></ul></div>
-        <i class="rb-arrow" aria-hidden="true"></i>
+      <div class="rb-scene">
+        <div class="rb-inc"><p class="rb-tag">INPUT</p><ul class="rb-chips"><li style="--i:0">아이디</li><li style="--i:1">비밀번호</li><li style="--i:2">로그인 클릭</li></ul></div>
+        <i class="rb-lane rb-l1" aria-hidden="true"><span></span></i>
         <div class="rb-mid"><svg class="rb-cube" viewBox="0 0 260 260" aria-hidden="true">
-          <circle class="qp-box-disc" cx="130" cy="130" r="122"/>
-          <g class="qp-cube"><path class="f-top" d="M130 62 L200 102 L130 142 L60 102z"/><path class="f-left" d="M60 102 L130 142 L130 222 L60 182z"/><path class="f-right" d="M200 102 L130 142 L130 222 L200 182z"/></g>
-          <text x="130" y="112" class="rb-q">?</text>
-        </svg><p>내부 코드는 보지 않습니다</p></div>
-        <i class="rb-arrow is-out" aria-hidden="true"></i>
-        <div class="rb-out"><p class="rb-io-h">Output</p>
-          <dl><div><dt>기대 결과</dt><dd>메인 화면 이동</dd></div><div class="is-act"><dt>실제 결과</dt><dd>메인 화면 이동<b aria-label="일치">✓</b></dd></div></dl>
-        </div>
+          <circle class="rb-disc" cx="130" cy="138" r="104"/>
+          <g class="qp-cube"><path class="f-top" d="M130 70 L200 110 L130 150 L60 110z"/><path class="f-left" d="M60 110 L130 150 L130 230 L60 190z"/><path class="f-right" d="M200 110 L130 150 L130 230 L200 190z"/></g>
+          <text x="130" y="121" class="rb-q">?</text>
+        </svg></div>
+        <i class="rb-lane rb-l2" aria-hidden="true"><span></span></i>
+        <div class="rb-outc"><p class="rb-tag">OUTPUT</p><ul class="rb-chips"><li class="is-ghost"><small>기대</small>메인 화면 이동</li><li class="is-act"><small>실제</small>메인 화면 이동<b aria-label="일치">✓</b></li></ul></div>
+        <div class="rb-note rb-n1"><div><b>대상</b><p>요구사항 명세서, 사용자 기능과 사양</p></div></div>
+        <div class="rb-note rb-n2"><div><b>관점</b><p>개발자가 아닌 사용자·테스터 관점의 기능 검증</p></div><div><b>언어 독립성</b><p>프로그래밍 언어나 내부 구현 방식에 구애받지 않습니다</p></div></div>
+        <div class="rb-note rb-n3"><div><b>목적</b><p>입력에 대해 기대한 결과가 올바르게 출력되는지 확인합니다</p></div></div>
       </div>
     </figure>
-    <ul class="ra-cols rb-traits"><li><h3>대상</h3><p>요구사항 명세서, 사용자 기능과 사양</p></li><li><h3>관점</h3><p>개발자가 아닌 사용자·테스터 관점의 기능 검증</p></li><li><h3>언어 독립성</h3><p>프로그래밍 언어나 내부 구현 방식에 구애받지 않습니다</p></li><li><h3>목적</h3><p>입력에 대해 기대한 결과가 올바르게 출력되는지 확인합니다</p></li></ul>
   </section>
     
   <section class="qp-sec" data-qp-reveal aria-labelledby="tech">
     <h2 class="qp-h" id="tech">대표적인 테스트 기법</h2>
     <div class="qp-lede"><p>입력과 출력만으로 결함을 찾기 위해, 대상과 위험도에 맞는 기법으로 테스트 케이스를 설계합니다.</p></div>
-    <div class="rb-tech" data-tech>
-      <div class="rb-core"><div class="rb-desc is-on" id="tech-desc-0" role="region" aria-labelledby="tech-0"><span>01</span><h3>동등 분할</h3><small>Equivalence Partitioning</small><p>입력값을 비슷한 성질의 그룹(동치 클래스)으로 나누고, 각 그룹을 대표하는 값만 뽑아 테스트합니다.</p></div><div class="rb-desc" id="tech-desc-1" role="region" aria-labelledby="tech-1"><span>02</span><h3>경계값 분석</h3><small>Boundary Value Analysis</small><p>오류가 자주 생기는 입력 범위의 최소값·최대값과 그 경계 근처 값을 집중해서 테스트합니다.</p></div><div class="rb-desc" id="tech-desc-2" role="region" aria-labelledby="tech-2"><span>03</span><h3>오류 예측</h3><small>Error Guessing</small><p>테스터의 경험과 직감으로 발생할 만한 오류를 예측해 검사하는 보조 기법입니다.</p></div><div class="rb-desc" id="tech-desc-3" role="region" aria-labelledby="tech-3"><span>04</span><h3>원인-효과 그래프</h3><small>Cause-Effect Graphing</small><p>입력 데이터 사이의 관계와 출력에 미치는 영향을 분석해 테스트 케이스를 도출합니다.</p></div><div class="rb-desc" id="tech-desc-4" role="region" aria-labelledby="tech-4"><span>05</span><h3>의사결정 테이블</h3><small>Decision Table Testing</small><p>여러 조건과 그에 따른 행동(결과)의 조합을 표로 정리해 모든 경우의 수를 테스트합니다.</p></div><div class="rb-desc" id="tech-desc-5" role="region" aria-labelledby="tech-5"><span>06</span><h3>상태 전이</h3><small>State Transition Testing</small><p>잠김 → 열림처럼 시스템의 상태가 바뀌는 흐름을 기준으로 테스트합니다.</p></div><div class="rb-desc" id="tech-desc-6" role="region" aria-labelledby="tech-6"><span>07</span><h3>비교 검사</h3><small>Comparison Testing</small><p>같은 입력에 대해 여러 버전의 프로그램이 같은 출력을 내는지 비교합니다.</p></div></div><button class="rb-node" type="button" id="tech-0" aria-controls="tech-desc-0" aria-pressed="true" style="--a:-90.00deg"><b>동등 분할</b><small>Equivalence Partitioning</small></button><button class="rb-node" type="button" id="tech-1" aria-controls="tech-desc-1" aria-pressed="false" style="--a:-38.57deg"><b>경계값 분석</b><small>Boundary Value Analysis</small></button><button class="rb-node" type="button" id="tech-2" aria-controls="tech-desc-2" aria-pressed="false" style="--a:12.86deg"><b>오류 예측</b><small>Error Guessing</small></button><button class="rb-node" type="button" id="tech-3" aria-controls="tech-desc-3" aria-pressed="false" style="--a:64.29deg"><b>원인-효과 그래프</b><small>Cause-Effect Graphing</small></button><button class="rb-node" type="button" id="tech-4" aria-controls="tech-desc-4" aria-pressed="false" style="--a:115.71deg"><b>의사결정 테이블</b><small>Decision Table Testing</small></button><button class="rb-node" type="button" id="tech-5" aria-controls="tech-desc-5" aria-pressed="false" style="--a:167.14deg"><b>상태 전이</b><small>State Transition Testing</small></button><button class="rb-node" type="button" id="tech-6" aria-controls="tech-desc-6" aria-pressed="false" style="--a:218.57deg"><b>비교 검사</b><small>Comparison Testing</small></button>
+    <div class="rb-tech" data-tech style="--n:7">
+      <svg class="rb-ring" viewBox="0 0 600 600" aria-hidden="true">
+        <circle class="rb-track" cx="300" cy="300" r="210"/>
+        <g class="rb-hand"><path d="M300 140V96"/></g><circle class="rb-dot is-on" cx="300.0" cy="90.0" r="6"/><circle class="rb-dot" cx="464.2" cy="169.1" r="6"/><circle class="rb-dot" cx="504.7" cy="346.7" r="6"/><circle class="rb-dot" cx="391.1" cy="489.2" r="6"/><circle class="rb-dot" cx="208.9" cy="489.2" r="6"/><circle class="rb-dot" cx="95.3" cy="346.7" r="6"/><circle class="rb-dot" cx="135.8" cy="169.1" r="6"/>
+      </svg>
+      <div class="rb-core"><div class="rb-desc is-on" id="tech-desc-0" role="region" aria-labelledby="tech-0"><span>01 / 07</span><h3>동등 분할</h3><small>Equivalence Partitioning</small><p>입력값을 비슷한 성질의 그룹(동치 클래스)으로 나누고, 각 그룹을 대표하는 값만 뽑아 테스트합니다.</p></div><div class="rb-desc" id="tech-desc-1" role="region" aria-labelledby="tech-1"><span>02 / 07</span><h3>경계값 분석</h3><small>Boundary Value Analysis</small><p>오류가 자주 생기는 입력 범위의 최소값·최대값과 그 경계 근처 값을 집중해서 테스트합니다.</p></div><div class="rb-desc" id="tech-desc-2" role="region" aria-labelledby="tech-2"><span>03 / 07</span><h3>오류 예측</h3><small>Error Guessing</small><p>테스터의 경험과 직감으로 발생할 만한 오류를 예측해 검사하는 보조 기법입니다.</p></div><div class="rb-desc" id="tech-desc-3" role="region" aria-labelledby="tech-3"><span>04 / 07</span><h3>원인-효과 그래프</h3><small>Cause-Effect Graphing</small><p>입력 데이터 사이의 관계와 출력에 미치는 영향을 분석해 테스트 케이스를 도출합니다.</p></div><div class="rb-desc" id="tech-desc-4" role="region" aria-labelledby="tech-4"><span>05 / 07</span><h3>의사결정 테이블</h3><small>Decision Table Testing</small><p>여러 조건과 그에 따른 행동(결과)의 조합을 표로 정리해 모든 경우의 수를 테스트합니다.</p></div><div class="rb-desc" id="tech-desc-5" role="region" aria-labelledby="tech-5"><span>06 / 07</span><h3>상태 전이</h3><small>State Transition Testing</small><p>잠김 → 열림처럼 시스템의 상태가 바뀌는 흐름을 기준으로 테스트합니다.</p></div><div class="rb-desc" id="tech-desc-6" role="region" aria-labelledby="tech-6"><span>07 / 07</span><h3>비교 검사</h3><small>Comparison Testing</small><p>같은 입력에 대해 여러 버전의 프로그램이 같은 출력을 내는지 비교합니다.</p></div></div><button class="rb-node" type="button" id="tech-0" aria-controls="tech-desc-0" aria-pressed="true" style="--x:50.00%;--y:5.00%"><b>동등 분할</b><small>Equivalence Partitioning</small></button><button class="rb-node" type="button" id="tech-1" aria-controls="tech-desc-1" aria-pressed="false" style="--x:85.18%;--y:21.94%"><b>경계값 분석</b><small>Boundary Value Analysis</small></button><button class="rb-node" type="button" id="tech-2" aria-controls="tech-desc-2" aria-pressed="false" style="--x:93.87%;--y:60.01%"><b>오류 예측</b><small>Error Guessing</small></button><button class="rb-node" type="button" id="tech-3" aria-controls="tech-desc-3" aria-pressed="false" style="--x:69.52%;--y:90.54%"><b>원인-효과 그래프</b><small>Cause-Effect Graphing</small></button><button class="rb-node" type="button" id="tech-4" aria-controls="tech-desc-4" aria-pressed="false" style="--x:30.48%;--y:90.54%"><b>의사결정 테이블</b><small>Decision Table Testing</small></button><button class="rb-node" type="button" id="tech-5" aria-controls="tech-desc-5" aria-pressed="false" style="--x:6.13%;--y:60.01%"><b>상태 전이</b><small>State Transition Testing</small></button><button class="rb-node" type="button" id="tech-6" aria-controls="tech-desc-6" aria-pressed="false" style="--x:14.82%;--y:21.94%"><b>비교 검사</b><small>Comparison Testing</small></button>
     </div>
   </section>
   <section class="qp-sec" data-qp-reveal>
@@ -256,6 +260,6 @@
   </footer>
   <script>window.TBELL_BASE = "../../";</script>
   <script src="../../assets/qa-pages.js?v=9"></script>
-  <script src="../../re-menu/re-menu.js?v=6"></script>
+  <script src="../../re-menu/re-menu.js?v=7"></script>
 </body>
 </html>

@@ -72,16 +72,24 @@
   // QA test pages: the SPA's section reveal and diagram motion (qa-pages.js, loaded before this file).
   if (typeof wireQaPages === "function") wireQaPages();
 
-  // 블랙박스 테스트 기법: the chosen node fills the centre; it steps on by itself until someone picks one.
-  document.querySelectorAll("[data-tech]").forEach((orbit) => {
-    const nodes = [...orbit.querySelectorAll(".rb-node")];
-    const descs = [...orbit.querySelectorAll(".rb-desc")];
+  // 블랙박스 테스트 기법 (dial): the hand turns the short way to the chosen point and the centre explains it;
+  // it steps on by itself until someone picks one.
+  document.querySelectorAll("[data-tech]").forEach((dial) => {
+    const nodes = [...dial.querySelectorAll(".rb-node")];
+    const descs = [...dial.querySelectorAll(".rb-desc")];
+    const dots = [...dial.querySelectorAll(".rb-dot")];
+    const hand = dial.querySelector(".rb-hand");
+    const step = 360 / nodes.length;
     let at = 0;
+    let deg = 0;
     let timer = 0;
     const show = (i) => {
+      deg += ((((i - at) * step) % 360) + 540) % 360 - 180;
       at = i;
+      hand.style.transform = `rotate(${deg}deg)`;
       nodes.forEach((node, k) => node.setAttribute("aria-pressed", String(k === i)));
       descs.forEach((desc, k) => desc.classList.toggle("is-on", k === i));
+      dots.forEach((dot, k) => dot.classList.toggle("is-on", k === i));
     };
     const stop = () => { clearInterval(timer); timer = 0; };
     nodes.forEach((node, i) => {
