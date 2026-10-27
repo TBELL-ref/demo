@@ -100,6 +100,25 @@
     if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) timer = setInterval(() => show((at + 1) % nodes.length), 3600);
   });
 
+  // 화이트박스 커버리지: one criterion at a time, each with its own diagram; steps on until someone picks one.
+  document.querySelectorAll("[data-cover]").forEach((box) => {
+    const picks = [...box.querySelectorAll(".rw-pick")];
+    const panels = [...box.querySelectorAll(".cv-panel")];
+    let at = 0;
+    let timer = 0;
+    const show = (i) => {
+      at = i;
+      picks.forEach((p, k) => p.setAttribute("aria-pressed", String(k === i)));
+      panels.forEach((p, k) => p.classList.toggle("is-on", k === i));
+    };
+    const stop = () => { clearInterval(timer); timer = 0; };
+    picks.forEach((p, i) => {
+      p.addEventListener("click", () => { stop(); show(i); });
+      p.addEventListener("focus", () => { stop(); show(i); });
+    });
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) timer = setInterval(() => show((at + 1) % picks.length), 5000);
+  });
+
   // 테스트 분야 photo cards (site.js wireDeck): the clicked card opens, the others close.
   document.querySelectorAll(".expand-card").forEach((card) => {
     card.addEventListener("click", () => {

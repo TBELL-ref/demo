@@ -249,55 +249,105 @@
 /* 화이트박스 › 커버리지: a dark band (origin qp-band) holding the criteria picker. */
 .qp-band.rw-cov { margin-top: clamp(80px, 10.4vw, 200px); padding: clamp(64px, 6vw, 96px) var(--svc-pad); background: radial-gradient(800px 400px at 50% 100%, rgba(39, 196, 213, .14), transparent 70%), #121212; }
 .rw-cov .qp-lede p { color: #bdbdbd; }
-/* Four small multiples, 2 × 2, split by thin rules. Each flowchart is grey with its own targets in cyan. */
-.rw-multi { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 1000px; margin: 48px auto 0; padding: 0; list-style: none; text-align: left; }
-.rw-multi > li { padding: 30px 32px 32px; }
-.rw-multi > li:nth-child(odd) { border-right: 1px solid #2e2e2e; padding-left: 0; }
-.rw-multi > li:nth-child(even) { padding-right: 0; }
-.rw-multi > li:nth-child(-n+2) { border-bottom: 1px solid #2e2e2e; padding-top: 0; }
-.rw-ph { display: grid; grid-template-columns: auto 1fr auto; align-items: baseline; gap: 12px; }
-.rw-ph span { font-family: var(--num); font-size: 13px; font-weight: 600; color: #27c4d5; }
-.rw-ph h3 { margin: 0; color: #fff; font-size: 18px; font-weight: 700; }
-.rw-ph h3 small { margin-left: 8px; color: #8a8a8a; font-family: var(--num); font-size: 12px; font-weight: 500; }
-.rw-tests { margin: 0; color: #8a8a8a; font-size: 13px; white-space: nowrap; }
-.rw-tests b { margin-right: 3px; color: #27c4d5; font-family: var(--num); font-size: 26px; font-weight: 600; }
-.rc-chart { display: block; width: 100%; height: auto; margin: 18px 0 0; overflow: visible; }
-.rc-chart text { fill: #d6d6d6; font-size: 18px; text-anchor: middle; }
-.rc-end { fill: #121212; stroke: #6a6a6a; stroke-width: 1.5; }
-.rc-end.is-end { fill: #6a6a6a; }
-.rc-edge path:first-child { fill: none; stroke: #4a4a4a; stroke-width: 2; }
-.rc-head { fill: #4a4a4a; stroke: none; }
-.rc-lab { fill: #8a8a8a !important; font-size: 15px !important; }
-.rc-dia { fill: #1b1b1b; stroke: #5a5a5a; stroke-width: 1.5; }
-.rc-cond rect, .rc-stmt rect { fill: #1b1b1b; stroke: #5a5a5a; stroke-width: 1.5; }
-.rc-cond text { font-family: var(--num); font-weight: 600; }
-.rc-flip, .rc-tf { display: none; }
-.rc-flip text { fill: #27c4d5 !important; font-size: 20px !important; }
-.rc-tf text { fill: #27c4d5 !important; font-size: 13px !important; }
-.rc-chart[data-mode="stmt"] .rc-stmt rect, .rc-chart[data-mode="cond"] .rc-cond rect, .rc-chart[data-mode="mcdc"] .rc-cond rect { fill: rgba(39, 196, 213, .18); stroke: #27c4d5; stroke-width: 2.5; }
-.rc-chart[data-mode="stmt"] .rc-stmt text, .rc-chart[data-mode="cond"] .rc-cond text, .rc-chart[data-mode="mcdc"] .rc-cond text { fill: #fff; font-weight: 700; }
-.rc-chart[data-mode="branch"] .rc-t path:first-child, .rc-chart[data-mode="branch"] .rc-f path:first-child { stroke: #27c4d5; stroke-width: 3.5; }
-.rc-chart[data-mode="branch"] .rc-t .rc-head, .rc-chart[data-mode="branch"] .rc-f .rc-head { fill: #27c4d5; }
-.rc-chart[data-mode="branch"] .rc-lab { fill: #27c4d5 !important; font-weight: 700; }
-.rc-chart[data-mode="cond"] .rc-tf, .rc-chart[data-mode="mcdc"] .rc-flip { display: inline; }
-.rw-why { margin: 14px 0 0; color: #bdbdbd; font-size: 14.5px; line-height: 1.6; word-break: keep-all; }
-.rw-why em { display: inline-block; margin-left: 8px; padding: 1px 10px; border: 1px solid #3a3a3a; border-radius: 62px; color: #bdbdbd; font-size: 11.5px; font-style: normal; }
-.rw-tl { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 0; padding: 0; list-style: none; }
-.rw-tl li { padding: 4px 12px; border: 1px solid #3a3a3a; border-radius: 62px; color: #fff; font-size: 12.5px; }
+/* The code under test, once, and a picker; the stage shows one criterion's own diagram at a time. */
+.cv-src { display: flex; justify-content: center; gap: 10px; margin: 22px 0 0; }
+.cv-src code { padding: 6px 14px; border: 1px solid #3a3a3a; border-radius: 8px; color: #fff; font-family: ui-monospace, Consolas, "Noto Sans KR", monospace; font-size: 14px; }
+.rw-cover { max-width: 860px; margin: 40px auto 0; }
+.rw-picks { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-bottom: 1px solid #333; }
+.rw-pick { position: relative; display: grid; justify-items: center; gap: 2px; padding: 0 6px 16px; border: 0; background: none; color: #8a8a8a; cursor: pointer; font: inherit; font-size: 15px; font-weight: 500; transition: color .25s; }
+.rw-pick span { font-family: var(--num); font-size: 12px; color: #5f5f5f; }
+.rw-pick small { font-family: var(--num); font-size: 11px; color: #6f6f6f; }
+.rw-pick::after { content: ""; position: absolute; left: 20%; right: 20%; bottom: -1px; height: 2px; background: transparent; transition: background .25s; }
+.rw-pick:hover, .rw-pick[aria-pressed="true"] { color: #fff; }
+.rw-pick[aria-pressed="true"] span { color: #27c4d5; }
+.rw-pick[aria-pressed="true"]::after { background: #27c4d5; }
+.rw-pick:focus-visible { outline: 2px solid #27c4d5; outline-offset: 2px; }
+.cv-stage { display: grid; grid-template-columns: minmax(0, 1fr); margin-top: 36px; }
+.cv-panel { grid-area: 1 / 1; display: grid; min-width: 0; align-content: center; opacity: 0; visibility: hidden; transition: opacity .35s, visibility .35s; }
+.cv-panel.is-on { opacity: 1; visibility: visible; }
+.cv-panel > div { width: 100%; }
+.cv-why { max-width: 40em; margin: 30px auto 0; color: #bdbdbd; font-size: 15px; line-height: 1.7; text-align: center; word-break: keep-all; }
+.cv-why b { margin-right: 10px; color: #27c4d5; font-family: var(--num); font-weight: 600; }
+.cv-why em { display: inline-block; margin-left: 10px; padding: 1px 10px; border: 1px solid #3a3a3a; border-radius: 62px; color: #bdbdbd; font-size: 12px; font-style: normal; }
+
+/* A test chip, shared by the four diagrams. */
+.cv-t { display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border: 1px solid #3a3a3a; border-radius: 62px; color: #d6d6d6; font-size: 14px; white-space: nowrap; }
+.cv-t i { margin-right: 4px; color: #8a8a8a; font-family: var(--num); font-size: 12px; font-style: normal; }
+.cv-t b.is-t { color: #27c4d5; }
+.cv-t b.is-f { color: #8a8a8a; }
+.cv-t b.is-chg { padding: 0 5px; border: 1.5px dashed #27c4d5; border-radius: 5px; }
+.cv-by { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px; }
+.cv-by p { width: 100%; margin: 4px 0 0; color: #8a8a8a; font-size: 13px; text-align: center; }
+
+/* 구문: the lines that ran, and the share of statements executed. */
+.cv-stmt { display: grid; grid-template-columns: minmax(0, 1fr) 150px; grid-template-areas: "code gauge" "by by"; align-items: center; gap: 24px 48px; max-width: 620px; margin: 0 auto; }
+.cv-code { grid-area: code; margin: 0; padding: 0; list-style: none; }
+.cv-code li { display: flex; align-items: center; justify-content: space-between; padding: 8px 14px; border-left: 3px solid #333; }
+.cv-code li.is-run { border-left-color: #27c4d5; background: rgba(39, 196, 213, .07); }
+.cv-code li + li { margin-top: 4px; }
+.cv-code code { color: #fff; font-family: ui-monospace, Consolas, "Noto Sans KR", monospace; font-size: 15px; white-space: pre; }
+.cv-code li.is-none code { color: #6f6f6f; }
+.cv-code em { color: #27c4d5; font-size: 13px; font-style: normal; font-weight: 700; }
+.cv-gauge { grid-area: gauge; position: relative; width: 150px; height: 150px; }
+.cv-gauge svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.cv-gauge .trk { fill: none; stroke: #2e2e2e; stroke-width: 10; }
+.cv-gauge .val { fill: none; stroke: #27c4d5; stroke-width: 10; stroke-linecap: round; stroke-dasharray: 314; stroke-dashoffset: 0; }
+.cv-panel.is-on .cv-gauge .val { animation: cv-fill 1s ease-out; }
+@keyframes cv-fill { from { stroke-dashoffset: 314; } }
+.cv-gauge p { position: absolute; inset: 0; display: grid; place-content: center; margin: 0; color: #8a8a8a; font-size: 12px; text-align: center; }
+.cv-gauge p b { color: #fff; font-family: var(--num); font-size: 30px; font-weight: 600; }
+.cv-stmt .cv-by { grid-area: by; }
+
+/* 분기: one decision, two ways out, each walked by a test. */
+.cv-branch { display: grid; grid-template-columns: auto 140px minmax(0, 1fr); align-items: center; max-width: 720px; margin: 0 auto; }
+.cv-node { padding: 14px 20px; border: 1.5px solid #6a6a6a; border-radius: 10px; color: #fff; font-family: ui-monospace, Consolas, monospace; font-size: 15px; }
+.cv-fork { width: 140px; height: 160px; overflow: visible; }
+.cv-fork path { fill: none; stroke: #27c4d5; stroke-width: 2.5; }
+.cv-ways { display: grid; gap: 54px; margin: 0; padding: 0; list-style: none; }
+.cv-ways li { display: flex; align-items: center; gap: 14px; }
+.cv-ways p { margin: 0; min-width: 7.5em; color: #8a8a8a; font-size: 13px; }
+.cv-ways p b { display: block; color: #fff; font-size: 16px; }
+.cv-ways em { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: #27c4d5; color: #121212; font-size: 13px; font-style: normal; font-weight: 700; }
+
+/* 조건: each condition's two values, and the test that produced each. */
+.cv-cond { max-width: 560px; margin: 0 auto; }
+.cv-cond table { width: 100%; border-collapse: collapse; }
+.cv-cond th { padding: 10px; color: #8a8a8a; font-size: 14px; font-weight: 500; }
+.cv-cond tbody th { color: #fff; font-size: 16px; font-weight: 700; text-align: left; }
+.cv-cond td { padding: 8px; text-align: center; }
+.cv-cond td span { display: inline-block; min-width: 9em; padding: 12px 0; border: 1.5px solid #27c4d5; border-radius: 10px; background: rgba(39, 196, 213, .08); color: #fff; font-size: 14px; }
+.cv-cond .cv-by { margin-top: 22px; }
+
+/* MC/DC: for each condition, two tests that differ only there — and the result flips. */
+.cv-mcdc ul { display: grid; gap: 22px; max-width: 760px; margin: 0 auto; padding: 0; list-style: none; }
+.cv-which { margin: 0 0 8px; color: #27c4d5; font-size: 14px; font-weight: 700; text-align: center; }
+.cv-pair { display: flex; align-items: center; justify-content: center; gap: 10px; }
+.cv-flip { color: #27c4d5; font-size: 14px; font-weight: 700; white-space: nowrap; }
+.cv-flip.is-f { color: #8a8a8a; }
+.cv-swap { margin: 0 8px; color: #6f6f6f; font-size: 20px; font-style: normal; }
 
 @media (max-width: 1024px) {
   .rw-types { grid-template-columns: 1fr; gap: 36px; }
 }
 @media (max-width: 768px) {
-  .rw-multi { grid-template-columns: 1fr; }
-  .rw-multi > li, .rw-multi > li:nth-child(odd), .rw-multi > li:nth-child(even), .rw-multi > li:nth-child(-n+2) { padding: 26px 0; border-right: 0; border-bottom: 1px solid #2e2e2e; }
-  .rw-multi > li:first-child { padding-top: 0; }
-  .rw-ph h3 small { display: block; margin: 2px 0 0; }
+  .rw-picks { grid-template-columns: 1fr 1fr; row-gap: 10px; }
+  .rw-pick { font-size: 14px; padding-bottom: 12px; }
+  .cv-stmt, .cv-branch { grid-template-columns: 1fr; justify-items: center; }
+  .cv-stmt { grid-template-areas: "code" "gauge" "by"; }
+  .cv-code { width: 100%; }
+  .cv-fork { width: 70px; height: 70px; transform: rotate(90deg); }
+  .cv-ways { width: 100%; }
+  .cv-pair { flex-wrap: wrap; }
+  .cv-swap { width: 100%; text-align: center; }
+  .cv-src { flex-wrap: wrap; }
+  .cv-t { padding: 5px 10px; font-size: 13px; }
+  .cv-ways li { flex-wrap: wrap; gap: 8px 10px; }
+  .cv-ways p { min-width: 0; width: 100%; }
+  .cv-cond td span { min-width: 0; width: 100%; padding: 10px 4px; font-size: 13px; }
+  .cv-cond th { padding: 8px 4px; }
+  .cv-code code { font-size: 14px; }
   .rw-group.is-wide ul { grid-template-columns: 1fr; gap: 28px; }
   .rw-group li { border-left: 0; }
-  .rc-chart text { font-size: 22px; }
-  .rc-lab { font-size: 18px !important; }
-  .rc-tf text { font-size: 15px !important; }
 }
 @media (prefers-reduced-motion: reduce) { .rw-glyph .g-hot { animation: none !important; } }
 
