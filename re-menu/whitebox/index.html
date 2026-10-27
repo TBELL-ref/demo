@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@200;400;500;700&family=Oxanium:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="../../assets/site.css?v=123">
   <link rel="stylesheet" href="../../assets/qa-pages.css?v=19">
-  <link rel="stylesheet" href="../../re-menu/re.css?v=17">
+  <link rel="stylesheet" href="../../re-menu/re.css?v=18">
   <link rel="icon" href="../../assets/tbell-logo.svg">
   <script type="application/ld+json">
 {
@@ -223,9 +223,12 @@
   </section>
   <section class="qp-band rw-cov" data-qp-reveal aria-labelledby="coverage">
     <h2 class="qp-h" id="coverage">검증 기준 · 커버리지</h2>
-    <div class="qp-lede"><p>같은 로그인 규칙을 기준마다 몇 번, 어떤 입력으로 테스트해야 하는지 비교합니다.</p></div>
-    <p class="rw-rule"><span>아이디 맞음</span><i>그리고</i><span>비밀번호 맞음</span><i>→</i><b>로그인</b><em>하나라도 틀리면 거부</em></p>
-    <ol class="rw-stairs"><li style="--i:0"><h3>구문 커버리지<small>Statement</small></h3><p>로그인 문장이 한 번만 실행되면 됩니다.</p><p class="rw-count"><b>1</b>개 테스트</p><ol class="rw-cases"><li>아이디 <i class="is-ok">✓</i> 비밀번호 <i class="is-ok">✓</i><span class="is-in">로그인</span></li></ol></li><li style="--i:1"><h3>결정 · 분기 커버리지<small>Decision / Branch</small></h3><p>로그인되는 경우와 거부되는 경우를 한 번씩 봅니다.</p><p class="rw-count"><b>2</b>개 테스트</p><ol class="rw-cases"><li>아이디 <i class="is-ok">✓</i> 비밀번호 <i class="is-ok">✓</i><span class="is-in">로그인</span></li><li>아이디 <i class="is-no">✗</i> 비밀번호 <i class="is-no">✗</i><span class="">거부</span></li></ol></li><li style="--i:2"><h3>조건 커버리지<small>Condition</small></h3><p>아이디와 비밀번호가 각각 한 번씩 맞고, 한 번씩 틀리게 합니다.</p><p class="rw-count"><b>2</b>개 테스트</p><ol class="rw-cases"><li>아이디 <i class="is-ok">✓</i> 비밀번호 <i class="is-no">✗</i><span class="">거부</span></li><li>아이디 <i class="is-no">✗</i> 비밀번호 <i class="is-ok">✓</i><span class="">거부</span></li></ol></li><li style="--i:3"><h3>변경 조건 / 결정 커버리지<small>MC/DC</small></h3><p>아이디만, 비밀번호만 바꿔도 결과가 바뀌는지 확인합니다.</p><p class="rw-count"><b>3</b>개 테스트</p><ol class="rw-cases"><li>아이디 <i class="is-ok">✓</i> 비밀번호 <i class="is-ok">✓</i><span class="is-in">로그인</span></li><li>아이디 <i class="is-ok">✓</i> 비밀번호 <i class="is-no">✗</i><span class="">거부</span></li><li>아이디 <i class="is-no">✗</i> 비밀번호 <i class="is-ok">✓</i><span class="">거부</span></li></ol><em>항공우주 · 안전 필수</em></li></ol>
+    <div class="qp-lede"><p>‘아이디가 맞고 그리고 비밀번호가 맞으면 로그인, 하나라도 틀리면 거부’를 테스트할 때, <br class="qp-br">기준이 엄격해질수록 넣어 봐야 하는 입력이 늘어납니다.</p></div>
+    <div class="rw-cover" data-cover>
+      <div class="rw-picks" role="group" aria-label="검증 기준"><button class="rw-pick" type="button" id="cov-0" aria-pressed="true" data-need="0"><span>01</span>구문 커버리지<small>Statement</small></button><button class="rw-pick" type="button" id="cov-1" aria-pressed="false" data-need="0,3"><span>02</span>결정 · 분기 커버리지<small>Decision / Branch</small></button><button class="rw-pick" type="button" id="cov-2" aria-pressed="false" data-need="1,2"><span>03</span>조건 커버리지<small>Condition</small></button><button class="rw-pick" type="button" id="cov-3" aria-pressed="false" data-need="0,1,2"><span>04</span>변경 조건 / 결정 커버리지<small>MC/DC</small></button></div>
+      <ol class="rw-tiles"><li data-case="0"><span class="rw-need">필요</span><p class="rw-tno">테스트 1</p><p>아이디 <b class="is-ok">✓</b></p><p>비밀번호 <b class="is-ok">✓</b></p><p class="rw-res is-in">→ 로그인</p></li><li data-case="1"><span class="rw-need">필요</span><p class="rw-tno">테스트 2</p><p>아이디 <b class="is-ok">✓</b></p><p>비밀번호 <b class="is-no">✗</b></p><p class="rw-res">→ 거부</p></li><li data-case="2"><span class="rw-need">필요</span><p class="rw-tno">테스트 3</p><p>아이디 <b class="is-no">✗</b></p><p>비밀번호 <b class="is-ok">✓</b></p><p class="rw-res">→ 거부</p></li><li data-case="3"><span class="rw-need">필요</span><p class="rw-tno">테스트 4</p><p>아이디 <b class="is-no">✗</b></p><p>비밀번호 <b class="is-no">✗</b></p><p class="rw-res">→ 거부</p></li></ol>
+      <div class="rw-notes"><p class="rw-note is-on" role="region" aria-labelledby="cov-0"><b>1개 테스트</b>로그인 문장이 한 번만 실행되면 됩니다.</p><p class="rw-note" role="region" aria-labelledby="cov-1"><b>2개 테스트</b>로그인되는 경우와 거부되는 경우를 한 번씩 봅니다.</p><p class="rw-note" role="region" aria-labelledby="cov-2"><b>2개 테스트</b>아이디와 비밀번호가 각각 한 번씩 맞고, 한 번씩 틀리게 합니다.</p><p class="rw-note" role="region" aria-labelledby="cov-3"><b>3개 테스트</b>아이디만, 비밀번호만 바꿔도 결과가 바뀌는지 확인합니다.<em>항공우주 · 안전 필수</em></p></div>
+    </div>
   </section>
   <section class="qp-sec" data-qp-reveal>
     <h2 class="qp-h">업무 범위</h2>
@@ -249,6 +252,6 @@
   </footer>
   <script>window.TBELL_BASE = "../../";</script>
   <script src="../../assets/qa-pages.js?v=9"></script>
-  <script src="../../re-menu/re-menu.js?v=10"></script>
+  <script src="../../re-menu/re-menu.js?v=11"></script>
 </body>
 </html>

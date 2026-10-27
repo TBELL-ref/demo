@@ -100,6 +100,30 @@
     if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) timer = setInterval(() => show((at + 1) % nodes.length), 3600);
   });
 
+  // 화이트박스 커버리지: the chosen criterion lights the input tiles it needs; steps on until someone picks one.
+  document.querySelectorAll("[data-cover]").forEach((box) => {
+    const picks = [...box.querySelectorAll(".rw-pick")];
+    const tiles = [...box.querySelectorAll("[data-case]")];
+    const notes = [...box.querySelectorAll(".rw-note")];
+    let at = 0;
+    let timer = 0;
+    const show = (i) => {
+      at = i;
+      const need = picks[i].dataset.need.split(",");
+      picks.forEach((p, k) => p.setAttribute("aria-pressed", String(k === i)));
+      notes.forEach((n, k) => n.classList.toggle("is-on", k === i));
+      tiles.forEach((t) => t.classList.toggle("is-need", need.includes(t.dataset.case)));
+    };
+    const stop = () => { clearInterval(timer); timer = 0; };
+    picks.forEach((p, i) => {
+      p.addEventListener("click", () => { stop(); show(i); });
+      p.addEventListener("mouseenter", () => { stop(); show(i); });
+      p.addEventListener("focus", () => { stop(); show(i); });
+    });
+    show(0);
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) timer = setInterval(() => show((at + 1) % picks.length), 3200);
+  });
+
   // 테스트 분야 photo cards (site.js wireDeck): the clicked card opens, the others close.
   document.querySelectorAll(".expand-card").forEach((card) => {
     card.addEventListener("click", () => {
