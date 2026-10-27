@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@200;400;500;700&family=Oxanium:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="../../assets/site.css?v=123">
   <link rel="stylesheet" href="../../assets/qa-pages.css?v=19">
-  <link rel="stylesheet" href="../../re-menu/re.css?v=30">
+  <link rel="stylesheet" href="../../re-menu/re.css?v=32">
   <link rel="icon" href="../../assets/tbell-logo.svg">
   <script type="application/ld+json">
 {
@@ -192,17 +192,14 @@
   </section>
   <section class="qp-sec" data-qp-reveal aria-labelledby="steps">
     <h2 class="qp-h" id="steps">기본 테스트 절차</h2>
-    <figure class="ap-msg" aria-label="요청: GET /users/1, 인증 헤더. 응답: 200 OK와 사용자 데이터, 예상과 일치">
-      <div class="ap-row"><span class="ap-tag">REQUEST</span>
-        <code class="ap-part" data-n="1"><b class="ap-m">GET</b> /users/1</code>
-        <code class="ap-part" data-n="2">Authorization: Bearer ••••••</code>
+    <figure class="ap-x" aria-label="테스트 도구에서 엔드포인트·메서드와 헤더·바디로 요청을 만들고, API 서버로 보낸 뒤, 돌아온 응답의 상태 코드와 데이터를 검증합니다">
+      <div class="ap-end"><div class="ap-art"><svg viewBox="0 0 120 84" aria-hidden="true"><rect x="16" y="6" width="88" height="56" rx="5" fill="#6b6b6b"/><rect x="22" y="12" width="76" height="44" fill="#f6f8fa"/><rect x="28" y="19" width="22" height="9" rx="4.5" fill="#6b6b6b"/><rect x="54" y="21" width="38" height="5" rx="2.5" fill="#b7c7d1"/><rect x="28" y="34" width="56" height="4" fill="#d9d9d9"/><rect x="28" y="42" width="44" height="4" fill="#d9d9d9"/><path d="M4 66h112l-8 12H12z" fill="#d9d9d9"/></svg></div><p>Tester<br><small>테스트 도구</small></p><ol class="ap-prep"><li><span>1</span><b>엔드포인트 · 메서드</b><small>URL과 GET · POST · PUT · DELETE</small></li><li><span>2</span><b>헤더 · 바디</b><small>인증 토큰, 필요하면 JSON 바디</small></li></ol></div>
+      <div class="ap-lanes">
+        <div class="ap-lane is-req"><p><span>3</span>요청 전송</p><i aria-hidden="true"><em></em></i><code>GET /users/1</code></div>
+        <div class="ap-lane is-res"><code>200 OK { "id": 1 }</code><i aria-hidden="true"><em></em></i><p><span>4</span>응답 검증 <b>✓ 예상과 일치</b></p></div>
       </div>
-      <div class="ap-row is-res"><span class="ap-tag">RESPONSE</span>
-        <code class="ap-part" data-n="3"><b class="ap-ok">200 OK</b> { "id": 1, "name": "TBELL" }</code>
-        <span class="ap-check">✓ 예상과 일치</span>
-      </div>
+      <div class="ap-end"><div class="ap-art"><svg viewBox="0 0 120 84" aria-hidden="true"><rect x="20" y="4" width="80" height="22" rx="3" fill="#d9d9d9"/><circle cx="31" cy="15" r="3.5" fill="#6b6b6b"/><circle cx="42" cy="15" r="3.5" fill="#6b6b6b"/><rect x="62" y="11" width="30" height="3" fill="#fff"/><rect x="62" y="17" width="30" height="3" fill="#fff"/><rect x="20" y="30" width="80" height="22" rx="3" fill="#d9d9d9"/><circle cx="31" cy="41" r="3.5" fill="#6b6b6b"/><circle cx="42" cy="41" r="3.5" fill="#6b6b6b"/><rect x="62" y="37" width="30" height="3" fill="#fff"/><rect x="62" y="43" width="30" height="3" fill="#fff"/><rect x="56" y="54" width="8" height="12" fill="#b0b0b0"/><rect x="26" y="66" width="68" height="10" fill="#b0b0b0"/></svg></div><p>API Server<br><small>대상 서버</small></p></div>
     </figure>
-    <ol class="ap-steps"><li><span>1</span><div><h3>엔드포인트 · 메서드 설정</h3><p>대상 URL을 정하고 GET, POST, PUT, DELETE 중 알맞은 메서드를 고릅니다.</p></div></li><li><span>2</span><div><h3>헤더 · 바디 작성</h3><p>인증 토큰과 요청 헤더를 설정하고, 필요한 경우 JSON 데이터를 바디에 담습니다.</p></div></li><li><span>3</span><div><h3>응답 검증</h3><p>HTTP 상태 코드와 돌아온 데이터가 예상과 일치하는지 확인합니다.</p></div></li></ol>
   </section>
         <section class="qp-sec" data-qp-reveal aria-labelledby="faq">
           <h2 class="qp-h" id="faq">자주 묻는 질문</h2>
