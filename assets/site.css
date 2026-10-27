@@ -2770,7 +2770,9 @@ a.s-card:hover .s-ibox { border-color: var(--active); }
 body { word-break: keep-all; overflow-wrap: break-word; }
 p, li, dd, h1, h2, h3, h4 { text-wrap: pretty; }
 .qp-h, .s-head h2, .qh-head h2, .iq-intro h1 { text-wrap: balance; }
-.subnav { overflow-x: auto; scrollbar-width: none; }
+/* Page sub-tabs: under the banner at first, then held under the header while the body scrolls past. */
+.subnav { position: sticky; top: var(--header-h); z-index: 8; overflow-x: auto; scrollbar-width: none; }
+.subnav::-webkit-scrollbar { display: none; }
 .subnav a, .subnav button { white-space: nowrap; flex: none; }
 .s-items { grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); }
 @media (max-width: 1280px) {
