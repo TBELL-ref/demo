@@ -1366,10 +1366,57 @@ const RECRUIT_SLIDES = [
   { id: "recruit", title: "Good Player, Great Work", desc: "티벨은 올바른 생각과 실천을 통해 “우수한 인재를, 일하기 좋은 기업”을 만듭니다.", tags: [], bg: ["bg-recruit.96e2ea0dae220b78e221.png", "bg-tablet-recruit.95364057a4fd3ee61e20.png", "bg-mobile-recruit.89efb893fcee0ae88828.png"], body: recruitBody }
 ];
 
-// 지속가능경영 opens on the origin's overview slide (its own banner and content image); like the origin it is
-// not one of the 윤리 · 사회 · 환경 tabs.
+// 지속가능경영 opens on the origin's overview slide; like the origin it is not one of the 윤리 · 사회 · 환경 tabs.
+// The origin draws it as one long image. Here every block is markup with the origin's own wording, except the
+// signed E / S / G statement, which stays the origin's image (cut per screen size).
+const MG_GOALS = [
+  ["E", "nvironmental", "친환경 ICT 기업 도약", ["환경 경영 추진체계 구축", "친환경 인식강화 교육", "에너지 절약 실천", "친환경 제품 도입"]],
+  ["S", "ocial", "위기대응 및 인재육성 강화", ["위기대응 TF(중대재해/정보보안)", "인재육성 프로그램 강화", "인권경영 강화", "사회공헌 확대"]],
+  ["G", "overnance", "윤리경영 강화, 투명경영 추진", ["윤리정책 국제가이드 준수", "ESG 정보공개 단계적 추진"]]
+];
+const MG_ROLES = [
+  ["ESG TF", ["ESG 전략/정책 수립", "ESG 규정 제정", "ESG 중장기 로드맵", "활동과제 설정"]],
+  ["위기대응 TF", ["정보보안 대응체계 구축", "안전보건(중대재해) 대응체계 구축", "위기대응 체계 실행"]],
+  ["경영지원팀", ["ESG 활동과제 모니터링 및 관리"]],
+  ["ESG 위원회", ["ESG Agenda 논의", "ESG 성과 및 개선점 논의"]]
+];
+
 function managementBody() {
-  return shot({ pc: "content-management.feb8dfe64927768a33b6.png", tablet: "content-tablet-management.561be7aa074f2115ebb8.png", mobile: "content-mobile-management.08406d76c6339ad0c066.png" });
+  const node = (label, cls = "") => `<span class="mg-node${cls ? " " + cls : ""}">${label}</span>`;
+  const goals = MG_GOALS.map(([cap, rest, aim, items]) => `
+      <div class="mg-goal">
+        <p class="mg-letter"><b>${cap}</b>${rest}</p>
+        <h3>${aim}</h3>
+        <ul>${items.map((item) => `<li>${item}</li>`).join("")}</ul>
+      </div>`).join("");
+  const roles = MG_ROLES.map(([name, items]) => `<article><h3>${name}</h3><p>${items.join("<br>")}</p></article>`).join("");
+  return `
+    ${qpSec("CEO MESSAGE", "<p>티벨 이해 관계자 여러분. 티벨은 기후 변화, 중대 재해, 경제 위기 등 새로운 경영 환경에 대응하고, 기업의 지속가능한 성장을 위해 ESG 경영을 추진하며, 기업의 사회적 책임(CSR)을 다하기 위해 노력할 것입니다. 법과 국제 가이드 라인에 기반한 ESG 경영전략 수립과 추진 체계를 구축하고, ESG Agenda를 발굴하고 논의하여 실천할 수 있도록 추진해 나가겠습니다.</p>")}
+    <picture class="mg-pledge">
+      <source media="(max-width: 500px)" srcset="${QA}photos/esg-pledge-mobile.jpg">
+      <source media="(max-width: 1023px)" srcset="${QA}photos/esg-pledge-tablet.jpg">
+      <img src="${QA}photos/esg-pledge.jpg" alt="Environmental · Social · Governance 경영 방향과 티벨 대표이사 김종균 서명" loading="lazy">
+    </picture>
+    ${qpSec("지향점", "", `<p class="mg-mark" role="img" aria-label="PLUS ESG"><span>PLUS</span> <b>ESG<img src="${QA}photos/esg-leaf.png" alt=""></b></p><p class="mg-mark-sub">전문성과 신뢰를 바탕으로 지속 가능한 성장</p>`)}
+    <section class="mg-goals" data-qp-reveal style="background-image:url('${ORIGIN}bg-management.7c040906499d5d3883e5.png')">
+      <h2 class="qp-h">목표 &amp; 주요과제</h2>
+      <div class="mg-goal-row">${goals}</div>
+    </section>
+    ${qpSec("ESG 추진체계", "<p>티벨은 ESG TF를 조직하여 ESG 경영 전략을 수립하고, 위기대응 TF 중심으로 정보 보안과 중대 재해 대응 체계를 구축하겠습니다.<br class='qp-br'> 향후 ESG 위원회를 중심으로 ESG 모든 활동을 총괄하여 관리하는 추진 체계 구축을 목표로 합니다.</p>")}
+    ${qpSec("조직도", "", `
+      <ul class="mg-org" aria-label="ESG 조직도">
+        <li>${node("대표이사", "is-top")}
+          <ul>
+            <li>${node("ESG 위원회", "is-mid")}</li>
+            <li>${node("ESG TF", "is-mid")}<ul><li>${node("경영지원팀")}</li></ul></li>
+            <li>${node("위기대응 TF", "is-mid")}<ul><li>${node("STE 1-2실")}</li><li>${node("개발연구소")}</li><li>${node("경영지원팀")}</li></ul></li>
+          </ul>
+        </li>
+      </ul>`)}
+    <section class="mg-system" data-qp-reveal style="background-image:url('${QA}photos/esg-paper.jpg')">
+      <h2 class="qp-h">추진체계</h2>
+      <div class="mg-roles">${roles}</div>
+    </section>`;
 }
 
 const ESG_SLIDES = [
