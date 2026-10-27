@@ -2491,7 +2491,6 @@ a.s-card:hover .s-ibox { border-color: var(--active); }
 
 /* ── Home (mh-): company-wide — MISSION, 티벨 코어, since 2015, figures ────────── */
 .mh { background: #121212; color: #fff; }
-.mh-cta { display: flex; justify-content: center; gap: 12px; margin-top: 12px; }
 .mh .pill.ghost { color: #fff; }
 .mh-wrap { width: min(var(--content-max), calc(100% - 2 * var(--gutter))); margin: 0 auto; text-align: center; }
 .mh-core { position: relative; padding: clamp(80px, 9vw, 130px) 0; background-color: #1d2a36; background-size: cover; background-position: center; }
@@ -2502,8 +2501,7 @@ a.s-card:hover .s-ibox { border-color: var(--active); }
 .mh-rings span { display: grid; place-items: center; width: clamp(130px, 13vw, 200px); height: clamp(130px, 13vw, 200px); border-radius: 50%; border: 2px solid #fff; outline: 2px dotted #fff; outline-offset: 8px; }
 .mh-rings img { width: 46%; }
 .mh-rings b { font-family: var(--num); font-size: clamp(18px, 1.6vw, 26px); letter-spacing: .06em; }
-.mh-since, .mh-common { padding: clamp(80px, 9vw, 140px) 0; }
-.mh-common { background: #1a1a1a; }
+.mh-since { padding: clamp(80px, 9vw, 140px) 0; }
 .mh h2 { margin-top: 12px; font-size: clamp(24px, 2.4vw, 36px); font-weight: 700; }
 .mh-since h2 .count { color: var(--active); font-family: var(--num); }
 .mh-line { position: relative; display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin: 56px 0 0; padding: 0; list-style: none; }
@@ -2516,17 +2514,13 @@ a.s-card:hover .s-ibox { border-color: var(--active); }
 .mh-figs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
 .mh-figs p { color: var(--mist); font-size: 15px; }
 .mh-figs strong { display: block; margin-top: 8px; font-family: var(--num); font-size: clamp(36px, 4vw, 60px); font-weight: 500; }
-.mh-places { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 48px; padding-top: 28px; border-top: 1px solid #2e2e2e; text-align: left; }
-.mh-places p { color: var(--mist); font-size: 14px; }
-.mh-places b { display: block; margin-bottom: 4px; color: #fff; font-size: 16px; }
 @media (max-width: 768px) {
-  .mh-cta { flex-direction: column; align-items: stretch; width: 100%; }
   .mh-rings { flex-direction: column; align-items: center; gap: 44px; }
   .mh-line { grid-template-columns: 1fr; gap: 22px; text-align: left; }
   .mh-line::before { left: 8px; right: auto; top: 6px; bottom: 6px; border-top: 0; border-left: 2px solid #333; }
   .mh-line li { grid-template-columns: 56px 1fr; justify-items: start; padding: 0 0 0 30px; }
   .mh-line li::before { left: 1px; top: 4px; }
-  .mh-figs, .mh-places { grid-template-columns: 1fr; }
+  .mh-figs { grid-template-columns: 1fr; }
 }
 
 /* ── White pages at the origin's proportions (66% / 88% / gutter) ─────────────────── */
@@ -2560,11 +2554,9 @@ a.s-card:hover .s-ibox { border-color: var(--active); }
 
 .mh-mission { max-width: 26em; margin: 16px auto 0; font-size: clamp(20px, 1.9vw, 30px); font-weight: 500; line-height: 1.55; }
 .mh-core-label { margin-top: clamp(56px, 6vw, 88px); }
-.mh-common .mh-cta { justify-content: center; margin-top: 36px; }
 
 @media (max-width: 768px) {
   .mh-mission br { display: none; }
-  .mh-common .mh-cta { flex-direction: column; align-items: stretch; }
 }
 
 
@@ -2636,13 +2628,14 @@ a.s-card:hover .s-ibox { border-color: var(--active); }
 .iq-intro { position: sticky; top: calc(var(--header-h) + 32px); color: #333; }
 .iq-intro h1 { margin: 0; color: #121212; font-size: clamp(26px, 2.2vw, 34px); font-weight: 700; line-height: 1.3; letter-spacing: -.01em; }
 .iq-lede { margin: 10px 0 0; color: #595959; font-size: 15px; line-height: 1.6; }
-.iq-contact { display: grid; grid-template-columns: 44px 1fr; gap: 10px 12px; margin: 28px 0 0; padding-top: 24px; border-top: 2px solid #121212; font-size: 14.5px; line-height: 1.5; }
-.iq-contact dt { color: #9a9a9a; font-size: 13px; font-weight: 500; line-height: 1.65; }
-.iq-contact dd { margin: 0; color: #222; }
-.iq-contact small { display: block; color: #8a8a8a; font-size: 12.5px; }
-.iq-links { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 22px; }
-.iq-links a { color: #0788a4; font-size: 14px; font-weight: 700; text-decoration: underline; text-decoration-color: rgba(7, 136, 164, .35); text-underline-offset: 4px; }
-.iq-links a:hover { text-decoration-color: currentColor; }
+.iq-contact { display: grid; gap: 12px; margin: 28px 0 0; padding: 24px 0 0; border-top: 2px solid #121212; list-style: none; }
+.iq-contact li { display: grid; grid-template-columns: 18px 1fr; gap: 12px; align-items: start; color: #222; font-size: 14.5px; line-height: 1.5; }
+.iq-contact svg, .iq-links svg { width: 18px; height: 18px; margin-top: 2px; fill: none; stroke: #27c4d5; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.iq-contact small { display: block; margin-top: 1px; color: #8a8a8a; font-size: 12.5px; }
+.iq-links { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 22px; }
+.iq-links a { display: inline-flex; align-items: center; gap: 5px; color: #0788a4; font-size: 14px; font-weight: 700; }
+.iq-links svg { width: 14px; height: 14px; margin: 0; stroke: currentColor; stroke-width: 2.2; transition: transform .2s; }
+.iq-links a:hover svg { transform: translateX(3px); }
 
 .detail.inq-page .sheet .iq-form { display: grid; gap: 0; color: #333; }
 .iq-step { display: flex; align-items: baseline; gap: 10px; margin: 0 0 12px; color: #121212; font-size: 15px; font-weight: 700; }
