@@ -100,23 +100,28 @@
     if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) timer = setInterval(() => show((at + 1) % nodes.length), 3600);
   });
 
-  // 화이트박스 커버리지: one criterion at a time, each with its own diagram; steps on until someone picks one.
-  document.querySelectorAll("[data-cover]").forEach((box) => {
-    const picks = [...box.querySelectorAll(".rw-pick")];
-    const panels = [...box.querySelectorAll(".cv-panel")];
+  // 화이트박스 커버리지: each criterion marks the truth-table rows its minimal test set needs.
+  document.querySelectorAll("[data-cov]").forEach((box) => {
+    const crits = [...box.querySelectorAll(".rw-crit")];
+    const descs = [...box.querySelectorAll(".rw-desc")];
+    const rows = [...box.querySelectorAll("tbody tr")];
     let at = 0;
     let timer = 0;
     const show = (i) => {
       at = i;
-      picks.forEach((p, k) => p.setAttribute("aria-pressed", String(k === i)));
-      panels.forEach((p, k) => p.classList.toggle("is-on", k === i));
+      const need = crits[i].dataset.need.split(",");
+      crits.forEach((c, k) => c.setAttribute("aria-pressed", String(k === i)));
+      descs.forEach((d, k) => d.classList.toggle("is-on", k === i));
+      rows.forEach((r) => r.classList.toggle("is-need", need.includes(r.dataset.row)));
     };
     const stop = () => { clearInterval(timer); timer = 0; };
-    picks.forEach((p, i) => {
-      p.addEventListener("click", () => { stop(); show(i); });
-      p.addEventListener("focus", () => { stop(); show(i); });
+    crits.forEach((c, i) => {
+      c.addEventListener("click", () => { stop(); show(i); });
+      c.addEventListener("mouseenter", () => { stop(); show(i); });
+      c.addEventListener("focus", () => { stop(); show(i); });
     });
-    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) timer = setInterval(() => show((at + 1) % picks.length), 5000);
+    show(0);
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) timer = setInterval(() => show((at + 1) % crits.length), 4200);
   });
 
   // 테스트 분야 photo cards (site.js wireDeck): the clicked card opens, the others close.
