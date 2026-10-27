@@ -4,16 +4,17 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>TBELL</title>
-  <!-- /re-menu: the /multi site; re-menu.js sends 테스트 종류 to the static pages (tools/build_re_menu.py). -->
-  <script>window.TBELL_LAYOUT = "multi"; window.TBELL_BASE = "../";</script>
+  <!-- Absolute site root ("/" or "/demo/"): pages move by path without a reload, so asset paths built in JS must not be relative. -->
+  <!-- /re-menu: the root site; re-menu.js sends 테스트 종류 to the static pages (tools/build_re_menu.py). -->
+  <script>window.TBELL_BASE = new URL("../", location.href).pathname; window.TBELL_HASH_ROUTES = true;</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@200;400;500;700&family=Oxanium:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="../assets/site.css?v=123">
+  <link rel="stylesheet" href="../assets/site.css?v=126">
   <link rel="stylesheet" href="../assets/qa-pages.css?v=19">
   <link rel="icon" href="../assets/tbell-logo.svg">
 </head>
-<body>
+<body class="is-multi">
   <a class="skip" href="#content">본문으로 건너뛰기</a>
   <div class="site-head">
   <header class="header">
@@ -23,11 +24,7 @@
     </a>
     <nav class="nav" id="nav" aria-label="상위 메뉴"></nav>
     <div class="tools">
-      <div class="switch">
-        <button class="switch-btn" id="switch-btn" type="button" aria-expanded="false" aria-controls="switch-panel">사업영역</button>
-        <div class="switch-panel" id="switch-panel" hidden></div>
-      </div>
-      <a class="pill" id="inquire" href="#qa/inquiry" hidden>문의</a>
+      <a class="pill" id="inquire" href="#inquiry/qa" hidden>문의</a>
       <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="nav">
         <span></span><span></span><span></span>
         <span class="sr-only">메뉴</span>
@@ -46,9 +43,9 @@
   </footer>
   <script src="../assets/blog-data.js?v=11"></script>
   <script src="../assets/history-data.js?v=10"></script>
-  <script src="../assets/svc-motion.js?v=12"></script>
-  <script src="../assets/qa-pages.js?v=9"></script>
-  <script src="../assets/site.js?v=89"></script>
+  <script src="../assets/svc-motion.js?v=13"></script>
+  <script src="../assets/qa-pages.js?v=11"></script>
+  <script src="../assets/site.js?v=92"></script>
   <script src="re-menu.js?v=15"></script>
 </body>
 </html>

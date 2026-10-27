@@ -17,10 +17,60 @@ const BLOG_CATS = [
   { id: "activity", name: "성과·활동", modes: ["qa", "security", "all"], nos: [18] }
 ];
 
-// /multi (multi/index.html) shares every file with the root site; only the header and three
-// combined routes differ. "all" is the mode of those routes: #blog, #company/…, #inquiry/qa|security.
-const MULTI = window.TBELL_LAYOUT === "multi";
+// One site under one header: QA · 보안 · 블로그 · 회사소개. QA and 보안 keep their own routes (#qa/…,
+// #security/…); blog, company and inquiry are shared, in mode "all": #blog, #company/…, #inquiry/qa|security.
 const hashBase = (mode) => (mode === "all" ? "#" : "#" + mode + "/");
+
+// Routes are real paths under the site root (…/qa/service/outsourcing/), so each page has its own URL.
+// The markup still writes a route as "#qa/service/outsourcing"; pathLinks() turns those links into paths
+// once they are in the page, and go() moves between routes without a reload. tools/build_routes.mjs
+// writes a copy of index.html at every route so a direct visit or a crawler gets a real page.
+// The /re-menu shell sets TBELL_HASH_ROUTES and keeps the "#…" routes.
+const HASH_ROUTES = !!window.TBELL_HASH_ROUTES;
+const SITE_ROOT = new URL(window.TBELL_BASE || "./", location.href).pathname;
+const ROUTE_HEADS = ["qa", "security", "blog", "company", "inquiry"];
+
+function isRoute(href) {
+  if (href === "#") return true;
+  const head = /^#([a-z]+)(?:\/|$)/.exec(href || "");
+  return !!head && ROUTE_HEADS.includes(head[1]);
+}
+
+function routeUrl(href) {
+  const raw = href.replace(/^#/, "").replace(/\/+$/, "");
+  return SITE_ROOT + (raw ? raw + "/" : "");
+}
+
+function currentRaw() {
+  if (HASH_ROUTES) return (location.hash || "").replace(/^#/, "");
+  const path = decodeURIComponent(location.pathname);
+  const rest = path.startsWith(SITE_ROOT) ? path.slice(SITE_ROOT.length) : "";
+  return rest.replace(/(^|\/)index\.html$/, "").replace(/\/+$/, "");
+}
+
+function isHere(href) {
+  return HASH_ROUTES ? (location.hash || "#") === href : routeUrl(href) === SITE_ROOT + (currentRaw() ? currentRaw() + "/" : "");
+}
+
+function go(href, replace) {
+  if (HASH_ROUTES) {
+    if (replace) location.replace(href);
+    else location.hash = href;
+    return;
+  }
+  history[replace ? "replaceState" : "pushState"](null, "", routeUrl(href));
+  onRoute();
+}
+
+function pathLinks() {
+  if (HASH_ROUTES) return;
+  document.querySelectorAll('a[href^="#"]').forEach((link) => {
+    const href = link.getAttribute("href");
+    if (!isRoute(href)) return;
+    link.setAttribute("href", routeUrl(href));
+    link.dataset.route = href;
+  });
+}
 
 function blogNodes(mode) {
   return BLOG_CATS.filter((cat) => cat.modes.includes(mode));
@@ -48,7 +98,7 @@ function blogMenu(mode) {
   };
 }
 
-// /multi drops the greeting from 회사소개 (only 티벨 코어 and 찾아오시는 길 remain), so it is "기업 정보" there.
+// The site drops the greeting from 회사소개 (only 티벨 코어 and 찾아오시는 길 remain), so it is "기업 정보" there.
 const ABOUT_LABEL = (mode) => (mode === "all" ? "기업 정보" : "회사소개");
 const COMPANY_MENU = (mode) => ({
   id: "company",
@@ -81,53 +131,27 @@ const COMPANY_MENU = (mode) => ({
   ]
 });
 
-const MENUS = {
-  qa: [
-    {
-      id: "types", label: "테스트 종류", href: "#qa/types",
-      children: [
-        { id: "outsourcing", label: "아웃소싱", href: "#qa/types/outsourcing" },
-        { id: "automation", label: "자동화", href: "#qa/types/automation" },
-        { id: "blackbox", label: "블랙박스", href: "#qa/types/blackbox" },
-        { id: "whitebox", label: "화이트박스", href: "#qa/types/whitebox" },
-        { id: "api", label: "API", href: "#qa/types/api" },
-        { id: "perfomance", label: "성능", href: "#qa/types/perfomance" }
-      ]
-    },
-    {
-      id: "testops", label: "TestOps", href: "#qa/testops",
-      children: [
-        { id: "build", label: "TestOps 구축", href: "#qa/testops/build" },
-        { id: "ai", label: "AI 기반 검증 자동화", href: "#qa/testops/ai" }
-      ]
-    },
-    {
-      id: "tauto", label: "T 솔루션", href: "#qa/tauto",
-      children: [
-        { id: "overview", label: "솔루션 개요", href: "#qa/tauto" },
-        { id: "auto", label: "T-AUTO", href: "#qa/tauto/auto" },
-        { id: "gen", label: "T-GEN", href: "#qa/tauto/gen" },
-        { id: "lens", label: "T-LENS", href: "#qa/tauto/lens" },
-        { id: "voc", label: "T-VOC", href: "#qa/tauto/voc" }
-      ]
-    },
-    blogMenu("qa"),
-    COMPANY_MENU("qa")
-  ],
-  security: [
-    { id: "diagnose", label: "사전진단", href: "#security/diagnose" },
-    { id: "services", label: "컨설팅", href: "#security/services" },
-    { id: "cert", label: "인증", href: "#security/cert" },
-    blogMenu("security"),
-    COMPANY_MENU("security")
-  ]
-};
-
-const OTHERS = {
-  "": [["#qa", "QA"], ["#security", "보안 컨설팅"]],
-  qa: [["#security", "보안 컨설팅"]],
-  security: [["#qa", "QA"]]
-};
+// QA's own menu groups; the header (MENU) puts them under QA.
+const QA_GROUPS = [
+  {
+    id: "service", label: "서비스", href: "#qa/service",
+    children: [
+      { id: "outsourcing", label: "QA 아웃소싱", href: "#qa/service/outsourcing" },
+      { id: "types", label: "테스트 유형", href: "#qa/service/types" },
+      { id: "automation", label: "테스트 자동화", href: "#qa/service/automation" }
+    ]
+  },
+  {
+    id: "tauto", label: "솔루션", href: "#qa/tauto",
+    children: [
+      { id: "overview", label: "솔루션 개요", href: "#qa/tauto" },
+      { id: "auto", label: "T-AUTO", href: "#qa/tauto/auto" },
+      { id: "gen", label: "T-GEN", href: "#qa/tauto/gen" },
+      { id: "lens", label: "T-LENS", href: "#qa/tauto/lens" },
+      { id: "voc", label: "T-VOC", href: "#qa/tauto/voc" }
+    ]
+  }
+];
 
 const MODE_LABEL = { qa: "QA", security: "정보보호", all: "TBELL" };
 
@@ -137,18 +161,15 @@ const header = document.querySelector(".header");
 const menuDrop = document.getElementById("menu-drop");
 const logoLink = document.getElementById("logo-link");
 const tools = document.querySelector(".tools");
-let activeMenu = [];
 const logoMode = document.getElementById("logo-mode");
 const inquire = document.getElementById("inquire");
-const switchBtn = document.getElementById("switch-btn");
-const switchPanel = document.getElementById("switch-panel");
 const navToggle = document.getElementById("nav-toggle");
 
 function parse() {
-  const raw = (location.hash || "").replace(/^#/, "");
+  const raw = currentRaw();
   let [mode, group, child, page] = raw.split("/");
   const known = ["qa", "security"];
-  if (MULTI && ["blog", "company", "inquiry"].includes(mode)) {
+  if (["blog", "company", "inquiry"].includes(mode)) {
     // #blog[/cat][/n] · #company[/child] · #inquiry/qa|security
     let [, a = "", b = ""] = raw.split("/");
     if (mode === "blog" && /^\d+$/.test(a)) { b = a; a = ""; }
@@ -180,35 +201,7 @@ function page(kicker, title, lede, body, jumps) {
   return `<section class="detail"><div class="banner"><p class="kicker">${kicker}</p><h1>${title}</h1>${ledeHtml}</div>${bar}<div class="sheet">${body || ""}</div></section>`;
 }
 
-function stage(kind, inner) {
-  return `<section class="stage ${kind}">${inner}</section>`;
-}
-
-function stats() {
-  const items = [
-    [1460, "개", "누적 수행 프로젝트 수"],
-    [161, "개사", "이용 고객사 수"],
-    [165, "명", "임직원 수"],
-    [299, "억", "누적 매출"]
-  ];
-  const cells = items.map(([n, unit, label]) => `<div class="stat"><p>${label}</p><p class="num"><span class="count" data-count="${n}">0</span>${unit}</p></div>`).join("");
-  return `<div class="stage-center"><h2>고객과 더불어 성장하는 TBELL</h2><div class="stats">${cells}</div></div>`;
-}
-
-// Root gate: the same two business entrances as the /multi home (multiBizCard).
-function gateHome() {
-  const [qaSec, secSec] = MULTI_MENU[0].sections;
-  return `
-    <div class="mh"><section class="mh-biz gate-biz">
-      <div class="mh-wrap">
-        <h1 class="sr-only">티벨 사업 영역</h1>
-        <div class="mb-grid">${multiBizCard(qaSec, BIZ_ART.qa())}${multiBizCard(secSec, BIZ_ART.security())}</div>
-      </div>
-    </section></div>
-    ${stage("shade-d", stats())}`;
-}
-
-// ── /multi home (design_demo/multi-home-hero-plan.md) ─────────────────────────────
+// ── Home (design_demo/multi-home-hero-plan.md) ─────────────────────────────
 // Hero says what the company does without naming the businesses; right below it, two
 // equal entrances into QA and 정보보호 using each home's own h1 and artwork. MISSION and
 // 티벨 코어, the milestones and the offices follow. Figures are the published ones.
@@ -221,30 +214,12 @@ const MULTI_SINCE = [
 ];
 const MULTI_FIGURES = [[1460, "개", "누적 수행 프로젝트"], [161, "개사", "이용 고객사"], [165, "명", "임직원"]];
 
-// Card artwork: the QA home banner badge, and a still copy of the security home shield.
+// Door artwork for 정보보호: a still copy of the security home shield.
 const BIZ_ART = {
-  qa: () => `<img src="${ORIGIN}banner-main-pc-001.0e1ee99f9660f77d4fe1.png" alt="" loading="lazy">`,
   security: () => `<span class="mb-shield"><img src="${window.TBELL_BASE || ""}assets/shield.png?v=3" alt="" loading="lazy"><i></i><svg viewBox="0 0 1400 1400"><path d="M642 642 L686 686 L766 594"/></svg></span>`
 };
 
-// One entrance per business: label, the h1 of that home, its sub-pages from the header menu.
-function multiBizCard(sec, art) {
-  const links = sec.groups.filter((g) => g.id).map((g) => `<li><a href="${g.href}">${g.label}</a></li>`).join("");
-  const name = sec.id === "qa" ? "QA" : "정보보호";
-  const en = sec.id === "qa" ? "SOFTWARE TEST &amp; QUALITY" : "TBELL 정보보호 컨설팅";
-  const title = sec.id === "qa" ? "차별화된 테스트 경험을 제공하는<br>대한민국 대표 품질 서비스 기업" : "우리 회사에 필요한 보안 인증,<br>2분이면 알 수 있습니다.";
-  return `<article class="mb-card mb-${sec.id}">
-      <a class="mb-art" href="${sec.href}" tabindex="-1" aria-hidden="true">${art}</a>
-      <div class="mb-body">
-        <p class="mb-name">${name}<span>${en}</span></p>
-        <h3><a href="${sec.href}">${title}</a></h3>
-        <ul class="mb-links">${links}</ul>
-        <a class="mb-go" href="${sec.href}">${name} 홈으로<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-      </div>
-    </article>`;
-}
-
-// /multi hero door: one half of the screen per business, the whole half is the link.
+// Home hero door: one half of the screen per business, the whole half is the link.
 // Copy is that home's own label and h1; artwork is the shared BIZ_ART.
 function multiDoor(sec) {
   const qa = sec.id === "qa";
@@ -266,7 +241,7 @@ function multiHome() {
   const base = window.TBELL_BASE || "";
   const years = new Date().getFullYear() - 2015;
   const core = [["core-test", "TEST"], ["core-customer", "CUSTOMER"], ["core-human", "HUMAN"]];
-  const [qaSec, secSec] = MULTI_MENU[0].sections;
+  const [qaSec, secSec] = MENU;
   return `<div class="mh">
   <section class="mh-doors">
     <h1 class="sr-only">TBELL</h1>
@@ -328,6 +303,12 @@ const QA_BADGE = {
   pc: { box: "0 0 1920 990", core: [1440, 510, 100], ring: 300, r: 36, tip: -1, nodes: [[1440, 348], [1541, 401], [1330, 388], [1280, 507], [1330, 627]] },
   mobile: { box: "0 0 1440 2376", core: [952, 1547, 150], ring: 450, r: 54, tip: -1, nodes: [[958, 1208], [1154, 1329], [739, 1305], [625, 1537], [739, 1771]] }
 };
+// Where a service id opens: 아웃소싱 and 자동화 have pages of their own, the four test types share
+// 테스트 유형. The ids keep the origin's "perfomance" (its artwork names); the URL spells it right.
+function qaServiceHref(id) {
+  if (id === "outsourcing" || id === "automation") return "#qa/service/" + id;
+  return "#qa/service/types/" + (id === "perfomance" ? "performance" : id);
+}
 const QA_BADGE_LINKS = [["outsourcing", "아웃소싱 테스트"], ["whitebox", "화이트박스 테스트"], ["automation", "테스트 자동화"], ["blackbox", "블랙박스 테스트"], ["perfomance", "성능 테스트"]];
 
 // T 브랜드 솔루션 on the home: the quality cycle from the leaflet (design → platform → eval → feedback).
@@ -350,7 +331,7 @@ function qaBadge(kind) {
     const w = name.length * (kind === "pc" ? 17 : 50) + (kind === "pc" ? 36 : 90);
     const h = kind === "pc" ? 40 : 96;
     const tx = x - spec.r - 14 - w;
-    return `<a class="qh-node" href="#qa/types/${id}" data-i="${i}" aria-label="${name}">
+    return `<a class="qh-node" href="${qaServiceHref(id)}" data-i="${i}" aria-label="${name}">
         <circle class="qh-node-halo" cx="${x}" cy="${y}" r="${spec.r + 10}"/>
         <circle class="qh-node-hit" cx="${x}" cy="${y}" r="${spec.r + 6}"/>
         <g class="qh-tip"><rect x="${tx}" y="${y - h / 2}" width="${w}" height="${h}" rx="${h / 2}"/><text x="${tx + w / 2}" y="${y + h * 0.13}" text-anchor="middle">${name}</text></g>
@@ -406,7 +387,7 @@ function qaHome() {
       <h1>차별화된 테스트 경험을 제공하는<br>대한민국 대표 품질 서비스 기업</h1>
       <p class="lede">대한민국 IT 산업에 품질로 기여하고자 테스트 방법론과 서비스를 차별화하여, 테스트 서비스의 패러다임 변화를 주도하고 있습니다.</p>
       <div class="s-actions">
-        <a class="pill" href="#qa/types">테스트 서비스 보기</a>
+        <a class="pill" href="#qa/service">테스트 서비스 보기</a>
         <a class="pill ghost" href="#qa/inquiry">프로젝트 문의</a>
       </div>
     </div>
@@ -421,7 +402,7 @@ function qaHome() {
         <div class="qx-stage">${shots}</div>
         <div class="qx-info">
           <div><h3 data-x="name">${first[1]}</h3><p data-x="text">${first[2]}</p><div class="qx-tags" data-x="tags">${firstTags}</div></div>
-          <a class="pill" data-x="link" href="#qa/types/${first[0]}">자세히 보기</a>
+          <a class="pill" data-x="link" href="${qaServiceHref(first[0])}">자세히 보기</a>
         </div>
       </div>
     </div>
@@ -434,7 +415,7 @@ function qaHome() {
         <p class="qh-label">TESTOPS</p>
         <h2>테스트를<br>개발 흐름 안으로</h2>
         <p>티벨은 최신 테스트 자동화 기술을 적용한 TestOps 환경 구축을 통해 고객에게 최적의 가치를 제공하고 있습니다.</p>
-        <div class="s-actions"><a class="pill" href="#qa/testops/build">TestOps 구축</a><a class="pill ghost" href="#qa/testops/ai">AI 기반 검증 자동화</a></div>
+        <div class="s-actions"><a class="pill" href="#qa/service/automation/testops">TestOps 구축</a><a class="pill ghost" href="#qa/service/automation/ai">AI 기반 검증 자동화</a></div>
       </div>
       <div class="qh-loop" aria-label="TestOps 진행 흐름">
         <svg viewBox="100 40 320 180" aria-hidden="true">
@@ -571,7 +552,7 @@ function wireQaHome() {
     slot("name").textContent = name;
     slot("text").textContent = text;
     slot("tags").innerHTML = (SERVICE_SLIDES.find((s) => s.id === id).tags || []).map((t) => `<span>#${t}</span>`).join("");
-    slot("link").href = `#qa/types/${id}`;
+    slot("link").href = qaServiceHref(id);
   });
 
   // Timeline: choosing a milestone fills the rail up to it and swaps in its demo.
@@ -710,10 +691,10 @@ function qaDeck(slides, id, base, leaves) {
     return `<article class="svc-slide">${photo}<div><p>${slide.title}</p><p>${slide.desc}</p><div class="svc-tags">${tags}</div></div></article>`;
   }).join("");
   const nav = (slide, dir, label) => slide
-    ? `<a class="svc-nav ${dir}" href="${base}${slide.id}" aria-label="${label}">${arrow}</a>`
+    ? `<a class="svc-nav ${dir}" href="${slide.href || base + slide.id}" aria-label="${label}">${arrow}</a>`
     : `<span class="svc-nav ${dir} is-off" aria-hidden="true">${arrow}</span>`;
   return `<section class="detail svc-page">
-    <div class="svc-banner" data-prev="${prev ? base + prev.id : ""}" data-next="${next ? base + next.id : ""}">
+    <div class="svc-banner" data-prev="${prev ? prev.href || base + prev.id : ""}" data-next="${next ? next.href || base + next.id : ""}">
       <div class="svc-track" style="transform:translateX(-${index * 100}%)">${slidesHtml}</div>
       ${nav(prev, "prev", "이전")}
       ${nav(next, "next", "다음")}
@@ -723,12 +704,46 @@ function qaDeck(slides, id, base, leaves) {
   </section>`;
 }
 
-function serviceDeck(child) {
-  return qaDeck(SERVICE_SLIDES, child || "outsourcing", "#qa/types/");
+// 서비스: QA 아웃소싱 alone; 테스트 유형 = the four test-type pages as tabs; 테스트 자동화 = the
+// automation page plus the two TestOps pages. Each page keeps its banner and body as before.
+const svcSlide = (slides, id, extra) => ({ ...slides.find((slide) => slide.id === id), ...extra });
+const TYPE_SLIDES = [
+  svcSlide(SERVICE_SLIDES, "blackbox", { tab: "블랙박스 테스트" }),
+  svcSlide(SERVICE_SLIDES, "whitebox", { tab: "화이트박스 테스트" }),
+  svcSlide(SERVICE_SLIDES, "api", { tab: "API 테스트" }),
+  svcSlide(SERVICE_SLIDES, "perfomance", { id: "performance", tab: "성능 테스트" })
+];
+const AUTOMATION_SLIDES = [
+  svcSlide(SERVICE_SLIDES, "automation", { href: "#qa/service/automation", tab: "테스트 자동화" }),
+  svcSlide(TESTOPS_SLIDES, "build", { id: "testops", tab: "TestOps 구축" }),
+  svcSlide(TESTOPS_SLIDES, "ai", { tab: "AI 기반 검증 자동화" })
+];
+
+function svcTabs(slides, base) {
+  return slides.map((slide) => ({ id: slide.id, label: slide.tab, href: slide.href || base + slide.id }));
 }
 
-function testopsDeck(child) {
-  return qaDeck(TESTOPS_SLIDES, child === "ai" ? "ai" : "build", "#qa/testops/");
+function serviceDeck(child, page) {
+  if (child === "types") {
+    const id = TYPE_SLIDES.some((slide) => slide.id === page) ? page : "blackbox";
+    return qaDeck(TYPE_SLIDES, id, "#qa/service/types/", svcTabs(TYPE_SLIDES, "#qa/service/types/"));
+  }
+  if (child === "automation") {
+    const id = AUTOMATION_SLIDES.some((slide) => slide.id === page) ? page : "automation";
+    return qaDeck(AUTOMATION_SLIDES, id, "#qa/service/automation/", svcTabs(AUTOMATION_SLIDES, "#qa/service/automation/"));
+  }
+  return qaDeck([SERVICE_SLIDES[0]], "outsourcing", "#qa/service/");
+}
+
+// Old QA URLs (테스트 종류 · TestOps menus) and where each now lives, so bookmarks keep working.
+function legacyQaHash(group, child) {
+  if (group === "types") {
+    if (child === "automation") return "#qa/service/automation";
+    if (["blackbox", "whitebox", "api", "perfomance"].includes(child)) return qaServiceHref(child);
+    return "#qa/service/outsourcing";
+  }
+  if (group === "testops") return "#qa/service/automation/" + (child === "ai" ? "ai" : "testops");
+  return "";
 }
 
 // ── T 브랜드 솔루션 (copy from the 「T브랜드솔루션」 leaflet) ─────────────
@@ -739,7 +754,7 @@ const T_BRANDS = [
     text: "기획서·Figma·요구사항 문서를 분석해 테스트 케이스를 자동으로 도출하고 중복을 정리합니다." },
   { id: "auto", name: "T-AUTO", role: "플랫폼", en: "PLATFORM", icon: "layers", href: "#qa/tauto/auto", tag: "AI 기반 통합 품질 검증 플랫폼",
     text: "4계층 아키텍처 위에서 No-Code 자동화, AI 자율 테스트, 품질 분석을 한 번에 운영합니다." },
-  { id: "testops", name: "TestOps", role: "검증·운영", en: "OPERATIONS", icon: "loop", href: "#qa/testops/build", tag: "멀티모달 테스트 및 품질 운영 자동화",
+  { id: "testops", name: "TestOps", role: "검증·운영", en: "OPERATIONS", icon: "loop", href: "#qa/service/automation/testops", tag: "멀티모달 테스트 및 품질 운영 자동화",
     text: "CI/CD 연동부터 멀티모달 QA, 안정성 점수 기반 배포 결정까지 품질 운영을 자동화합니다." },
   { id: "lens", name: "T-LENS", role: "평가", en: "EVAL", icon: "scan", href: "#qa/tauto/lens", tag: "대화형 AI(LLM) 품질 평가 플랫폼",
     text: "LLM-as-a-Judge로 평가 프로세스를 표준화하고 정량·정성 평가를 자동화합니다." },
@@ -775,7 +790,7 @@ function tautoHome() {
   const stages = [["설계", "gen"], ["검증·운영", "auto"], ["평가", "lens"], ["피드백", "voc"]];
   const col = ([stage, id], i) => {
     const b = tBrand(id);
-    const extra = id === "auto" ? `<a class="tq-also" href="#qa/testops/build">+ TestOps</a>` : "";
+    const extra = id === "auto" ? `<a class="tq-also" href="#qa/service/automation/testops">+ TestOps</a>` : "";
     return `<li class="${id === "auto" ? "is-core" : ""}" style="--i:${i}">
       <p class="tq-stage"><span>${String(i + 1).padStart(2, "0")}</span>${stage}</p>
       <a class="tq-prod" href="${b.href}">${tpIco(b.icon)}<b>${b.name}</b><small>${b.tag}</small></a>${extra}
@@ -847,7 +862,7 @@ function tAuto() {
         <article><h3 class="grey">VISION · AI Vision (OBS)</h3><div>${tpIco("look")}<p>OBS 기반으로 화면의 이상을 탐지합니다.</p></div></article>
         <article><h3 class="teal">VOICE · Voice (STT/TTS)</h3><div>${tpIco("loop")}<p>테스터 대신 TTS·STT로 발화해 AI 고객 상담 시나리오의 음성 품질을 반복 검증합니다.<small>SOTEC 2025 · STK 2025 · QA 코리아 컨퍼런스 2025에서 음성 테스트 자동화(VUX)로 공개</small></p></div></article>
       </div>
-      <div class="tp-actions"><a class="pill ghost" href="#qa/testops/build">TestOps에서 운영하는 방식 보기</a></div>`, "tp-last"));
+      <div class="tp-actions"><a class="pill ghost" href="#qa/service/automation/testops">TestOps에서 운영하는 방식 보기</a></div>`, "tp-last"));
 }
 
 function tGen() {
@@ -1339,7 +1354,7 @@ function ethicalBody() {
 }
 
 const ABOUT_SLIDES = [
-  { id: "about", title: MULTI ? "기업 정보" : "회사 소개", desc: "", tags: [], bg: ["bg-info.de3329d4a93fff58c0c9.png", "bg-tablet-info.dfaa0c39c60c825ecbb2.png", "bg-mobile-info.92d953b0346cc509e852.png"], body: aboutBody },
+  { id: "about", title: "기업 정보", desc: "", tags: [], bg: ["bg-info.de3329d4a93fff58c0c9.png", "bg-tablet-info.dfaa0c39c60c825ecbb2.png", "bg-mobile-info.92d953b0346cc509e852.png"], body: aboutBody },
   { id: "vision", title: "경영철학", desc: "", tags: [], bg: ["bg-vision.2e2c550d96ce302bf12d.png", "bg-tablet-vision.657fdee36572fc7cefea.png", "bg-mobile-vision.5aa6cb952f2921958f37.png"], body: visionBody }
 ];
 
@@ -1554,8 +1569,7 @@ function drawCompany(child, mode) {
 const DRAW = {
   qa: {
     "": qaHome,
-    types: (child) => serviceDeck(child),
-    testops: (child) => testopsDeck(child),
+    service: (child, mode, page) => serviceDeck(child, page),
     tauto: (child) => (T_PAGES[child] || tautoHome)(),
     blog: (child, mode) => blogList(mode, child),
     inquiry: () => inquiryPage("qa"),
@@ -1578,7 +1592,7 @@ const DRAW = {
   }
 };
 
-// /multi 문의: a QA | 보안 switch above the same inquiry pages as #qa/inquiry and #security/inquiry.
+// 문의: a QA | 보안 switch above the same inquiry pages as #qa/inquiry and #security/inquiry.
 const inquiryMode = (child) => (child === "security" ? "security" : "qa");
 function multiInquiry(child) {
   const which = inquiryMode(child);
@@ -1586,40 +1600,31 @@ function multiInquiry(child) {
   return `<nav class="s-subnav inq-switch" aria-label="문의 분야"><div class="s-wrap">${tab("qa", "QA 문의")}${tab("security", "보안 컨설팅 문의")}</div></nav>${inquiryPage(which)}`;
 }
 
-// /multi header: 서비스 (QA · 보안 → their own menus), 블로그 (combined), 회사소개.
-const MULTI_MENU = [
-  {
-    id: "service", label: "서비스", href: "#qa",
-    sections: [
-      { id: "qa", label: "QA", href: "#qa", groups: [
-        { id: "", label: "사업 소개", href: "#qa" },
-        ...MENUS.qa.filter((item) => ["types", "testops", "tauto"].includes(item.id))
-      ] },
-      { id: "security", label: "보안", href: "#security", groups: [
-        { id: "", label: "사업 소개", href: "#security" },
-        { id: "diagnose", label: "사전 진단", href: "#security/diagnose" },
-        { id: "services", label: "컨설팅", href: "#security/services" },
-        { id: "cert", label: "인증", href: "#security/cert" }
-      ] }
-    ]
-  },
+// Header: QA and 보안 each open their own menu; 블로그 holds both areas' posts; 회사소개 is shared.
+const MENU = [
+  { id: "qa", label: "QA", href: "#qa", groups: [{ id: "", label: "사업 소개", href: "#qa" }, ...QA_GROUPS] },
+  { id: "security", label: "보안", href: "#security", groups: [
+    { id: "", label: "사업 소개", href: "#security" },
+    { id: "diagnose", label: "사전 진단", href: "#security/diagnose" },
+    { id: "services", label: "컨설팅", href: "#security/services" },
+    { id: "cert", label: "인증", href: "#security/cert" }
+  ] },
   blogMenu("all"),
   COMPANY_MENU("all")
 ];
 
-function multiTop(mode, group) {
-  if (mode === "qa" || mode === "security") return "service";
-  return group;
+function menuTop(mode, group) {
+  return mode === "qa" || mode === "security" ? mode : group;
 }
 
-function fillMultiDrop(mode, group, child) {
+function fillDrop(mode, group, child) {
   const sub = activeChild(group, child);
   const arrow = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>`;
   const link = (href, label, on, cls = "") => `<a href="${href}"${cls ? ` class="${cls}"` : ""}${on ? ' aria-current="page"' : ""}>${label}</a>`;
-  // 서비스: two framed sections. Each opens with its area (eyebrow, name, 사업 소개 link), then its menu.
+  // QA · 보안: the area (eyebrow, name, 사업 소개 link) on the left, its menu on the right.
   const EYEBROW = { qa: "SOFTWARE TEST &amp; QUALITY", security: "TBELL 정보보호 컨설팅" };
   const NAME = { qa: "QA", security: "보안 컨설팅" };
-  const service = MULTI_MENU[0].sections.map((sec) => {
+  const area = (sec) => {
     const here = mode === sec.id;
     const groups = sec.groups.filter((g) => g.id);
     const nested = groups.some((g) => g.children);
@@ -1631,14 +1636,14 @@ function fillMultiDrop(mode, group, child) {
           </div>`).join("")}</div>`
       : `<div class="md-rows">${groups.map((g) => link(g.href, `<span>${g.label}</span>${arrow}`, here && group === g.id, "md-row")).join("")}</div>`;
     return `
-    <section class="md-sec md-${sec.id}${here ? " is-here" : ""}" aria-label="${NAME[sec.id]}">
+    <section class="md-sec md-solo md-${sec.id}${here ? " is-here" : ""}" aria-label="${NAME[sec.id]}">
       <header class="md-sec-head">
         <p class="md-eyebrow">${EYEBROW[sec.id]}</p>
         <div class="md-title"><b>${NAME[sec.id]}</b>${link(sec.href, `사업 소개${arrow}`, here && !group, "md-home")}</div>
       </header>
       ${body}
     </section>`;
-  }).join("");
+  };
   const plainCol = (item) => item.children.every((g) => !g.children)
     ? `<div class="md-rows md-flat">${item.children.map((g) => link(g.href, `<span>${g.label}</span>${arrow}`, mode === "all" && group === item.id && activeChild(group, child) === g.id, "md-row")).join("")}</div>`
     : `<div class="md-groups md-plain">${item.children.map((g) => `
@@ -1647,31 +1652,31 @@ function fillMultiDrop(mode, group, child) {
       ${(g.children || []).map((k) => link(k.href, k.label, mode === "all" && group === item.id && (child || "about") === k.id, "md-leaf")).join("")}
     </div>`).join("")}</div>`;
   const cols = [
-    `<div class="drop-col md-panel md-service" data-id="service">${service}</div>`,
-    `<div class="drop-col md-panel" data-id="blog">${plainCol(MULTI_MENU[1])}</div>`,
-    `<div class="drop-col md-panel" data-id="company">${plainCol(MULTI_MENU[2])}</div>`
+    `<div class="drop-col md-panel" data-id="qa">${area(MENU[0])}</div>`,
+    `<div class="drop-col md-panel" data-id="security">${area(MENU[1])}</div>`,
+    `<div class="drop-col md-panel" data-id="blog">${plainCol(MENU[2])}</div>`,
+    `<div class="drop-col md-panel" data-id="company">${plainCol(MENU[3])}</div>`
   ].join("");
   menuDrop.innerHTML = `<div class="drop-cols">${cols}</div>`;
   menuDrop.style.height = "0px";
   menuDrop.classList.remove("is-open");
 }
 
-function multiNav(mode, group, child) {
-  const top = multiTop(mode, group);
+function navHtml(mode, group, child) {
+  const top = menuTop(mode, group);
   const mobile = window.matchMedia("(max-width: 768px)").matches;
-  return MULTI_MENU.map((item) => {
+  return MENU.map((item) => {
     const head = `<a href="${item.href}" data-id="${item.id}"${item.id === top ? ' aria-current="page"' : ""}>${item.label}</a>`;
     if (!mobile) return head;
-    const kids = item.sections
-      ? item.sections.map((sec) => `<span class="nav-sec">${sec.label}</span>` + sec.groups.map((g) => `<a href="${g.href}"${mode === sec.id && group === g.id ? ' aria-current="page"' : ""}>${g.label}</a>`).join("")).join("")
+    const kids = item.groups
+      ? item.groups.map((g) => `<a href="${g.href}"${mode === item.id && group === g.id ? ' aria-current="page"' : ""}>${g.label}</a>`).join("")
       : item.children.map((g) => `<a href="${g.href}"${item.id === group && activeChild(group, child) === g.id ? ' aria-current="page"' : ""}>${g.label}</a>`).join("");
     return head + `<div class="nav-sub">${kids}</div>`;
   }).join("");
 }
 
 function activeChild(group, child) {
-  if (group === "types") return child || "outsourcing";
-  if (group === "testops") return child || "build";
+  if (group === "service") return child || "outsourcing";
   if (group === "tauto") return child === "vux" ? "auto" : child || "overview";
   if (group === "blog") {
     const located = blogLocate(parse().mode, child);
@@ -1684,35 +1689,14 @@ function activeChild(group, child) {
   return child;
 }
 
-function extAttrs(href) {
-  return /^https?:/.test(href) ? ' target="_blank" rel="noopener noreferrer"' : "";
-}
-
-function fillDrop(menu, group, child) {
-  const sub = activeChild(group, child);
-  const cols = menu.map((item) => {
-    const links = (item.children || []).map((entry) => `<a href="${entry.href}"${extAttrs(entry.href)}${item.id === group && entry.id === sub ? ' aria-current="page"' : ""}>${entry.label}</a>`).join("");
-    return `<div class="drop-col" data-id="${item.id}">${links}</div>`;
-  }).join("");
-  menuDrop.innerHTML = `<div class="drop-side"></div><div class="drop-cols">${cols}</div><div class="drop-side"></div>`;
-  menuDrop.style.height = "0px";
-  menuDrop.classList.remove("is-open");
-}
-
 function menuFitHeight() {
-  if (MULTI) return Math.min(menuDrop.querySelector(".drop-cols").offsetHeight, Math.max(0, window.innerHeight - header.offsetHeight));
-  const columns = [...menuDrop.querySelectorAll(".drop-col")];
-  const content = columns.reduce((max, col) => Math.max(max, col.offsetHeight), 0);
-  const styles = getComputedStyle(menuDrop);
-  const pad = parseFloat(styles.paddingTop) + parseFloat(styles.paddingBottom);
-  const cap = Math.max(0, window.innerHeight - header.offsetHeight);
-  return Math.min(content + pad, cap);
+  return Math.min(menuDrop.querySelector(".drop-cols").offsetHeight, Math.max(0, window.innerHeight - header.offsetHeight));
 }
 
 function openMenu(id) {
   if (window.matchMedia("(max-width: 768px)").matches) return;
-  // /multi shows one panel per item: entering the nav bar (or a gap in it) must not open an empty sheet.
-  if (MULTI && !id) return;
+  // One panel per item: entering the nav bar (or a gap in it) must not open an empty sheet.
+  if (!id) return;
   const opening = !menuDrop.classList.contains("is-open");
   menuDrop.classList.add("is-open");
   menuDrop.querySelectorAll(".drop-col").forEach((col) => col.classList.toggle("is-hover", col.dataset.id === id));
@@ -1811,7 +1795,7 @@ function wireJump() {
         return;
       }
       const href = el.getAttribute("href") || "";
-      if (href && (location.hash || "#") !== href) {
+      if (href && !isHere(el.dataset.route || href)) {
         sessionStorage.setItem("tbell-jump", id);
         return;
       }
@@ -2136,7 +2120,7 @@ function wireDiagnose() {
     try {
       sessionStorage.setItem("tbell-consult-v01", JSON.stringify({ message: lines.join("\n"), pii: on("q-pii"), topics }));
     } catch (err) { /* storage unavailable */ }
-    location.hash = "#security/inquiry";
+    go("#security/inquiry");
   });
 }
 
@@ -2155,67 +2139,23 @@ function wireDeck() {
     const delta = event.changedTouches[0].clientX - startX;
     if (Math.abs(delta) < 40) return;
     const href = delta < 0 ? banner.dataset.next : banner.dataset.prev;
-    if (href) location.hash = href;
+    if (href) go(href);
   });
 }
 
 function render() {
   const { mode, group, child, page: pageNo } = parse();
-  // /multi keeps one blog, one company section and one inquiry page: send the per-area URLs there.
-  if (MULTI && (mode === "qa" || mode === "security") && ["blog", "company", "inquiry"].includes(group)) {
+  const legacy = mode === "qa" ? legacyQaHash(group, child) : "";
+  if (legacy) {
+    go(legacy, true);
+    return;
+  }
+  // One blog, one company section and one inquiry page: send the old per-area URLs there.
+  if ((mode === "qa" || mode === "security") && ["blog", "company", "inquiry"].includes(group)) {
     const to = group === "inquiry" ? "#inquiry/" + mode : "#" + group + (child ? "/" + child : "") + (pageNo ? "/" + pageNo : "");
-    location.replace(to);
+    go(to, true);
     return;
   }
-  if (MULTI) return renderMulti(mode, group, child);
-  // Inside a business area the logo returns to that area's home, not the root gate.
-  logoLink.href = mode ? "#" + mode : "#";
-  logoLink.setAttribute("aria-label", mode ? `TBELL ${MODE_LABEL[mode]} 홈` : "TBELL 홈");
-  if (!mode) {
-    activeMenu = [];
-    logoMode.textContent = "";
-    document.title = "TBELL";
-    inquire.hidden = true;
-    switchPanel.innerHTML = OTHERS[""].map(([href, label]) => `<a href="${href}">${label}</a>`).join("");
-    switchBtn.setAttribute("aria-expanded", "false");
-    switchPanel.hidden = true;
-    nav.innerHTML = "";
-    nav.classList.remove("open");
-    navToggle.setAttribute("aria-expanded", "false");
-    fillDrop([], "", "");
-    content.innerHTML = gateHome();
-    wireStages();
-    window.scrollTo(0, 0);
-    return;
-  }
-  const menu = MENUS[mode];
-  activeMenu = menu;
-  logoMode.textContent = MODE_LABEL[mode];
-  document.title = "TBELL · " + MODE_LABEL[mode];
-  inquire.hidden = false;
-  inquire.textContent = "문의";
-  inquire.href = "#" + mode + "/inquiry";
-
-  switchPanel.innerHTML = OTHERS[mode].map(([href, label]) => `<a href="${href}">${label}</a>`).join("");
-  switchBtn.setAttribute("aria-expanded", "false");
-  switchPanel.hidden = true;
-
-  const mobile = window.matchMedia("(max-width: 768px)").matches;
-  const sub = activeChild(group, child);
-  nav.innerHTML = menu.map((item) => {
-    const top = `<a href="${item.href}" data-id="${item.id}"${extAttrs(item.href)}${item.id === group ? ' aria-current="page"' : ""}>${item.label}</a>`;
-    if (!mobile || !item.children) return top;
-    const kids = item.children.map((entry) => `<a href="${entry.href}"${extAttrs(entry.href)}${item.id === group && entry.id === sub ? ' aria-current="page"' : ""}>${entry.label}</a>`).join("");
-    return top + `<div class="nav-sub">${kids}</div>`;
-  }).join("");
-  nav.classList.remove("open");
-  navToggle.setAttribute("aria-expanded", "false");
-  fillDrop(menu, group, child);
-
-  drawContent(mode, group, child);
-}
-
-function renderMulti(mode, group, child) {
   logoLink.href = "#";
   logoLink.setAttribute("aria-label", "TBELL 홈");
   logoMode.textContent = "";
@@ -2223,24 +2163,25 @@ function renderMulti(mode, group, child) {
   inquire.hidden = false;
   inquire.textContent = "문의";
   inquire.href = "#inquiry/" + (mode === "security" ? "security" : "qa");
-  nav.innerHTML = multiNav(mode, group, child);
+  nav.innerHTML = navHtml(mode, group, child);
   nav.classList.remove("open");
   navToggle.setAttribute("aria-expanded", "false");
-  fillMultiDrop(mode, group, child);
+  fillDrop(mode, group, child);
   if (!mode) {
     content.innerHTML = multiHome();
     wireStages();
     wireJump();
+    pathLinks();
     window.scrollTo(0, 0);
     return;
   }
-  drawContent(mode, group, child);
+  drawContent(mode, group, child, pageNo);
 }
 
-function drawContent(mode, group, child) {
+function drawContent(mode, group, child, pageNo) {
   const bucket = DRAW[mode];
   const draw = bucket[group] || bucket[""];
-  content.innerHTML = draw.length ? draw(child, mode) : draw();
+  content.innerHTML = draw.length ? draw(child, mode, pageNo) : draw();
   wireDeck();
   wireJump();
   wireDiagnose();
@@ -2265,6 +2206,7 @@ function drawContent(mode, group, child) {
     });
   }
   wireStages();
+  pathLinks();
   const jump = sessionStorage.getItem("tbell-jump");
   window.scrollTo(0, 0);
   if (jump) {
@@ -2293,21 +2235,9 @@ function wireStages() {
       stageObserver.unobserve(entry.target);
     });
   }, { threshold: 0.4 });
-  document.querySelectorAll(".stage, [data-count-zone]").forEach((el) => stageObserver.observe(el));
+  document.querySelectorAll("[data-count-zone]").forEach((el) => stageObserver.observe(el));
 }
 
-switchBtn.addEventListener("click", (event) => {
-  event.stopPropagation();
-  const open = switchBtn.getAttribute("aria-expanded") === "true";
-  switchBtn.setAttribute("aria-expanded", String(!open));
-  switchPanel.hidden = open;
-});
-document.addEventListener("click", (event) => {
-  if (!event.target.closest(".switch")) {
-    switchBtn.setAttribute("aria-expanded", "false");
-    switchPanel.hidden = true;
-  }
-});
 nav.addEventListener("mouseenter", () => openMenu(""));
 nav.addEventListener("mouseover", (event) => {
   const link = event.target.closest("a[data-id]");
@@ -2329,15 +2259,15 @@ navToggle.addEventListener("click", () => {
   const open = nav.classList.toggle("open");
   navToggle.setAttribute("aria-expanded", String(open));
 });
-// Moving between pages of one QA deck (테스트 종류, TestOps, 회사…) morphs the shared pieces — the
+// Moving between pages of one QA deck (테스트 유형, 테스트 자동화, 회사…) morphs the shared pieces — the
 // section headings and the box diagram — with a view transition instead of a hard cut.
-if (MULTI) document.body.classList.add("is-multi");
 let lastRoute = parse();
-window.addEventListener("hashchange", () => {
+function onRoute() {
   const prev = lastRoute;
   const next = parse();
   lastRoute = next;
-  const deck = prev.mode === next.mode && prev.group === next.group && prev.child !== next.child && document.querySelector(".svc-page");
+  const tab = next.group === "service" && prev.child === next.child && prev.page !== next.page;
+  const deck = prev.mode === next.mode && prev.group === next.group && (prev.child !== next.child || tab) && document.querySelector(".svc-page");
   const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (!deck || still || !document.startViewTransition) { render(); return; }
   // The transition waits for a painted frame; if none comes (throttled tab), render anyway.
@@ -2345,5 +2275,25 @@ window.addEventListener("hashchange", () => {
   const once = () => { if (!done) { done = true; render(); } };
   const vt = document.startViewTransition(once);
   setTimeout(() => { if (!done) { vt.skipTransition(); once(); } }, 400);
-});
+}
+if (HASH_ROUTES) {
+  window.addEventListener("hashchange", onRoute);
+} else {
+  // An old "#qa/…" link (bookmark, or one drawn after the page was built) becomes its path.
+  const fromHash = () => {
+    if (!isRoute(location.hash)) return false;
+    history.replaceState(null, "", routeUrl(location.hash));
+    return true;
+  };
+  window.addEventListener("hashchange", () => { if (fromHash()) onRoute(); });
+  window.addEventListener("popstate", onRoute);
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[data-route]");
+    if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    if (isHere(link.dataset.route)) return;
+    go(link.dataset.route);
+  });
+  if (fromHash()) lastRoute = parse();
+}
 render();

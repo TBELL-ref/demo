@@ -282,14 +282,8 @@ function qpRingBand(cls, bg, title, rings, titleInside = true) {
 }
 
 function qpAboutIntro() {
-  // /multi (기업 정보) shows only 티벨 코어 and 찾아오시는 길.
-  const greeting = window.TBELL_LAYOUT === "multi" ? "" : qpSec("회사소개", `<div class="qp-left">${qpParas([
-    "인재가 자산인 티벨 홈페이지를 방문해 주신 모든 분들께 감사드립니다.",
-    "대한민국 IT산업의 SW품질향상에 기여하고자 테스트에 대한 방법론과 서비스를 차별화하여 테스트 서비스의 패러다임 변화를 주도하고 있습니다. / 이런 우리의 철학과 품질 가치를 중심으로 대기업뿐만 아니라 중소기업 및 벤처기업의 Needs에 맞는 테스트 서비스를 제공하고 있으며, 티벨의 고객 / 솔루션이 사용자에게 만족과 안정성을 드릴 수 있게 서비스를 제공하고 있습니다.",
-    "최고의 고객 품질을 지향하는 티벨은 차별화된 테스트 경험을 제공하는 대한민국 대표 품질 서비스 기업입니다. 테스트 서비스를 제공하며 DevOps와 / OpenSource 테스트 기술력에 집중하며 성장세를 기록하고 있습니다. / 앞으로도 티벨은 고객이 만족하고 신뢰할 수 있는 테스트 서비스를 제공하기 위해 끊임없이 노력할 것이며, 한국 시장을 넘어 세계 시장에서 인정받는 / 대한민국 대표 테스트 기업이 되겠습니다. / 또한, 새로운 사업인 AI Data 분야를 통해 생활의 편의성을 증가시키고 IT 강국의 이름을 이어갈 수 있도록 최선을 다할 것입니다.",
-    "감사합니다."
-  ])}</div>`);
-  return `${greeting}
+  // 기업 정보 shows only 티벨 코어 and 찾아오시는 길.
+  return `
   <h2 class="qp-h qp-h-solo" data-qp-reveal>티벨 코어</h2>
   ${qpRingBand("qp-core", "core-building.jpg", "", [["core-test", "TEST"], ["core-customer", "CUSTOMER"], ["core-human", "HUMAN"]].map(([i, t]) => `<b>${t}</b><span class="qp-ring2">${qpIcon(i, t)}</span>`))}`;
 }
