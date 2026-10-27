@@ -299,14 +299,16 @@ html:has(.stage) { scroll-snap-type: y proximity; }
   margin-top: 18px; padding: 18px; border-radius: 15px; background: #1b1b1b;
 }
 .result strong { color: var(--active); font-weight: 400; }
-.footer {
-  padding: 36px 6vw 48px;
-  background: var(--canvas);
-  border-top: 1px solid rgba(255, 255, 255, 0.16);
-  color: var(--ash); font-size: 0.9rem;
-  display: grid; gap: 6px;
+/* Footer: the origin site's footer as it is — logo, 견적 상담 and the phone, hours, then the company lines. */
+.footer { display: flex; flex-direction: column; padding: 5%; background: #121212; color: #fff; font-size: 15px; line-height: 1.5; }
+.footer > img { display: block; align-self: flex-start; width: auto; height: 28px; margin: 6px 0 34px; }
+.footer-body p { margin: 0; color: #fff; font-size: 12px; line-height: 1.5; white-space: pre-wrap; }
+.footer-body .footer-call { font-size: 20px; font-weight: 600; }
+.footer-body .footer-phone { font-size: 25px; font-weight: 700; }
+@media (max-width: 768px) {
+  .footer-body .footer-call { font-size: 12px; }
+  .footer-body .footer-phone { font-size: 12px; font-weight: 600; }
 }
-.footer img { height: 16px; width: auto; margin-bottom: 8px; opacity: 0.85; }
 
 @media (max-width: 1024px) {
   .nav a { font-weight: 400; font-size: 15px; width: auto; padding: 0 clamp(6px, 1.2vw, 14px); white-space: nowrap; }
@@ -2376,16 +2378,16 @@ a.s-card:hover .s-ibox { border-color: var(--active); }
 
 /* QA · 보안: one area per panel, its name on the left and its menu on the right */
 .md-sec { display: grid; align-content: start; gap: 24px; width: 100%; }
-.md-solo { grid-template-columns: minmax(200px, 260px) minmax(0, 1fr); column-gap: 56px; padding: 4px 0 6px; }
+.md-solo { grid-template-columns: 260px minmax(0, 1fr); column-gap: 56px; padding: 4px 0 6px; }
 /* The /re-menu static pages still draw the older two-section 서비스 panel (tools/build_re_menu.py header()). */
 .md-service { grid-template-columns: 1.5fr 1fr; }
 .is-multi .drop-col.md-service.is-hover { display: grid; }
 .md-service .md-sec { padding: 4px 48px 6px 0; }
 .md-service .md-sec + .md-sec { padding: 4px 0 6px 48px; border-left: 1px solid #2c2c2c; }
-.md-solo .md-sec-head { padding-right: 40px; border-right: 1px solid #2c2c2c; }
+.md-solo .md-sec-head { align-content: start; padding-right: 40px; border-right: 1px solid #2c2c2c; }
 .md-solo .md-title { flex-direction: column; align-items: flex-start; gap: 10px; }
 .md-solo .md-title b, .md-solo .md-title a { white-space: nowrap; }
-.md-solo .md-groups { grid-template-columns: repeat(auto-fill, minmax(160px, 200px)); column-gap: 48px; }
+.md-solo .md-groups { grid-template-columns: repeat(3, minmax(0, 200px)); column-gap: clamp(24px, 3vw, 48px); }
 .md-solo .md-rows { grid-template-columns: repeat(3, minmax(0, 220px)); column-gap: 28px; align-content: start; }
 .md-sec-head { display: grid; gap: 6px; }
 .md-eyebrow { margin: 0; color: #7d7d7d; font-family: var(--num); font-size: 11px; font-weight: 600; letter-spacing: .14em; }

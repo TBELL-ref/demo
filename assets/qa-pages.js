@@ -335,16 +335,17 @@ function qpRecruitIntro() {
     ["talent-synergy", "시너지", "상호 존중과 신뢰를 바탕으로 창조적인 / 대안을 이끌어 낼 수 있는 인재"],
     ["talent-innovation", "끊임 없는 쇄신", "적극적인 자기 개선과 지속적인 / 성장을 추구하는 인재"]
   ];
-  const tile = (cls, html) => `<article class="qp-mosaic-${cls}" style="background-image:url('${QA}photos/recruit-mosaic.jpg')"><h3>${html}</h3></article>`;
+  const tile = (cls, html, mail) => `<article class="qp-mosaic-${cls}" style="background-image:url('${QA}photos/recruit-mosaic.jpg')"><h3>${html}<a class="qp-mosaic-mail" href="mailto:${mail}">${mail}</a></h3></article>`;
   return `
     ${qpRule("인재상", qpIconList(talents))}
     ${qpSec("인재채용", "<p>티벨은 올바른 생각과 실천을 통해 “우수한 인재를, 일하기 좋은 기업”을 만듭니다.</p>", "", "qp-tight")}
     <div class="qp-mosaic" data-qp-reveal>
-      ${tile("a", "[경력] (주)티벨 정보보호 전문가 채용")}
-      ${tile("b", "[경력] (주)티벨 개발자 채용<small>상시채용</small>")}
-      ${tile("c", "인사팀 경력자 채용")}
+      ${tile("a", "[경력] (주)티벨 SW 테스터 대규모 채용", "staff@tbell.co.kr")}
+      ${tile("b", "[경력] (주)티벨 개발자 채용<small>상시채용</small>", "staff@tbell.co.kr")}
+      ${tile("c", "인사팀 경력자 채용", "staff@tbell.co.kr")}
+      ${tile("d", "[경력] (주)티벨 정보보호 전문가 채용", "security@tbell.co.kr")}
     </div>
-    ${qpSec("지원방법", "<p>티벨은 즐거움과 행복과 성장을 나눌 수 있는 Good Player를 모집합니다.</p>", "", "qp-tight")}`;
+    ${qpSec("지원방법", "<p>티벨은 즐거움과 행복과 성장을 나눌 수 있는 Good Player를 모집합니다.</p><p>QA · 개발 · 인사 분야는 <a href=\"mailto:staff@tbell.co.kr\">staff@tbell.co.kr</a>, 정보보호 분야는 <a href=\"mailto:security@tbell.co.kr\">security@tbell.co.kr</a>로 지원하실 수 있습니다.</p>", "", "qp-tight")}`;
 }
 
 function benefitBody() {

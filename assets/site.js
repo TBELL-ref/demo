@@ -114,7 +114,7 @@ const COMPANY_MENU = (mode) => ({
       ]
     },
     {
-      id: "recruit", label: "인재채용", href: hashBase(mode) + "company/recruit",
+      id: "recruit", label: "채용·복지", href: hashBase(mode) + "company/recruit",
       children: [
         { id: "benefit", label: "복리후생", href: hashBase(mode) + "company/benefit" },
         { id: "recruit", label: "인재채용", href: hashBase(mode) + "company/recruit" }
@@ -131,14 +131,25 @@ const COMPANY_MENU = (mode) => ({
   ]
 });
 
-// QA's own menu groups; the header (MENU) puts them under QA.
+// QA's own menu groups; the header (MENU) puts them under QA. Every test service and both TestOps pages
+// are listed by name, so the menu shows the whole QA offer.
 const QA_GROUPS = [
   {
-    id: "service", label: "서비스", href: "#qa/service",
+    id: "service", label: "테스트 서비스", href: "#qa/service/outsourcing",
     children: [
       { id: "outsourcing", label: "QA 아웃소싱", href: "#qa/service/outsourcing" },
-      { id: "types", label: "테스트 유형", href: "#qa/service/types" },
-      { id: "automation", label: "테스트 자동화", href: "#qa/service/automation" }
+      { id: "automation", label: "테스트 자동화", href: "#qa/service/automation" },
+      { id: "blackbox", label: "블랙박스 테스트", href: "#qa/service/types/blackbox" },
+      { id: "whitebox", label: "화이트박스 테스트", href: "#qa/service/types/whitebox" },
+      { id: "api", label: "API 테스트", href: "#qa/service/types/api" },
+      { id: "performance", label: "성능 테스트", href: "#qa/service/types/performance" }
+    ]
+  },
+  {
+    id: "testops", label: "TestOps", href: "#qa/service/automation/testops",
+    children: [
+      { id: "build", label: "TestOps 구축", href: "#qa/service/automation/testops" },
+      { id: "ai", label: "AI 기반 검증 자동화", href: "#qa/service/automation/ai" }
     ]
   },
   {
@@ -1631,8 +1642,8 @@ function fillDrop(mode, group, child) {
     const body = nested
       ? `<div class="md-groups">${groups.map((g) => `
           <div class="md-group">
-            ${link(g.href, g.label, here && group === g.id && !child, "md-gtitle")}
-            ${(g.children || []).map((k) => link(k.href, k.label, here && group === g.id && sub === k.id, "md-leaf")).join("")}
+            ${link(g.href, g.label, here && (g.children || []).some((k) => isHere(k.href)), "md-gtitle")}
+            ${(g.children || []).map((k) => link(k.href, k.label, here && isHere(k.href), "md-leaf")).join("")}
           </div>`).join("")}</div>`
       : `<div class="md-rows">${groups.map((g) => link(g.href, `<span>${g.label}</span>${arrow}`, here && group === g.id, "md-row")).join("")}</div>`;
     return `
@@ -2177,6 +2188,9 @@ function render() {
   }
   drawContent(mode, group, child, pageNo);
 }
+
+const footerYear = document.getElementById("footer-year");
+if (footerYear) footerYear.textContent = new Date().getFullYear();
 
 function drawContent(mode, group, child, pageNo) {
   const bucket = DRAW[mode];
