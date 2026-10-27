@@ -216,14 +216,9 @@ function page(kicker, title, lede, body, jumps) {
 // Hero says what the company does without naming the businesses; right below it, two
 // equal entrances into QA and 정보보호 using each home's own h1 and artwork. MISSION and
 // 티벨 코어, the milestones and the offices follow. Figures are the published ones.
-const MULTI_SINCE = [
-  ["2015", "주식회사 티벨 설립"],
-  ["2016", "기업부설연구소 설립"],
-  ["2018", "SK텔레콤 동반성장 협약 체결"],
-  ["2020", "벤처기업 인증"],
-  ["2023", "2023년도 SK텔레콤 최우수파트너사 수상"]
-];
-const MULTI_FIGURES = [[1460, "개", "누적 수행 프로젝트"], [161, "개사", "이용 고객사"], [165, "명", "임직원"]];
+// Home SINCE 2015: the published figures, then three milestones in one line (the full history is on 연혁).
+const MULTI_STEPS = [["2015", "설립"], ["2016", "기업부설연구소"], ["2020", "벤처기업 인증"]];
+const MULTI_FIGURES = [[1460, "개", "누적 수행 프로젝트"], [161, "개사", "이용 고객사"], [165, "명", "임직원"], [299, "억 원", "누적 매출"]];
 
 // Door artwork for 정보보호: a still copy of the security home shield.
 const BIZ_ART = {
@@ -249,8 +244,7 @@ function multiDoor(sec) {
 
 function multiHome() {
   const base = window.TBELL_BASE || "";
-  const years = new Date().getFullYear() - 2015;
-  const core = [["core-test", "TEST"], ["core-security", "SECURITY"], ["core-customer", "CUSTOMER"], ["core-human", "HUMAN"]];
+  const core = [["core-test", "QUALITY", "품질에 대한 책임"], ["core-security", "SECURITY", "신뢰할 수 있는 보안"], ["core-customer", "CUSTOMER", "고객 중심의 가치"], ["core-human", "PEOPLE", "사람과 전문성"]];
   const [qaSec, secSec] = MENU;
   return `<div class="mh">
   <section class="mh-doors">
@@ -259,19 +253,18 @@ function multiHome() {
   </section>
   <section class="mh-core" style="background-image:url('${base}assets/qa/photos/core-building.jpg')">
     <div class="mh-wrap">
-      <p class="qh-label">MISSION</p>
-      <p class="mh-mission">우리는 고객의 소프트웨어 품질 향상을 위해 <br>스마트한 솔루션을 제공하며 <br>고객의 가치 향상에 기여합니다.</p>
-      <p class="qh-label mh-core-label">TBELL CORE</p>
-      <h2>티벨 코어</h2>
-      <ul class="mh-rings">${core.map(([icon, t], i) => `<li style="--i:${i}"><span><img src="${base}assets/qa/icons/${icon}.png" alt=""></span><b>${t}</b></li>`).join("")}</ul>
+      <h2>티벨이 추구하는 가치</h2>
+      <p class="mh-mission">기술과 전문성을 바탕으로 <br>고객의 품질과 보안 수준을 높이고, <br>더 나은 비즈니스 가치를 만들어갑니다.</p>
+      <ul class="mh-rings">${core.map(([icon, t, ko], i) => `<li style="--i:${i}"><span><img src="${base}assets/qa/icons/${icon}.png" alt=""></span><b>${t}</b><small>${ko}</small></li>`).join("")}</ul>
     </div>
   </section>
   <section class="mh-since" data-count-zone>
     <div class="mh-wrap">
       <p class="qh-label">SINCE 2015</p>
-      <h2><span class="count" data-count="${years}">0</span>년, 하나의 티벨</h2>
-      <ol class="mh-line">${MULTI_SINCE.map(([y, t], i) => `<li style="--i:${i}"><b>${y}</b><span>${t}</span></li>`).join("")}</ol>
-      <div class="mh-figs">${MULTI_FIGURES.map(([n, u, l]) => `<div><p>${l}</p><strong><span class="count" data-count="${n}">0</span>${u}</strong></div>`).join("")}</div>
+      <h2>고객과 함께 성장해 온 티벨</h2>
+      <p class="mh-since-lede">2015년 설립 이후 다양한 산업에서 쌓아온 경험과 신뢰</p>
+      <div class="mh-figs">${MULTI_FIGURES.map(([n, u, l]) => `<div><p>${l}</p><strong><span class="count" data-count="${n}">0</span><small>${u}</small></strong></div>`).join("")}</div>
+      <div class="mh-steps"><p>주요 발자취</p><ol>${MULTI_STEPS.map(([y, t]) => `<li><b>${y}</b><span>${t}</span></li>`).join("")}</ol></div>
     </div>
   </section>
 </div>`;
@@ -2282,6 +2275,38 @@ function render() {
 const footerYear = document.getElementById("footer-year");
 if (footerYear) footerYear.textContent = new Date().getFullYear();
 
+// Home on PC (≥1024, as the origin): one wheel step glides to the next full-height section; past the last one the page scrolls on to the footer.
+let homePaging = 0;
+window.addEventListener("wheel", (e) => {
+  const secs = document.querySelectorAll(".mh > section");
+  if (!secs.length || window.innerWidth < 1024 || e.ctrlKey || !e.deltaY) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if (Date.now() < homePaging) { e.preventDefault(); return; }
+  const head = document.querySelector(".site-head").offsetHeight;
+  const view = window.innerHeight - head;
+  const tops = [...secs].map((s) => s.getBoundingClientRect().top + window.scrollY - head);
+  const y = window.scrollY;
+  const last = tops.length - 1;
+  let i = tops.length - 1;
+  while (i > 0 && tops[i] > y + 2) i--;
+  const bottom = tops[i] + secs[i].offsetHeight - view;
+  let to = null;
+  if (e.deltaY > 0) {
+    if (y < bottom - 2) return; // a section taller than the screen scrolls through first
+    if (i < last) to = tops[i + 1];
+  } else if (y > tops[last] + secs[last].offsetHeight - view + 2) {
+    to = tops[last] + secs[last].offsetHeight - view; // from the footer, back to the last section
+  } else if (y > tops[i] + 2) {
+    return;
+  } else if (i > 0) {
+    to = tops[i - 1] + Math.max(0, secs[i - 1].offsetHeight - view);
+  }
+  if (to === null) return;
+  e.preventDefault();
+  homePaging = Date.now() + 900;
+  window.scrollTo({ top: to, behavior: "smooth" });
+}, { passive: false });
+
 function drawContent(mode, group, child, pageNo) {
   const bucket = DRAW[mode];
   const draw = bucket[group] || bucket[""];
@@ -2332,7 +2357,7 @@ function wireStages() {
         const start = performance.now();
         const tick = (now) => {
           const p = Math.min(1, (now - start) / 1200);
-          el.textContent = String(Math.round(target * (1 - Math.pow(1 - p, 3))));
+          el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3))).toLocaleString("ko-KR");
           if (p < 1) requestAnimationFrame(tick);
         };
         requestAnimationFrame(tick);
