@@ -240,10 +240,9 @@ function multiDoor(sec) {
   return `<a class="door door-${sec.id}" href="${sec.href}">
       ${art}
       <span class="door-copy">
-        <small>${qa ? "SOFTWARE TEST &amp; QUALITY" : "TBELL 정보보호 컨설팅"}</small>
-        <b>${qa ? "QA" : "정보보호"}</b>
-        <span class="door-line">${qa ? "차별화된 테스트 경험을 제공하는 대한민국 대표 품질 서비스 기업" : "우리 회사에 필요한 보안 인증, 2분이면 알 수 있습니다."}</span>
-        <em>${qa ? "QA" : "정보보호"} 홈으로<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></em>
+        <b>${qa ? "QA 서비스" : "보안 서비스"}</b>
+        <span class="door-line">${qa ? "차별화된 테스트 경험을 제공하는 대표 품질 서비스" : "기업의 보안 수준을 높이는 전문 보안 진단 및 컨설팅 서비스"}</span>
+        <em>자세히 알아보기<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></em>
       </span>
     </a>`;
 }
