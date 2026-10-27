@@ -299,15 +299,23 @@ html:has(.stage) { scroll-snap-type: y proximity; }
   margin-top: 18px; padding: 18px; border-radius: 15px; background: #1b1b1b;
 }
 .result strong { color: var(--active); font-weight: 400; }
-/* Footer: the origin site's footer as it is — logo, 견적 상담 and the phone, hours, then the company lines. */
-.footer { display: flex; flex-direction: column; padding: 5%; background: #121212; color: #fff; font-size: 15px; line-height: 1.5; }
-.footer > img { display: block; align-self: flex-start; width: auto; height: 28px; margin: 6px 0 34px; }
-.footer-body p { margin: 0; color: #fff; font-size: 12px; line-height: 1.5; white-space: pre-wrap; }
-.footer-body .footer-call { font-size: 20px; font-weight: 600; }
-.footer-body .footer-phone { font-size: 25px; font-weight: 700; }
+/* Footer: the origin site's footer — a 2px rule on top; the logo right-aligned in the first third,
+   견적 상담 · phone · hours · company lines in the other two. Tablet and phone stack them. */
+.footer { display: flex; padding: 4%; background: #121212; border-top: 2px solid #e4e4e4; color: #c5c5c5; }
+.footer-logo { display: flex; flex: 1 1 0; justify-content: flex-end; align-items: flex-start; padding-right: 3.68vw; }
+.footer-logo img { display: block; width: auto; height: 28px; margin-top: 6px; }
+.footer-body { flex: 2 1 0; min-width: 0; }
+.footer-body p { margin: 0; color: #fff; font-size: 12px; line-height: 18px; white-space: pre-wrap; }
+.footer-body .footer-call { font-weight: 600; }
+.footer-body .footer-phone { font-size: 25px; font-weight: 700; line-height: 1.5; }
+@media (max-width: 1024px) {
+  .footer { flex-direction: column; padding: 5%; }
+  .footer-logo { justify-content: flex-start; margin-bottom: 27px; padding-right: 0; }
+  .footer-body .footer-call { font-size: 20px; line-height: 30px; }
+}
 @media (max-width: 768px) {
-  .footer-body .footer-call { font-size: 12px; }
-  .footer-body .footer-phone { font-size: 12px; font-weight: 600; }
+  .footer-body .footer-call { font-size: 12px; line-height: 18px; }
+  .footer-body .footer-phone { font-size: 12px; font-weight: 600; line-height: 18px; }
 }
 
 @media (max-width: 1024px) {
@@ -2378,7 +2386,7 @@ a.s-card:hover .s-ibox { border-color: var(--active); }
 
 /* QA · 보안: one area per panel, its name on the left and its menu on the right */
 .md-sec { display: grid; align-content: start; gap: 24px; width: 100%; }
-.md-solo { grid-template-columns: 260px minmax(0, 1fr); column-gap: 56px; padding: 4px 0 6px; }
+.md-solo { grid-template-columns: 260px minmax(0, 1fr); grid-template-rows: minmax(192px, auto); column-gap: 56px; padding: 4px 0 6px; }
 /* The /re-menu static pages still draw the older two-section 서비스 panel (tools/build_re_menu.py header()). */
 .md-service { grid-template-columns: 1.5fr 1fr; }
 .is-multi .drop-col.md-service.is-hover { display: grid; }
@@ -2526,27 +2534,32 @@ a.s-card:hover .s-ibox { border-color: var(--active); }
 }
 
 
-/* ── Header: compact bar, grouped nav, quiet hairline, neutral button ───────── */
-.is-multi { --header-h: 68px; }
-.is-multi .site-head { background: rgba(13, 13, 13, .96); -webkit-backdrop-filter: saturate(140%) blur(14px); backdrop-filter: saturate(140%) blur(14px); }
-.is-multi .header { padding: 0 var(--gutter); border-bottom: 1px solid rgba(255, 255, 255, .08); }
+/* ── Header: the origin bar — 90px, #121212, a 1px light line underneath, 17px bold items in equal
+   162px cells centred on the page. 문의 keeps its place at the right but is one more item in the same type. */
+.is-multi { --header-h: 90px; }
+.is-multi .site-head { background: #121212; }
+.is-multi .header { padding: 0 5.5vw; border-bottom: 1px solid #e4e4e4; }
 .is-multi .logo { flex: 1 1 0; padding: 0; }
-.is-multi .logo img { height: 18px; }
+.is-multi .logo img { height: 20px; }
 .is-multi .logo:hover img { filter: none; opacity: .75; }
-.is-multi .tools { flex: 1 1 0; width: auto; }
-.is-multi #inquire { min-height: 0; height: 36px; padding: 0 16px; border-radius: 6px; background: #fff; border-color: #fff; color: #111; font-size: 14px; font-weight: 600; }
-.is-multi #inquire:hover { background: #dcdcdc; border-color: #dcdcdc; color: #111; }
+.is-multi .tools { flex: 1 1 0; width: auto; justify-content: flex-end; }
+.is-multi #inquire { min-height: 0; height: auto; padding: 0; border: 0; border-radius: 0; background: none; color: #fff; font-size: 17px; font-weight: 700; transition: color .15s; }
+.is-multi #inquire:hover { background: none; color: var(--active); }
 @media (min-width: 769px) {
-  .is-multi .nav { flex: none; width: auto; gap: clamp(4px, 1.6vw, 24px); justify-content: center; }
-  .is-multi .nav a { position: relative; width: auto; padding: 0 14px; border-radius: 0; color: rgba(255, 255, 255, .72); font-size: 15px; font-weight: 500; letter-spacing: -.01em; white-space: nowrap; transition: color .15s; }
-  .is-multi .nav a::after { content: ""; position: absolute; left: 14px; right: 14px; bottom: -1px; height: 2px; background: var(--active); transform: scaleX(0); transition: transform .2s ease; }
-  .is-multi .nav a:hover, .is-multi .nav a[aria-current="page"] { color: #fff; }
+  .is-multi .nav { flex: none; width: auto; gap: 0; justify-content: center; }
+  .is-multi .nav a { position: relative; width: clamp(104px, 8.44vw, 162px); padding: 0; justify-content: center; border-radius: 0; color: #fff; font-size: 17px; font-weight: 700; white-space: nowrap; transition: color .15s; }
+  .is-multi .nav a::after { content: ""; position: absolute; left: 50%; bottom: -1px; width: 48px; height: 2px; margin-left: -24px; background: var(--active); transform: scaleX(0); transition: transform .2s ease; }
+  .is-multi .nav a:hover, .is-multi .nav a[aria-current="page"] { color: var(--active); }
   .is-multi .nav a:hover::after, .is-multi .nav a[aria-current="page"]::after { transform: scaleX(1); }
+}
+@media (max-width: 1024px) {
+  .is-multi .nav a, .is-multi #inquire { font-size: 15px; }
 }
 @media (max-width: 768px) {
   .is-multi { --header-h: 56px; }
   .is-multi .header { padding: 0 16px; }
-  .is-multi #inquire { height: 32px; padding: 0 12px; font-size: 13px; }
+  .is-multi .tools { gap: 18px; }
+  .is-multi #inquire { font-size: 14px; }
 }
 
 /* ── Home hero · two doors (design_demo/multi-hero-options/b-two-doors) ─────────── */

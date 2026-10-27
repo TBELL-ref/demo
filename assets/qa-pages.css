@@ -270,18 +270,18 @@
 .qp-csf-w:hover path { filter: brightness(.94); }
 
 /* recruit mosaic */
-.qp-mosaic { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; height: clamp(360px, 40vw, 775px); margin-top: 56px; }
-.qp-mosaic article { position: relative; display: flex; padding: clamp(18px, 2.6vw, 48px); overflow: hidden; background-repeat: no-repeat; color: #fff; }
-.qp-mosaic article::after { content: ""; position: absolute; inset: 0; background: rgba(10, 20, 40, .18); transition: background .4s; }
+/* 인재채용: the one photo (three shots, the code shot 54% wide) stays whole behind four roles —
+   two on the code shot, one on each shot on the right — so no role crosses a seam. */
+.qp-mosaic { display: grid; grid-template-columns: 53.85% 46.15%; grid-template-rows: 1fr 1fr; aspect-ratio: 3840 / 1549; margin-top: 56px; background: #1a2333 var(--qp-mosaic) center / 100% 100% no-repeat; }
+.qp-mosaic article { position: relative; display: flex; padding: clamp(18px, 2.6vw, 48px); color: #fff; }
+.qp-mosaic article::after { content: ""; position: absolute; inset: 0; background: rgba(10, 20, 40, .18); transition: background .4s; pointer-events: none; }
 .qp-mosaic article:hover::after { background: rgba(10, 20, 40, 0); }
-.qp-mosaic h3 { position: relative; z-index: 1; margin: 0; color: #fff; font-size: clamp(17px, 1.75vw, 33px); font-weight: 400; line-height: 1.3; }
-.qp-mosaic small { display: block; text-align: right; font-size: .55em; }
-.qp-mosaic article { background-size: 200% 200%; }
-.qp-mosaic-a { background-position: 0 0; }
-.qp-mosaic-b { background-position: 100% 0; justify-content: flex-end; text-align: right; }
-.qp-mosaic-c { background-position: 0 100%; align-items: flex-end; }
-.qp-mosaic-d { background-position: 100% 100%; justify-content: flex-end; align-items: flex-end; text-align: right; }
-.qp-mosaic .qp-mosaic-mail { display: block; margin-top: .5em; color: rgba(255, 255, 255, .85); font-size: .5em; text-decoration: underline; text-underline-offset: 3px; }
+.qp-mosaic h3 { position: relative; z-index: 1; margin: 0; color: #fff; font-size: clamp(18px, 1.75vw, 33px); font-weight: 500; line-height: 1.3; }
+.qp-mosaic h3 span { display: block; margin-top: .35em; color: rgba(255, 255, 255, .85); font-size: .5em; font-weight: 400; }
+.qp-mosaic-a { grid-area: 1 / 1; }
+.qp-mosaic-d { grid-area: 2 / 1; align-items: flex-end; }
+.qp-mosaic-b { grid-area: 1 / 2; justify-content: flex-end; text-align: right; }
+.qp-mosaic-c { grid-area: 2 / 2; justify-content: flex-end; align-items: flex-end; text-align: right; }
 
 /* world-map sections */
 .qp-map, .qp-timeline { background: center 70% / min(1260px, 100%) auto no-repeat; }
@@ -384,7 +384,12 @@
   .qp-ilist li { grid-template-columns: 76px 1fr; gap: 16px; }
   .qp-bandrings { grid-template-columns: 1fr; justify-items: center; gap: 40px; }
   .qp-maprings { grid-template-columns: 1fr; width: 70%; margin-left: auto; margin-right: auto; }
-  .qp-mosaic { grid-template-columns: 1fr; grid-template-rows: repeat(4, 180px); height: auto; }
+  .qp-mosaic { grid-template-columns: 1fr; grid-template-rows: repeat(4, 160px); aspect-ratio: auto; background: none !important; }
+  .qp-mosaic article { grid-area: auto; justify-content: flex-start; align-items: flex-end; text-align: left; background-image: var(--qp-mosaic); background-repeat: no-repeat; }
+  .qp-mosaic-a, .qp-mosaic-d { background-size: 186% auto; background-position: 0 30%; }
+  .qp-mosaic-d { background-position: 0 85%; }
+  .qp-mosaic-b { background-size: 240% auto; background-position: 100% 0; }
+  .qp-mosaic-c { background-size: 240% auto; background-position: 100% 100%; }
   .qp-mission blockquote { padding: 0 40px; }
   .qp-mission blockquote::before, .qp-mission blockquote::after { font-size: 60px; }
   .qp-stairs ol { flex-direction: column; align-items: center; gap: 46px; }
