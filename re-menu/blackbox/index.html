@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@200;400;500;700&family=Oxanium:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="../../assets/site.css?v=123">
   <link rel="stylesheet" href="../../assets/qa-pages.css?v=19">
-  <link rel="stylesheet" href="../../re-menu/re.css?v=14">
+  <link rel="stylesheet" href="../../re-menu/re.css?v=15">
   <link rel="icon" href="../../assets/tbell-logo.svg">
   <script type="application/ld+json">
 {
@@ -203,23 +203,23 @@
   <section class="qp-sec qp-intro" data-qp-reveal>
     <h2 class="qp-h">블랙박스 테스트<br>(Black-Box Testing)</h2>
     <div class="qp-lede"><p>소프트웨어의 요구사항과 명세서를 기반으로 테스트 설계 및 테스트를 수행하며, 이 과정에서 입출력 데이터를 분석하여 <br class="qp-br">시스템의 적정성을 확인하는 동적 테스트 서비스입니다. 설계 및 구현 단계에 이르기까지 모든 소프트웨어 개발 단계에서 테스트가 가능합니다.</p><p>블랙박스 테스트는 소프트웨어의 품질을 보장하는 데 필수적인 방법입니다. 블랙박스 테스트를 통해 소프트웨어의 버그와 <br class="qp-br">오류를 발견하고 수정할 수 있습니다. 또한 블랙박스 테스트는 소프트웨어의 사용성을 개선하고 사용자 만족도를 높이는 데에도 도움이 됩니다.</p></div>
-    <figure class="rb-box" aria-label="Black Box Testing: 아이디·비밀번호 입력과 로그인 클릭을 넣고, 내부는 보지 않은 채 기대 결과와 실제 결과를 비교합니다">
-      <figcaption>Black Box Testing</figcaption>
-      <div class="rb-scene">
-        <div class="rb-inc"><p class="rb-tag">INPUT</p><ul class="rb-chips"><li style="--i:0">아이디</li><li style="--i:1">비밀번호</li><li style="--i:2">로그인 클릭</li></ul></div>
-        <i class="rb-lane rb-l1" aria-hidden="true"><span></span></i>
-        <div class="rb-mid"><svg class="rb-cube" viewBox="0 0 260 260" aria-hidden="true">
-          <circle class="rb-disc" cx="130" cy="138" r="104"/>
-          <g class="qp-cube"><path class="f-top" d="M130 70 L200 110 L130 150 L60 110z"/><path class="f-left" d="M60 110 L130 150 L130 230 L60 190z"/><path class="f-right" d="M200 110 L130 150 L130 230 L200 190z"/></g>
-          <text x="130" y="121" class="rb-q">?</text>
-        </svg></div>
-        <i class="rb-lane rb-l2" aria-hidden="true"><span></span></i>
-        <div class="rb-outc"><p class="rb-tag">OUTPUT</p><ul class="rb-chips"><li class="is-ghost"><small>기대</small>메인 화면 이동</li><li class="is-act"><small>실제</small>메인 화면 이동<b aria-label="일치">✓</b></li></ul></div>
-        <div class="rb-note rb-n1"><div><b>대상</b><p>요구사항 명세서, 사용자 기능과 사양</p></div></div>
-        <div class="rb-note rb-n2"><div><b>관점</b><p>개발자가 아닌 사용자·테스터 관점의 기능 검증</p></div><div><b>언어 독립성</b><p>프로그래밍 언어나 내부 구현 방식에 구애받지 않습니다</p></div></div>
-        <div class="rb-note rb-n3"><div><b>목적</b><p>입력에 대해 기대한 결과가 올바르게 출력되는지 확인합니다</p></div></div>
-      </div>
-    </figure>
+    <figure class="qp-box" data-box="black" aria-label="Black Box Testing: Input → Black Box → Output">
+    <figcaption>Black Box Testing</figcaption>
+    <svg viewBox="0 0 880 300" role="img" aria-hidden="true">
+      <text x="70" y="148" class="qp-box-io">Input</text>
+      <line class="qp-dash" x1="175" y1="140" x2="290" y2="140"/><path class="qp-head" d="M290 132 l14 8 -14 8z"/>
+      <circle class="qp-box-disc" cx="440" cy="140" r="122"/>
+      <g class="qp-cube">
+        <path class="f-top" d="M440 72 L510 112 L440 152 L370 112z"/>
+        <path class="f-left" d="M370 112 L440 152 L440 232 L370 192z"/>
+        <path class="f-right" d="M510 112 L440 152 L440 232 L510 192z"/>
+      </g>
+      <line class="qp-dash" x1="590" y1="140" x2="705" y2="140"/><path class="qp-head" d="M705 132 l14 8 -14 8z"/>
+      <text x="740" y="148" class="qp-box-io">Output</text>
+    </svg>
+    <p class="qp-box-name">Black Box</p>
+  </figure>
+    <dl class="rx-spec" style="--n:4"><div><dt>대상</dt><dd>요구사항 명세서</dd></div><div><dt>관점</dt><dd>사용자 · 테스터</dd></div><div><dt>언어 독립성</dt><dd>구현 방식과 무관</dd></div><div><dt>목적</dt><dd>기대 결과 = 실제 결과</dd></div></dl>
   </section>
     
   <section class="qp-sec" data-qp-reveal aria-labelledby="tech">
@@ -260,6 +260,6 @@
   </footer>
   <script>window.TBELL_BASE = "../../";</script>
   <script src="../../assets/qa-pages.js?v=9"></script>
-  <script src="../../re-menu/re-menu.js?v=8"></script>
+  <script src="../../re-menu/re-menu.js?v=9"></script>
 </body>
 </html>
