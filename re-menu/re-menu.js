@@ -69,6 +69,16 @@
   window.addEventListener("resize", () => { if (drop.classList.contains("is-open")) drop.style.height = fit() + "px"; });
   toggle.addEventListener("click", () => toggle.setAttribute("aria-expanded", String(nav.classList.toggle("open"))));
 
+  // 테스트 분야 photo cards (site.js wireDeck): the clicked card opens, the others close.
+  document.querySelectorAll(".expand-card").forEach((card) => {
+    card.addEventListener("click", () => {
+      card.parentElement.querySelectorAll(".expand-card").forEach((el) => {
+        el.classList.toggle("is-open", el === card);
+        el.setAttribute("aria-expanded", String(el === card));
+      });
+    });
+  });
+
   // 테스트 종류 explorer (site.js wireExplorer, static): the chosen photo wipes in, its info block shows.
   const qx = document.querySelector(".qx");
   if (qx) {

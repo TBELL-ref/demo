@@ -105,89 +105,15 @@
   .dg .curve, .dg .edge.hot { stroke-dasharray: none; }
 }
 
-/* ── QA 아웃소싱 (rm-outsourcing): its own sections, one picture each ──────────────
-   ro- = this page only. White sections follow design.md's white body (700 #333 titles, white cards,
-   12px radius, soft shadow); dark ones use the canvas steps. */
-.ro-split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: clamp(32px, 5vw, 80px); align-items: center; }
-.ro-split .qh-head { margin-bottom: 28px; }
-.ro-lede { max-width: 32em; margin: 0 0 14px; color: var(--mist); font-size: 17px; line-height: 1.85; }
-.ro-art { min-height: 0; padding: clamp(20px, 3vw, 40px); border-radius: 18px; box-shadow: 0 24px 48px rgba(0, 0, 0, .18); }
-.ro-art .dg { max-width: 520px; margin: 0 auto; }
-
-/* 이럴 때: four cards on the dark canvas, icon first. */
-.ro-need { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin: 0; padding: 0; list-style: none; }
-.ro-need li { position: relative; display: grid; grid-template-rows: auto 1fr; gap: 18px; min-height: 210px; padding: 28px 26px; border: 1px solid var(--rule); border-radius: 12px; background: var(--raise); transition: border-color .25s, transform .25s; }
-.ro-need li:hover { border-color: var(--active); transform: translateY(-4px); }
-.ro-need .n { position: absolute; top: 24px; right: 24px; font-family: var(--num); font-size: 13px; color: var(--ash); }
-.ro-need p { align-self: end; margin: 0; font-size: 18px; font-weight: 500; line-height: 1.5; }
-.ro-ico { width: 40px; height: 40px; fill: none; stroke: var(--active); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
-
-/* 장점 01–05: rings on a gentle rise, each drawn with a cyan arc (origin cards, origin copy). */
-.ro-adv { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 20px; margin: 64px 0 0; padding: 0; list-style: none; text-align: center; }
-.ro-adv li { display: grid; justify-items: center; gap: 22px; transform: translateY(calc((2 - var(--i)) * -14px)); }
-.ro-ring { position: relative; display: grid; place-items: center; width: clamp(108px, 9vw, 140px); aspect-ratio: 1; border-radius: 50%; background: #fff; box-shadow: 0 14px 30px rgba(0, 0, 0, .10); }
-.ro-ring::before { content: ""; position: absolute; inset: -7px; border-radius: 50%; background: conic-gradient(from 200deg, #27c4d5 0 calc(36% + var(--i) * 9%), #e9eef0 0); -webkit-mask: radial-gradient(closest-side, transparent calc(100% - 5px), #000 calc(100% - 4px)); mask: radial-gradient(closest-side, transparent calc(100% - 5px), #000 calc(100% - 4px)); }
-.ro-ring b { font-size: clamp(26px, 2.2vw, 34px); font-weight: 700; color: #333; }
-.ro-adv p { margin: 0; color: #333; font-size: 16px; font-weight: 500; line-height: 1.6; }
-
-/* 진행: four steps on one track. */
-.ro-flow { position: relative; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; margin: 0; padding: 0; list-style: none; }
-.ro-flow::before { content: ""; position: absolute; top: 46px; left: 12.5%; right: 12.5%; height: 2px; background: linear-gradient(90deg, var(--rule-strong), var(--active), var(--rule-strong)); }
-.ro-flow li { position: relative; display: grid; justify-items: center; gap: 10px; text-align: center; }
-.ro-dot { display: grid; place-items: center; width: 92px; height: 92px; margin-bottom: 10px; border: 1px solid var(--rule-strong); border-radius: 50%; background: var(--panel); }
-.ro-flow li:hover .ro-dot { border-color: var(--active); box-shadow: 0 0 24px rgba(39, 196, 213, .25); }
-.ro-flow .n { font-family: var(--num); font-size: 12px; font-weight: 500; letter-spacing: .16em; color: var(--ash); }
-.ro-flow h3 { margin: 0; font-size: 20px; font-weight: 700; }
-.ro-flow p { max-width: 15em; margin: 0; color: var(--mist); font-size: 15px; line-height: 1.7; }
-
-/* 테스트 분야: origin photo cards; the one under the pointer (or focus) widens and shows its copy. */
-.ro-fields { display: flex; gap: 12px; height: clamp(320px, 30vw, 420px); margin: 0; padding: 0; list-style: none; }
-.ro-fields li { position: relative; flex: 1 1 0; min-width: 0; overflow: hidden; border-radius: 12px; background: #121212; box-shadow: 0 14px 30px rgba(0, 0, 0, .14); cursor: default; transition: flex-grow .45s cubic-bezier(.2, .7, .2, 1); outline: none; }
-.ro-fields:not(:hover):not(:focus-within) li:first-child, .ro-fields li:hover, .ro-fields li:focus-within { flex-grow: 2.6; }
-.ro-fields li:focus-visible { box-shadow: 0 0 0 3px var(--active); }
-.ro-fields img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.ro-fields li::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0, 0, 0, .05) 30%, rgba(0, 0, 0, .78)); }
-.ro-fields div { position: absolute; left: 0; right: 0; bottom: 0; z-index: 1; padding: clamp(18px, 1.8vw, 28px); color: #fff; }
-.ro-fields b { font-family: var(--num); font-size: 14px; font-weight: 500; color: #ddd; }
-.ro-fields h3 { margin: 4px 0 0; font-size: clamp(18px, 1.5vw, 24px); font-weight: 700; color: #fff; white-space: nowrap; }
-.ro-fields p { max-height: 0; max-width: 26em; margin: 0; overflow: hidden; color: #e6e6e6; font-size: 14px; line-height: 1.7; opacity: 0; transition: max-height .45s, opacity .3s, margin .45s; }
-.ro-fields:not(:hover):not(:focus-within) li:first-child p, .ro-fields li:hover p, .ro-fields li:focus-within p { max-height: 8em; margin-top: 10px; opacity: 1; transition-delay: .12s; }
-
-/* 테스트 의뢰: the origin's contact row, under the closing button. */
-.ro-contact { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px 56px; margin: 48px 0 0; padding: 0; list-style: none; text-align: left; }
-.ro-contact li { display: flex; align-items: center; gap: 14px; }
-.ro-contact img { width: 48px; height: 48px; padding: 11px; border: 1px solid var(--rule-strong); border-radius: 50%; object-fit: contain; filter: invert(1) brightness(1.6); }
-.ro-contact div { display: grid; gap: 2px; }
-.ro-contact a { color: var(--ink); font-family: var(--num); font-size: 18px; font-weight: 500; text-decoration: none; }
-.ro-contact a:hover { color: var(--active); }
-.ro-contact span { color: var(--ash); font-size: 13px; }
-
-@media (max-width: 1024px) {
-  .ro-split { grid-template-columns: 1fr; }
-  .ro-need { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .ro-adv { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 48px; }
-  .ro-adv li { transform: none; }
-  .ro-flow { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 48px; }
-  .ro-flow::before { display: none; }
-}
-@media (max-width: 768px) {
-  .ro-lede { font-size: 15px; }
-  .ro-need { grid-template-columns: 1fr; }
-  .ro-need li { min-height: 0; grid-template-rows: none; grid-template-columns: auto 1fr; align-items: center; padding: 20px 48px 20px 20px; }
-  .ro-need .n { top: 50%; right: 18px; transform: translateY(-50%); }
-  .ro-need p { margin: 0; font-size: 16px; }
-  .ro-adv { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 36px 12px; }
-  .ro-adv p { font-size: 14px; }
-  .ro-ring { width: 96px; }
-  .ro-adv br, .ro-fields br { display: none; }
-  .ro-flow { grid-template-columns: 1fr; }
-  .ro-flow li { grid-template-columns: 72px 1fr; justify-items: start; column-gap: 18px; text-align: left; }
-  .ro-dot { grid-row: span 3; width: 72px; height: 72px; margin: 0; }
-  .ro-fields { flex-direction: column; height: auto; }
-  .ro-fields li, .ro-fields li:hover, .ro-fields li:focus-within { flex: none; height: 220px; }
-  .ro-fields p { max-height: none; margin-top: 8px; opacity: 1; }
-  .ro-contact { flex-direction: column; align-items: center; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .ro-fields li, .ro-fields p, .ro-need li { transition: none; }
-}
+/* ── Origin white body (QA 아웃소싱): the SPA's svc-body + qp- components from qa-pages.css ──
+   Only the FAQ is new here; it takes the white body's colours and the qp- column. */
+.rm-origin .rm-faq { margin-top: 56px; border-top-color: #ddd; text-align: left; }
+.rm-origin .rm-faq details { border-bottom-color: #ddd; }
+.rm-origin .rm-faq summary { color: #333; font-size: clamp(15px, 1vw, 18px); }
+.rm-origin .rm-faq summary::after { color: #969696; }
+.rm-origin .rm-faq details p { color: #595959; font-size: clamp(14px, .9vw, 16px); }
+.rm-origin .rm-faq a { color: #0788a4; }
+.rm-origin .qp-lede p { margin: 0; }
+.rm-origin .expand-card:focus-visible { outline: 2px solid var(--active); outline-offset: 3px; }
+.rm-origin .contact-row a { color: inherit; text-decoration: none; }
+.rm-origin .contact-row a:hover { color: #0788a4; }
