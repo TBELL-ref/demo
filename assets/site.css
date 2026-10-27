@@ -1840,7 +1840,8 @@ a.s-card:hover .s-ibox { border-color: var(--active); }
 .form-row > label { display: grid; gap: 6px; min-width: 0; color: var(--ash); font-size: 0.9rem; }
 .detail .sheet .form-row > label { color: #595959; }
 .form-row input { min-width: 0; }
-.survey { border: 1px solid var(--line); border-radius: 12px; padding: 0 16px; }
+/* 사전 조사: no outline — a text row that opens onto one light panel; fields are white on it. */
+.survey { border: 0; padding: 0; }
 .survey summary {
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
   padding: 14px 0; cursor: pointer; list-style: none;
@@ -1853,8 +1854,16 @@ a.s-card:hover .s-ibox { border-color: var(--active); }
 .survey .when-open, .survey[open] .when-closed { display: none; }
 .survey[open] .when-open { display: inline; }
 .survey summary:focus-visible { outline: 2px solid var(--active); outline-offset: 2px; border-radius: 8px; }
-.survey[open] { padding-bottom: 16px; }
-.survey[open] summary { border-bottom: 1px solid var(--line); margin-bottom: 4px; }
+.survey[open] { padding-bottom: 0; }
+.survey[open] summary { border-bottom: 0; margin-bottom: 0; }
+.survey summary { padding: 6px 0 10px; }
+.survey .survey-toggle::before { content: "열기"; }
+.survey[open] .survey-toggle::before { content: "닫기"; }
+.survey[open] > :not(summary) { background: #f5f7f8; }
+.survey[open] .survey-note { margin: 0; padding: 18px 20px 4px; border-radius: 12px 12px 0 0; }
+.survey[open] .survey-counts { margin: 0; padding: 12px 20px 0; }
+.survey[open] .survey-selects { margin: 0; padding: 12px 20px 20px; border-radius: 0 0 12px 12px; }
+.form .survey .unit input, .form .survey-selects select { border: 1px solid #e1e5e8; border-radius: 8px; background: #fff; }
 .survey .survey-grid { margin-top: 12px; }
 .list > .inq-link {
   display: flex; align-items: center; justify-content: space-between; gap: 16px;
@@ -2419,6 +2428,7 @@ a.s-card:hover .s-ibox { border-color: var(--active); }
 
 .nav-sec { padding: 12px 0 2px; color: var(--active); font-family: var(--num); font-size: 12px; letter-spacing: .12em; }
 .inq-switch + .detail .banner { border-top: 0; }
+.inq-page .sheet { padding-top: clamp(48px, 5vw, 80px); }
 .is-multi .drop-col a.md-row:hover, .is-multi .drop-col a.md-row[aria-current="page"],
 .is-multi .drop-col a.md-gtitle:hover, .is-multi .drop-col a.md-gtitle[aria-current="page"],
 .is-multi .drop-col a.md-leaf:hover, .is-multi .drop-col a.md-leaf[aria-current="page"] { color: var(--active); }

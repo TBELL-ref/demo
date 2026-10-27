@@ -251,7 +251,7 @@ function multiDoor(sec) {
 function multiHome() {
   const base = window.TBELL_BASE || "";
   const years = new Date().getFullYear() - 2015;
-  const core = [["core-test", "TEST"], ["core-customer", "CUSTOMER"], ["core-human", "HUMAN"]];
+  const core = [["core-test", "TEST"], ["core-security", "SECURITY"], ["core-customer", "CUSTOMER"], ["core-human", "HUMAN"]];
   const [qaSec, secSec] = MENU;
   return `<div class="mh">
   <section class="mh-doors">
@@ -1392,10 +1392,6 @@ const INQUIRY = {
     title: "진단 결과를 보내 주시면, 계획으로 답합니다",
     lede: "셀프 진단 결과나 준비 중인 인증, 목표 일정을 알려 주세요. 컨설팅 범위와 권장 일정, 단계별로 받으실 문서 목록을 정리해 회신드립니다.",
     mail: "security@tbell.co.kr",
-    labels: ["EMAIL", "TEL", "HQ"],
-    phone: "070-7777-9113",
-    phoneNote: "월–금 09:30–18:00 · 점심 12:00–13:00",
-    place: "서울특별시 강남구 강남대로 354, 9층 (혜천빌딩)",
     aside: `<a class="inq-link" href="#security/diagnose"><div><h3>진단 전</h3><p>아직 진단 전이면, 2분 셀프 진단부터</p></div><svg class="inq-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>`,
     topics: ["ISMS·ISMS-P", "ISO 27001 계열", "개인정보 보호", "마스터플랜·제로트러스트", "AI 거버넌스", "Virtual CISO 자문"],
     messageLabel: "현재 상황과 목표 일정",
@@ -1425,15 +1421,14 @@ const INQUIRY = {
 function inquiryPage(mode) {
   const spec = INQUIRY[mode];
   const chips = spec.topics.map((topic) => `<label class="chip"><input type="checkbox" name="topic" value="${topic}">${topic}</label>`).join("");
-  const phone = spec.phone || "070-7777-9113 / 070-7777-6368";
-  const phoneNote = spec.phoneNote || "월–금요일 09:30–18:00 · 점심 12:00–13:00";
-  const place = spec.place || "강남본사 서울특별시 강남구 강남대로 354, 9층";
-  return page(spec.kicker || "Inquiry", spec.title, spec.lede, `
+  // No banner: the QA | 보안 switch above is the page's head. The contact block is the same for both areas;
+  // only the mail differs.
+  return `<section class="detail inq-page"><div class="sheet">
     <div class="inquiry-grid">
       <div class="list">
-        <article><h3>${spec.labels ? spec.labels[0] : "메일"}</h3><p>${spec.mail}</p></article>
-        <article><h3>${spec.labels ? spec.labels[1] : "전화"}</h3><p class="num">${phone}</p><p>${phoneNote}</p></article>
-        <article><h3>${spec.labels ? spec.labels[2] : "받는 곳"}</h3><p>${place}</p></article>
+        <article><h3>메일</h3><p>${spec.mail}</p></article>
+        <article><h3>전화</h3><p class="num">070-7777-9113 / 070-7777-6368</p><p>월–금요일 09:30–18:00 · 점심 12:00–13:00</p></article>
+        <article><h3>받는 곳</h3><p>강남본사 서울특별시 강남구 강남대로 354, 9층</p></article>
         ${spec.aside || ""}
       </div>
       <form class="form" id="inquiry-form">
@@ -1450,7 +1445,8 @@ function inquiryPage(mode) {
         <button class="pill" type="submit">${spec.button || "문의 보내기"}</button>
       </form>
     </div>
-    <div class="result" id="inquiry-result" hidden></div>`);
+    <div class="result" id="inquiry-result" hidden></div>
+  </div></section>`;
 }
 
 function esc(text) {
