@@ -311,11 +311,17 @@ html:has(.stage) { scroll-snap-type: y proximity; }
 @media (max-width: 1024px) {
   .footer { flex-direction: column; padding: 5%; }
   .footer-logo { justify-content: flex-start; margin-bottom: 27px; padding-right: 0; }
+}
+@media (max-width: 1023px) {
   .footer-body .footer-call { font-size: 20px; line-height: 30px; }
 }
-@media (max-width: 768px) {
-  .footer-body .footer-call { font-size: 12px; line-height: 18px; }
-  .footer-body .footer-phone { font-size: 12px; font-weight: 600; line-height: 18px; }
+/* Mobile: the phone joins 견적 상담 on one 20px line, and Fax drops to its own line. */
+@media (max-width: 500px) {
+  .footer { padding: 10% 5%; }
+  .footer-body .footer-call, .footer-body .footer-phone { display: inline; font-size: 20px; font-weight: 600; line-height: 30px; }
+  .footer-body .footer-call::after { content: " "; }
+  .footer-sep { display: none; }
+  .footer-fax { display: block; }
 }
 
 @media (max-width: 1024px) {
@@ -323,7 +329,8 @@ html:has(.stage) { scroll-snap-type: y proximity; }
   .grid, .two, .inquiry-grid, .gate { grid-template-columns: 1fr; }
   .blog-grid { grid-template-columns: repeat(2, 1fr); }
 }
-@media (max-width: 768px) {
+/* Below 1024 (the origin's tablet and mobile) the header is the 50px bar with the menu behind ☰. */
+@media (max-width: 1023px) {
   :root { --header-h: 50px; }
   .header { padding: 0 14px; gap: 10px; }
   .logo { flex: 0 0 auto; padding: 0 3% 0 0; }
@@ -347,6 +354,8 @@ html:has(.stage) { scroll-snap-type: y proximity; }
     justify-content: flex-start;
     font-weight: 400; color: #969696;
   }
+}
+@media (max-width: 768px) {
   .grid, .two, .timeline li { grid-template-columns: 1fr; }
   .hero { min-height: auto; padding-top: 48px; }
 }
@@ -371,7 +380,16 @@ html:has(.stage) { scroll-snap-type: y proximity; }
 .svc-slide p { margin: 0 0 20px; white-space: pre-wrap; line-height: 1.5; text-align: left; }
 .svc-slide p:first-child { font-size: 24px; }
 .svc-tags { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-.svc-tags span { background: #d9d9d9; color: #1b1b1b; border-radius: 30px; padding: 10px; text-align: center; font-size: 14px; }
+.svc-tags span { background: #d9d9d9; color: #1b1b1b; border-radius: 30px; padding: 10px; text-align: center; font-size: clamp(11px, calc(7.57px + .3348vw), 14px); }
+.svc-slide p:nth-child(2) { font-size: clamp(14px, calc(2.57px + 1.1161vw), 24px); }
+@media (max-width: 1023px) {
+  .svc-slide p:nth-child(2) { font-size: clamp(11px, calc(-4px + 1.9531vw), 16px); }
+  .svc-tags span { font-size: clamp(10px, calc(4px + .7813vw), 12px); }
+}
+@media (max-width: 500px) {
+  .svc-slide p:nth-child(2) { font-size: clamp(11px, calc(5.14px + 1.6746vw), 18px); }
+  .svc-tags span { font-size: clamp(10px, calc(8.32px + .4785vw), 12px); }
+}
 .svc-nav {
   position: absolute; top: calc(50% - 28px); z-index: 2; color: #fff; line-height: 0;
 }
@@ -651,13 +669,16 @@ html:has(.stage) { scroll-snap-type: y proximity; }
   .hist-stack-year .rule { width: 100%; margin: 3% 0; border-top: 1px solid #969696; }
   .hist-stack-year p { margin: 0; max-width: 100%; color: inherit; text-align: center; overflow-wrap: break-word; }
 }
-@media (max-width: 768px) {
+/* Banner copy follows the origin's JS steps: the copy column only goes full width on mobile (<= 500). */
+@media (max-width: 500px) {
   .svc-slide { align-items: flex-start; }
-  .svc-banner { height: 100vw; min-height: 100vw; max-height: 768px; }
   .svc-slide > div { width: 100%; height: 60%; margin-left: 0; padding: 3%; }
   .svc-slide p:first-child { font-size: 12px; }
   .svc-tags { grid-template-columns: repeat(3, 1fr); }
-  .svc-tags span { padding: 7px; font-size: 12px; }
+  .svc-tags span { padding: 7px; }
+}
+@media (max-width: 768px) {
+  .svc-banner { height: 100vw; min-height: 100vw; max-height: 768px; }
   .expand-row { flex-direction: column; padding: 0 5%; }
   .expand-card, .expand-card.is-open { width: 100%; height: auto; }
   .expand-card img { width: 100%; height: auto; }
@@ -1454,8 +1475,16 @@ a.s-card:hover .s-ibox { border-color: var(--active); }
   position: absolute; z-index: 2; top: 50%; transform: translateY(-50%);
   left: max(var(--gutter), calc((100vw - var(--content-max)) / 2 + 16px)); width: min(700px, 52vw);
 }
-.qh-hero-copy h1 { margin-top: 18px; font-size: clamp(30px, 2.9vw, 44px); font-weight: 700; line-height: 1.3; letter-spacing: -0.01em; }
-.qh-hero-copy .lede { margin-top: 22px; max-width: 32em; color: var(--mist); }
+.qh-hero-copy h1 { margin-top: 18px; font-size: clamp(22px, calc(-7.71px + 2.9018vw), 48px); font-weight: 700; line-height: 1.3; letter-spacing: -0.01em; }
+.qh-hero-copy .lede { margin-top: 22px; max-width: 32em; color: var(--mist); font-size: clamp(12px, calc(-1.71px + 1.3393vw), 24px); }
+@media (max-width: 1023px) {
+  .qh-hero-copy h1 { font-size: clamp(22px, calc(-32px + 7.0313vw), 40px); }
+  .qh-hero-copy .lede { font-size: clamp(12px, calc(-6px + 2.3438vw), 18px); }
+}
+@media (max-width: 500px) {
+  .qh-hero-copy h1 { font-size: 20px; }
+  .qh-hero-copy .lede { font-size: clamp(10px, calc(8.32px + .4785vw), 12px); }
+}
 .qh-hero-copy .s-actions { justify-content: flex-start; margin-top: 36px; }
 .qh-scroll { position: absolute; z-index: 2; left: 50%; bottom: 28px; width: 26px; height: 42px; margin-left: -13px; border: 1.5px solid rgba(255, 255, 255, .45); border-radius: 13px; }
 .qh-scroll span { position: absolute; left: 50%; top: 8px; width: 4px; height: 8px; margin-left: -2px; border-radius: 2px; background: #fff; animation: qh-wheel 1.8s ease-in-out infinite; }
@@ -1625,7 +1654,6 @@ a.s-card:hover .s-ibox { border-color: var(--active); }
   .qh-hero-copy { width: min(440px, 42vw); }
   .qh-art { left: 48%; }
   .qh-art::after { content: ""; position: absolute; inset: 0 auto 0 0; width: 22%; background: linear-gradient(90deg, #161616, rgba(22, 22, 22, 0)); pointer-events: none; }
-  .qh-hero-copy h1 { font-size: clamp(22px, 2.9vw, 30px); }
   .qx { grid-template-columns: 240px 1fr; gap: 32px; }
   .qx-list button { font-size: 17px; }
   .qh-testops > .s-wrap { grid-template-columns: 1fr; min-height: 0; padding-block: 96px; }
@@ -1634,8 +1662,6 @@ a.s-card:hover .s-ibox { border-color: var(--active); }
   .qh-hero { display: flex; flex-direction: column; height: auto; min-height: 0; max-height: none; }
   .qh-hero-copy { order: -1; }
   .qh-hero-copy { position: relative; z-index: 2; top: auto; left: auto; width: auto; transform: none; padding: 40px 16px 0; }
-  .qh-hero-copy h1 { font-size: 26px; }
-  .qh-hero-copy .lede { font-size: 15px; }
   .qh-hero-copy .s-actions { margin-top: 24px; }
   .qh-art::after { display: none; }
   .qh-art { position: relative; inset: auto; left: auto; aspect-ratio: 1440 / 1560; margin: -24px 0 -72px; transform: none; }
@@ -2364,9 +2390,7 @@ a.s-card:hover .s-ibox { border-color: var(--active); }
   .s-hero .lede,
   .detail .banner .lede,
   .sk-copy .lede { font-size: 15px; line-height: 1.6; }
-  /* QA photo banners (types, recruit): the slide title was 12px, smaller than its own description */
-  .svc-slide p:first-child { font-size: 16px; font-weight: 500; }
-  .svc-slide p:nth-child(2) { font-size: 15px; white-space: normal; }
+  .svc-slide p:nth-child(2) { white-space: normal; }
   .svc-slide > div > p { margin-bottom: 10px; }
   .svc-tags { gap: 8px; }
   /* Services hero: the 120px bottom pad makes room for the wave on desktop; on phones it was empty space */
@@ -2458,11 +2482,11 @@ a.s-card:hover .s-ibox { border-color: var(--active); }
 
 /* QA photo banners at tablet widths: wider copy column, tags wrap as pills, nothing spills from the next slide */
 .svc-slide { overflow: hidden; }
-@media (min-width: 769px) and (max-width: 1024px) {
+@media (min-width: 501px) and (max-width: 1024px) {
   .svc-slide > div { width: 46%; margin-left: 52%; padding-right: var(--gutter); }
   .svc-slide p:nth-child(2) { white-space: normal; }
   .svc-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-  .svc-tags span { padding: 7px 14px; font-size: 13px; }
+  .svc-tags span { padding: 7px 14px; }
 }
 
 /* ── Home (mh-): company-wide — MISSION, 티벨 코어, since 2015, figures ────────── */
@@ -2555,21 +2579,27 @@ a.s-card:hover .s-ibox { border-color: var(--active); }
 .is-multi .tools { flex: 1 1 0; width: auto; justify-content: flex-end; }
 .is-multi #inquire { min-height: 0; height: auto; padding: 0; border: 0; border-radius: 0; background: none; color: #fff; font-size: 17px; font-weight: 700; transition: color .15s; }
 .is-multi #inquire:hover { background: none; color: var(--active); }
-@media (min-width: 769px) {
+@media (min-width: 1024px) {
   .is-multi .nav { flex: none; width: auto; gap: 0; justify-content: center; }
-  .is-multi .nav a { position: relative; width: clamp(104px, 8.44vw, 162px); padding: 0; justify-content: center; border-radius: 0; color: #fff; font-size: 17px; font-weight: 700; white-space: nowrap; transition: color .15s; }
+  /* origin px(10, 17) over 1024-1920, in 8vw-wide cells */
+  .is-multi .nav a { position: relative; width: 8.44vw; padding: 0; justify-content: center; border-radius: 0; color: #fff; font-size: clamp(10px, calc(2px + .7813vw), 17px); font-weight: 700; white-space: nowrap; transition: color .15s; }
+  .is-multi #inquire { font-size: clamp(10px, calc(2px + .7813vw), 17px); }
   .is-multi .nav a::after { content: ""; position: absolute; left: 50%; bottom: -1px; width: 48px; height: 2px; margin-left: -24px; background: var(--active); transform: scaleX(0); transition: transform .2s ease; }
   .is-multi .nav a:hover, .is-multi .nav a[aria-current="page"] { color: var(--active); }
   .is-multi .nav a:hover::after, .is-multi .nav a[aria-current="page"]::after { transform: scaleX(1); }
 }
-@media (max-width: 1024px) {
-  .is-multi .nav a, .is-multi #inquire { font-size: 15px; }
+/* Tablet and mobile: the origin's 50px bar — logo at its inset, ☰ only (문의 sits in the opened menu). */
+@media (max-width: 1023px) {
+  .is-multi { --header-h: 50px; }
+  .is-multi .header { padding: 0 22px 0 calc(10px + 5.9vw); }
+  .is-multi #inquire { display: none; }
+  .is-multi .nav-toggle { width: 35px; height: 35px; }
+  .is-multi .nav-toggle span { width: 25px; height: 3px; margin: 5px auto; }
+  .is-multi .nav .nav-inquiry { margin-top: 8px; padding-top: 14px; border-top: 1px solid #262626; }
 }
-@media (max-width: 768px) {
-  .is-multi { --header-h: 56px; }
-  .is-multi .header { padding: 0 16px; }
-  .is-multi .tools { gap: 18px; }
-  .is-multi #inquire { font-size: 14px; }
+@media (max-width: 500px) {
+  .is-multi .header { padding: 0 10px 0 calc(10px + 3vw); }
+  .is-multi .logo img { height: 17px; }
 }
 
 /* ── Home hero · two doors (design_demo/multi-hero-options/b-two-doors) ─────────── */

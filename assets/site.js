@@ -1671,7 +1671,9 @@ function fillDrop(mode, group, child) {
 
 function navHtml(mode, group, child) {
   const top = menuTop(mode, group);
-  const mobile = window.matchMedia("(max-width: 768px)").matches;
+  // Below 1024 (origin tablet and mobile) the menu opens from ☰ with every item's pages listed, and 문의 last.
+  const mobile = window.matchMedia("(max-width: 1023px)").matches;
+  const inquiry = mobile ? `<a class="nav-inquiry" href="#inquiry/${mode === "security" ? "security" : "qa"}">문의</a>` : "";
   return MENU.map((item) => {
     const head = `<a href="${item.href}" data-id="${item.id}"${item.id === top ? ' aria-current="page"' : ""}>${item.label}</a>`;
     if (!mobile) return head;
@@ -1679,7 +1681,7 @@ function navHtml(mode, group, child) {
       ? item.groups.map((g) => `<a href="${g.href}"${mode === item.id && group === g.id ? ' aria-current="page"' : ""}>${g.label}</a>`).join("")
       : item.children.map((g) => `<a href="${g.href}"${item.id === group && activeChild(group, child) === g.id ? ' aria-current="page"' : ""}>${g.label}</a>`).join("");
     return head + `<div class="nav-sub">${kids}</div>`;
-  }).join("");
+  }).join("") + inquiry;
 }
 
 function activeChild(group, child) {
@@ -1701,7 +1703,7 @@ function menuFitHeight() {
 }
 
 function openMenu(id) {
-  if (window.matchMedia("(max-width: 768px)").matches) return;
+  if (window.matchMedia("(max-width: 1023px)").matches) return;
   // One panel per item: entering the nav bar (or a gap in it) must not open an empty sheet.
   if (!id) return;
   const opening = !menuDrop.classList.contains("is-open");
