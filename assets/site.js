@@ -1381,16 +1381,16 @@ const ESG_SLIDES = [
 ];
 const INQUIRY = {
   qa: {
-    title: "어떤 테스트가 필요한지<br>함께 정리해 드립니다",
-    lede: "테스트 범위와 희망 일정을 알려 주시면 QA 담당이 수행 가능 여부와 진행 방식으로 답합니다.",
+    title: "QA 테스트 상담",
+    lede: "범위와 일정을 알려 주시면 진행 방식을 제안해 드립니다.",
     mail: "staff@tbell.co.kr",
     topics: ["아웃소싱 테스트", "테스트 자동화", "블랙박스", "화이트박스", "API", "성능", "TestOps", "T-AUTO", "T-LENS"],
     extra: ""
   },
   security: {
     kicker: "Contact",
-    title: "진단 결과를 보내 주시면,<br>계획으로 답합니다",
-    lede: "셀프 진단 결과나 준비 중인 인증, 목표 일정을 알려 주세요. 컨설팅 범위와 권장 일정, 단계별로 받으실 문서 목록을 정리해 회신드립니다.",
+    title: "보안 컨설팅 상담",
+    lede: "진단 결과나 목표 일정을 알려 주시면 계획으로 답합니다.",
     mail: "security@tbell.co.kr",
     topics: ["ISMS·ISMS-P", "ISO 27001 계열", "개인정보 보호", "마스터플랜·제로트러스트", "AI 거버넌스", "Virtual CISO 자문"],
     messageLabel: "현재 상황과 목표 일정",
@@ -1417,51 +1417,47 @@ const INQUIRY = {
   }
 };
 
-// 문의: the intro (title, one line, contacts, two onward links) beside a lean form — underline fields,
-// square option chips, one bordered message box. Field names and ids are what the submit handler and
-// the self-diagnosis hand-off (fillConsult) read.
-const INQ_ICON = {
-  mail: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg>',
-  phone: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>',
-  pin: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>'
-};
+// 문의: a short title and one line, the contacts as label / value rows, then the form in three numbered
+// steps (관심 분야 · 담당자 정보 · 문의 내용) — underline fields and one bordered message box, no panels.
+// Field names and ids are what the submit handler and the self-diagnosis hand-off (fillConsult) read.
 const INQ_LINKS = {
-  qa: [["테스트 서비스 보기", "#qa/service/outsourcing"], ["T 솔루션 보기", "#qa/tauto"]],
-  security: [["2분 셀프 진단", "#security/diagnose"], ["인증 안내 보기", "#security/cert"]]
+  qa: [["테스트 서비스", "#qa/service/outsourcing"], ["T 솔루션", "#qa/tauto"]],
+  security: [["2분 셀프 진단", "#security/diagnose"], ["인증 안내", "#security/cert"]]
 };
 
 function inquiryPage(mode) {
   const spec = INQUIRY[mode];
   const chips = spec.topics.map((topic) => `<label class="chip"><input type="checkbox" name="topic" value="${topic}"><span>${topic}</span></label>`).join("");
   const field = (name, label, attrs, required) => `<label class="iq-field"><span>${label}${required ? "<i>*</i>" : ""}</span><input name="${name}" ${attrs}${required ? " required" : ""}></label>`;
-  const links = INQ_LINKS[mode].map(([label, href]) => `<a href="${href}">${label}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>`).join("");
+  const step = (n, label, note = "") => `<p class="iq-step"><b>${n}</b>${label}${note ? `<small>${note}</small>` : ""}</p>`;
+  const links = INQ_LINKS[mode].map(([label, href]) => `<a href="${href}">${label}</a>`).join("");
   return `<section class="detail inq-page"><div class="sheet">
     <div class="iq">
       <aside class="iq-intro">
-        <p class="iq-eyebrow">${mode === "security" ? "보안 컨설팅 문의" : "QA 문의"}</p>
         <h1>${spec.title}</h1>
         <p class="iq-lede">${spec.lede}</p>
-        <ul class="iq-contact">
-          <li>${INQ_ICON.mail}<span>${spec.mail}</span></li>
-          <li>${INQ_ICON.phone}<span>070-7777-9113 / 070-7777-6368<small>월–금요일 09:30–18:00 · 점심 12:00–13:00</small></span></li>
-          <li>${INQ_ICON.pin}<span>강남본사 서울특별시 강남구 강남대로 354, 9층</span></li>
-        </ul>
+        <dl class="iq-contact">
+          <dt>메일</dt><dd>${spec.mail}</dd>
+          <dt>전화</dt><dd>070-7777-9113 / 070-7777-6368<small>월–금 09:30–18:00 · 점심 12:00–13:00</small></dd>
+          <dt>주소</dt><dd>서울특별시 강남구 강남대로 354, 9층</dd>
+        </dl>
         <nav class="iq-links" aria-label="함께 보기">${links}</nav>
       </aside>
       <form class="form iq-form" id="inquiry-form">
-        <fieldset class="chips iq-chips"><legend>관심 분야 <small>복수 선택</small></legend>${chips}</fieldset>
+        <fieldset class="chips iq-chips"><legend>${step("01", "관심 분야", "복수 선택")}</legend>${chips}</fieldset>
+        ${step("02", "담당자 정보")}
         <div class="iq-row">
           ${field("name", "이름", 'autocomplete="name" placeholder="담당자 이름"', true)}
           ${field("company", "회사명", 'autocomplete="organization" placeholder="회사 또는 기관명"', true)}
-        </div>
-        <div class="iq-row">
           ${field("email", "이메일", 'type="email" autocomplete="email" placeholder="name@company.com"', true)}
           ${field("phone", "연락처", 'type="tel" autocomplete="tel" placeholder="010-0000-0000"', false)}
         </div>
         ${spec.extra}
-        <label class="iq-msg"><span>${spec.messageLabel || "문의 내용"}<i>*</i></span><textarea name="message" required placeholder="${spec.placeholder || "대상 서비스, 일정, 현재 상황을 적어 주세요."}"></textarea></label>
-        <label class="agree"><input type="checkbox" name="agree" required><span>[필수] ${spec.agree || "문의 회신을 위한 개인정보(이름, 회사명, 이메일, 연락처) 수집·이용에 동의합니다."}</span></label>
-        <button class="iq-submit" type="submit">${spec.button || "문의 보내기"}</button>
+        <label class="iq-msg">${step("03", spec.messageLabel || "문의 내용")}<textarea name="message" required placeholder="${spec.placeholder || "대상 서비스, 일정, 현재 상황을 적어 주세요."}"></textarea></label>
+        <div class="iq-send">
+          <label class="agree"><input type="checkbox" name="agree" required><span>${spec.agree || "문의 회신을 위한 개인정보(이름, 회사명, 이메일, 연락처) 수집·이용에 동의합니다."}</span></label>
+          <button class="iq-submit" type="submit">${spec.button || "문의 보내기"}</button>
+        </div>
       </form>
     </div>
     <div class="result" id="inquiry-result" hidden></div>
