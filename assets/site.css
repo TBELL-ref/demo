@@ -2677,3 +2677,30 @@ a.s-card:hover .s-ibox { border-color: var(--active); }
   .iq-intro h1 { font-size: 24px; }
 }
 .detail.inq-page .sheet .iq-form .survey .kicker { color: #121212; font-size: 15px; font-weight: 700; }
+
+/* ── Origin type rules (measured from the origin's own clamp() rules, px(min, max) over 1024-1920 pc,
+   768-1024 tablet, 350-768 mobile) for the pieces both sites share. ─────────────────────────── */
+/* Header dropdown: the origin's menu items are px(10, 15), grey. */
+.is-multi .drop-col a, .is-multi .drop-col a.md-leaf, .is-multi .drop-col a.md-row, .is-multi .drop-col a.md-gtitle { font-size: clamp(10px, calc(4.29px + .558vw), 15px); }
+.is-multi .drop-col a.md-leaf { color: #969696; }
+.md-title b { font-size: clamp(16px, calc(9.14px + .6696vw), 22px); }
+/* Service pages: domain cards (01 WEB/APP) and the 테스트 의뢰 contact row. */
+.expand-card strong { font-size: clamp(16px, calc(11.43px + .4464vw), 20px); font-weight: 600; }
+.expand-card em { font-size: clamp(10px, calc(5.43px + .4464vw), 14px); }
+.contact-row strong { font-size: clamp(21px, calc(14.14px + .6696vw), 27px); font-weight: 600; }
+.contact-row span { font-size: clamp(10px, calc(.86px + .8929vw), 18px); }
+/* QA / 보안 home: section titles and their lede. */
+.qh-head h2, .qh-clients .s-head h2 { font-size: clamp(23px, calc(-5.57px + 2.7902vw), 48px); line-height: 1.33; }
+.qh-head p:not(.qh-label) { font-size: clamp(16px, calc(6.86px + .8929vw), 24px); }
+@media (max-width: 1023px) {
+  .expand-card strong { font-size: clamp(16px, calc(4px + 1.5625vw), 20px); }
+  .expand-card em { font-size: clamp(10px, calc(-2px + 1.5625vw), 14px); }
+  .qh-head h2, .qh-clients .s-head h2 { font-size: clamp(30px, 3.9063vw, 40px); }
+  .qh-head p:not(.qh-label) { font-size: clamp(12px, calc(-6px + 2.3438vw), 18px); }
+}
+@media (max-width: 500px) {
+  .expand-card strong { font-size: 16px; }
+  .expand-card em { font-size: 12px; }
+  .qh-head h2, .qh-clients .s-head h2 { font-size: 20px; }
+  .qh-head p:not(.qh-label) { font-size: clamp(12px, calc(10.32px + .4785vw), 14px); }
+}
