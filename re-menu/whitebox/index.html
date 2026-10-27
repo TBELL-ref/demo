@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@200;400;500;700&family=Oxanium:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="../../assets/site.css?v=123">
   <link rel="stylesheet" href="../../assets/qa-pages.css?v=19">
-  <link rel="stylesheet" href="../../re-menu/re.css?v=18">
+  <link rel="stylesheet" href="../../re-menu/re.css?v=20">
   <link rel="icon" href="../../assets/tbell-logo.svg">
   <script type="application/ld+json">
 {
@@ -223,11 +223,27 @@
   </section>
   <section class="qp-band rw-cov" data-qp-reveal aria-labelledby="coverage">
     <h2 class="qp-h" id="coverage">검증 기준 · 커버리지</h2>
-    <div class="qp-lede"><p>‘아이디가 맞고 그리고 비밀번호가 맞으면 로그인, 하나라도 틀리면 거부’를 테스트할 때, <br class="qp-br">기준이 엄격해질수록 넣어 봐야 하는 입력이 늘어납니다.</p></div>
-    <div class="rw-cover" data-cover>
-      <div class="rw-picks" role="group" aria-label="검증 기준"><button class="rw-pick" type="button" id="cov-0" aria-pressed="true" data-need="0"><span>01</span>구문 커버리지<small>Statement</small></button><button class="rw-pick" type="button" id="cov-1" aria-pressed="false" data-need="0,3"><span>02</span>결정 · 분기 커버리지<small>Decision / Branch</small></button><button class="rw-pick" type="button" id="cov-2" aria-pressed="false" data-need="1,2"><span>03</span>조건 커버리지<small>Condition</small></button><button class="rw-pick" type="button" id="cov-3" aria-pressed="false" data-need="0,1,2"><span>04</span>변경 조건 / 결정 커버리지<small>MC/DC</small></button></div>
-      <ol class="rw-tiles"><li data-case="0"><span class="rw-need">필요</span><p class="rw-tno">테스트 1</p><p>아이디 <b class="is-ok">✓</b></p><p>비밀번호 <b class="is-ok">✓</b></p><p class="rw-res is-in">→ 로그인</p></li><li data-case="1"><span class="rw-need">필요</span><p class="rw-tno">테스트 2</p><p>아이디 <b class="is-ok">✓</b></p><p>비밀번호 <b class="is-no">✗</b></p><p class="rw-res">→ 거부</p></li><li data-case="2"><span class="rw-need">필요</span><p class="rw-tno">테스트 3</p><p>아이디 <b class="is-no">✗</b></p><p>비밀번호 <b class="is-ok">✓</b></p><p class="rw-res">→ 거부</p></li><li data-case="3"><span class="rw-need">필요</span><p class="rw-tno">테스트 4</p><p>아이디 <b class="is-no">✗</b></p><p>비밀번호 <b class="is-no">✗</b></p><p class="rw-res">→ 거부</p></li></ol>
-      <div class="rw-notes"><p class="rw-note is-on" role="region" aria-labelledby="cov-0"><b>1개 테스트</b>로그인 문장이 한 번만 실행되면 됩니다.</p><p class="rw-note" role="region" aria-labelledby="cov-1"><b>2개 테스트</b>로그인되는 경우와 거부되는 경우를 한 번씩 봅니다.</p><p class="rw-note" role="region" aria-labelledby="cov-2"><b>2개 테스트</b>아이디와 비밀번호가 각각 한 번씩 맞고, 한 번씩 틀리게 합니다.</p><p class="rw-note" role="region" aria-labelledby="cov-3"><b>3개 테스트</b>아이디만, 비밀번호만 바꿔도 결과가 바뀌는지 확인합니다.<em>항공우주 · 안전 필수</em></p></div>
+    <div class="qp-lede"><p>같은 코드라도 무엇을 빠짐없이 지나야 하는지에 따라 기준이 달라집니다. <br class="qp-br">기준을 고르면 그 기준이 확인하는 부분이 순서도에 표시됩니다.</p></div>
+    <div class="rw-cover" data-cover data-mode="stmt">
+      <div class="rw-picks" role="group" aria-label="검증 기준"><button class="rw-pick" type="button" id="cov-0" aria-pressed="true" data-mode="stmt"><span>01</span>구문 커버리지<small>Statement</small></button><button class="rw-pick" type="button" id="cov-1" aria-pressed="false" data-mode="branch"><span>02</span>결정 · 분기 커버리지<small>Decision / Branch</small></button><button class="rw-pick" type="button" id="cov-2" aria-pressed="false" data-mode="cond"><span>03</span>조건 커버리지<small>Condition</small></button><button class="rw-pick" type="button" id="cov-3" aria-pressed="false" data-mode="mcdc"><span>04</span>변경 조건 / 결정 커버리지<small>MC/DC</small></button></div>
+      <svg class="rc-chart" viewBox="0 0 620 270" role="img" aria-label="순서도: 조건 A 그리고 B가 참이면 문장 1을 거쳐 문장 2로, 거짓이면 문장 1을 건너뛰고 문장 2로 갑니다">
+          <circle class="rc-end" cx="30" cy="110" r="9"/><text class="rc-cap" x="30" y="140">시작</text>
+          <g class="rc-edge"><path d="M40 110H96"/><path class="rc-head" d="M104 110l-9-5v10z"/></g>
+          <path class="rc-dia" d="M175 40L250 110L175 180L100 110z"/>
+          <g class="rc-cond"><rect x="128" y="96" width="34" height="28" rx="8"/><text x="145" y="115">A</text></g>
+          <g class="rc-cond"><rect x="188" y="96" width="34" height="28" rx="8"/><text x="205" y="115">B</text></g>
+          <text class="rc-and" x="175" y="114">AND</text>
+          <g class="rc-flip"><text x="145" y="86">⇄</text><text x="205" y="86">⇄</text></g>
+          <g class="rc-tf"><text x="145" y="144">참·거짓</text><text x="205" y="144">참·거짓</text></g>
+          <g class="rc-edge rc-t"><path d="M250 110H308"/><path class="rc-head" d="M316 110l-9-5v10z"/><text class="rc-lab" x="279" y="98">참</text></g>
+          <g class="rc-stmt"><rect x="318" y="88" width="104" height="44" rx="8"/><text x="370" y="115">문장 1</text></g>
+          <g class="rc-edge"><path d="M422 110H458"/><path class="rc-head" d="M466 110l-9-5v10z"/></g>
+          <g class="rc-stmt"><rect x="468" y="88" width="104" height="44" rx="8"/><text x="520" y="115">문장 2</text></g>
+          <g class="rc-edge"><path d="M572 110H590"/></g>
+          <circle class="rc-end is-end" cx="600" cy="110" r="9"/><text class="rc-cap" x="600" y="140">끝</text>
+          <g class="rc-edge rc-f"><path d="M175 180V230H520V142"/><path class="rc-head" d="M520 134l-5 9h10z"/><text class="rc-lab" x="186" y="214">거짓</text></g>
+        </svg>
+      <div class="rw-notes"><div class="rw-note is-on" role="region" aria-labelledby="cov-0"><p>모든 문장을 한 번 이상 실행합니다. 참 갈래 한 번이면 문장 1·2가 모두 실행됩니다.</p><p class="rw-tests"><b>테스트 1개</b></p><ul><li>A 참 · B 참<span>→ 참 갈래</span></li></ul></div><div class="rw-note" role="region" aria-labelledby="cov-1"><p>참 갈래와 거짓 갈래를 모두 한 번 이상 지나야 합니다.</p><p class="rw-tests"><b>테스트 2개</b></p><ul><li>A 참 · B 참<span>→ 참 갈래</span></li><li>A 거짓 · B 거짓<span>→ 거짓 갈래</span></li></ul></div><div class="rw-note" role="region" aria-labelledby="cov-2"><p>결정 안의 조건 A와 B가 각각 참과 거짓을 한 번씩 가져야 합니다.</p><p class="rw-tests"><b>테스트 2개</b></p><ul><li>A 참 · B 거짓<span>→ 거짓 갈래</span></li><li>A 거짓 · B 참<span>→ 거짓 갈래</span></li></ul></div><div class="rw-note" role="region" aria-labelledby="cov-3"><p>A만 바꿔도, B만 바꿔도 결과가 달라지는지 보여야 합니다.<em>항공우주 · 안전 필수</em></p><p class="rw-tests"><b>테스트 3개</b></p><ul><li>A 참 · B 참<span>→ 참 갈래</span></li><li>A 거짓 · B 참<span>→ 거짓 갈래</span></li><li>A 참 · B 거짓<span>→ 거짓 갈래</span></li></ul></div></div>
     </div>
   </section>
   <section class="qp-sec" data-qp-reveal>
@@ -252,6 +268,6 @@
   </footer>
   <script>window.TBELL_BASE = "../../";</script>
   <script src="../../assets/qa-pages.js?v=9"></script>
-  <script src="../../re-menu/re-menu.js?v=11"></script>
+  <script src="../../re-menu/re-menu.js?v=12"></script>
 </body>
 </html>
