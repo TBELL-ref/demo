@@ -100,25 +100,6 @@
     if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) timer = setInterval(() => show((at + 1) % nodes.length), 3600);
   });
 
-  // 화이트박스 기초 경로: one basic path lit at a time on the flow graph; steps on until someone picks one.
-  document.querySelectorAll("[data-paths]").forEach((box) => {
-    const btns = [...box.querySelectorAll(".rw-pathbtn")];
-    let at = 0;
-    let timer = 0;
-    const show = (i) => {
-      at = i;
-      box.dataset.path = btns[i].dataset.path;
-      btns.forEach((b, k) => b.setAttribute("aria-pressed", String(k === i)));
-    };
-    const stop = () => { clearInterval(timer); timer = 0; };
-    btns.forEach((b, i) => {
-      b.addEventListener("click", () => { stop(); show(i); });
-      b.addEventListener("mouseenter", () => { stop(); show(i); });
-      b.addEventListener("focus", () => { stop(); show(i); });
-    });
-    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) timer = setInterval(() => show((at + 1) % btns.length), 2600);
-  });
-
   // 테스트 분야 photo cards (site.js wireDeck): the clicked card opens, the others close.
   document.querySelectorAll(".expand-card").forEach((card) => {
     card.addEventListener("click", () => {
