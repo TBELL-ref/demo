@@ -100,6 +100,30 @@
     if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) timer = setInterval(() => show((at + 1) % nodes.length), 3600);
   });
 
+  // 화이트박스 커버리지: each criterion marks the truth-table rows its minimal test set needs.
+  document.querySelectorAll("[data-cov]").forEach((box) => {
+    const crits = [...box.querySelectorAll(".rw-crit")];
+    const descs = [...box.querySelectorAll(".rw-desc")];
+    const rows = [...box.querySelectorAll("tbody tr")];
+    let at = 0;
+    let timer = 0;
+    const show = (i) => {
+      at = i;
+      const need = crits[i].dataset.need.split(",");
+      crits.forEach((c, k) => c.setAttribute("aria-pressed", String(k === i)));
+      descs.forEach((d, k) => d.classList.toggle("is-on", k === i));
+      rows.forEach((r) => r.classList.toggle("is-need", need.includes(r.dataset.row)));
+    };
+    const stop = () => { clearInterval(timer); timer = 0; };
+    crits.forEach((c, i) => {
+      c.addEventListener("click", () => { stop(); show(i); });
+      c.addEventListener("mouseenter", () => { stop(); show(i); });
+      c.addEventListener("focus", () => { stop(); show(i); });
+    });
+    show(0);
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) timer = setInterval(() => show((at + 1) % crits.length), 4200);
+  });
+
   // 테스트 분야 photo cards (site.js wireDeck): the clicked card opens, the others close.
   document.querySelectorAll(".expand-card").forEach((card) => {
     card.addEventListener("click", () => {
