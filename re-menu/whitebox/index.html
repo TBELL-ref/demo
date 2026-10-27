@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@200;400;500;700&family=Oxanium:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="../../assets/site.css?v=123">
   <link rel="stylesheet" href="../../assets/qa-pages.css?v=19">
-  <link rel="stylesheet" href="../../re-menu/re.css?v=20">
+  <link rel="stylesheet" href="../../re-menu/re.css?v=21">
   <link rel="icon" href="../../assets/tbell-logo.svg">
   <script type="application/ld+json">
 {
@@ -223,28 +223,68 @@
   </section>
   <section class="qp-band rw-cov" data-qp-reveal aria-labelledby="coverage">
     <h2 class="qp-h" id="coverage">검증 기준 · 커버리지</h2>
-    <div class="qp-lede"><p>같은 코드라도 무엇을 빠짐없이 지나야 하는지에 따라 기준이 달라집니다. <br class="qp-br">기준을 고르면 그 기준이 확인하는 부분이 순서도에 표시됩니다.</p></div>
-    <div class="rw-cover" data-cover data-mode="stmt">
-      <div class="rw-picks" role="group" aria-label="검증 기준"><button class="rw-pick" type="button" id="cov-0" aria-pressed="true" data-mode="stmt"><span>01</span>구문 커버리지<small>Statement</small></button><button class="rw-pick" type="button" id="cov-1" aria-pressed="false" data-mode="branch"><span>02</span>결정 · 분기 커버리지<small>Decision / Branch</small></button><button class="rw-pick" type="button" id="cov-2" aria-pressed="false" data-mode="cond"><span>03</span>조건 커버리지<small>Condition</small></button><button class="rw-pick" type="button" id="cov-3" aria-pressed="false" data-mode="mcdc"><span>04</span>변경 조건 / 결정 커버리지<small>MC/DC</small></button></div>
-      <svg class="rc-chart" viewBox="0 0 620 270" role="img" aria-label="순서도: 조건 A 그리고 B가 참이면 문장 1을 거쳐 문장 2로, 거짓이면 문장 1을 건너뛰고 문장 2로 갑니다">
-          <circle class="rc-end" cx="30" cy="110" r="9"/><text class="rc-cap" x="30" y="140">시작</text>
-          <g class="rc-edge"><path d="M40 110H96"/><path class="rc-head" d="M104 110l-9-5v10z"/></g>
-          <path class="rc-dia" d="M175 40L250 110L175 180L100 110z"/>
-          <g class="rc-cond"><rect x="128" y="96" width="34" height="28" rx="8"/><text x="145" y="115">A</text></g>
-          <g class="rc-cond"><rect x="188" y="96" width="34" height="28" rx="8"/><text x="205" y="115">B</text></g>
-          <text class="rc-and" x="175" y="114">AND</text>
-          <g class="rc-flip"><text x="145" y="86">⇄</text><text x="205" y="86">⇄</text></g>
-          <g class="rc-tf"><text x="145" y="144">참·거짓</text><text x="205" y="144">참·거짓</text></g>
-          <g class="rc-edge rc-t"><path d="M250 110H308"/><path class="rc-head" d="M316 110l-9-5v10z"/><text class="rc-lab" x="279" y="98">참</text></g>
-          <g class="rc-stmt"><rect x="318" y="88" width="104" height="44" rx="8"/><text x="370" y="115">문장 1</text></g>
-          <g class="rc-edge"><path d="M422 110H458"/><path class="rc-head" d="M466 110l-9-5v10z"/></g>
-          <g class="rc-stmt"><rect x="468" y="88" width="104" height="44" rx="8"/><text x="520" y="115">문장 2</text></g>
-          <g class="rc-edge"><path d="M572 110H590"/></g>
-          <circle class="rc-end is-end" cx="600" cy="110" r="9"/><text class="rc-cap" x="600" y="140">끝</text>
-          <g class="rc-edge rc-f"><path d="M175 180V230H520V142"/><path class="rc-head" d="M520 134l-5 9h10z"/><text class="rc-lab" x="186" y="214">거짓</text></g>
-        </svg>
-      <div class="rw-notes"><div class="rw-note is-on" role="region" aria-labelledby="cov-0"><p>모든 문장을 한 번 이상 실행합니다. 참 갈래 한 번이면 문장 1·2가 모두 실행됩니다.</p><p class="rw-tests"><b>테스트 1개</b></p><ul><li>A 참 · B 참<span>→ 참 갈래</span></li></ul></div><div class="rw-note" role="region" aria-labelledby="cov-1"><p>참 갈래와 거짓 갈래를 모두 한 번 이상 지나야 합니다.</p><p class="rw-tests"><b>테스트 2개</b></p><ul><li>A 참 · B 참<span>→ 참 갈래</span></li><li>A 거짓 · B 거짓<span>→ 거짓 갈래</span></li></ul></div><div class="rw-note" role="region" aria-labelledby="cov-2"><p>결정 안의 조건 A와 B가 각각 참과 거짓을 한 번씩 가져야 합니다.</p><p class="rw-tests"><b>테스트 2개</b></p><ul><li>A 참 · B 거짓<span>→ 거짓 갈래</span></li><li>A 거짓 · B 참<span>→ 거짓 갈래</span></li></ul></div><div class="rw-note" role="region" aria-labelledby="cov-3"><p>A만 바꿔도, B만 바꿔도 결과가 달라지는지 보여야 합니다.<em>항공우주 · 안전 필수</em></p><p class="rw-tests"><b>테스트 3개</b></p><ul><li>A 참 · B 참<span>→ 참 갈래</span></li><li>A 거짓 · B 참<span>→ 거짓 갈래</span></li><li>A 참 · B 거짓<span>→ 거짓 갈래</span></li></ul></div></div>
-    </div>
+    <div class="qp-lede"><p>같은 코드라도 무엇을 빠짐없이 지나야 하는지에 따라 기준이 달라집니다. <br class="qp-br">각 그림에서 그 기준이 확인하는 부분이 표시되어 있습니다.</p></div>
+    <ol class="rw-multi"><li><div class="rw-ph"><span>01</span><h3>구문 커버리지<small>Statement</small></h3><p class="rw-tests"><b>1</b>개 테스트</p></div><svg class="rc-chart" data-mode="stmt" viewBox="0 0 540 220" role="img" aria-label="구문 커버리지: 조건 A 그리고 B가 참이면 문장 1을 거쳐 문장 2로, 거짓이면 문장 1을 건너뜁니다">
+            <circle class="rc-end" cx="16" cy="90" r="8"/>
+            <g class="rc-edge"><path d="M24 90H72"/><path class="rc-head" d="M80 90l-9-5v10z"/></g>
+            <path class="rc-dia" d="M150 26L216 90L150 154L84 90z"/>
+            <g class="rc-cond"><rect x="104" y="74" width="38" height="32" rx="8"/><text x="123" y="97">A</text></g>
+            <g class="rc-cond"><rect x="158" y="74" width="38" height="32" rx="8"/><text x="177" y="97">B</text></g>
+            <g class="rc-flip"><text x="123" y="64">⇄</text><text x="177" y="64">⇄</text></g>
+            <g class="rc-tf"><text x="123" y="128">참·거짓</text><text x="177" y="128">참·거짓</text></g>
+            <g class="rc-edge rc-t"><path d="M216 90H262"/><path class="rc-head" d="M270 90l-9-5v10z"/><text class="rc-lab" x="240" y="76">참</text></g>
+            <g class="rc-stmt"><rect x="272" y="66" width="104" height="48" rx="8"/><text x="324" y="97">문장 1</text></g>
+            <g class="rc-edge"><path d="M376 90H398"/><path class="rc-head" d="M406 90l-9-5v10z"/></g>
+            <g class="rc-stmt"><rect x="408" y="66" width="104" height="48" rx="8"/><text x="460" y="97">문장 2</text></g>
+            <g class="rc-edge"><path d="M512 90H522"/></g>
+            <circle class="rc-end is-end" cx="530" cy="90" r="8"/>
+            <g class="rc-edge rc-f"><path d="M150 154V196H460V122"/><path class="rc-head" d="M460 114l-5 9h10z"/><text class="rc-lab" x="162" y="184">거짓</text></g>
+          </svg><p class="rw-why">모든 문장을 한 번 이상 실행합니다. 참 갈래 한 번이면 문장 1·2가 모두 실행됩니다.</p><ul class="rw-tl"><li>A 참 · B 참</li></ul></li><li><div class="rw-ph"><span>02</span><h3>결정 · 분기 커버리지<small>Decision / Branch</small></h3><p class="rw-tests"><b>2</b>개 테스트</p></div><svg class="rc-chart" data-mode="branch" viewBox="0 0 540 220" role="img" aria-label="결정 · 분기 커버리지: 조건 A 그리고 B가 참이면 문장 1을 거쳐 문장 2로, 거짓이면 문장 1을 건너뜁니다">
+            <circle class="rc-end" cx="16" cy="90" r="8"/>
+            <g class="rc-edge"><path d="M24 90H72"/><path class="rc-head" d="M80 90l-9-5v10z"/></g>
+            <path class="rc-dia" d="M150 26L216 90L150 154L84 90z"/>
+            <g class="rc-cond"><rect x="104" y="74" width="38" height="32" rx="8"/><text x="123" y="97">A</text></g>
+            <g class="rc-cond"><rect x="158" y="74" width="38" height="32" rx="8"/><text x="177" y="97">B</text></g>
+            <g class="rc-flip"><text x="123" y="64">⇄</text><text x="177" y="64">⇄</text></g>
+            <g class="rc-tf"><text x="123" y="128">참·거짓</text><text x="177" y="128">참·거짓</text></g>
+            <g class="rc-edge rc-t"><path d="M216 90H262"/><path class="rc-head" d="M270 90l-9-5v10z"/><text class="rc-lab" x="240" y="76">참</text></g>
+            <g class="rc-stmt"><rect x="272" y="66" width="104" height="48" rx="8"/><text x="324" y="97">문장 1</text></g>
+            <g class="rc-edge"><path d="M376 90H398"/><path class="rc-head" d="M406 90l-9-5v10z"/></g>
+            <g class="rc-stmt"><rect x="408" y="66" width="104" height="48" rx="8"/><text x="460" y="97">문장 2</text></g>
+            <g class="rc-edge"><path d="M512 90H522"/></g>
+            <circle class="rc-end is-end" cx="530" cy="90" r="8"/>
+            <g class="rc-edge rc-f"><path d="M150 154V196H460V122"/><path class="rc-head" d="M460 114l-5 9h10z"/><text class="rc-lab" x="162" y="184">거짓</text></g>
+          </svg><p class="rw-why">참 갈래와 거짓 갈래를 모두 한 번 이상 지나야 합니다.</p><ul class="rw-tl"><li>A 참 · B 참</li><li>A 거짓 · B 거짓</li></ul></li><li><div class="rw-ph"><span>03</span><h3>조건 커버리지<small>Condition</small></h3><p class="rw-tests"><b>2</b>개 테스트</p></div><svg class="rc-chart" data-mode="cond" viewBox="0 0 540 220" role="img" aria-label="조건 커버리지: 조건 A 그리고 B가 참이면 문장 1을 거쳐 문장 2로, 거짓이면 문장 1을 건너뜁니다">
+            <circle class="rc-end" cx="16" cy="90" r="8"/>
+            <g class="rc-edge"><path d="M24 90H72"/><path class="rc-head" d="M80 90l-9-5v10z"/></g>
+            <path class="rc-dia" d="M150 26L216 90L150 154L84 90z"/>
+            <g class="rc-cond"><rect x="104" y="74" width="38" height="32" rx="8"/><text x="123" y="97">A</text></g>
+            <g class="rc-cond"><rect x="158" y="74" width="38" height="32" rx="8"/><text x="177" y="97">B</text></g>
+            <g class="rc-flip"><text x="123" y="64">⇄</text><text x="177" y="64">⇄</text></g>
+            <g class="rc-tf"><text x="123" y="128">참·거짓</text><text x="177" y="128">참·거짓</text></g>
+            <g class="rc-edge rc-t"><path d="M216 90H262"/><path class="rc-head" d="M270 90l-9-5v10z"/><text class="rc-lab" x="240" y="76">참</text></g>
+            <g class="rc-stmt"><rect x="272" y="66" width="104" height="48" rx="8"/><text x="324" y="97">문장 1</text></g>
+            <g class="rc-edge"><path d="M376 90H398"/><path class="rc-head" d="M406 90l-9-5v10z"/></g>
+            <g class="rc-stmt"><rect x="408" y="66" width="104" height="48" rx="8"/><text x="460" y="97">문장 2</text></g>
+            <g class="rc-edge"><path d="M512 90H522"/></g>
+            <circle class="rc-end is-end" cx="530" cy="90" r="8"/>
+            <g class="rc-edge rc-f"><path d="M150 154V196H460V122"/><path class="rc-head" d="M460 114l-5 9h10z"/><text class="rc-lab" x="162" y="184">거짓</text></g>
+          </svg><p class="rw-why">결정 안의 조건 A와 B가 각각 참과 거짓을 한 번씩 가져야 합니다.</p><ul class="rw-tl"><li>A 참 · B 거짓</li><li>A 거짓 · B 참</li></ul></li><li><div class="rw-ph"><span>04</span><h3>변경 조건 / 결정 커버리지<small>MC/DC</small></h3><p class="rw-tests"><b>3</b>개 테스트</p></div><svg class="rc-chart" data-mode="mcdc" viewBox="0 0 540 220" role="img" aria-label="변경 조건 / 결정 커버리지: 조건 A 그리고 B가 참이면 문장 1을 거쳐 문장 2로, 거짓이면 문장 1을 건너뜁니다">
+            <circle class="rc-end" cx="16" cy="90" r="8"/>
+            <g class="rc-edge"><path d="M24 90H72"/><path class="rc-head" d="M80 90l-9-5v10z"/></g>
+            <path class="rc-dia" d="M150 26L216 90L150 154L84 90z"/>
+            <g class="rc-cond"><rect x="104" y="74" width="38" height="32" rx="8"/><text x="123" y="97">A</text></g>
+            <g class="rc-cond"><rect x="158" y="74" width="38" height="32" rx="8"/><text x="177" y="97">B</text></g>
+            <g class="rc-flip"><text x="123" y="64">⇄</text><text x="177" y="64">⇄</text></g>
+            <g class="rc-tf"><text x="123" y="128">참·거짓</text><text x="177" y="128">참·거짓</text></g>
+            <g class="rc-edge rc-t"><path d="M216 90H262"/><path class="rc-head" d="M270 90l-9-5v10z"/><text class="rc-lab" x="240" y="76">참</text></g>
+            <g class="rc-stmt"><rect x="272" y="66" width="104" height="48" rx="8"/><text x="324" y="97">문장 1</text></g>
+            <g class="rc-edge"><path d="M376 90H398"/><path class="rc-head" d="M406 90l-9-5v10z"/></g>
+            <g class="rc-stmt"><rect x="408" y="66" width="104" height="48" rx="8"/><text x="460" y="97">문장 2</text></g>
+            <g class="rc-edge"><path d="M512 90H522"/></g>
+            <circle class="rc-end is-end" cx="530" cy="90" r="8"/>
+            <g class="rc-edge rc-f"><path d="M150 154V196H460V122"/><path class="rc-head" d="M460 114l-5 9h10z"/><text class="rc-lab" x="162" y="184">거짓</text></g>
+          </svg><p class="rw-why">A만 바꿔도, B만 바꿔도 결과가 달라지는지 보여야 합니다.<em>항공우주 · 안전 필수</em></p><ul class="rw-tl"><li>A 참 · B 참</li><li>A 거짓 · B 참</li><li>A 참 · B 거짓</li></ul></li></ol>
   </section>
   <section class="qp-sec" data-qp-reveal>
     <h2 class="qp-h">업무 범위</h2>
@@ -268,6 +308,6 @@
   </footer>
   <script>window.TBELL_BASE = "../../";</script>
   <script src="../../assets/qa-pages.js?v=9"></script>
-  <script src="../../re-menu/re-menu.js?v=12"></script>
+  <script src="../../re-menu/re-menu.js?v=13"></script>
 </body>
 </html>

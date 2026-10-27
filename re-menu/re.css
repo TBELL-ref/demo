@@ -249,64 +249,55 @@
 /* 화이트박스 › 커버리지: a dark band (origin qp-band) holding the criteria picker. */
 .qp-band.rw-cov { margin-top: clamp(80px, 10.4vw, 200px); padding: clamp(64px, 6vw, 96px) var(--svc-pad); background: radial-gradient(800px 400px at 50% 100%, rgba(39, 196, 213, .14), transparent 70%), #121212; }
 .rw-cov .qp-lede p { color: #bdbdbd; }
-/* Criteria picker over four fixed input tiles: the tiles a criterion needs light up, the rest dim. */
-.rw-cover { max-width: 900px; margin: 44px auto 0; }
-.rw-picks { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-bottom: 1px solid #333; }
-.rw-pick { position: relative; display: grid; justify-items: center; gap: 2px; padding: 0 6px 16px; border: 0; background: none; color: #8a8a8a; cursor: pointer; font: inherit; font-size: 15px; font-weight: 500; transition: color .25s; }
-.rw-pick span { font-family: var(--num); font-size: 12px; color: #5f5f5f; }
-.rw-pick small { font-family: var(--num); font-size: 11px; color: #6f6f6f; }
-.rw-pick::after { content: ""; position: absolute; left: 20%; right: 20%; bottom: -1px; height: 2px; background: transparent; transition: background .25s; }
-.rw-pick:hover, .rw-pick[aria-pressed="true"] { color: #fff; }
-.rw-pick[aria-pressed="true"] span { color: #27c4d5; }
-.rw-pick[aria-pressed="true"]::after { background: #27c4d5; }
-.rw-pick:focus-visible { outline: 2px solid #27c4d5; outline-offset: 2px; }
-/* The flowchart: everything quiet grey; the chosen criterion's targets turn cyan. */
-.rc-chart { display: block; width: 100%; max-width: 760px; height: auto; margin: 34px auto 0; overflow: visible; }
-.rc-chart text { fill: #d6d6d6; font-size: 15px; text-anchor: middle; }
-.rc-cap { fill: #8a8a8a !important; font-size: 12px !important; }
+/* Four small multiples, 2 × 2, split by thin rules. Each flowchart is grey with its own targets in cyan. */
+.rw-multi { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 1000px; margin: 48px auto 0; padding: 0; list-style: none; text-align: left; }
+.rw-multi > li { padding: 30px 32px 32px; }
+.rw-multi > li:nth-child(odd) { border-right: 1px solid #2e2e2e; padding-left: 0; }
+.rw-multi > li:nth-child(even) { padding-right: 0; }
+.rw-multi > li:nth-child(-n+2) { border-bottom: 1px solid #2e2e2e; padding-top: 0; }
+.rw-ph { display: grid; grid-template-columns: auto 1fr auto; align-items: baseline; gap: 12px; }
+.rw-ph span { font-family: var(--num); font-size: 13px; font-weight: 600; color: #27c4d5; }
+.rw-ph h3 { margin: 0; color: #fff; font-size: 18px; font-weight: 700; }
+.rw-ph h3 small { margin-left: 8px; color: #8a8a8a; font-family: var(--num); font-size: 12px; font-weight: 500; }
+.rw-tests { margin: 0; color: #8a8a8a; font-size: 13px; white-space: nowrap; }
+.rw-tests b { margin-right: 3px; color: #27c4d5; font-family: var(--num); font-size: 26px; font-weight: 600; }
+.rc-chart { display: block; width: 100%; height: auto; margin: 18px 0 0; overflow: visible; }
+.rc-chart text { fill: #d6d6d6; font-size: 18px; text-anchor: middle; }
 .rc-end { fill: #121212; stroke: #6a6a6a; stroke-width: 1.5; }
 .rc-end.is-end { fill: #6a6a6a; }
-.rc-edge path:first-child { fill: none; stroke: #5a5a5a; stroke-width: 2; transition: stroke .35s, stroke-width .35s; }
-.rc-head { fill: #5a5a5a; stroke: none; transition: fill .35s; }
-.rc-lab { fill: #8a8a8a !important; font-size: 13px !important; transition: fill .35s; }
-.rc-dia { fill: #1b1b1b; stroke: #6a6a6a; stroke-width: 1.5; }
-.rc-and { fill: #8a8a8a !important; font-family: var(--num); font-size: 10px !important; }
-.rc-cond rect, .rc-stmt rect { fill: #1b1b1b; stroke: #6a6a6a; stroke-width: 1.5; transition: fill .35s, stroke .35s; }
+.rc-edge path:first-child { fill: none; stroke: #4a4a4a; stroke-width: 2; }
+.rc-head { fill: #4a4a4a; stroke: none; }
+.rc-lab { fill: #8a8a8a !important; font-size: 15px !important; }
+.rc-dia { fill: #1b1b1b; stroke: #5a5a5a; stroke-width: 1.5; }
+.rc-cond rect, .rc-stmt rect { fill: #1b1b1b; stroke: #5a5a5a; stroke-width: 1.5; }
 .rc-cond text { font-family: var(--num); font-weight: 600; }
-.rc-flip, .rc-tf { opacity: 0; transition: opacity .35s; }
-.rc-flip text { fill: #27c4d5 !important; font-size: 16px !important; }
-.rc-tf text { fill: #27c4d5 !important; font-size: 11px !important; }
-.rw-cover[data-mode="stmt"] .rc-stmt rect,
-.rw-cover[data-mode="cond"] .rc-cond rect, .rw-cover[data-mode="mcdc"] .rc-cond rect { fill: rgba(39, 196, 213, .16); stroke: #27c4d5; stroke-width: 2; }
-.rw-cover[data-mode="branch"] .rc-t path:first-child, .rw-cover[data-mode="branch"] .rc-f path:first-child { stroke: #27c4d5; stroke-width: 3; }
-.rw-cover[data-mode="branch"] .rc-t .rc-head, .rw-cover[data-mode="branch"] .rc-f .rc-head { fill: #27c4d5; }
-.rw-cover[data-mode="branch"] .rc-lab { fill: #27c4d5 !important; }
-.rw-cover[data-mode="cond"] .rc-tf, .rw-cover[data-mode="mcdc"] .rc-flip { opacity: 1; }
-.rw-notes { display: grid; margin-top: 22px; text-align: center; }
-.rw-note { grid-area: 1 / 1; opacity: 0; visibility: hidden; transition: opacity .3s, visibility .3s; }
-.rw-note.is-on { opacity: 1; visibility: visible; }
-.rw-note p { margin: 0; color: #d6d6d6; font-size: 15px; line-height: 1.6; word-break: keep-all; }
-.rw-note em { display: inline-block; margin-left: 10px; padding: 1px 10px; border: 1px solid #3a3a3a; border-radius: 62px; color: #bdbdbd; font-size: 12px; font-style: normal; }
-.rw-note .rw-tests { margin-top: 16px; color: #27c4d5; font-size: 13px; }
-.rw-note ul { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 10px 0 0; padding: 0; list-style: none; }
-.rw-note li { padding: 5px 14px; border: 1px solid #3a3a3a; border-radius: 62px; color: #fff; font-size: 13px; }
-.rw-note li span { margin-left: 8px; color: #8a8a8a; }
+.rc-flip, .rc-tf { display: none; }
+.rc-flip text { fill: #27c4d5 !important; font-size: 20px !important; }
+.rc-tf text { fill: #27c4d5 !important; font-size: 13px !important; }
+.rc-chart[data-mode="stmt"] .rc-stmt rect, .rc-chart[data-mode="cond"] .rc-cond rect, .rc-chart[data-mode="mcdc"] .rc-cond rect { fill: rgba(39, 196, 213, .18); stroke: #27c4d5; stroke-width: 2.5; }
+.rc-chart[data-mode="stmt"] .rc-stmt text, .rc-chart[data-mode="cond"] .rc-cond text, .rc-chart[data-mode="mcdc"] .rc-cond text { fill: #fff; font-weight: 700; }
+.rc-chart[data-mode="branch"] .rc-t path:first-child, .rc-chart[data-mode="branch"] .rc-f path:first-child { stroke: #27c4d5; stroke-width: 3.5; }
+.rc-chart[data-mode="branch"] .rc-t .rc-head, .rc-chart[data-mode="branch"] .rc-f .rc-head { fill: #27c4d5; }
+.rc-chart[data-mode="branch"] .rc-lab { fill: #27c4d5 !important; font-weight: 700; }
+.rc-chart[data-mode="cond"] .rc-tf, .rc-chart[data-mode="mcdc"] .rc-flip { display: inline; }
+.rw-why { margin: 14px 0 0; color: #bdbdbd; font-size: 14.5px; line-height: 1.6; word-break: keep-all; }
+.rw-why em { display: inline-block; margin-left: 8px; padding: 1px 10px; border: 1px solid #3a3a3a; border-radius: 62px; color: #bdbdbd; font-size: 11.5px; font-style: normal; }
+.rw-tl { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 0; padding: 0; list-style: none; }
+.rw-tl li { padding: 4px 12px; border: 1px solid #3a3a3a; border-radius: 62px; color: #fff; font-size: 12.5px; }
 
 @media (max-width: 1024px) {
   .rw-types { grid-template-columns: 1fr; gap: 36px; }
 }
 @media (max-width: 768px) {
+  .rw-multi { grid-template-columns: 1fr; }
+  .rw-multi > li, .rw-multi > li:nth-child(odd), .rw-multi > li:nth-child(even), .rw-multi > li:nth-child(-n+2) { padding: 26px 0; border-right: 0; border-bottom: 1px solid #2e2e2e; }
+  .rw-multi > li:first-child { padding-top: 0; }
+  .rw-ph h3 small { display: block; margin: 2px 0 0; }
   .rw-group.is-wide ul { grid-template-columns: 1fr; gap: 28px; }
   .rw-group li { border-left: 0; }
-  .rw-picks { grid-template-columns: 1fr 1fr; row-gap: 10px; }
-  .rw-pick { font-size: 14px; padding-bottom: 12px; }
-  .rc-chart { margin-top: 24px; }
   .rc-chart text { font-size: 22px; }
-  .rc-cap, .rc-lab { font-size: 19px !important; }
-  .rc-and { font-size: 13px !important; }
+  .rc-lab { font-size: 18px !important; }
   .rc-tf text { font-size: 15px !important; }
-  .rc-flip text { font-size: 22px !important; }
-  .rw-note p { font-size: 14px; }
 }
 @media (prefers-reduced-motion: reduce) { .rw-glyph .g-hot { animation: none !important; } }
 
