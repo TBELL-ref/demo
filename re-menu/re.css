@@ -189,3 +189,75 @@
   .ra-cols, .ra-two { grid-template-columns: 1fr; width: 100%; gap: 28px; margin-top: 48px; }
   .ra-cols li { padding: 0; border-left: 0; }
 }
+
+/* ── 블랙박스 테스트 (rb-) ─────────────────────────────────────────────
+   Input → box → Output as a worked example, in the origin box figure's greys (#333 dashes, #e9e9e9 disc). */
+.rb-box { max-width: 960px; margin: 64px auto 0; }
+.rb-box figcaption { font-size: clamp(22px, 1.9vw, 34px); color: #121212; }
+.rb-io { display: grid; grid-template-columns: minmax(0, 1fr) 72px 240px 72px minmax(0, 1fr); align-items: center; margin-top: 30px; }
+.rb-io-h { margin: 0 0 16px; color: #121212; font-size: clamp(20px, 1.5vw, 26px); }
+.rb-in ul { display: grid; gap: 10px; justify-items: end; margin: 0; padding: 0; list-style: none; }
+.rb-in li { padding: 9px 20px; border: 1px solid #cfcfcf; border-radius: 62px; background: #fff; color: #333; font-size: clamp(14px, .95vw, 16px); }
+.rb-in .rb-io-h { text-align: right; }
+.rb-arrow { position: relative; height: 3px; background: repeating-linear-gradient(90deg, #333 0 3px, transparent 3px 8px); }
+.rb-arrow::after { content: ""; position: absolute; right: -4px; top: -6px; border: 7px solid transparent; border-left: 11px solid #333; border-right: 0; }
+.rb-mid { display: grid; justify-items: center; }
+.rb-cube { width: 100%; height: auto; }
+.rb-cube .qp-box-disc { fill: #e9e9e9; }
+.rb-cube .f-top { fill: #6a6a6a; } .rb-cube .f-left { fill: #262626; } .rb-cube .f-right { fill: #3d3d3d; }
+.rb-q { fill: #fff; font-family: var(--num); font-size: 30px; font-weight: 600; text-anchor: middle; }
+.rb-mid p { margin: 8px 0 0; color: #969696; font-size: 13px; }
+.rb-out dl { margin: 0; text-align: left; }
+.rb-out dl > div { padding: 12px 2px; border-bottom: 1px solid #ddd; }
+.rb-out dl > div:first-child { border-top: 1px solid #ddd; }
+.rb-out dt { color: #969696; font-size: 13px; }
+.rb-out dd { display: flex; align-items: center; gap: 10px; margin: 4px 0 0; color: #333; font-size: clamp(15px, 1vw, 17px); font-weight: 500; }
+.rb-out dd b { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: #27c4d5; color: #fff; font-size: 12px; }
+.qp-js [data-qp-reveal].is-in .rb-in li { animation: rb-feed 4.8s ease-in-out infinite; animation-delay: calc(var(--i) * .5s); }
+@keyframes rb-feed { 0%, 30%, 100% { background: #fff; border-color: #cfcfcf; color: #333; } 10%, 20% { background: #333; border-color: #333; color: #fff; } }
+.qp-js [data-qp-reveal].is-in .rb-arrow { animation: rb-dash 1.2s linear infinite; }
+@keyframes rb-dash { to { background-position: 16px 0; } }
+.qp-js [data-qp-reveal].is-in .rb-out dd b { animation: rb-ok 4.8s ease-in-out infinite; }
+@keyframes rb-ok { 0%, 45% { transform: scale(0); } 55%, 100% { transform: scale(1); } }
+.rb-traits { grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 80px; }
+
+/* 테스트 기법: seven nodes on an orbit; the centre explains the chosen one. */
+.rb-tech { position: relative; width: min(100%, 660px); aspect-ratio: 1; margin: 48px auto 0; container-type: inline-size; }
+.rb-tech::before { content: ""; position: absolute; inset: 12.5%; border: 1px dashed #cfcfcf; border-radius: 50%; }
+.rb-core { position: absolute; inset: 27%; display: grid; place-items: center; padding: 8%; border-radius: 50%; background: #f4f4f4; text-align: center; }
+.rb-desc { grid-area: 1 / 1; opacity: 0; visibility: hidden; transition: opacity .35s, visibility .35s; }
+.rb-desc.is-on { opacity: 1; visibility: visible; }
+.rb-desc span { font-family: var(--num); font-size: 13px; font-weight: 600; color: #969696; }
+.rb-desc h3 { margin: 4px 0 0; color: #333; font-size: clamp(19px, 3.6cqi, 24px); font-weight: 700; }
+.rb-desc small { display: block; margin-top: 2px; color: #969696; font-family: var(--num); font-size: 12px; }
+.rb-desc p { margin: 12px 0 0; color: #595959; font-size: clamp(13px, 2.3cqi, 15px); line-height: 1.7; word-break: keep-all; }
+.rb-node { --s: clamp(92px, 19cqi, 124px); position: absolute; left: 50%; top: 50%; display: grid; place-content: center; gap: 2px; width: var(--s); height: var(--s); margin: calc(var(--s) / -2) 0 0 calc(var(--s) / -2); padding: 6px; border: 1px solid #dcdcdc; border-radius: 50%; background: #fff; box-shadow: 6px 6px 10px rgba(0, 0, 0, .08); color: #333; cursor: pointer; font: inherit; text-align: center; transform: rotate(var(--a)) translate(37.5cqi) rotate(calc(-1 * var(--a))); transition: background .3s, color .3s, border-color .3s, box-shadow .3s; }
+.rb-node b { font-size: clamp(13px, 2.4cqi, 15px); font-weight: 700; line-height: 1.3; word-break: keep-all; }
+.rb-node small { color: #969696; font-family: var(--num); font-size: 10px; line-height: 1.25; }
+.rb-node:hover { border-color: #27c4d5; }
+.rb-node[aria-pressed="true"] { border-color: #333; background: #333; color: #fff; box-shadow: 0 0 0 5px rgba(39, 196, 213, .25), 6px 6px 14px rgba(0, 0, 0, .18); }
+.rb-node[aria-pressed="true"] small { color: #c8c8c8; }
+.rb-node:focus-visible { outline: 2px solid #27c4d5; outline-offset: 4px; }
+
+@media (max-width: 1024px) {
+  .rb-traits { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 32px; }
+  .rb-traits li:nth-child(3) { padding-left: 0; border-left: 0; }
+}
+@media (max-width: 768px) {
+  .rb-io { grid-template-columns: 1fr; justify-items: center; gap: 18px; }
+  .rb-in ul { justify-items: center; }
+  .rb-in .rb-io-h, .rb-out .rb-io-h { text-align: center; }
+  .rb-arrow { width: 3px; height: 40px; background: repeating-linear-gradient(180deg, #333 0 3px, transparent 3px 8px); }
+  .rb-arrow::after { right: -6px; top: auto; bottom: -6px; border: 7px solid transparent; border-top: 11px solid #333; border-bottom: 0; }
+  .rb-mid { width: 200px; }
+  .rb-out { width: min(100%, 300px); }
+  .rb-traits { grid-template-columns: 1fr; }
+  .rb-tech { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; width: 100%; aspect-ratio: auto; container-type: normal; }
+  .rb-tech::before { display: none; }
+  .rb-core { position: static; order: -1; width: 100%; min-height: 220px; margin-bottom: 14px; padding: 28px 22px; border-radius: 12px; }
+  .rb-desc h3 { font-size: 20px; } .rb-desc p { font-size: 14px; }
+  .rb-node { position: static; width: auto; height: auto; margin: 0; padding: 9px 16px; border-radius: 62px; transform: none; box-shadow: none; }
+  .rb-node small { display: none; }
+  .rb-node[aria-pressed="true"] { box-shadow: none; }
+}
+@media (prefers-reduced-motion: reduce) { .rb-in li, .rb-arrow, .rb-out dd b { animation: none !important; } }

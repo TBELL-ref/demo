@@ -72,6 +72,26 @@
   // QA test pages: the SPA's section reveal and diagram motion (qa-pages.js, loaded before this file).
   if (typeof wireQaPages === "function") wireQaPages();
 
+  // 블랙박스 테스트 기법: the chosen node fills the centre; it steps on by itself until someone picks one.
+  document.querySelectorAll("[data-tech]").forEach((orbit) => {
+    const nodes = [...orbit.querySelectorAll(".rb-node")];
+    const descs = [...orbit.querySelectorAll(".rb-desc")];
+    let at = 0;
+    let timer = 0;
+    const show = (i) => {
+      at = i;
+      nodes.forEach((node, k) => node.setAttribute("aria-pressed", String(k === i)));
+      descs.forEach((desc, k) => desc.classList.toggle("is-on", k === i));
+    };
+    const stop = () => { clearInterval(timer); timer = 0; };
+    nodes.forEach((node, i) => {
+      node.addEventListener("click", () => { stop(); show(i); });
+      node.addEventListener("mouseenter", () => { stop(); show(i); });
+      node.addEventListener("focus", () => { stop(); show(i); });
+    });
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) timer = setInterval(() => show((at + 1) % nodes.length), 3600);
+  });
+
   // 테스트 분야 photo cards (site.js wireDeck): the clicked card opens, the others close.
   document.querySelectorAll(".expand-card").forEach((card) => {
     card.addEventListener("click", () => {
