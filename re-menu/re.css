@@ -183,17 +183,32 @@
 .ra-cols p { margin: 0; color: #595959; font-size: clamp(14px, .92vw, 16px); line-height: 1.75; word-break: keep-all; }
 .ra-two { grid-template-columns: repeat(2, minmax(0, 1fr)); width: 83%; margin: 40px auto 0; }
 .ra-two h3 span { margin-right: 12px; font-family: var(--num); font-weight: 600; color: #969696; }
-/* API 테스트 › 기본 테스트 절차: three ruled columns, each with one fragment of a real request. */
-.ra-steps { width: 83%; margin: 40px auto 0; }
-.ra-steps h3 span { margin-right: 12px; font-family: var(--num); font-weight: 600; color: #969696; }
-.ra-steps code { display: inline-block; margin-top: 14px; padding: 5px 12px; border: 1px solid #cfcfcf; border-radius: 6px; color: #333; font-family: ui-monospace, Consolas, monospace; font-size: 13px; }
-.ra-steps li:last-child code { border-color: #27c4d5; color: #0788a4; }
+/* API 테스트 › 기본 테스트 절차: one request and its response on a dark panel (the origin { api } tone),
+   parts numbered ①②③; the steps below carry the same numbers. */
+.ap-msg { max-width: 820px; margin: 52px auto 0; padding: 34px 36px 30px; border-radius: 14px; background: #2b2b2b; text-align: left; }
+.ap-row { display: flex; flex-wrap: wrap; align-items: center; gap: 22px 14px; }
+.ap-row.is-res { margin-top: 30px; padding-top: 30px; border-top: 1px dashed #4a4a4a; }
+.ap-tag { width: 96px; color: #8a8a8a; font-family: var(--num); font-size: 12px; letter-spacing: .2em; }
+.ap-part { position: relative; padding: 10px 16px; border-radius: 8px; background: #1c1c1c; color: #e6e6e6; font-family: ui-monospace, Consolas, monospace; font-size: 15px; }
+.ap-part::before { content: attr(data-n); position: absolute; top: -11px; left: -11px; display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: #27c4d5; color: #121212; font-family: var(--num); font-size: 13px; font-weight: 700; }
+.ap-m { margin-right: 6px; color: #27c4d5; }
+.ap-ok { margin-right: 8px; color: #27c4d5; }
+.ap-check { margin-left: auto; color: #27c4d5; font-size: 14px; font-weight: 700; }
+.ap-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; max-width: 820px; margin: 36px auto 0; padding: 0; list-style: none; text-align: left; }
+.ap-steps li { display: flex; gap: 12px; }
+.ap-steps span { flex: none; display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: #27c4d5; color: #121212; font-family: var(--num); font-size: 13px; font-weight: 700; }
+.ap-steps h3 { margin: 1px 0 6px; color: #333; font-size: 16px; font-weight: 700; }
+.ap-steps p { margin: 0; color: #595959; font-size: 14px; line-height: 1.65; word-break: keep-all; }
 .qp-flow-art svg text { font-weight: 600; }
 
 @media (max-width: 768px) {
   .ra-cols, .ra-two { grid-template-columns: 1fr; width: 100%; gap: 28px; margin-top: 48px; }
   .ra-cols li { padding: 0; border-left: 0; }
-  .ra-steps { width: 100%; }
+  .ap-msg { padding: 26px 18px 22px; }
+  .ap-tag { width: 100%; }
+  .ap-part { font-size: 13px; }
+  .ap-check { margin-left: 0; }
+  .ap-steps { grid-template-columns: 1fr; gap: 18px; }
 }
 
 /* ── 블랙박스 · 화이트박스 (rx- shared, rb- blackbox, rw- whitebox) ─────────────────────────
