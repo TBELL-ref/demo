@@ -2262,6 +2262,8 @@ a.s-card:hover .s-ibox { border-color: var(--active); }
 .md-solo .md-title { flex-direction: column; align-items: flex-start; gap: 10px; }
 .md-solo .md-title b, .md-solo .md-title a { white-space: nowrap; }
 .md-solo .md-groups { grid-template-columns: repeat(3, minmax(0, 200px)); column-gap: clamp(24px, 3vw, 48px); }
+/* /re-menu adds KOLAS as a fourth QA group: four columns, so it sits beside the others instead of under them. */
+.md-solo .md-groups:has(> .md-group:nth-child(4)) { grid-template-columns: repeat(4, minmax(0, 180px)); }
 .md-solo .md-rows { grid-template-columns: repeat(3, minmax(0, 220px)); column-gap: 28px; align-content: start; }
 .md-sec-head { display: grid; gap: 6px; }
 .md-eyebrow { margin: 0; color: #7d7d7d; font-family: var(--num); font-size: 11px; font-weight: 600; letter-spacing: .14em; }
@@ -2497,6 +2499,22 @@ a.s-card:hover .s-ibox { border-color: var(--active); }
   .iq-intro h1 { font-size: 24px; }
 }
 .detail.inq-page .sheet .iq-form .survey .kicker { color: #121212; font-size: 15px; font-weight: 700; }
+/* 사전 조사, opened: the same underline fields and grey labels as 담당자 정보, no panel around them. */
+.detail.inq-page .sheet .iq-form .survey .kicker small { margin-left: 8px; color: #9a9a9a; font-size: 12px; font-weight: 400; }
+.detail.inq-page .sheet .iq-form .survey[open] > :not(summary) { background: none; border-radius: 0; }
+.detail.inq-page .sheet .iq-form .survey[open] .survey-note { padding: 0; color: #8a8a8a; font-size: 13px; }
+.detail.inq-page .sheet .iq-form .survey[open] .survey-counts { gap: 18px 20px; padding: 16px 0 0; align-items: end; }
+.detail.inq-page .sheet .iq-form .survey-counts label > span:first-child { white-space: normal; word-break: keep-all; }
+.detail.inq-page .sheet .iq-form .survey[open] .survey-selects { gap: 18px 28px; padding: 18px 0 0; }
+.detail.inq-page .sheet .iq-form .survey-counts label, .detail.inq-page .sheet .iq-form .survey-selects label { gap: 0; color: #6b6b6b; font-size: 13px; font-weight: 500; }
+.detail.inq-page .sheet .iq-form .survey .unit input, .detail.inq-page .sheet .iq-form .survey-selects select { height: 40px; border: 0; border-bottom: 1px solid #d9dde1; border-radius: 0; background-color: transparent; color: #121212; font-size: 15px; transition: border-color .2s; }
+.detail.inq-page .sheet .iq-form .survey .unit input { padding: 0 24px 0 2px; text-align: left; }
+.detail.inq-page .sheet .iq-form .survey .unit em { right: 2px; color: #9a9a9a; }
+.detail.inq-page .sheet .iq-form .survey-selects select { padding: 0 24px 0 2px; -webkit-appearance: none; appearance: none; cursor: pointer;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 4.5 6 8l3.5-3.5' fill='none' stroke='%238a8a8a' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") right 2px center / 12px no-repeat; }
+.detail.inq-page .sheet .iq-form .survey .unit input:focus, .detail.inq-page .sheet .iq-form .survey-selects select:focus { outline: 0; border-bottom-color: #27c4d5; }
+.detail.inq-page .sheet .iq-form .survey-selects select:invalid, .detail.inq-page .sheet .iq-form .survey-selects select:has(option[value=""]:checked) { color: #b4b8bc; }
+.detail.inq-page .sheet .iq-form .survey-selects option { color: #121212; }
 
 /* ── Origin type rules (measured from the origin's own clamp() rules, px(min, max) over 1024-1920 pc,
    768-1024 tablet, 350-768 mobile) for the pieces both sites share. ─────────────────────────── */

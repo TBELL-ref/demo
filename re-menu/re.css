@@ -361,3 +361,7 @@
   .pm-strip li:nth-child(odd) { border-left: 0; padding-left: 4px; }
   .pm-strip li:nth-child(n+3) { border-top: 1px solid #e4e4e4; }
 }
+
+/* Header: 문의 sits in the phone menu only (the SPA adds it below 1024px); KOLAS pages have only a title. */
+@media (min-width: 1024px) { .is-multi .nav .nav-inquiry { display: none; } }
+.rm-kolas .s-sec { min-height: 320px; }

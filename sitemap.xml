@@ -64,11 +64,11 @@
   <url><loc>https://tbell-ref.github.io/demo/qa/service/types/blackbox/</loc></url>
   <url><loc>https://tbell-ref.github.io/demo/qa/service/types/performance/</loc></url>
   <url><loc>https://tbell-ref.github.io/demo/qa/service/types/whitebox/</loc></url>
-  <url><loc>https://tbell-ref.github.io/demo/qa/tauto/</loc></url>
-  <url><loc>https://tbell-ref.github.io/demo/qa/tauto/auto/</loc></url>
-  <url><loc>https://tbell-ref.github.io/demo/qa/tauto/gen/</loc></url>
-  <url><loc>https://tbell-ref.github.io/demo/qa/tauto/lens/</loc></url>
-  <url><loc>https://tbell-ref.github.io/demo/qa/tauto/voc/</loc></url>
+  <url><loc>https://tbell-ref.github.io/demo/qa/solution/</loc></url>
+  <url><loc>https://tbell-ref.github.io/demo/qa/solution/auto/</loc></url>
+  <url><loc>https://tbell-ref.github.io/demo/qa/solution/gen/</loc></url>
+  <url><loc>https://tbell-ref.github.io/demo/qa/solution/lens/</loc></url>
+  <url><loc>https://tbell-ref.github.io/demo/qa/solution/voc/</loc></url>
   <url><loc>https://tbell-ref.github.io/demo/security/</loc></url>
   <url><loc>https://tbell-ref.github.io/demo/security/cert/</loc></url>
   <url><loc>https://tbell-ref.github.io/demo/security/diagnose/</loc></url>

@@ -153,13 +153,13 @@ const QA_GROUPS = [
     ]
   },
   {
-    id: "tauto", label: "솔루션", href: "#qa/tauto",
+    id: "solution", label: "솔루션", href: "#qa/solution",
     children: [
-      { id: "overview", label: "솔루션 개요", href: "#qa/tauto" },
-      { id: "auto", label: "T-AUTO", href: "#qa/tauto/auto" },
-      { id: "gen", label: "T-GEN", href: "#qa/tauto/gen" },
-      { id: "lens", label: "T-LENS", href: "#qa/tauto/lens" },
-      { id: "voc", label: "T-VOC", href: "#qa/tauto/voc" }
+      { id: "overview", label: "T 브랜드 솔루션", href: "#qa/solution" },
+      { id: "auto", label: "T-AUTO", href: "#qa/solution/auto" },
+      { id: "lens", label: "T-LENS", href: "#qa/solution/lens" },
+      { id: "gen", label: "T-GEN", href: "#qa/solution/gen" },
+      { id: "voc", label: "T-VOC", href: "#qa/solution/voc" }
     ]
   }
 ];
@@ -312,11 +312,11 @@ const QA_OPS_SIDES = [["지속적인 테스트 자동화", "서비스 신뢰성 
 // T 솔루션 on the home (the user's Group 66 design, over a darkened, blurred QA workspace photo): five columns — the overview, then the
 // four products. The frosted panel with the teal dot sits on the overview and follows the pointer.
 const QA_SOLUTIONS = [
-  ["T-솔루션", "AI 기반 품질 검증 자동화", "#qa/tauto"],
-  ["T-GEN", "테스트케이스 생성", "#qa/tauto/gen"],
-  ["T-AUTO", "테스트 자동 실행·운영", "#qa/tauto/auto"],
-  ["T-LENS", "LLM·AI 서비스 평가", "#qa/tauto/lens"],
-  ["T-VOC", "사용자 리뷰 분석", "#qa/tauto/voc"]
+  ["T-솔루션", "AI 기반 품질 검증 자동화", "#qa/solution"],
+  ["T-AUTO", "통합 QA 자동화 플랫폼", "#qa/solution/auto"],
+  ["T-LENS", "LLM 품질 평가", "#qa/solution/lens"],
+  ["T-GEN", "AI 테스트케이스 생성", "#qa/solution/gen"],
+  ["T-VOC", "AI 고객 리뷰 분석", "#qa/solution/voc"]
 ];
 const QA_ART = (window.TBELL_BASE || "") + "assets/qa/";
 
@@ -669,7 +669,8 @@ function qaDeck(slides, id, base, leaves) {
   const slidesHtml = slides.map((slide) => {
     const tags = slide.tags.map((tag) => `<span>#${tag.replace(" Test", "")}</span>`).join("");
     const photo = `<picture class="svc-bg"><source media="(max-width: 768px)" srcset="${ORIGIN}${slide.bg[2]}"><source media="(max-width: 1024px)" srcset="${ORIGIN}${slide.bg[1]}"><img src="${ORIGIN}${slide.bg[0]}" alt=""></picture>`;
-    return `<article class="svc-slide">${photo}<div><p>${slide.title}</p><p>${slide.desc}</p><div class="svc-tags">${tags}</div></div></article>`;
+    const word = slide.word ? `<strong class="svc-word" aria-hidden="true">${slide.word}</strong>` : "";
+    return `<article class="svc-slide">${photo}${word}<div><p>${slide.title}</p><p>${slide.desc}</p><div class="svc-tags">${tags}</div></div></article>`;
   }).join("");
   const nav = (slide, dir, label) => slide
     ? `<a class="svc-nav ${dir}" href="${slide.href || base + slide.id}" aria-label="${label}">${arrow}</a>`
@@ -704,7 +705,7 @@ function serviceDeck(child, page) {
   return qaDeck(SERVICE_DECK, child === "automation" ? "automation" : "outsourcing", "#qa/service/", qaLeaves("service"));
 }
 
-// Old QA URLs (테스트 종류 · TestOps menus) and where each now lives, so bookmarks keep working.
+// Old QA URLs (테스트 종류 · TestOps · T 솔루션 tauto menus) and where each now lives, so bookmarks keep working.
 function legacyQaHash(group, child) {
   if (group === "types") {
     if (child === "automation") return "#qa/service/automation";
@@ -712,182 +713,262 @@ function legacyQaHash(group, child) {
     return "#qa/service/outsourcing";
   }
   if (group === "testops") return "#qa/service/automation/" + (child === "ai" ? "ai" : "testops");
+  if (group === "tauto") return "#qa/solution" + (child === "vux" ? "/auto" : T_PAGES[child] && child !== "overview" ? "/" + child : "");
   return "";
 }
 
-// ── T 브랜드 솔루션 (copy from the 「T브랜드솔루션」 leaflet) ─────────────
-// T-AUTO is the platform at the centre; T-GEN, T-LENS, T-VOC and TestOps sit around it by role.
-// T-ASSI is part of the leaflet's map but is left out of the QA menu and pages for now.
-const T_BRANDS = [
-  { id: "gen", name: "T-GEN", role: "설계", en: "DESIGN", icon: "form", href: "#qa/tauto/gen", tag: "AI 기반 테스트 케이스 설계 자동화",
-    text: "기획서·Figma·요구사항 문서를 분석해 테스트 케이스를 자동으로 도출하고 중복을 정리합니다." },
-  { id: "auto", name: "T-AUTO", role: "플랫폼", en: "PLATFORM", icon: "layers", href: "#qa/tauto/auto", tag: "AI 기반 통합 품질 검증 플랫폼",
-    text: "4계층 아키텍처 위에서 No-Code 자동화, AI 자율 테스트, 품질 분석을 한 번에 운영합니다." },
-  { id: "testops", name: "TestOps", role: "검증·운영", en: "OPERATIONS", icon: "loop", href: "#qa/service/automation/testops", tag: "멀티모달 테스트 및 품질 운영 자동화",
-    text: "CI/CD 연동부터 멀티모달 QA, 안정성 점수 기반 배포 결정까지 품질 운영을 자동화합니다." },
-  { id: "lens", name: "T-LENS", role: "평가", en: "EVAL", icon: "scan", href: "#qa/tauto/lens", tag: "대화형 AI(LLM) 품질 평가 플랫폼",
-    text: "LLM-as-a-Judge로 평가 프로세스를 표준화하고 정량·정성 평가를 자동화합니다." },
-  { id: "voc", name: "T-VOC", role: "피드백", en: "FEEDBACK", icon: "send", href: "#qa/tauto/voc", tag: "앱 스토어 VOC 모니터링 시스템",
-    text: "앱 스토어 리뷰를 모아 이슈로 만들고, AI가 유형을 나누고 답변을 추천합니다." }
-];
+// ── T 브랜드 솔루션 (copy from the 2026.10.22 T 브랜드 소개서; design_demo/t-solution-content-audit.md) ──
+// Five pages as one banner deck like the QA service and company pages: the darkened QA workspace photo with
+// the product's name lettered on it, the tab strip, then a white body of centred qp- sections. T-ASSI is
+// introduced only under 도입 옵션 on the overview; it has no page of its own.
 
-function tBrand(id) {
-  return T_BRANDS.find((b) => b.id === id);
-}
+// Pictures for the API 테스트-style flows (T-LENS · T-GEN · T-VOC): grey device, pale screen, blue-grey
+// lines and one cyan accent, each on a 120×96 box.
+const TB_G = "#6b6b6b", TB_L = "#d9d9d9", TB_B = "#b7c7d1", TB_S = "#f6f8fa", TB_T = "#27c4d5";
+const tbStar = (cx, cy, r, fill) => `<path d="${Array.from({ length: 10 }, (_, i) => {
+  const a = Math.PI / 5 * i - Math.PI / 2, d = i % 2 ? r * .45 : r;
+  return (i ? "L" : "M") + (cx + d * Math.cos(a)).toFixed(1) + " " + (cy + d * Math.sin(a)).toFixed(1);
+}).join("")}z" fill="${fill}"/>`;
+const tbPhone = (x, y, w, h, screen = "") => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="${w / 6}" fill="${TB_G}"/><rect x="${x + 3}" y="${y + 7}" width="${w - 6}" height="${h - 14}" fill="${TB_S}"/>${screen}`;
+const tbLines = (x, y, widths, gap = 10, fill = TB_B) => widths.map((w, i) => `<rect x="${x}" y="${y + i * gap}" width="${w}" height="4" fill="${fill}"/>`).join("");
+const TB_ART = {
+  chat: `<path d="M14 10h62a6 6 0 0 1 6 6v32a6 6 0 0 1-6 6H38L24 66V54H14a6 6 0 0 1-6-6V16a6 6 0 0 1 6-6z" fill="${TB_G}"/>${[30, 45, 60].map((x) => `<circle cx="${x}" cy="32" r="4.5" fill="#fff"/>`).join("")}<path d="M60 46h46a6 6 0 0 1 6 6v20a6 6 0 0 1-6 6h-6v10L90 78H60a6 6 0 0 1-6-6V52a6 6 0 0 1 6-6z" fill="${TB_T}"/>${tbLines(64, 56, [36, 24], 10, "#fff")}`,
+  report: `<rect x="12" y="8" width="96" height="80" rx="4" fill="${TB_G}"/><rect x="18" y="14" width="84" height="68" fill="${TB_S}"/><rect x="28" y="52" width="12" height="22" fill="${TB_B}"/><rect x="46" y="40" width="12" height="34" fill="${TB_B}"/><rect x="64" y="30" width="12" height="44" fill="${TB_T}"/><rect x="82" y="44" width="12" height="30" fill="${TB_B}"/><path d="M26 34l20-8 18-6 28 6" stroke="${TB_G}" stroke-width="2.5" fill="none"/>`,
+  docs: `<rect x="14" y="16" width="50" height="74" rx="4" fill="${TB_L}"/>${tbLines(22, 30, [32, 26, 34, 20], 10, "#fff")}<rect x="48" y="6" width="56" height="80" rx="4" fill="${TB_G}"/><rect x="54" y="12" width="44" height="68" fill="${TB_S}"/>${tbLines(60, 22, [32, 24, 32, 18])}<rect x="60" y="64" width="32" height="10" fill="${TB_T}"/>`,
+  tc: `<rect x="28" y="10" width="64" height="80" rx="5" fill="${TB_G}"/><rect x="34" y="18" width="52" height="66" fill="${TB_S}"/><rect x="48" y="4" width="24" height="12" rx="3" fill="${TB_L}"/>${[26, 40, 54, 68].map((y) => `<rect x="40" y="${y}" width="8" height="8" rx="1.5" fill="${TB_T}"/><rect x="52" y="${y + 2}" width="28" height="4" fill="${TB_B}"/>`).join("")}`,
+  review: `<rect x="10" y="8" width="62" height="78" rx="4" fill="${TB_G}"/><rect x="16" y="14" width="50" height="66" fill="${TB_S}"/>${[22, 34, 46, 58].map((y, i) => `<rect x="22" y="${y}" width="${i === 1 ? 30 : 36}" height="5" fill="${i === 1 || i === 2 ? TB_T : TB_B}"/>`).join("")}<circle cx="78" cy="52" r="18" fill="rgba(255,255,255,.7)" stroke="${TB_G}" stroke-width="6"/><path d="M91 65l16 16" stroke="${TB_G}" stroke-width="8" stroke-linecap="round"/>`,
+  store: tbPhone(34, 2, 52, 92, [0, 1, 2, 3, 4].map((i) => tbStar(44 + i * 8, 22, 4, i < 4 ? TB_T : TB_L)).join("") + tbLines(42, 34, [36, 28, 34], 9) + `<rect x="42" y="64" width="36" height="12" rx="3" fill="${TB_B}"/>`),
+  inbox: `<path d="M60 6v34" stroke="${TB_T}" stroke-width="6" stroke-linecap="round"/><path d="M46 26l14 14 14-14" stroke="${TB_T}" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 50h30l6 10h24l6-10h30v30a5 5 0 0 1-5 5H17a5 5 0 0 1-5-5z" fill="${TB_G}"/><path d="M24 50l8-14h12M96 50l-8-14H76" stroke="${TB_L}" stroke-width="4" fill="none"/>`,
+  ticket: `<path d="M10 20h100v20a8 8 0 0 0 0 16v20H10V56a8 8 0 0 0 0-16z" fill="${TB_G}"/><rect x="24" y="30" width="22" height="9" rx="2" fill="${TB_T}"/>${tbLines(24, 46, [56, 40], 10, "#fff")}<path d="M88 30v36" stroke="${TB_L}" stroke-width="2" stroke-dasharray="4 4"/>`
+};
 
-// T 솔루션 bodies: the white QA-detail language, but each page built from different pieces the way the
-// 테스트 종류 pages are (cycle band, chevrons, layer stack, metrics band, conversion, score screen, flow).
-// Copy is the leaflet's; no source notes.
-const tpBody = (html) => `<div class="svc-body tp">${html}</div>`;
-const tpSec = (id, eyebrow, title, lede, inner, cls = "") => `
-  <section class="qp-sec tp-sec${cls ? " " + cls : ""}" id="${id}" data-qp-reveal>
-    <p class="tp-eyebrow">${eyebrow}</p>
-    <h2 class="qp-h">${title}</h2>
-    ${lede ? `<div class="qp-lede"><p>${lede}</p></div>` : ""}
+// Product names (and End-to-End) never break at their hyphens.
+const tbNw = (text) => text.replace(/T-(AUTO|LENS|GEN|VOC|ASSI)|End-to-End/g, '<span class="tb-nw">$&</span>');
+// Line breaks are for wide screens; phones drop them (qa-pages.css), so each keeps a space before it.
+const tbBr = (text) => tbNw(text.replace(/<br>/g, " <br>"));
+// One section, one message: a title, an optional lede, then the figure.
+const tbSec = (id, title, lede, inner, cls = "") => `
+  <section class="qp-sec tb-sec${cls ? " " + cls : ""}" id="${id}" data-qp-reveal>
+    <h2 class="qp-h">${tbBr(title)}</h2>
+    ${lede ? `<div class="qp-lede"><p>${tbBr(lede)}</p></div>` : ""}
     ${inner}
   </section>`;
-const tpIco = (name) => `<span class="tp-ico">${ICO[name]}</span>`;
-
-// Product tabs under the hero: switch between the T pages without a footer list on every page.
-function tTabs(current) {
-  const items = [["overview", "솔루션 개요", "#qa/tauto"], ["auto", "T-AUTO", "#qa/tauto/auto"], ["gen", "T-GEN", "#qa/tauto/gen"], ["lens", "T-LENS", "#qa/tauto/lens"], ["voc", "T-VOC", "#qa/tauto/voc"]];
-  return `<nav class="subnav tq-tabs" aria-label="T 솔루션">${items.map(([id, label, href]) => `<a href="${href}"${id === current ? ' aria-current="page"' : ""}>${label}</a>`).join("")}</nav>`;
+// Full-bleed grey or dark band inside .svc-body, for the one section on a page that changes the rhythm.
+const tbBand = (id, title, lede, inner, tone = "grey") => `
+  <section class="tb-band ${tone}" id="${id}" data-qp-reveal>
+    <h2 class="qp-h">${tbBr(title)}</h2>
+    ${lede ? `<div class="qp-lede"><p>${tbBr(lede)}</p></div>` : ""}
+    ${inner}
+  </section>`;
+// Short statements side by side on rules.
+const tbTrio = (items, cls = "") => `<ul class="tb-trio${cls ? " " + cls : ""}" style="--n:${items.length}">${items.map(([k, t, d], i) =>
+  `<li style="--i:${i}">${k ? `<span>${k}</span>` : ""}<b>${t}</b>${d ? `<p>${tbNw(d)}</p>` : ""}</li>`).join("")}</ul>`;
+const tbCta = (label) => `<div class="tb-cta"><a class="pill" href="#inquiry/qa">${label}</a></div>`;
+// The API 테스트 figure: pictures joined by dotted arrows, a dark { } circle where AI does the work.
+const tbAi = (word) => `<span class="qp-api${word.length > 3 ? " sm" : ""}">{ ${word} }</span>`;
+const tbFlow = (label, nodes) => `<figure class="qp-flow tb-flowart n${nodes.length}" aria-label="${label}">
+      <ol>${nodes.map(([art, text], i) => `<li style="--i:${i}"><div class="qp-flow-art">${art.startsWith("<") ? art : `<svg viewBox="0 0 120 96" aria-hidden="true">${TB_ART[art]}</svg>`}</div><p>${text}</p></li>`).join("")}</ol>
+    </figure>`;
+// Three values as editorial columns: a large light keyword over its line (the overview intro).
+const tbValues = (items, cls = "") => `<ol class="tb-values${cls ? " " + cls : ""}">${items.map(([k, t, d], i) => `<li style="--i:${i}"><strong>${k}</strong><b>${t}</b><p>${tbNw(d)}</p></li>`).join("")}</ol>`;
+// Numbered statements in two columns, the number set large and pale (challenges).
+const tbNums = (items) => `<ol class="tb-nums">${items.map(([t, d], i) => `<li style="--i:${i}"><span>0${i + 1}</span><div><b>${t}</b><p>${tbNw(d)}</p></div></li>`).join("")}</ol>`;
+// Overview portfolio flow: stage, product and role, and a line icon per product (ink strokes, cyan accents).
+const TB_PF = [["gen", "01", "설계", "T-GEN", "AI 기반 테스트 케이스 생성"], ["auto", "02", "검증 · 운영", "T-AUTO", "통합 QA 자동화 플랫폼"],
+  ["lens", "03", "평가", "T-LENS", "LLM 품질 평가"], ["voc", "04", "피드백", "T-VOC", "고객 리뷰 분석"]];
+const TB_INK = "#25313a";
+const tbCheck = (x, y, on) => on
+  ? `<rect x="${x}" y="${y}" width="11" height="11" rx="2" fill="#e3f6f9" stroke="${TB_T}" stroke-width="2"/><path d="M${x + 2.5} ${y + 5.5}l2.5 2.5 4.5-5" fill="none" stroke="${TB_T}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>`
+  : `<rect x="${x}" y="${y}" width="11" height="11" rx="2" fill="#fff" stroke="${TB_INK}" stroke-width="1.8"/>`;
+const TB_PF_ART = {
+  gen: `<g fill="#fff" stroke="${TB_INK}" stroke-width="2" stroke-linejoin="round"><rect x="22" y="12" width="54" height="74" rx="4"/><rect x="30" y="18" width="54" height="74" rx="4"/><rect x="40" y="26" width="58" height="76" rx="5"/></g>
+    ${tbCheck(49, 40, true)}${tbCheck(49, 60, false)}${tbCheck(49, 80, false)}<g fill="#a9b6bf"><rect x="66" y="43" width="24" height="3" rx="1.5"/><rect x="66" y="49" width="16" height="3" rx="1.5"/><rect x="66" y="63" width="22" height="3" rx="1.5"/><rect x="66" y="83" width="24" height="3" rx="1.5"/></g>`,
+  auto: `<rect x="8" y="28" width="142" height="100" rx="6" fill="#fff" stroke="${TB_INK}" stroke-width="2"/><path d="M8 42h142M44 42v86" stroke="${TB_INK}" stroke-width="2"/>
+    <g fill="#a9b6bf"><circle cx="17" cy="35" r="2"/><circle cx="24" cy="35" r="2"/><circle cx="31" cy="35" r="2"/>${[56, 70, 84, 98].map((y) => `<circle cx="17" cy="${y}" r="2"/><rect x="23" y="${y - 1.5}" width="14" height="3" rx="1.5"/>`).join("")}</g>
+    <rect x="54" y="52" width="82" height="64" rx="4" fill="#f2f6f8" stroke="#c9d3d9" stroke-width="1.5"/><g fill="#c9d3d9"><rect x="62" y="60" width="44" height="4" rx="2"/><rect x="62" y="96" width="60" height="8" rx="2"/></g>
+    <rect x="62" y="74" width="46" height="12" rx="3" fill="#bfeaf0" stroke="${TB_T}" stroke-width="2"/>
+    <path d="M112 70l3-5M117 76l5-2M110 66l-1-6" stroke="${TB_T}" stroke-width="2" stroke-linecap="round"/>
+    <path d="M106 78l14 10-6 1.5 4 7-3.5 2-4-7-4.5 4z" fill="#fff" stroke="${TB_INK}" stroke-width="2" stroke-linejoin="round"/>
+    <rect x="144" y="46" width="48" height="84" rx="7" fill="#fff" stroke="${TB_INK}" stroke-width="2"/><rect x="151" y="56" width="34" height="26" rx="2" fill="#eef2f4"/>
+    <path d="M154 78l9-10 7 7 5-4 8 7" fill="none" stroke="#a9b6bf" stroke-width="1.8" stroke-linejoin="round"/><circle cx="175" cy="63" r="2.5" fill="#a9b6bf"/>
+    <g fill="#c9d3d9"><rect x="151" y="90" width="30" height="3" rx="1.5"/><rect x="151" y="97" width="22" height="3" rx="1.5"/></g><rect x="151" y="110" width="34" height="8" rx="2" fill="${TB_T}"/>
+    <circle cx="40" cy="24" r="18" fill="#fff" stroke="${TB_T}" stroke-width="3"/><text x="40" y="31" text-anchor="middle" font-family="Oxanium, sans-serif" font-size="18" font-weight="600" fill="#0788a4">AI</text>`,
+  lens: `<rect x="26" y="12" width="58" height="80" rx="4" fill="#fff" stroke="${TB_INK}" stroke-width="2"/><g fill="${TB_T}"><rect x="35" y="24" width="38" height="3" rx="1.5"/><rect x="35" y="32" width="28" height="3" rx="1.5"/><rect x="35" y="40" width="34" height="3" rx="1.5"/></g>
+    <g fill="#a9b6bf"><rect x="36" y="70" width="4" height="12"/><rect x="44" y="64" width="4" height="18"/></g><rect x="52" y="56" width="4" height="26" fill="${TB_T}"/><rect x="60" y="62" width="4" height="20" fill="#a9b6bf"/>
+    <circle cx="82" cy="70" r="14" fill="rgba(255,255,255,.85)" stroke="${TB_INK}" stroke-width="2.6"/><path d="M92 80l12 12" stroke="${TB_INK}" stroke-width="3.2" stroke-linecap="round"/>`,
+  voc: `<g fill="#fff" stroke="${TB_INK}" stroke-width="2" stroke-linejoin="round"><path d="M20 16h56a5 5 0 0 1 5 5v30a5 5 0 0 1-5 5H42l-12 10V56H20a5 5 0 0 1-5-5V21a5 5 0 0 1 5-5z"/>
+    <path d="M60 46h42a5 5 0 0 1 5 5v26a5 5 0 0 1-5 5h-6v10l-10-10H60a5 5 0 0 1-5-5V51a5 5 0 0 1 5-5z"/><path d="M16 72h28a4 4 0 0 1 4 4v14a4 4 0 0 1-4 4H30l-8 7v-7h-6a4 4 0 0 1-4-4V76a4 4 0 0 1 4-4z"/></g>
+    <g fill="#a9b6bf"><rect x="24" y="26" width="40" height="3" rx="1.5"/><rect x="24" y="34" width="30" height="3" rx="1.5"/><rect x="20" y="81" width="20" height="3" rx="1.5"/></g>${tbStar(81, 64, 10, TB_T)}`,
+  assi: `<g fill="#fff" stroke="${TB_INK}" stroke-width="2"><path d="M8 12v26c0 4 8 7 18 7s18-3 18-7V12"/><path d="M8 25c0 4 8 7 18 7s18-3 18-7"/><ellipse cx="26" cy="12" rx="18" ry="7"/></g>
+    <circle cx="44" cy="40" r="11" fill="${TB_T}"/><path d="M44 34v12M38 40h12" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/>`
+};
+function tOverview() {
+  // The quality cycle left to right, one product per stage, T-AUTO at the centre; T-ASSI hangs under it.
+  const map = `
+    <ol class="tb-pf">${TB_PF.map(([id, no, stage, name, role], i) => `
+      <li class="${id === "auto" ? "is-core" : ""}" style="--i:${i}"><a href="#qa/solution/${id}">
+        <span class="tb-pf-k"><small>${no}</small>${stage}</span>
+        <span class="tb-pf-ico"><svg viewBox="${id === "auto" ? "0 0 200 140" : "0 0 120 110"}" aria-hidden="true">${TB_PF_ART[id]}</svg></span>
+        <b>${name}</b><span class="tb-pf-d">${role}</span></a></li>`).join("")}
+    </ol>
+    <div class="tb-pf-low"><p class="tb-pf-assi"><svg viewBox="0 0 60 56" aria-hidden="true">${TB_PF_ART.assi}</svg><b>T-ASSI</b><span>구독형 QA 서비스</span></p></div>`;
+  return tbSec("intro", "AI 기반 통합 품질 검증 자동화", "테스트 설계부터 실행, 평가, 결함 관리까지 연결하는 T 브랜드 QA 솔루션입니다.",
+      tbValues([["통합성", "기능 · 성능 · LLM 통합", "하나의 플랫폼에서 품질을 검증합니다."], ["지능화", "AI 코파일럿", "자동화 구현부터 실패 분석까지 AI가 지원합니다."], ["신뢰성", "사람이 승인하는 AI", "AI가 제안하고, 최종 판단은 사람이 합니다."]])) +
+    tbSec("why", "QA 자동화, 실행만으로 충분할까요?", "실행 자동화가 늘수록 분석하고 판정해야 할 결과도 함께 늘어납니다.",
+      tbNums([
+        ["도구 · 데이터 분산", "설계 · 실행 · 결과 · 결함 관리 도구가 나뉘어 이력 추적이 어렵습니다."],
+        ["자동화 자산 유지보수", "UI · 환경이 바뀔 때마다 스크립트를 고쳐야 합니다."],
+        ["실행 이후의 수작업", "실패 원인 분석과 결함 판정, 재검증에 사람이 반복 투입됩니다."],
+        ["검증 대상의 다양화", "웹 · 모바일 · 앱 성능 · LLM마다 실행 방식과 평가 기준이 다릅니다."]
+      ])) +
+    tbSec("portfolio", "설계부터 피드백까지, 하나의 흐름으로", "T-AUTO를 중심으로 설계 · 검증 · 평가 · 피드백이 연결됩니다.", map, "tb-pf-sec") +
+    tbSec("contact", "솔루션 도입 문의", "", `
+      <ol class="tb-steps">${["도입 상담 및 요구사항 분석", "핵심 시나리오 검증", "단계적 도입 및 확대"]
+        .map((t, i) => `<li style="--i:${i}"><span>${i + 1}</span><b>${t}</b></li>`).join("")}</ol>
+      ${tbCta("도입 문의하기")}`);
 }
-const tPage = (current, eyebrow, title, lede, body) => sPage(eyebrow, title, lede, tTabs(current) + tpBody(body));
 
-function tautoHome() {
-  const stages = [["설계", "gen"], ["검증·운영", "auto"], ["평가", "lens"], ["피드백", "voc"]];
-  const col = ([stage, id], i) => {
-    const b = tBrand(id);
-    const extra = id === "auto" ? `<a class="tq-also" href="#qa/service/automation/testops">+ TestOps</a>` : "";
-    return `<li class="${id === "auto" ? "is-core" : ""}" style="--i:${i}">
-      <p class="tq-stage"><span>${String(i + 1).padStart(2, "0")}</span>${stage}</p>
-      <a class="tq-prod" href="${b.href}">${tpIco(b.icon)}<b>${b.name}</b><small>${b.tag}</small></a>${extra}
-    </li>`;
-  };
-  return tPage("overview", "T BRAND SOLUTION", "AI 기반 품질 검증 자동화", "IT 고객을 위한 통합 QA 자동화 포트폴리오입니다. T-AUTO를 중심으로 설계부터 평가, 운영, 고객 피드백까지 하나의 품질 플랫폼 생태계로 연결합니다.",
-    tpSec("map", "PORTFOLIO MAP", "설계부터 피드백까지 하나로", "각 솔루션은 품질 주기의 한 단계를 맡고, T-AUTO가 그 사이를 잇습니다.",
-      `<ol class="tq-cycle">${stages.map(col).join("")}</ol>`) +
-    `<section class="tq-band" data-qp-reveal>
-      <div class="tq-band-in">
-        <div><p class="tp-eyebrow">VALUE</p><h2 class="qp-h">도입하면 달라지는 것</h2></div>
-        <ol class="tq-values">${[["출시 주기 단축", "설계와 실행을 자동화해 Time-to-Market을 앞당깁니다."], ["No-Code 자동화", "LLM이 자연어 시나리오를 읽고 테스트를 만들어 실행합니다."], ["운영·비용 최적화", "필요한 테스트만 골라 구독형으로 운영해 초기 구축 비용을 줄입니다."]]
-          .map(([t, d], i) => `<li style="--i:${i}"><span>0${i + 1}</span><div><b>${t}</b><p>${d}</p></div></li>`).join("")}</ol>
-      </div>
-    </section>` +
-    tpSec("next", "NEXT STEP", "이렇게 시작합니다", "", `
-      <ol class="tq-chev">${[["PoC / 파일럿 협의", "도입 가능성을 검토하고 요구사항을 분석합니다."], ["우선순위 시나리오 선정", "핵심 기능 위주로 자동화 대상을 고릅니다."], ["통합 및 확대 적용", "CI/CD 파이프라인과 연동하고 전사로 넓힙니다."]]
-        .map(([t, d], i) => `<li style="--i:${i}"><b>${t}</b><p>${d}</p></li>`).join("")}</ol>
-      <div class="tp-actions"><a class="pill" href="#qa/inquiry">T 솔루션 도입 문의</a></div>`, "tp-last"));
-}
-
+// T-AUTO copilot: a line icon per step (ink strokes, cyan accent) and the centre picture — a person and the
+// AI in pale circles, dashed arcs carrying the work across (top) and back for approval (bottom).
+const TB_DUO_ICO = {
+  input: `<g fill="none" stroke="${TB_INK}" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"><path d="M10 5h18l9 9v26a3 3 0 0 1-3 3H10a3 3 0 0 1-3-3V8a3 3 0 0 1 3-3z"/><path d="M28 5v9h9M13 21h12M13 28h8"/></g>
+    <circle cx="36" cy="37" r="9" fill="${TB_T}"/><path d="M36 32.5v9M31.5 37h9" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/>`,
+  explore: `<circle cx="20" cy="20" r="13" fill="none" stroke="${TB_INK}" stroke-width="2.6"/><path d="M14 17a7 7 0 0 1 6-4" fill="none" stroke="${TB_T}" stroke-width="2.2" stroke-linecap="round"/><path d="M30 30l11 11" stroke="${TB_T}" stroke-width="4" stroke-linecap="round"/>`,
+  build: `<rect x="17" y="5" width="14" height="13" rx="2" fill="${TB_T}"/><g fill="none" stroke="${TB_INK}" stroke-width="2.2" stroke-linejoin="round"><path d="M24 18v7M10 31v-6h28v6"/><rect x="4" y="31" width="13" height="12" rx="2"/><rect x="31" y="31" width="13" height="12" rx="2"/></g>`,
+  approve: `<g fill="none" stroke="${TB_INK}" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"><path d="M12 5h18l9 9v26a3 3 0 0 1-3 3H12a3 3 0 0 1-3-3V8a3 3 0 0 1 3-3z"/><path d="M30 5v9h9"/></g>
+    <path d="M16 28l5 5 10-11" fill="none" stroke="${TB_T}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`
+};
+const TB_DUO_MID = `<defs><clipPath id="tb-duo-c1"><circle cx="100" cy="150" r="78"/></clipPath><clipPath id="tb-duo-c2"><circle cx="300" cy="150" r="78"/></clipPath>
+    <marker id="tb-duo-ar" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1l7 4-7 4" fill="none" stroke="${TB_T}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+  <g transform="translate(-6 21) scale(.86)"><circle cx="100" cy="150" r="78" fill="#eaf6f8"/>
+  <g clip-path="url(#tb-duo-c1)"><path d="M48 240c4-40 26-58 52-58s48 18 52 58z" fill="#fff" stroke="#d7e3e8" stroke-width="2"/><path d="M90 160h20v24H90z" fill="#f4d9c6"/>
+    <ellipse cx="100" cy="132" rx="26" ry="30" fill="#f8e3d4"/><path d="M73 130c-3-26 12-40 30-40 18 0 30 12 26 32-8-10-20-14-34-12-8 1-14 8-22 20z" fill="${TB_INK}"/></g></g>
+  <g transform="translate(62 21) scale(.86)"><circle cx="300" cy="150" r="78" fill="#eaf6f8"/><g clip-path="url(#tb-duo-c2)"><path d="M250 240c2-34 22-50 50-50s48 16 50 50z" fill="#fff" stroke="#d7e3e8" stroke-width="2"/>
+    <path d="M300 92v14" stroke="#c9d3d9" stroke-width="3"/><circle cx="300" cy="88" r="6" fill="${TB_T}"/>
+    <rect x="258" y="106" width="84" height="70" rx="30" fill="#fff" stroke="#d7e3e8" stroke-width="2"/><rect x="268" y="120" width="64" height="40" rx="20" fill="#1f3340"/>
+    <rect x="283" y="132" width="9" height="15" rx="4.5" fill="#5fe0ee"/><rect x="308" y="132" width="9" height="15" rx="4.5" fill="#5fe0ee"/></g></g>
+  <text x="200" y="157" text-anchor="middle" font-size="17" font-weight="700" fill="${TB_INK}">사람 <tspan fill="${TB_T}">⟷</tspan> AI</text>
+  <g fill="none" stroke="${TB_T}" stroke-width="2.2" stroke-dasharray="6 6" stroke-linecap="round"><path d="M128 72Q200 26 272 72" marker-end="url(#tb-duo-ar)"/><path d="M272 228Q200 274 128 228" marker-end="url(#tb-duo-ar)"/></g>`;
 function tAuto() {
-  const layers = [
-    ["L4", "Quality Analytics Layer", "실패 분석 및 릴리즈 의사결정 지원", ["Failure Analysis AI", "Release Stability Score"]],
-    ["L3", "AI Intelligence Layer", "AI Agent 기반 자율 테스트", ["TC Gen", "Explorer", "Self-Healing"]],
-    ["L2", "Test Automation Layer", "No-Code 및 멀티 플랫폼 실행", ["No-Code AI QA", "One Runner Platform"]],
-    ["L1", "Multi-modal QA Layer", "시각·음성 등 다양한 인터페이스 검증", ["Vision (OBS)", "Voice (STT/TTS)"]]
+  // What it verifies, how it runs, how it automates, where it runs — one diagram each, nothing said twice.
+  const areas = [["기능 QA", "Android · iOS · Web · API"], ["앱 성능", "기능 실행과 연계한 구간별 지표"], ["LLM QA", "T-LENS 평가 엔진으로 응답 품질 평가"]];
+  const flow = [
+    ["테스트 설계", "매뉴얼 TC · 테스트 데이터"],
+    ["테스트 실행", "자동 · 수동 · 예약 실행"],
+    ["결과 · 증적", "스크린샷 · 영상 · 로그"],
+    ["실패 분석", "AI가 원인 · 근거를 분석하고 개선안 제안"],
+    ["결함 관리", "등록 · 조치 · 확인, Jira 연계"]
   ];
-  return tPage("auto", "T-AUTO · PLATFORM", "AI 기반 통합 품질 검증 플랫폼", "T 브랜드 솔루션의 중심입니다. 4계층 아키텍처 위에서 No-Code 자동화, AI 자율 테스트, 품질 분석을 한 플랫폼으로 운영하고, 설계(T-GEN)·평가(T-LENS)·피드백(T-VOC)과 연결합니다.",
-    tpSec("layers", "4-LAYER ARCHITECTURE", "네 개의 계층이 함께 움직입니다", "아래 계층이 다양한 인터페이스를 검증하고, 위로 올라갈수록 AI가 판단과 의사결정을 돕습니다.", `
-      <div class="tp-stack">
-        <p class="tp-stack-axis" aria-hidden="true"><span>AI 판단·의사결정</span><span>인터페이스 검증</span></p>
-        <ol>${layers.map(([no, name, text, chips], i) => `
-          <li class="l${4 - i}" style="--i:${i}"><span class="tp-lno">${no}</span><div class="tp-lname"><b>${name}</b><p>${text}</p></div><div class="tp-lchips">${chips.map((c) => `<span>${c}</span>`).join("")}</div></li>`).join("")}</ol>
-      </div>
-      <p class="tp-note">T-AUTO는 소프트웨이브 2024에서 소프트웨어 테스트 자동화 도구로 처음 소개했습니다.</p>`) +
-    tpSec("areas", "PLATFORM", "기능도, 성능도, LLM까지.", "하나의 자산 · 실행 · 결함 체계 위에서 네 가지 검증 영역이 함께 동작합니다.", `
-      <ul class="tq-areas">${[["기능 QA", "App · Web · API 기능 검증 자동화"], ["앱 성능", "스텝 · 구간별 지표 수집 · 판정"], ["LLM 평가", "T-LENS 기반 챗봇 품질 평가"], ["실기기 검증", "디바이스 팜 · 클라우드 · 직접 연결"]]
-        .map(([t, d], i) => `<li${i === 2 ? ' class="is-key"' : ""}><b>${t}</b><p>${d}</p></li>`).join("")}</ul>
-      <p class="tq-envs"><span>Android</span><span>iOS</span><span>Web</span><span>API</span></p>
-      <p class="tp-note">실기기 팜 · 클라우드 · 직접 연결 단말 기반 End-to-End 검증 · 2021년부터 축적한 TestOps 운영 경험</p>`) +
-    tpSec("how", "HOW IT WORKS", "생성부터 결함 등록까지 한 흐름으로", "", `
-      <ol class="tq-pipe">${[["AI 자동화 생성", "TC 입력 → 자동 생성"], ["자동 실행", "실기기 · 스케줄, 성능 측정 동시"], ["실행 중 복구", "화면 변경 감지, 복구 후보 검증"], ["결과 · 실패 분석", "AI 원인 분류"], ["결함 관리", "검토 · 승인 후 결함 등록"]]
-        .map(([t, d], i) => `<li${i === 2 ? ' class="is-ai"' : i === 4 ? ' class="is-human"' : ""}><span>${i + 1}</span><b>${t}</b><p>${d}</p></li>`).join("")}</ol>
-      <p class="tq-pipe-loop">AI는 실행 중 복구하고, 테스트 자산 변경은 사람의 승인 후 반영합니다</p>`) +
-    tpSec("nocode", "NO-CODE", "LLM 기반 No-Code 자동화", "Web 환경 PoC 사례: 시나리오 설정만으로 테스트 전 과정을 자동 수행했습니다.", `
-      <div class="tq-split">
-        <ol class="tq-vsteps">${[["시나리오 설정", "자연어로 테스트 시나리오를 입력합니다."], ["AI 분석 및 식별 (LLM)", "화면의 UI 요소와 Action을 자동으로 파악합니다."], ["테스트 자동 실행", "식별한 요소를 기준으로 검증을 수행합니다."]]
-          .map(([t, d], i) => `<li style="--i:${i}"><span>0${i + 1}</span><div><b>${t}</b><p>${d}</p></div></li>`).join("")}</ol>
-        <div class="ts-demo nocode" aria-hidden="true">
-          <p class="ts-demo-k">시나리오</p><p class="ts-type">“로그인 후 장바구니에 상품을 담고 결제 화면까지 이동”</p>
-          <p class="ts-demo-k">AI 식별</p><div class="ts-found"><span>#login-id</span><span>#login-pw</span><span>button.cart-add</span><span>a.checkout</span></div>
-          <p class="ts-demo-k">실행</p><ul class="ts-run"><li>로그인</li><li>상품 담기</li><li>결제 화면 진입</li></ul>
-        </div>
+  // who does each copilot step: h = 사람, a = AI
+  const copilot = [["h", "TC 입력", "자연어로 테스트 단계와 기대 결과를 입력", "input"], ["a", "탐색 · 실행", "화면을 분석하고 액션 수행, 필요하면 사용자 확인 요청", "explore"], ["a", "자동화 생성", "실행 경로를 재사용 가능한 자동화 자산으로 구성", "build"], ["h", "검토 · 승인", "결과를 확인해 등록하고, 중요한 변경은 사람이 승인", "approve"]];
+  const envs = [["사용자 연결 기기", "사용자 PC에 연결한 기기"], ["사내 전용 디바이스팜", "공유 기기 · 브라우저 병렬 실행"], ["클라우드 디바이스팜", "클라우드 디바이스 기반 LLM 서비스 평가"]];
+  return tbSec("platform", "기능 · 성능 · LLM 검증을 하나의 플랫폼에서", "검증 영역은 달라도 자산 · 실행 · 결과 · 결함은 하나의 체계로 관리합니다.", `
+      <figure class="tb-stack" aria-label="T-AUTO 플랫폼 구성: 검증 영역과 공통 플랫폼">
+        <div class="tb-stack-row areas"><p class="tb-stack-k"><b>검증 영역</b></p>
+          <ul>${areas.map(([t, d]) => `<li><b>${t}</b><p>${tbNw(d)}</p></li>`).join("")}</ul></div>
+        <div class="tb-stack-row base"><p class="tb-stack-k"><b>공통 플랫폼</b></p>
+          <ul>${["테스트 자산", "실행 관리", "결과 · 증적", "결함 관리", "사용자 · 권한"].map((t) => `<li><b>${t}</b></li>`).join("")}</ul></div>
+      </figure>`) +
+    tbBand("workflow", "설계부터 재검증까지 한 흐름으로", "", `
+      <div class="tb-flow">
+        <ol>${flow.map(([t, d], i) => `<li${i === 3 ? ' class="is-ai"' : ""} style="--i:${i}"><span>0${i + 1}</span><b>${t}</b><p>${d}</p></li>`).join("")}</ol>
+        <div class="tb-flow-loop"><span>06</span><b>재검증 및 결과 비교</b><p>수정 후 다시 실행해 이전 결과와 비교하고, 이력을 누적합니다.</p></div>
       </div>`) +
-    tpSec("healing", "SELF-HEALING", "UI가 바뀌어도 테스트가 스스로 복구합니다", "요소 탐색에 실패하면 원인을 분석해 새 경로를 찾아 이어서 실행합니다.", `
-      <ol class="tq-ruled">${[["실패 상태 캡처 및 보존", "요소 탐색 실패 시 UI 스크린샷과 DOM 구조를 즉시 저장합니다."], ["데이터 정제 (Token Optimization)", "LLM 효율을 위해 불필요한 스크립트와 마커를 제거합니다."], ["AI 기반 DOM 차이 분석", "기준(V1)과 현재(V2) XML을 비교해 구조 변경을 파악합니다."], ["대체 경로(XPath) 자동 생성", "바뀐 UI에 맞는 새 Locator를 제안하고 복구합니다."]]
-        .map(([t, d], i) => `<li style="--i:${i}"><span>STEP 0${i + 1}</span><b>${t}</b><p>${d}</p></li>`).join("")}</ol>`) +
-    `<section class="tq-metrics" data-qp-reveal>
-      <p class="tp-eyebrow">IMPACT &amp; VALUE</p>
-      <div class="tq-metrics-row">
-        <div><span>Flaky Test 감소율</span><strong>35% ~ 50%<em>↓</em></strong></div>
-        <div><span>자동 복구 성공률</span><strong>75% ~ 90%<em>↑</em></strong></div>
+    tbSec("automation", "AI가 만들고, 사람이 승인합니다", "매뉴얼 TC를 AI 코파일럿이 자동화로 바꾸고, 필요하면 블록이나 코드로 직접 구성합니다.", `
+      <div class="tb-duo">
+        ${[["h", "사람의 업무"], ["a", "AI의 업무"]].map(([who, k]) => `
+        <div class="tb-duo-side ${who}"><p class="tb-duo-k">${k}</p>
+          <ul>${copilot.map((c, i) => [...c, i]).filter(([w]) => w === who).map(([, t, d, ico, i]) =>
+            `<li><svg viewBox="0 0 48 48" aria-hidden="true">${TB_DUO_ICO[ico]}</svg><div><small>0${i + 1}</small><b>${t}</b><p>${d}</p></div></li>`).join("")}</ul>
+          ${who === "a" ? `<p class="tb-duo-ex"><b>실행 실패 시</b>원인과 TC 보완 사항을 제시합니다.</p>` : ""}
+        </div>`).join("")}
+        <svg class="tb-duo-mid" viewBox="0 0 400 300" role="img" aria-label="사람이 TC를 입력하면 AI가 실행해 자동화를 만들고, 사람이 검토해 승인합니다">${TB_DUO_MID}</svg>
       </div>
-      <ul class="tq-chips"><li>테스트 유지보수 비용 절감</li><li>릴리즈 안정성 지표화</li><li>UI 변경 대응 리드타임 단축</li></ul>
-    </section>` +
-    tpSec("multimodal", "MULTI-MODAL QA", "화면과 음성까지 검증합니다", "", `
-      <div class="tq-heads">
-        <article><h3 class="grey">VISION · AI Vision (OBS)</h3><div>${tpIco("look")}<p>OBS 기반으로 화면의 이상을 탐지합니다.</p></div></article>
-        <article><h3 class="teal">VOICE · Voice (STT/TTS)</h3><div>${tpIco("loop")}<p>테스터 대신 TTS·STT로 발화해 AI 고객 상담 시나리오의 음성 품질을 반복 검증합니다.<small>SOTEC 2025 · STK 2025 · QA 코리아 컨퍼런스 2025에서 음성 테스트 자동화(VUX)로 공개</small></p></div></article>
+      <p class="tb-modes"><b>자동화 방식</b><span class="is-ai">AI 코파일럿<small>TC로 자동 생성</small></span><span>블록 기반<small>조작 기록 · 조건 분기 · 반복</small></span><span>코드 기반<small>스크립트 · 사용자 정의 검증</small></span></p>`) +
+    tbSec("execution", "어디서든 실행하고, 성능까지 함께 측정합니다", "", `
+      <div class="tb-tree">
+        <p class="tb-tree-root">T-AUTO 통합 실행 관리</p>
+        <ul>${envs.map(([t, d], i) => `<li style="--i:${i}"><b>${t}</b><p>${d}</p></li>`).join("")}</ul>
       </div>
-      <div class="tp-actions"><a class="pill ghost" href="#qa/service/automation/testops">TestOps에서 운영하는 방식 보기</a></div>`, "tp-last"));
+      <dl class="tb-collect">
+        <div><dt>실행과 함께 측정</dt><dd>${["응답 시간", "앱 CPU", "앱 메모리", "배터리 소모(추정)"].map((t) => `<span>${t}</span>`).join("")}</dd></div>
+        <div><dt>자동으로 남는 증적</dt><dd>${["스크린샷", "영상", "로그"].map((t) => `<span>${t}</span>`).join("")}</dd></div>
+      </dl>
+      <p class="tb-note">지원 지표는 OS · 실행 환경에 따라 다를 수 있습니다.</p>`) +
+    tbSec("contact", "T-AUTO 도입 문의", "클라우드 · 온프레미스 구축과 CI/CD · Jira 연계는 고객 환경에 맞춰 협의합니다.", tbCta("도입 문의하기"));
+}
+
+function tLens() {
+  return tbSec("capabilities", "LLM 응답 품질을 정량화하고,<br>변경 전후를 비교합니다", "정답이 고정되지 않는 LLM 서비스의 품질을 일관된 기준으로 평가합니다.",
+      tbFlow("LLM 서비스 응답 → LLM-as-a-Judge 통합 채점 → 정성 지표 · 기능 정확성 평가", [
+        ["chat", "LLM 서비스<br>응답"],
+        [tbAi("judge"), "LLM-as-a-Judge<br>통합 채점"],
+        ["report", "정성 지표 · 기능 정확성<br>평가 결과"]
+      ]) +
+      tbTrio([["", "정성 지표 기반 품질 평가", "응답의 품질을 정성 지표로 채점합니다."], ["", "의미 유사도 기반 기능 정확성 검증", "의미 유사도를 기준으로 기능 정확성을 검증합니다."]], "sm")) +
+    tbSec("contact", "T-LENS 도입 문의", "", tbCta("도입 문의하기"));
 }
 
 function tGen() {
-  return tPage("gen", "T-GEN · DESIGN", "AI 기반 테스트 케이스 설계 자동화", "기획서, Figma, 요구사항 문서를 분석해 테스트 케이스를 자동으로 도출하고, AI 에이전트가 중복을 걸러 설계를 최적화합니다.",
-    tpSec("docs", "DOCS → TC", "문서에서 테스트 케이스를 바로 만듭니다", "기획서, Figma 화면, 요구사항 문서를 그대로 넣으면 AI가 기능과 조건을 읽어 테스트 케이스를 도출합니다.", `
-      <div class="tq-convert" aria-hidden="true">
-        <ul class="tq-files"><li><i>PDF</i>기획서</li><li><i>FIG</i>Figma</li><li><i>XLSX</i>요구사항 문서</li></ul>
-        <span class="tq-ai"><b>AI</b></span>
-        <div class="ts-demo gen"><p class="ts-demo-k">TEST CASES</p><ul class="ts-tc"><li><b>TC-001</b> 비밀번호 5회 오류 시 계정 잠금</li><li><b>TC-002</b> 잠금 해제 메일 발송</li><li><b>TC-003</b> 임시 비밀번호 재설정</li></ul></div>
-      </div>`) +
-    tpSec("arch", "ARCHITECTURE", "로컬 SLM과 벡터 DB로 생성합니다", "LLM 기반 자연어 처리와 검색 · 분석 기술을 결합해 요구사항 · 시나리오 · 로그 등 다양한 문서에서 테스트 케이스를 만듭니다.", `
-      <ol class="tq-ruled">${[["PDF 문서 파싱", "기획서 · 설명서 등 다양한 문서를 읽어 들입니다."], ["문서 내용 벡터 DB화", "문서 내용을 벡터 DB에 저장해 검색할 수 있게 합니다."], ["Test Case 생성 요청", "로컬 PC의 SLM이 필요한 문서 내용을 찾아 분석합니다."], ["분석 및 TC 생성", "자동 생성 로직이 일관된 형식의 테스트 케이스를 만듭니다."]]
-        .map(([t, d], i) => `<li style="--i:${i}"><span>STEP 0${i + 1}</span><b>${t}</b><p>${d}</p></li>`).join("")}</ol>`) +
-    `<section class="tq-band light" data-qp-reveal>
-      <div class="tq-band-in">
-        <div><p class="tp-eyebrow">OPTIMIZE</p><h2 class="qp-h">중복은 줄이고, 판단은 사람과 함께</h2><div class="qp-lede"><p>AI 에이전트가 겹치는 테스트 케이스를 골라내고, 담당자가 확인한 결과로 다시 생성합니다(Human-in-the-loop).</p></div>
-          <div class="ts-demo dedupe" aria-hidden="true"><ul><li>로그인 실패 시 오류 문구 표시</li><li class="dup">로그인 실패하면 에러 메시지 노출</li><li>비밀번호 5회 오류 시 계정 잠금</li><li class="dup">5회 연속 실패 시 로그인 차단</li></ul><p class="ts-demo-k">중복 2건 병합 제안 · 검토 대기</p></div></div>
-        <ol class="qp-valuebars">${[["중복 TC 선별", "AI 에이전트가 겹치는 테스트 케이스를 골라냅니다."], ["담당자 검토", "사람이 결과를 확인합니다(Human-in-the-loop)."], ["재생성", "검토 결과를 반영해 테스트 케이스를 다시 만듭니다."]]
-          .map(([t, d], i) => `<li style="--i:${i}"><b>0${i + 1} ${t}</b><p>${d}</p></li>`).join("")}</ol>
+  return tbSec("intro", "요구사항 분석부터 테스트 케이스 생성까지,<br>AI로 지원합니다", "T-GEN은 기획서 · 요구사항 문서를 분석해 테스트 케이스 초안을 만들고,<br>유사 · 중복 테스트 케이스를 검토해 다시 생성하는 AI 기반 테스트 설계 솔루션입니다.",
+      tbFlow("기획서 · 요구사항 문서 → AI 문서 분석 → 테스트 케이스 초안 → 중복 검토 · 재생성", [
+        ["docs", "기획서 ·<br>요구사항 문서"],
+        [tbAi("AI"), "문서 분석"],
+        ["tc", "테스트 케이스<br>초안 생성"],
+        ["review", "유사 · 중복 검토<br>및 재생성"]
+      ]) +
+      tbTrio([["", "문서 기반 TC 자동 생성", "기획서 · 요구사항을 분석해 테스트 케이스 초안을 생성합니다."], ["", "TC 중복 검토 · 재생성", "유사 · 중복 테스트 케이스를 식별하고, 검토 결과를 바탕으로 다시 생성합니다."]], "sm")) +
+    tbSec("adoption", "T-GEN 도입 문의", "T-GEN은 T-AUTO 통합 모듈이며, T 브랜드 솔루션의 추가 옵션으로 도입할 수 있습니다.<br>세부 구성은 고객 요구사항에 따라 별도로 제안합니다.", tbCta("T-GEN 도입 문의"));
+}
+
+function tVoc() {
+  return tbSec("intro", "고객의 목소리를 분석하고,<br>개선 과제로 연결합니다", "T-VOC는 앱 스토어 리뷰를 수집 · 분석하고 VOC를 모니터링하는 솔루션입니다.<br>리뷰를 이슈로 연결하고, AI가 리뷰 유형을 분류하고 답변을 추천합니다.", "") +
+    tbSec("collect", "리뷰를 모으고, 이슈로 연결합니다", "앱 스토어 리뷰를 자동으로 수집하고 Jira 티켓을 자동으로 생성 · 연계합니다.",
+      tbFlow("앱 스토어 리뷰 → 리뷰 자동 수집 → Jira 티켓 자동 생성 · 연계", [
+        ["store", "앱 스토어<br>리뷰"],
+        ["inbox", "리뷰<br>자동 수집"],
+        ["ticket", "Jira 티켓<br>자동 생성 · 연계"]
+      ]), "tb-tight") +
+    `<section class="tb-band dark tb-split tb-voc-ai" id="analyze" data-qp-reveal>
+      <div>
+        <h2 class="qp-h">AI가 분류하고,<br>답변을 추천합니다</h2>
+        <div class="qp-lede"><p>모인 리뷰는 AI가 유형별로 자동 분류하고,<br>리뷰에 맞는 답변을 추천해 VOC 대응을 지원합니다.</p></div>
+        <ol class="tb-rows sm"><li><b>리뷰 유형 자동 분류</b></li><li><b>AI 기반 답변 추천</b></li></ol>
       </div>
+      <img class="tb-voc-art" src="${QA}photos/tvoc-ai-flow.webp" width="1344" height="478" loading="lazy" alt="모인 리뷰를 AI가 분석해 유형을 분류하고, 리뷰에 맞는 답변을 추천합니다">
     </section>` +
-    `<section class="tq-metrics" data-qp-reveal>
-      <p class="tp-eyebrow">EXPECTED BENEFITS</p>
-      <div class="tq-metrics-row one"><div><span>수십~수백 개 TC 자동 생성으로 작성 속도</span><strong>5~10배<em>↑</em></strong></div></div>
-      <ul class="tq-chips"><li>QA 초기 기본 커버리지 보장</li><li>일관된 형식 · 구조의 TC</li><li>신규 인력 빠른 온보딩</li></ul>
-    </section>`);
+    tbSec("adoption", "T-VOC 도입 문의", "T-VOC는 독립적으로 운영하거나 T 브랜드 솔루션과 연계할 수 있으며, 추가 옵션으로 도입합니다.<br>세부 구성은 고객 요구사항에 따라 별도로 제안합니다.", tbCta("T-VOC 도입 문의"));
 }
 
-function lens() {
-  return tPage("lens", "T-LENS · EVAL", "대화형 AI(LLM) 품질 평가 플랫폼", "TBELL LLM Evaluation and Scoring System. LLM-as-a-Judge로 평가 프로세스를 표준화하고 정량·정성 평가를 자동화해 일관성을 확보합니다. 2026년 1월 공식 런칭했습니다.",
-    tpSec("judge", "LLM-AS-A-JUDGE", "평가자에 따라 달라지지 않는 평가", "챗봇 검증용 질문·응답 데이터셋으로 평가 프롬프트를 만들고, 여러 Judge 모델이 응답 품질을 점수와 사유로 냅니다. 평가 프로세스를 표준화해 정량·정성 평가의 일관성을 확보합니다.", `
-      <div class="ts-demo lens tq-score" aria-hidden="true">
-        <div class="ts-score"><svg viewBox="0 0 80 80"><circle cx="40" cy="40" r="32"/><circle class="v" cx="40" cy="40" r="32" pathLength="100"/></svg><strong>92<small>%</small></strong></div>
-        <div><p class="ts-demo-k">EVALUATION SCORE</p><ul class="ts-eval"><li>정확성 <b class="ok">Pass</b></li><li>안전성 <b class="ok">Pass</b></li><li>일관성 <b class="warn">Warning</b></li></ul></div>
-        <div class="ts-progress"><span>Total Progress</span><i style="--w:75%"></i><b>75%</b></div>
-        <p class="ts-demo-cap">예시 화면</p>
-      </div>
-      <ul class="tq-tiles">${["시나리오 전체 End-to-End 검증", "버전 변경 전후 비교", "새 모델 적용 시 품질 안정성 확인"].map((t, i) => `<li class="${i === 1 ? "teal" : "grey"}" style="--i:${i}">${t}</li>`).join("")}</ul>`) +
-    tpSec("device", "AWS DEVICE FARM", "여러 기기에서 동시에", "", `
-      <ul class="tq-cols">${[["cloud", "AWS Device Farm 연동", "Android, iOS, 웹을 포함한 다양한 디바이스 환경에서 병렬로 테스트합니다."], ["layers", "대시보드", "평가 점수와 사유를 대시보드에서 확인합니다."], ["renew", "지표 맞춤", "서비스 특성에 맞게 평가 지표를 바꿀 수 있습니다."]]
-        .map(([ic, t, d], i) => `<li style="--i:${i}">${tpIco(ic)}<b>${t}</b><p>${d}</p></li>`).join("")}</ul>`, "tp-last"));
+// The deck: banner copy per page, and the title and description the page carries (also written into the
+// static copy by tools/build_routes.mjs).
+const T_ART = ["../qa/photos/tsol-qa-space.jpg", "../qa/photos/tsol-qa-space.jpg", "../qa/photos/tsol-qa-space-m.jpg"];
+const T_SLIDES = [
+  { id: "overview", href: "#qa/solution", word: "T BRAND\nSOLUTION", title: "T Brand Solution", desc: "실행 자동화에서 지능형 검증까지\nAI 기반 통합 품질 검증 자동화", tags: ["통합성", "지능화", "신뢰성"], body: tOverview,
+    meta: ["T 브랜드 솔루션", "테스트 설계부터 실행, 평가, 결함 관리까지 연결하는 TBELL의 AI 기반 통합 품질 검증 자동화 솔루션입니다. T-AUTO · T-LENS · T-GEN · T-VOC와 도입 방식을 소개합니다."] },
+  { id: "auto", word: "T-AUTO", title: "Integrated QA Automation Platform", desc: "기능 · 성능 · LLM 검증을\n하나의 플랫폼에서", tags: ["기능 QA", "앱 성능", "LLM QA", "AI 코파일럿"], body: tAuto,
+    meta: ["T-AUTO 통합 QA 자동화 플랫폼", "기능 QA · 앱 성능 · LLM 품질 평가를 하나의 플랫폼에서 운영하고, 테스트 설계부터 실패 분석 · 결함 관리 · 재검증까지 연결하는 T-AUTO를 소개합니다."] },
+  { id: "lens", word: "T-LENS", title: "LLM Quality Evaluation", desc: "LLM 응답 품질을 평가하고\n변화까지 검증합니다", tags: ["LLM-as-a-Judge", "멀티턴", "회귀 검증"], body: tLens,
+    meta: ["T-LENS LLM 품질 평가 솔루션", "LLM-as-a-Judge 기반으로 LLM 응답 품질을 자동 평가하고, 모델 · 프롬프트 변경에 따른 품질 변화를 비교하는 T-LENS를 소개합니다."] },
+  { id: "gen", word: "T-GEN", title: "AI Test Case Generation", desc: "요구사항 문서에서\n테스트 케이스 초안까지", tags: ["문서 기반 생성", "중복 검토", "재생성"], body: tGen,
+    meta: ["T-GEN AI 테스트케이스 생성 솔루션", "기획서 · 요구사항 문서를 분석해 테스트 케이스 초안을 생성하고, 중복을 검토해 다시 생성하는 T-GEN을 소개합니다."] },
+  { id: "voc", word: "T-VOC", title: "AI Customer Review Analysis", desc: "고객의 목소리를 분석하고\n개선 과제로 연결합니다", tags: ["리뷰 수집", "AI 분류", "답변 추천", "Jira 연계"], body: tVoc,
+    meta: ["T-VOC AI 고객 리뷰 분석 솔루션", "앱 스토어 리뷰를 자동으로 수집해 Jira 이슈로 연계하고, AI가 리뷰 유형을 분류하고 답변을 추천하는 T-VOC를 소개합니다."] }
+];
+const T_PAGES = Object.fromEntries(T_SLIDES.map((slide) => [slide.id, slide]));
+
+function tDeck(child) {
+  const slides = T_SLIDES.map((slide) => ({ ...slide, bg: T_ART }));
+  return qaDeck(slides, T_PAGES[child] ? child : "overview", "#qa/solution/", qaLeaves("solution"))
+    .replace('<section class="detail svc-page">', '<section class="detail svc-page tb-page">');
 }
 
-function voc() {
-  const flow = [["send", "신규 리뷰 자동 수집", "앱 스토어에 올라온 새 리뷰를 자동으로 모읍니다."], ["flag", "부정 리뷰 Jira 티켓 생성", "부정 리뷰는 Jira 티켓으로 자동 등록합니다."], ["layers", "리뷰 유형 자동 분류", "모인 리뷰를 유형별로 자동 분류합니다."], ["form", "AI 추천 답변 생성", "리뷰에 맞는 답변을 AI가 추천해 대응 속도를 높입니다."]];
-  return tPage("voc", "T-VOC · FEEDBACK", "앱 스토어 VOC 모니터링 시스템", "앱 스토어 리뷰를 자동으로 모으고, 부정 리뷰는 Jira 티켓으로 등록하며, AI가 리뷰 유형을 분류하고 답변을 추천해 대응 속도를 높입니다.",
-    tpSec("collect", "COLLECT → ISSUE → AI", "리뷰가 곧 이슈가 되고, 분류와 답변은 AI가 먼저", "", `
-      <ol class="tq-flow">${flow.map(([ic, t, d], i) => `<li style="--i:${i}"><span class="tq-node${i > 1 ? " ai" : ""}">${tpIco(ic)}</span><b>${t}</b><p>${d}</p></li>`).join("")}</ol>
-      <div class="tq-demos" aria-hidden="true">
-        <div class="ts-demo voc"><p class="ts-demo-k">APP STORE</p><div class="ts-review"><span class="ts-stars">★★★★☆</span><p>로그인이 자주 풀려요…</p></div></div>
-        <div class="ts-demo voc"><p class="ts-demo-k">JIRA</p><div class="ts-ticket"><b>이슈 자동 등록 완료</b><span>Ticket: VOC-1242 (Critical)</span></div><p class="ts-demo-cap">예시 화면</p></div>
-      </div>
-      <p class="tp-note">티벨은 2020년 금융사 VOC 관리 자동화 프로세스 구축을 시작으로 10여 개 고객사에 VOC 자동화를 구축해 왔습니다.</p>`, "tp-last"));
+// Title and description for routes that carry their own (the T pages); null keeps the site default.
+function pageMeta(mode, group, child) {
+  if (mode !== "qa" || group !== "solution") return null;
+  const slide = T_PAGES[child || "overview"];
+  return slide ? { title: slide.meta[0] + " · TBELL", description: slide.meta[1] } : null;
 }
-
-const T_PAGES = { auto: tAuto, vux: tAuto, gen: tGen, lens, voc };
 
 // Security pages on the s- layout (design.md › Security layout).
 // Detail pages keep a dark hero over a white body; the mode home is dark throughout.
@@ -1480,7 +1561,7 @@ const INQUIRY = {
     button: "상담 신청",
     extra: `<p class="import-note" id="import-note" hidden>셀프 진단 결과가 문의 내용에 들어가 있습니다. 이름과 연락처만 더해 주세요.</p>
     <details class="survey">
-      <summary><span class="kicker">사전 조사 (선택)</span><span class="survey-toggle" aria-hidden="true"></span></summary>
+      <summary><span class="kicker">사전 조사<small>선택</small></span><span class="survey-toggle" aria-hidden="true"></span></summary>
       <p class="survey-note">대략적인 수량이면 충분합니다. 컨설팅 범위와 기간을 정하는 데 씁니다.</p>
       <div class="survey-counts">
         ${[["server", "서버", "대", "40"], ["db", "DBMS", "개", "6"], ["net", "네트워크·보안장비", "대", "15"], ["apps", "웹·앱 서비스", "개", "3"], ["staff", "임직원", "명", "120"]]
@@ -1508,7 +1589,7 @@ const INQ_ICON = {
   arrow: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'
 };
 const INQ_LINKS = {
-  qa: [["테스트 서비스", "#qa/service/outsourcing"], ["T 솔루션", "#qa/tauto"]],
+  qa: [["테스트 서비스", "#qa/service/outsourcing"], ["T 솔루션", "#qa/solution"]],
   security: [["2분 셀프 진단", "#security/diagnose"], ["인증 안내", "#security/cert"]]
 };
 
@@ -1679,18 +1760,18 @@ const DRAW = {
   qa: {
     "": qaHome,
     service: (child, mode, page) => serviceDeck(child, page),
-    tauto: (child) => (T_PAGES[child] || tautoHome)(),
+    solution: (child) => tDeck(child),
     blog: (child, mode) => blogList(mode, child),
     inquiry: () => inquiryPage("qa"),
     company: drawCompany
   },
   security: {
-    "": securityHome,
-    diagnose: () => securityDeck("diagnose"),
-    services: () => securityDeck("services"),
-    cert: () => securityDeck("cert"),
+    "": () => securityPage("home"),
+    diagnose: () => securityPage("diagnose"),
+    services: () => securityPage("services"),
+    cert: () => securityPage("cert"),
     blog: (child, mode) => blogList(mode, child),
-    inquiry: () => inquiryPage("security"),
+    inquiry: () => securityPage("contact"),
     company: drawCompany
   },
   all: {
@@ -1706,12 +1787,22 @@ const inquiryMode = (child) => (child === "security" ? "security" : "qa");
 function multiInquiry(child) {
   const which = inquiryMode(child);
   const tab = (id, label) => `<a href="#inquiry/${id}"${id === which ? ' aria-current="page"' : ""}>${label}</a>`;
-  return `<nav class="s-subnav inq-switch" aria-label="문의 분야"><div class="s-wrap">${tab("qa", "QA 문의")}${tab("security", "보안 문의")}</div></nav>${inquiryPage(which)}`;
+  const body = which === "security" ? securityPage("contact") : inquiryPage(which);
+  return `<nav class="s-subnav inq-switch" aria-label="문의 분야"><div class="s-wrap">${tab("qa", "QA 문의")}${tab("security", "보안 문의")}</div></nav>${body}`;
 }
 
 // Header: QA and 보안 each open their own menu; 블로그 holds both areas' posts; 회사소개 is shared.
+// KOLAS (the /re-menu draft only, for now): two static pages beside the shell, and T-ASSI's own site in a new tab.
+const KOLAS_GROUP = {
+  id: "kolas", label: "KOLAS", href: "kolas/report/",
+  children: [
+    { id: "report", label: "시험성적서", href: "kolas/report/" },
+    { id: "cert", label: "일반 인증서", href: "kolas/cert/" },
+    { id: "tassi", label: "T-ASSI", href: "https://t-assi.co.kr/", external: true }
+  ]
+};
 const MENU = [
-  { id: "qa", label: "QA", href: "#qa", groups: [{ id: "", label: "사업 소개", href: "#qa" }, ...QA_GROUPS] },
+  { id: "qa", label: "QA", href: "#qa", groups: [{ id: "", label: "사업 소개", href: "#qa" }, ...QA_GROUPS, ...(HASH_ROUTES ? [KOLAS_GROUP] : [])] },
   { id: "security", label: "보안", href: "#security", groups: [
     { id: "", label: "사업 소개", href: "#security" },
     { id: "diagnose", label: "사전 진단", href: "#security/diagnose" },
@@ -1741,7 +1832,9 @@ function fillDrop(mode, group, child) {
       ? `<div class="md-groups">${groups.map((g) => `
           <div class="md-group">
             ${link(g.href, g.label, here && (g.children || []).some((k) => isHere(k.href)), "md-gtitle")}
-            ${(g.children || []).map((k) => link(k.href, k.label, here && isHere(k.href), "md-leaf")).join("")}
+            ${(g.children || []).map((k) => k.external
+              ? `<a class="md-leaf" href="${k.href}" target="_blank" rel="noopener noreferrer">${k.label}</a>`
+              : link(k.href, k.label, here && isHere(k.href), "md-leaf")).join("")}
           </div>`).join("")}</div>`
       : `<div class="md-rows">${groups.map((g) => link(g.href, `<span>${g.label}</span>${arrow}`, here && group === g.id, "md-row")).join("")}</div>`;
     return `
@@ -1788,7 +1881,7 @@ function navHtml(mode, group, child) {
 
 function activeChild(group, child) {
   if (group === "service") return child || "outsourcing";
-  if (group === "tauto") return child === "vux" ? "auto" : child || "overview";
+  if (group === "solution") return child || "overview";
   if (group === "blog") {
     const located = blogLocate(parse().mode, child);
     return located.group ? located.group.id : "";
@@ -2270,7 +2363,16 @@ function render() {
   logoLink.href = "#";
   logoLink.setAttribute("aria-label", "TBELL 홈");
   logoMode.textContent = "";
-  document.title = mode && mode !== "all" ? "TBELL · " + MODE_LABEL[mode] : "TBELL";
+  const meta = pageMeta(mode, group, child);
+  document.title = meta ? meta.title : mode && mode !== "all" ? "TBELL · " + MODE_LABEL[mode] : "TBELL";
+  let described = document.querySelector('meta[name="description"]');
+  if (meta && !described) {
+    described = document.createElement("meta");
+    described.name = "description";
+    document.head.append(described);
+  }
+  if (meta) described.content = meta.description;
+  else if (described) described.remove();
   inquire.hidden = false;
   inquire.textContent = "문의";
   inquire.href = "#inquiry/" + (mode === "security" ? "security" : "qa");
@@ -2330,7 +2432,7 @@ function drawContent(mode, group, child, pageNo) {
   content.innerHTML = draw.length ? draw(child, mode, pageNo) : draw();
   wireDeck();
   wireJump();
-  wireDiagnose();
+  wireSecurityDemo();
   if (typeof wireSvcMotion === "function") wireSvcMotion();
   if (typeof wireQaPages === "function") wireQaPages();
   wireQaHome();
