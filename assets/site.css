@@ -1476,13 +1476,13 @@ a.s-card:hover .s-ibox { border-color: var(--active); }
 .qx-list ul { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--rule); }
 .qx-list li { border-bottom: 1px solid var(--rule); }
 .qx-list button {
-  display: flex; align-items: baseline; gap: 14px; width: 100%; padding: 20px 0 20px 22px;
+  display: flex; align-items: baseline; gap: 12px; width: 100%; padding: 10px 0 10px 20px;
   background: none; border: 0; text-align: left; cursor: pointer;
-  color: #9a9a9a; font-size: 20px; font-weight: 500; transition: color .25s, padding .35s;
+  color: #9a9a9a; font-size: 16px; font-weight: 500; transition: color .25s, padding .35s;
 }
 .qx-list .n { font-size: 13px; font-weight: 700; color: #c4c4c4; transition: color .25s; }
 .qx-list button:hover { color: var(--ink); }
-.qx-list button[aria-selected="true"] { padding-left: 30px; color: var(--ink); font-weight: 700; }
+.qx-list button[aria-selected="true"] { padding-left: 26px; color: var(--ink); font-weight: 700; }
 .qx-list button[aria-selected="true"] .n { color: #0788a4; }
 .qx-list button:focus-visible { outline: 2px solid var(--active); outline-offset: -2px; }
 .qx-bar { position: absolute; left: 0; top: 0; width: 3px; background: var(--active); transition: transform .45s cubic-bezier(.7, 0, .2, 1), height .45s; }
@@ -1502,14 +1502,6 @@ a.s-card:hover .s-ibox { border-color: var(--active); }
 .qx-info.swap > div { animation: qx-in .55s cubic-bezier(.2, .7, .2, 1) both; }
 
 /* 4. TestOps — the origin office scene, with the TestOps loop drawn when it comes into view. */
-.qh-testops { position: relative; overflow: hidden; color: #fff; }
-.qh-testops-bg, .qh-testops-bg img { position: absolute; inset: 0; width: 100%; height: 100%; }
-.qh-testops-bg img { object-fit: cover; }
-.qh-testops::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(90deg, rgba(18, 18, 18, .94) 0%, rgba(18, 18, 18, .78) 42%, rgba(18, 18, 18, .35) 100%); }
-.qh-testops > .s-wrap { position: relative; z-index: 2; display: grid; grid-template-columns: 1fr 1.15fr; gap: 48px; align-items: center; min-height: 760px; padding-block: 120px; }
-.qh-testops-copy h2 { margin-top: 16px; font-size: clamp(32px, 3.4vw, 48px); font-weight: 700; line-height: 1.25; }
-.qh-testops-copy > p:not(.qh-label) { max-width: 30em; margin-top: 20px; color: var(--mist); }
-.qh-testops-copy .s-actions { justify-content: flex-start; }
 
 /* 5. Automation → AI timeline — a rail of public milestones, each with a small working demo. */
 
@@ -1535,8 +1527,7 @@ a.s-card:hover .s-ibox { border-color: var(--active); }
   /* Narrow desktop / tablet: the badge art moves right so the copy keeps its own column. */
   .qh-hero-copy { width: min(560px, 70vw); }
   .qx { grid-template-columns: 240px 1fr; gap: 32px; }
-  .qx-list button { font-size: 17px; }
-  .qh-testops > .s-wrap { grid-template-columns: 1fr; min-height: 0; padding-block: 96px; }
+  .qx-list button { font-size: 15px; }
 }
 @media (max-width: 768px) {
   .qh-hero { display: flex; flex-direction: column; justify-content: center; height: auto; min-height: 560px; max-height: none; }
@@ -1558,9 +1549,6 @@ a.s-card:hover .s-ibox { border-color: var(--active); }
   .qx-stage { aspect-ratio: 16 / 9; border-radius: 12px; }
   .qx-info { flex-direction: column; align-items: flex-start; gap: 18px; margin-top: 18px; }
   .qx-info h3 { font-size: 22px; }
-  .qh-testops::before { background: linear-gradient(180deg, rgba(18, 18, 18, .9) 0%, rgba(18, 18, 18, .82) 55%, rgba(18, 18, 18, .6) 100%); }
-  .qh-testops > .s-wrap { gap: 36px; padding-block: 72px; }
-  .qh-testops-copy h2 { font-size: 30px; }
   .qh-close { padding: 80px 0; }
   .qh-close h2 br { display: none; }
   .qh-close h2 { font-size: 26px; }
@@ -2728,7 +2716,7 @@ p, li, dd, h1, h2, h3, h4 { text-wrap: pretty; }
 /* ── QA home, 2026-10 rework: section kickers in Korean, a quiet hero, the TestOps flow,
    T 솔루션 as input → product → result, lead industries with photos. */
 .qh .qh-head { justify-items: start; text-align: left; margin-bottom: 56px; }
-.qh-kicker, .qh .qh-head .qh-kicker, .qh-testops-copy > p.qh-kicker { margin-top: 0; color: var(--active); font-size: 15px; font-weight: 700; letter-spacing: 0; }
+.qh-kicker, .qh .qh-head .qh-kicker { margin-top: 0; color: var(--active); font-size: 15px; font-weight: 700; letter-spacing: 0; }
 .qh .qh-light .qh-head .qh-kicker { color: #0788a4; }
 .qh .qh-head p:not(.qh-kicker) { max-width: 40em; }
 
@@ -2738,78 +2726,12 @@ p, li, dd, h1, h2, h3, h4 { text-wrap: pretty; }
 .qx-stage { box-shadow: none; }
 .qx-info h3 { font-size: 24px; }
 
-.qh-testops::before { background: linear-gradient(90deg, rgba(18, 18, 18, .94) 0%, rgba(18, 18, 18, .84) 50%, rgba(18, 18, 18, .72) 100%); }
-.qh-testops > .s-wrap { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 80px; min-height: 0; padding-block: var(--section-pad); }
-.qo-flow { position: relative; display: grid; margin: 0; padding: 0; list-style: none; }
-.qo-flow li { position: relative; z-index: 1; display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 18px; padding: 22px 0; }
-.qo-line { position: absolute; left: 19px; top: 36px; bottom: 36px; width: 2px; background: rgba(255, 255, 255, .16); }
-.qo-fill { display: block; width: 100%; height: calc(var(--step, 0) * 100%); background: rgba(255, 255, 255, .5); transition: height 1.2s cubic-bezier(.4, 0, .2, 1); }
-.qo-dot { justify-self: center; width: 14px; height: 14px; margin-top: 6px; box-sizing: border-box; border-radius: 50%; border: 2px solid rgba(255, 255, 255, .4); background: #161616; transition: background .6s, border-color .6s, box-shadow .6s; }
-.qo-flow li.is-past .qo-dot { border-color: rgba(255, 255, 255, .75); }
-.qo-flow li.is-on .qo-dot { border-color: var(--active); background: var(--active); box-shadow: 0 0 0 6px rgba(39, 196, 213, .16); }
-.qo-flow b { display: block; color: rgba(255, 255, 255, .62); font-size: 19px; font-weight: 700; transition: color .6s; }
-.qo-flow b em { margin-right: 10px; color: rgba(255, 255, 255, .4); font-family: var(--num); font-size: 13px; font-style: normal; transition: color .6s; }
-.qo-flow p { margin-top: 6px; color: var(--mist); font-size: 15px; }
-.qo-flow li.is-on b { color: #fff; }
-.qo-flow li.is-on b em { color: var(--active); }
-
-.qs-tabs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 0 0 56px; padding: 0; list-style: none; border-bottom: 1px solid var(--rule); }
-.qs-tabs button {
-  display: grid; gap: 4px; width: 100%; margin-bottom: -1px; padding: 0 12px 20px 0;
-  background: none; border: 0; border-bottom: 2px solid transparent; text-align: left; cursor: pointer;
-  color: #9a9a9a; transition: color .25s, border-color .25s;
-}
-.qs-tabs b { font-family: var(--num); font-size: 20px; font-weight: 600; letter-spacing: .02em; }
-.qs-tabs small { font-size: 13px; }
-.qs-tabs button:hover { color: var(--ink); }
-.qs-tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--active); }
-.qs-tabs button[aria-selected="true"] small { color: #0788a4; }
-.qs-tabs button:focus-visible { outline: 2px solid var(--active); outline-offset: 2px; }
-.qs-panel { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: 64px; align-items: center; }
-.qs-role { color: #0788a4; font-size: 14px; font-weight: 700; }
-.qs-copy h3 { margin-top: 8px; font-family: var(--num); font-size: 34px; font-weight: 600; }
-.qs-copy > p:not(.qs-role) { margin-top: 14px; color: var(--mist); }
-.qs-copy .pill { margin-top: 28px; }
-.qs-copy { animation: qs-in .5s cubic-bezier(.2, .7, .2, 1) both; }
-.qs-fig {
-  display: grid; grid-template-columns: minmax(0, 1fr) 36px auto 36px minmax(0, 1fr); align-items: center;
-  margin: 0; aspect-ratio: 16 / 9; padding: 32px; box-sizing: border-box; border-radius: 16px; background: #f3f5f6;
-}
-.qs-col > p { margin-bottom: 10px; color: var(--ash); font-size: 12px; font-weight: 700; }
-.qs-col ul { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
-.qs-col li { padding: 10px 14px; border-radius: 8px; background: #fff; color: var(--ink); font-size: 14px; line-height: 1.4; animation: qs-in .5s cubic-bezier(.2, .7, .2, 1) both; animation-delay: calc(var(--k) * .08s); }
-.qs-out li { animation-delay: calc(.45s + var(--k) * .08s); }
-.qs-link { position: relative; height: 2px; background: #d3dade; }
-.qs-link::after { content: ""; position: absolute; inset: 0; background: var(--active); transform-origin: left; animation: qs-draw .5s cubic-bezier(.4, 0, .2, 1) .15s both; }
-.qs-core + .qs-link::after { animation-delay: .35s; }
-.qs-core { display: grid; justify-items: center; gap: 10px; padding: 22px 20px; border-radius: 14px; background: #161616; color: #fff; }
-.qs-core .mark { width: 40px; height: 40px; }
-.qs-core b { font-family: var(--num); font-size: 15px; font-weight: 600; letter-spacing: .04em; }
 
 
-@keyframes qs-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
-@keyframes qs-draw { from { transform: scaleX(0); } to { transform: none; } }
-@keyframes qs-drop { from { transform: scaleY(0); } to { transform: none; } }
 
-@media (max-width: 1024px) {
-  .qh-testops > .s-wrap { grid-template-columns: 1fr; gap: 48px; }
-  .qs-panel { grid-template-columns: 1fr; gap: 36px; }
-}
+
 @media (max-width: 768px) {
   .qh .qh-head { margin-bottom: 32px; }
-  .qo-flow li { padding: 16px 0; gap: 14px; }
-  .qo-flow b { font-size: 17px; }
-  .qo-flow p { font-size: 14px; }
-  .qs-tabs { margin: 0 -16px 32px; padding: 0 16px; overflow-x: auto; scrollbar-width: none; grid-template-columns: repeat(4, minmax(150px, 1fr)); }
-  .qs-tabs::-webkit-scrollbar { display: none; }
-  .qs-tabs b { font-size: 17px; }
-  .qs-tabs small { font-size: 12px; }
-  .qs-copy h3 { font-size: 28px; }
-  .qs-fig { grid-template-columns: 1fr; aspect-ratio: auto; padding: 24px 20px; }
-  .qs-link { justify-self: center; width: 2px; height: 22px; margin: 8px 0; }
-  .qs-link::after { transform-origin: top; animation-name: qs-drop; }
-  .qs-core { grid-auto-flow: column; justify-content: center; align-items: center; padding: 14px 20px; }
-  .qs-core .mark { width: 28px; height: 28px; }
 }
 
 /* QA home buttons: the origin main page's square outline button (50px high, thin line, no fill). */
@@ -2822,7 +2744,6 @@ p, li, dd, h1, h2, h3, h4 { text-wrap: pretty; }
 .qh-light .qh-btn { color: var(--ink); }
 .qh-light .qh-btn:hover, .qh-light .qh-btn:focus-visible { border-color: var(--ink); background: var(--ink); color: #fff; }
 .qx-info .qh-btn { flex: none; }
-.qs-copy .qh-btn { margin-top: 28px; }
 .qh .s-actions { gap: 12px; }
 
 /* Hero: copy on the left, the service deck on the right. */
@@ -2911,4 +2832,89 @@ p, li, dd, h1, h2, h3, h4 { text-wrap: pretty; }
 }
 @media (prefers-reduced-motion: reduce) {
   .qh-art { transform: none; }
+}
+
+/* ── Security detail pages on the QA detail layout (securityDeck) ───────────
+   Same banner, tabs and white column as the QA detail pages; the s- components keep their
+   structure but lose their boxes, grey bands and English eyebrows. */
+.sec-body {
+  --canvas: #ffffff; --raise: #ffffff; --panel: #ffffff; --rule: #e4e4e4; --rule-strong: #d0d0d0;
+  --track: #ececec; --ink: #333333; --mist: #595959; --ash: #5f6164; --mask: #ffffff;
+  color-scheme: light; background: #fff; color: #333;
+}
+.s-page.light.sec-body .s-sec, .s-page.light.sec-body .s-sec.alt, .s-page.light.sec-body .dz-section { padding-block: clamp(80px, 10.4vw, 200px) 0; background: #fff; }
+.s-page.light.sec-body > :last-child, .s-page.light.sec-body #svc > :last-child, .s-page.light.sec-body .dz > :last-child { padding-bottom: clamp(90px, 9vw, 170px); }
+.s-page.light.sec-body .s-wrap { width: var(--white-w); max-width: none; margin-inline: auto; padding-inline: 0; }
+.s-page.light.sec-body .s-head { gap: 0; }
+.s-page.light.sec-body .s-head .s-eyebrow { display: none; }
+.s-page.light.sec-body .s-head h2 { color: #333; font-size: clamp(22px, 1.9vw, 36px); font-weight: 700; line-height: 1.45; }
+.s-page.light.sec-body .s-head p { max-width: none; margin-top: 28px; color: #595959; font-size: clamp(15px, .95vw, 18px); line-height: 1.75; }
+.s-page.light.sec-body .s-domains { gap: 0; }
+.s-page.light.sec-body .s-domain, .s-page.light.sec-body .s-domain:hover { padding: 48px 0; background: none; border: 0; border-top: 1px solid var(--rule); border-radius: 0; box-shadow: none; }
+.s-page.light.sec-body .s-domain:last-child { border-bottom: 1px solid var(--rule); }
+.s-page.light.sec-body .s-items li, .s-page.light.sec-body .s-items li:hover { padding: 16px 0; background: none; border: 0; border-top: 1px solid #efefef; border-radius: 0; }
+.s-page.light.sec-body .s-panel { padding: 32px 0 0; background: none; border: 0; border-top: 1px solid var(--rule); border-radius: 0; box-shadow: none; }
+.s-page.light.sec-body .s-doc { background: #f7f7f7; border: 0; }
+.s-page.light.sec-body .s-card, .s-page.light.sec-body a.s-card:hover { padding: 28px 0 0; background: none; border: 0; border-top: 1px solid var(--rule); border-radius: 0; box-shadow: none; }
+.s-page.light.sec-body .dz-navi { border-radius: 0; box-shadow: none; }
+
+/* ── QA home TestOps: the origin TestOps visual full width, copy centred on it. */
+.qh-ops { position: relative; display: grid; place-items: center; min-height: max(640px, calc(100vh - var(--header-h))); max-height: 900px; overflow: hidden; background: #111; color: #fff; text-align: center; }
+.qh-ops-bg, .qh-ops-bg img { position: absolute; inset: 0; width: 100%; height: 100%; }
+.qh-ops-bg img { object-fit: cover; }
+.qh-ops::before { content: ""; position: absolute; inset: 0; z-index: 1; background: radial-gradient(60% 60% at 50% 55%, rgba(10, 12, 14, .74), rgba(10, 12, 14, .3) 80%); }
+.qh-ops-copy { position: relative; z-index: 2; padding: 0 var(--gutter); }
+.qh-ops-copy h2 { margin-top: 12px; font-size: clamp(28px, 2.9vw, 44px); font-weight: 700; line-height: 1.3; }
+.qh-ops-copy > p:not(.qh-kicker) { margin-top: 16px; color: rgba(255, 255, 255, .78); font-size: clamp(14px, 1.18vw, 18px); line-height: 1.7; }
+.qh-ops-copy .s-actions { justify-content: center; margin-top: 32px; }
+/* The user's triangle (Group.svg) between the line and the button. */
+.qh-ops-row { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: clamp(32px, 5vw, 88px); width: min(1100px, 100%); margin: 40px auto 0; }
+.qh-ops-tri { display: block; width: min(280px, 56vw); height: auto; filter: brightness(.78) contrast(.88) saturate(.85); opacity: .94; }
+.qh-ops-side { display: grid; justify-items: end; gap: 10px; margin: 0; text-align: right; }
+.qh-ops-side.is-right { justify-items: start; text-align: left; }
+.qh-ops-side::before { content: ""; width: 36px; height: 1px; margin-bottom: 8px; background: var(--active); }
+.qh-ops-side small { color: rgba(255, 255, 255, .7); font-size: clamp(14px, 1.1vw, 17px); }
+.qh-ops-side b { font-size: clamp(22px, 2vw, 30px); font-weight: 700; letter-spacing: -.01em; }
+
+/* ── QA home T 솔루션 (the user's Group 66): a photo card in five columns; the frosted panel marks one. */
+.qh-ts { padding: clamp(80px, 8vw, 128px) 0; background: #0f1113; color: #fff; }
+.qh-ts-head { padding: 0 var(--gutter); text-align: center; }
+.qh-ts-head h2 { margin-top: 12px; font-size: clamp(28px, 2.9vw, 44px); font-weight: 700; line-height: 1.3; }
+.qh-ts-head p:not(.qh-kicker) { margin-top: 16px; color: #a9adb2; font-size: clamp(14px, 1.18vw, 17px); line-height: 1.7; }
+.qh-ts-card { position: relative; width: min(1520px, calc(100% - 2 * var(--gutter))); aspect-ratio: 1520 / 585; margin: clamp(36px, 4vw, 56px) auto 0; overflow: hidden; border-radius: 20px; box-shadow: 0 0 8px rgba(0, 0, 0, .25); }
+.qh-ts-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
+.qh-ts-card::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10, 12, 16, .25), rgba(10, 12, 16, .55) 42%, rgba(10, 12, 16, .55) 62%, rgba(10, 12, 16, .3)); pointer-events: none; }
+.qh-ts-cols { position: absolute; inset: 0; z-index: 1; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); margin: 0; padding: 0; list-style: none; }
+.qh-ts-cols li + li { border-left: 1px solid rgba(162, 162, 162, .8); }
+.qh-ts-cols a { position: relative; isolation: isolate; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; padding: 0 20px; color: #fff; text-align: center; text-decoration: none; transition: color .45s; }
+.qh-ts-cols a::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(0deg, #fff 54.7%, rgba(255, 255, 255, 0)); opacity: 0; transition: opacity .45s; }
+.qh-ts-dot { width: 14px; height: 14px; margin-bottom: 26px; border-radius: 50%; background: #fff; transition: background .45s, transform .45s; }
+.qh-ts-cols b { font-size: clamp(20px, 1.7vw, 28px); font-weight: 700; line-height: 1.3; text-shadow: 0 1px 2px rgba(0, 0, 0, .55), 0 2px 18px rgba(0, 0, 0, .6); }
+.qh-ts-cols li.is-on b { text-shadow: none; }
+.qh-ts-cols small { max-height: 0; margin-top: 0; overflow: hidden; color: #4a4a4a; font-size: clamp(13px, .95vw, 15px); line-height: 1.6; opacity: 0; transition: opacity .45s, max-height .45s, margin-top .45s; }
+.qh-ts-cols li.is-on a { color: #1a1a1a; }
+.qh-ts-cols li.is-on a::before { opacity: .8; }
+.qh-ts-cols li.is-on .qh-ts-dot { background: var(--active); transform: translateY(-36px); }
+.qh-ts-cols li.is-on small { max-height: 4em; margin-top: 18px; opacity: 1; }
+.qh-ts-cols a:focus-visible { outline: 2px solid var(--active); outline-offset: -4px; }
+
+@media (max-width: 1024px) {
+}
+@media (max-width: 768px) {
+  .qh-ops { min-height: 560px; max-height: none; padding: 56px 0; }
+  /* Phone: the triangle on top, the two values side by side under it. */
+  .qh-ops-row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 16px; margin-top: 32px; }
+  .qh-ops-tri { grid-column: 1 / -1; grid-row: 1; justify-self: center; width: min(200px, 56vw); }
+  .qh-ops-side, .qh-ops-side.is-right { justify-items: center; text-align: center; }
+  .qh-ops-side b { font-size: 19px; }
+  /* Phone: the card turns into five rows; the frosted row carries its line. */
+  .qh-ts-card { aspect-ratio: auto; }
+  .qh-ts-cols { position: relative; grid-template-columns: 1fr; }
+  .qh-ts-cols li + li { border-left: 0; border-top: 1px solid rgba(162, 162, 162, .6); }
+  .qh-ts-cols a { flex-direction: row; flex-wrap: wrap; justify-content: flex-start; gap: 0 14px; min-height: 76px; padding: 16px 22px; text-align: left; }
+  .qh-ts-dot { margin: 0; }
+  .qh-ts-cols li.is-on .qh-ts-dot { transform: none; }
+  .qh-ts-cols b { font-size: 19px; }
+  .qh-ts-cols small { flex-basis: 100%; padding-left: 28px; }
+  .qh-ts-cols li.is-on small { margin-top: 4px; }
 }

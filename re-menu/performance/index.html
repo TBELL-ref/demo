@@ -16,9 +16,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@200;400;500;700&family=Oxanium:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="../../assets/site.css?v=123">
-  <link rel="stylesheet" href="../../assets/qa-pages.css?v=19">
-  <link rel="stylesheet" href="../../re-menu/re.css?v=32">
+  <link rel="stylesheet" href="../../assets/site.css?v=192">
+  <link rel="stylesheet" href="../../assets/qa-pages.css?v=23">
+  <link rel="stylesheet" href="../../re-menu/re.css?v=40">
   <link rel="icon" href="../../assets/tbell-logo.svg">
   <script type="application/ld+json">
 {
@@ -190,8 +190,13 @@
     <img class="qp-banner" src="../../assets/qa/photos/perf-dashboard.jpg" alt="">
   </section>
     
+  <section class="qp-sec" data-qp-reveal aria-labelledby="metrics">
+    <h2 class="qp-h" id="metrics">주요 핵심 지표</h2>
+    <div class="qp-lede"><p>성능 테스트는 아래 지표를 측정해 목표와 비교하고, 시스템의 한계와 임계점을 찾습니다.</p></div>
+    <ul class="pm-strip"><li><b aria-hidden="true">Users</b><h3>동시 사용자 수<small>Concurrent Users</small></h3><p>시스템에 동시에 접속해 요청을 보내는 최대 사용자 수</p></li><li><b aria-hidden="true">TPS</b><h3>처리량<small>Throughput</small></h3><p>일정 시간 동안 처리하는 트랜잭션 또는 요청의 수</p></li><li><b aria-hidden="true">ms</b><h3>응답 시간<small>Response Time</small></h3><p>요청을 보내고 결과를 받기까지 걸리는 시간</p></li><li><b aria-hidden="true">%</b><h3>자원 사용량<small>Resource Usage</small></h3><p>CPU · 메모리 · 디스크 I/O · 네트워크 대역폭의 사용률</p></li></ul>
+  </section>
   <section class="qp-sec" data-qp-reveal>
-    <h2 class="qp-h">업무범위</h2>
+    <h2 class="qp-h">주요 종류</h2>
     <div class="qp-lede"><p>티벨은 각 분야의 전문가를 활용하여 성능 테스트를 수행하고 있으며, <br class="qp-br">특히 개발 연구소를 통해 최적의 도구 선정과 테스트에 이르기까지의 과정에 참여하고 있습니다.</p></div>
     <ul class="qp-rings"><li style="--i:0"><img class="qp-ico" src="../../assets/qa/icons/perf-load.png" alt=""><span>부하 테스트</span></li><li style="--i:1"><img class="qp-ico" src="../../assets/qa/icons/perf-scalability.png" alt=""><span>확장성 테스트</span></li><li style="--i:2"><img class="qp-ico" src="../../assets/qa/icons/perf-stress.png" alt=""><span>스트레스 테스트</span></li><li style="--i:3"><img class="qp-ico" src="../../assets/qa/icons/perf-stability.png" alt=""><span>안정성 테스트</span></li><li style="--i:4"><img class="qp-ico" src="../../assets/qa/icons/perf-volume.png" alt=""><span>볼륨 테스트</span></li><li style="--i:5"><img class="qp-ico" src="../../assets/qa/icons/perf-configuration.png" alt=""><span>구성 테스트</span></li></ul>
   </section>
@@ -209,11 +214,20 @@
     </section>
   </main>
   <footer class="footer">
-    <img src="../../assets/tbell-logo.svg" alt="" width="88" height="18">
-    <p>대표이사 김종균 · 사업자등록번호 376-81-00089</p>
-    <p>강남본사 서울특별시 강남구 강남대로 354, 9층 (역삼동, 혜천빌딩)</p>
-    <p>가산사업장 서울특별시 금천구 가산디지털1로 168, A동 601호</p>
-    <p class="num">Tel 070-7777-9113 / 070-7777-6368 · staff@tbell.co.kr</p>
+    <div class="footer-logo"><img src="../../assets/tbell-logo.svg" alt="TBELL" width="137" height="28"></div>
+    <div class="footer-body">
+      <p class="footer-call">견적 상담</p>
+      <p class="footer-phone">070-7777-9113</p>
+      <p>월-금요일   09:30-18:00   |   점심시간   12:00-13:00</p>
+      <p class="footer-info">
+대표이사  :  김종균   |   사업자등록번호  :  376-81-00089
+Tel  :  070.7777.9113  /  070.7777.6368<span class="footer-sep">   |   </span><span class="footer-fax">Fax  :  070.7610.7540</span>
+
+(강남본사) 서울특별시 강남구 강남대로 354, 9층
+(가산지사) 서울특별시 금천구 가산디지털1로 168, A동 601호
+
+Copyright 2015-2026. TBELL Corp. All Rights Reserved.</p>
+    </div>
   </footer>
   <script>window.TBELL_BASE = "../../";</script>
   <script src="../../assets/qa-pages.js?v=9"></script>

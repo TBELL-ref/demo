@@ -306,30 +306,19 @@ function qaServiceHref(id) {
   return "#qa/service/types/" + (id === "perfomance" ? "performance" : id);
 }
 
-// TestOps on the home: the operating flow from the TestOps page, one step lit at a time.
-const QA_TESTOPS_FLOW = [
-  ["BDD 시나리오", "비즈니스 언어로 테스트 시나리오 작성"],
-  ["CI/CD 자동 실행", "개발 파이프라인과 테스트 실행 연계"],
-  ["결과 분석", "실행 결과 확인 및 분석"],
-  ["결함 관리", "테스트 결과와 결함 관리 체계 연동"]
-];
-
-// T 솔루션 on the home: four products that stand alone and can be combined. No product screens exist
-// in the project, so each one is drawn as what goes in and what comes out (copy from the T pages).
+// TestOps on the home: the origin home's own TestOps visual full width; the user's triangle (Group.svg)
+// in the middle with one short value on each side (the origin TestOps page's own), then the way in.
+const QA_OPS_SIDES = [["지속적인 테스트 자동화", "서비스 신뢰성 향상"], ["반복 테스트 자동화", "업무 효율성 증대"]];
+// T 솔루션 on the home (the user's Group 66 design, over a darkened, blurred QA workspace photo): five columns — the overview, then the
+// four products. The frosted panel with the teal dot sits on the overview and follows the pointer.
 const QA_SOLUTIONS = [
-  { id: "gen", name: "T-GEN", role: "AI 기반 테스트케이스 생성", icon: "form", href: "#qa/tauto/gen",
-    text: "기획서·Figma·요구사항 문서를 분석해 테스트 케이스를 자동으로 도출하고, AI 에이전트가 중복을 걸러냅니다.",
-    input: ["기획서", "Figma", "요구사항 문서"], output: ["테스트 케이스 도출", "중복 케이스 정리"] },
-  { id: "auto", name: "T-AUTO", role: "테스트 자동 실행 및 운영", icon: "layers", href: "#qa/tauto/auto",
-    text: "자연어 시나리오만으로 테스트를 자동 수행하는 No-Code 자동화와, UI가 바뀌어도 스스로 복구하는 Self-Healing을 제공합니다.",
-    input: ["자연어 시나리오"], output: ["No-Code 자동 실행", "Self-Healing 복구"] },
-  { id: "lens", name: "T-LENS", role: "LLM 및 AI 서비스 평가", icon: "scan", href: "#qa/tauto/lens",
-    text: "LLM-as-a-Judge로 대화형 AI의 응답 품질을 정량·정성 평가하고, AWS Device Farm으로 여러 기기에서 병렬 검증합니다.",
-    input: ["대화형 AI 응답"], output: ["정량·정성 평가", "여러 기기 병렬 검증"] },
-  { id: "voc", name: "T-VOC", role: "사용자 리뷰 분석 및 피드백 관리", icon: "send", href: "#qa/tauto/voc",
-    text: "앱 스토어 리뷰를 자동으로 모아 부정 리뷰를 Jira 티켓으로 등록하고, AI가 유형을 분류해 답변을 추천합니다.",
-    input: ["앱 스토어 리뷰"], output: ["리뷰 유형 분류", "Jira 티켓 등록", "답변 추천"] }
+  ["T-솔루션", "AI 기반 품질 검증 자동화", "#qa/tauto"],
+  ["T-GEN", "테스트케이스 생성", "#qa/tauto/gen"],
+  ["T-AUTO", "테스트 자동 실행·운영", "#qa/tauto/auto"],
+  ["T-LENS", "LLM·AI 서비스 평가", "#qa/tauto/lens"],
+  ["T-VOC", "사용자 리뷰 분석", "#qa/tauto/voc"]
 ];
+const QA_ART = (window.TBELL_BASE || "") + "assets/qa/";
 
 // Hero: the origin QA banner art (its TEST∞OPS lettering removed, design_demo/qa-hero-badge) with a
 // live layer drawn in its pixel space — the orbit turns,
@@ -387,19 +376,6 @@ function qaHeroArt() {
     </div>`;
 }
 
-function qaSolutionPanel(i) {
-  const s = QA_SOLUTIONS[i];
-  const chips = (items) => items.map((t, k) => `<li style="--k:${k}">${t}</li>`).join("");
-  return `<div class="qs-copy"><p class="qs-role">${s.role}</p><h3>${s.name}</h3><p>${s.text}</p><a class="qh-btn" href="${s.href}">자세히 보기</a></div>
-    <figure class="qs-fig" aria-label="${s.name}: ${s.input.join(", ")} → ${s.output.join(", ")}">
-      <div class="qs-col"><p>입력</p><ul class="qs-in">${chips(s.input)}</ul></div>
-      <i class="qs-link" aria-hidden="true"></i>
-      <div class="qs-core" aria-hidden="true">${ICO[s.icon]}<b>${s.name}</b></div>
-      <i class="qs-link" aria-hidden="true"></i>
-      <div class="qs-col"><p>결과</p><ul class="qs-out">${chips(s.output)}</ul></div>
-    </figure>`;
-}
-
 function qaHome() {
   const list = QA_EXPLORE.map(([id, name], i) =>
     `<li><button type="button" role="tab" id="qx-tab-${i}" aria-selected="${i ? "false" : "true"}" aria-controls="qx-panel" tabindex="${i ? "-1" : "0"}" data-i="${i}"><span class="n">${String(i + 1).padStart(2, "0")}</span>${name}</button></li>`).join("");
@@ -409,10 +385,8 @@ function qaHome() {
   }).join("");
   const first = QA_EXPLORE[0];
   const firstTags = SERVICE_SLIDES[0].tags.map((t) => `<span>#${t}</span>`).join("");
-  const flow = QA_TESTOPS_FLOW.map(([t, d], i) =>
-    `<li style="--i:${i}"><span class="qo-dot" aria-hidden="true"></span><div><b><em>${String(i + 1).padStart(2, "0")}</em>${t}</b><p>${d}</p></div></li>`).join("");
-  const tabs = QA_SOLUTIONS.map((s, i) =>
-    `<li><button type="button" role="tab" id="qs-tab-${i}" aria-selected="${i ? "false" : "true"}" aria-controls="qs-panel" tabindex="${i ? "-1" : "0"}" data-i="${i}"><b>${s.name}</b><small>${s.role}</small></button></li>`).join("");
+  const tsCols = QA_SOLUTIONS.map(([name, role, href], i) =>
+    `<li${i ? "" : ' class="is-on"'}><a href="${href}"><i class="qh-ts-dot" aria-hidden="true"></i><b>${name}</b><small>${role}</small></a></li>`).join("");
   const industries = DOMAINS.map(([name, image]) =>
     `<li><img src="${ORIGIN}${image}" alt="" loading="lazy"><span>${name}</span></li>`).join("");
   return `<div class="qh s-page dark" id="qh">
@@ -444,24 +418,30 @@ function qaHome() {
     </div>
   </div></section>
 
-  <section class="qh-testops" id="qh-testops">
-    <picture class="qh-testops-bg"><source media="(max-width: 768px)" srcset="${ORIGIN}sec-main-mobile-002.70747ccffb2ac394fa5b.png"><img src="${ORIGIN}sec-main-002.2e4090c5e8921c5fcc33.png" alt="" loading="lazy"></picture>
-    <div class="s-wrap">
-      <div class="qh-testops-copy">
-        <p class="qh-kicker">TestOps</p>
-        <h2>테스트를<br>개발 흐름 안으로</h2>
-        <p>BDD 기반 테스트 설계부터 CI/CD 자동 실행, 결과 및 결함 관리까지 개발 과정에 테스트를 연결합니다.</p>
-        <div class="s-actions"><a class="qh-btn" href="#qa/service/automation/testops">TestOps 구축</a><a class="qh-btn" href="#qa/service/automation/ai">AI 기반 검증 자동화</a></div>
+  <section class="qh-ops" id="qh-testops">
+    <picture class="qh-ops-bg"><source media="(max-width: 768px)" srcset="${ORIGIN}sec-main-mobile-002.70747ccffb2ac394fa5b.png"><img src="${ORIGIN}sec-main-002.2e4090c5e8921c5fcc33.png" alt="" loading="lazy"></picture>
+    <div class="qh-ops-copy">
+      <p class="qh-kicker">TestOps</p>
+      <h2>테스트를 개발 흐름 안으로</h2>
+      <p>최신 테스트 자동화 기술로 TestOps 환경을 구축합니다.</p>
+      <div class="qh-ops-row">
+        ${QA_OPS_SIDES.map(([lead, title], i) => `<p class="qh-ops-side${i ? " is-right" : ""}"><small>${lead}</small><b>${title}</b></p>`).join(`<img class="qh-ops-tri" src="${QA_ART}testops-triangle.svg" alt="" width="465" height="408" loading="lazy">`)}
       </div>
-      <ol class="qo-flow" aria-label="TestOps 운영 흐름"><i class="qo-line" aria-hidden="true"><i class="qo-fill"></i></i>${flow}</ol>
+      <div class="s-actions"><a class="qh-btn" href="#qa/service/automation/testops">TestOps 구축</a></div>
     </div>
   </section>
 
-  <section class="s-sec qh-light qh-tsol" id="qh-tsol"><div class="s-wrap">
-    <div class="qh-head"><p class="qh-kicker">T-솔루션</p><h2>AI 기술로 확장하는 품질 검증</h2><p>테스트 설계와 실행, AI 평가부터 사용자 피드백 분석까지. 티벨의 AI 솔루션으로 품질 관리의 범위를 넓힙니다.</p></div>
-    <ul class="qs-tabs" role="tablist" aria-label="T-솔루션">${tabs}</ul>
-    <div class="qs-panel" id="qs-panel" role="tabpanel" aria-labelledby="qs-tab-0">${qaSolutionPanel(0)}</div>
-  </div></section>
+  <section class="qh-ts" id="qh-tsol">
+    <div class="qh-ts-head">
+      <p class="qh-kicker">T-솔루션</p>
+      <h2>AI 기술로 확장하는 품질 검증</h2>
+      <p>테스트 설계와 실행, AI 평가부터 사용자 피드백 분석까지. 티벨이 직접 만든 품질 기술입니다.</p>
+    </div>
+    <div class="qh-ts-card">
+      <picture class="qh-ts-photo"><source media="(max-width: 768px)" srcset="${QA_ART}photos/tsol-qa-space-m.jpg"><img src="${QA_ART}photos/tsol-qa-space.jpg" alt="" loading="lazy"></picture>
+      <ul class="qh-ts-cols" aria-label="T-솔루션">${tsCols}</ul>
+    </div>
+  </section>
 
   <section class="s-sec qh-domains" id="industries"><div class="s-wrap">
     <div class="qh-head"><p class="qh-kicker">산업별 경험</p><h2>산업별 환경을 이해하는 QA 전문성</h2><p>산업마다 다른 시스템 환경과 품질 요구사항을 고려해 테스트를 설계하고 수행합니다.</p></div>
@@ -580,49 +560,16 @@ function wireQaHome() {
     pathLinks();
   });
 
-  // TestOps: one step at a time is lit; the line fills down to it.
-  const flow = root.querySelector(".qo-flow");
-  const steps = Array.from(flow.querySelectorAll("li"));
-  let step = 0;
-  const lightStep = (i) => {
-    step = i;
-    steps.forEach((li, k) => {
-      li.classList.toggle("is-on", k === i);
-      li.classList.toggle("is-past", k < i);
-    });
-    flow.style.setProperty("--step", i / (steps.length - 1));
-  };
-  lightStep(0);
-
-  // T 솔루션: tabs swap the panel; arrows move between them.
-  const tabs = Array.from(root.querySelectorAll(".qs-tabs button"));
-  const panel = root.querySelector("#qs-panel");
-  let current = 0;
-  let touched = false;
-  const show = (i, focus) => {
-    if (i === current) return;
-    current = i;
-    tabs.forEach((tab, k) => {
-      tab.setAttribute("aria-selected", k === i ? "true" : "false");
-      tab.tabIndex = k === i ? 0 : -1;
-    });
-    panel.innerHTML = qaSolutionPanel(i);
-    panel.setAttribute("aria-labelledby", tabs[i].id);
-    pathLinks();
-    if (focus) tabs[i].focus();
-  };
-  tabs.forEach((tab, i) => {
-    tab.addEventListener("click", () => { touched = true; show(i); });
-    tab.addEventListener("keydown", (event) => {
-      const move = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[event.key];
-      if (!move) return;
-      event.preventDefault();
-      touched = true;
-      show((current + move + tabs.length) % tabs.length, true);
-    });
+  // T 솔루션: the frosted panel follows the pointer (or focus) and returns to the overview when it leaves.
+  const tsCols = Array.from(root.querySelectorAll(".qh-ts-cols li"));
+  const tsLight = (i) => tsCols.forEach((li, k) => li.classList.toggle("is-on", k === i));
+  tsCols.forEach((li, i) => {
+    li.addEventListener("pointerenter", () => tsLight(i));
+    li.addEventListener("focusin", () => tsLight(i));
   });
-  panel.addEventListener("pointerenter", () => { touched = true; });
-  panel.addEventListener("focusin", () => { touched = true; });
+  const tsList = root.querySelector(".qh-ts-cols");
+  tsList.addEventListener("pointerleave", () => tsLight(0));
+  tsList.addEventListener("focusout", (event) => { if (!tsList.contains(event.relatedTarget)) tsLight(0); });
 
   // Motion runs only while its section is on screen.
   window.__qhIo = new IntersectionObserver((entries) => {
@@ -630,15 +577,13 @@ function wireQaHome() {
       entry.target.classList.toggle("play", entry.isIntersecting);
     });
   }, { threshold: 0.35 });
-  root.querySelectorAll(".qh-hero, .qh-testops, .qh-tsol").forEach((el) => window.__qhIo.observe(el));
+  root.querySelectorAll(".qh-hero, .qh-ops, .qh-ts").forEach((el) => window.__qhIo.observe(el));
   if (reduce) return;
   let tick = 0;
   window.__qhTimer = setInterval(() => {
     if (!document.body.contains(root)) { clearInterval(window.__qhTimer); window.__qhTimer = null; return; }
     tick += 1;
     if (!held && root.querySelector(".qh-hero").classList.contains("play")) light((lit + 1) % QA_BADGE_LINKS.length);
-    if (root.querySelector(".qh-testops").classList.contains("play")) lightStep((step + 1) % steps.length);
-    if (!touched && tick % 3 === 0 && root.querySelector(".qh-tsol").classList.contains("play")) show((current + 1) % tabs.length);
   }, 2400);
 }
 
@@ -741,7 +686,7 @@ function qaDeck(slides, id, base, leaves) {
 }
 
 // 서비스: like the origin's /service, the six test services are one deck in the origin's order — the banner
-// arrows step through them and there is no tab strip. TestOps 구축 and AI 기반 검증 자동화 are the origin's
+// arrows step through them, and the group's tab strip sits under the banner. TestOps 구축 and AI 기반 검증 자동화 are the origin's
 // /testops deck. URLs stay as they are (qa/service/…, qa/service/types/…, qa/service/automation/…).
 const svcSlide = (slides, id, extra) => ({ ...slides.find((slide) => slide.id === id), ...extra });
 const SERVICE_DECK = SERVICE_SLIDES.map((slide) => ({ ...slide, id: slide.id === "perfomance" ? "performance" : slide.id, href: qaServiceHref(slide.id) }));
@@ -750,10 +695,13 @@ const TESTOPS_DECK = [
   svcSlide(TESTOPS_SLIDES, "ai", { href: "#qa/service/automation/ai" })
 ];
 
+// Under the banner, like 회사소개, a tab strip lists the pages of the same QA menu group.
+const qaLeaves = (group) => QA_GROUPS.find((g) => g.id === group).children.map((c) => ({ ...c, id: c.id === "build" ? "testops" : c.id }));
+
 function serviceDeck(child, page) {
-  if (child === "automation" && (page === "testops" || page === "ai")) return qaDeck(TESTOPS_DECK, page, "#qa/service/automation/");
-  if (child === "types") return qaDeck(SERVICE_DECK, SERVICE_DECK.some((slide) => slide.id === page) ? page : "blackbox", "#qa/service/");
-  return qaDeck(SERVICE_DECK, child === "automation" ? "automation" : "outsourcing", "#qa/service/");
+  if (child === "automation" && (page === "testops" || page === "ai")) return qaDeck(TESTOPS_DECK, page, "#qa/service/automation/", qaLeaves("testops"));
+  if (child === "types") return qaDeck(SERVICE_DECK, SERVICE_DECK.some((slide) => slide.id === page) ? page : "blackbox", "#qa/service/", qaLeaves("service"));
+  return qaDeck(SERVICE_DECK, child === "automation" ? "automation" : "outsourcing", "#qa/service/", qaLeaves("service"));
 }
 
 // Old QA URLs (테스트 종류 · TestOps menus) and where each now lives, so bookmarks keep working.
@@ -951,6 +899,34 @@ function sPage(eyebrow, title, lede, body, jumps, extra = "", tone = "light") {
   return `<div class="s-page ${tone}">
   <section class="s-hero plain"><div class="s-wrap"><div><p class="s-eyebrow">${eyebrow}</p><h1>${title}</h1>${ledeHtml}${extra}</div></div></section>${bar}${body}
 </div>`;
+}
+
+// Security detail pages (사전 진단 · 컨설팅 · 인증) as one banner deck built by qaDeck, like the QA
+// detail pages: origin-format banner art (design_demo/sec-banners), sibling tabs, the page lede as the
+// centred intro, then the page's own body. Each page hands over its parts through secPage().
+function secPage(eyebrow, title, lede, body) {
+  return { eyebrow, title, lede, body };
+}
+
+const SECURITY_PAGES = [
+  // [id, tab label, intro title, banner title, page, banner tags]
+  ["diagnose", "사전 진단", "셀프 진단", "Compliance Navigator", () => diagnose(), ["의무 진단", "일정 역산", "상담 신청"]],
+  ["services", "컨설팅", "정보보호 컨설팅", "Security Consulting", () => services(), SVC_DOMAINS.map((d) => d.title)],
+  ["cert", "인증", "인증 컨설팅", "Certification", () => cert(), ["ISMS", "ISMS-P", "ISO"]]
+];
+
+function securityDeck(id) {
+  const art = (key) => ["bg-", "bg-tablet-", "bg-mobile-"].map((pre) => `../security/${pre}${key}.png`);
+  const slides = SECURITY_PAGES.map(([key, , intro, banner, page, tags]) => ({
+    id: key, title: banner, tags, bg: art(key),
+    get desc() { return page().title.replace(/<br>/g, "\n"); },
+    body: () => {
+      const p = page();
+      return `<section class="qp-sec qp-intro"><h2 class="qp-h">${intro}</h2><div class="qp-lede"><p>${p.lede}</p></div></section>${p.body}`;
+    }
+  }));
+  const leaves = SECURITY_PAGES.map(([key, label]) => ({ id: key, label, href: "#security/" + key }));
+  return qaDeck(slides, id, "#security/", leaves).replace('<div class="svc-body">', '<div class="svc-body s-page light sec-body">');
 }
 
 function sSec(id, [eyebrow, title, lede, icon], inner, alt) {
@@ -1190,8 +1166,8 @@ function diagnose() {
     ["q-cloud", "공공기관에 SaaS·클라우드 서비스를 공급하거나 예정", false],
     ["q-listed", "상장사이거나 연 매출 3,000억 원 이상", false]
   ];
-  // Hero and page tabs are the shared detail-page pieces (sPage); the body is security_demo's.
-  return sPage("Compliance Navigator", "질문에 답하면 의무와 일정이 바로 나옵니다",
+  // Banner and page tabs come from the security deck (securityDeck); the body is security_demo's.
+  return secPage("Compliance Navigator", "질문에 답하면 의무와 일정이 바로 나옵니다",
     "STEP 1에서 해당되는 의무를 확인하고, STEP 2에서 목표 심사일을 넣어 착수일을 계산하세요. STEP 3에서 그 결과로 바로 상담을 신청할 수 있습니다.",
     `<div class="dz">
   <section class="dz-section" id="step-1">
@@ -1263,7 +1239,7 @@ function diagnose() {
 }
 
 function cert() {
-  return sPage("Certification · ISMS / ISMS-P / ISO", "2027년, 인증 심사가 달라집니다", "인증을 받은 기업에서도 대형 유출 사고가 이어지자 정부는 ISMS·ISMS-P를 서면 심사 중심에서 운영 현장과 기술을 확인하는 심사로 바꾸고 있습니다. 문서만 갖춘 준비로는 통과도, 유지도 어려워집니다.",
+  return secPage("Certification · ISMS / ISMS-P / ISO", "2027년, 인증 심사가 달라집니다", "인증을 받은 기업에서도 대형 유출 사고가 이어지자 정부는 ISMS·ISMS-P를 서면 심사 중심에서 운영 현장과 기술을 확인하는 심사로 바꾸고 있습니다. 문서만 갖춘 준비로는 통과도, 유지도 어려워집니다.",
     sSec("reform", ["", "심사 개편"], `
     <div class="s-cards two s-body">
       <article class="s-card icon"><span class="s-ibox">${ICO.layers}</span><div><p class="s-eyebrow">등급제</p><h3>간편·표준·강화 3단계</h3><p>위험도에 따라 기준을 달리 적용합니다. 통신사와 대형 플랫폼은 강화 등급 대상입니다.</p></div></article>
@@ -1710,9 +1686,9 @@ const DRAW = {
   },
   security: {
     "": securityHome,
-    diagnose,
-    services,
-    cert,
+    diagnose: () => securityDeck("diagnose"),
+    services: () => securityDeck("services"),
+    cert: () => securityDeck("cert"),
     blog: (child, mode) => blogList(mode, child),
     inquiry: () => inquiryPage("security"),
     company: drawCompany

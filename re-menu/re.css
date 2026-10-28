@@ -275,6 +275,13 @@
 .rw-group p:not(.rw-brace) { margin: 10px 0 0; color: #595959; font-size: 14px; line-height: 1.6; word-break: keep-all; }
 .rw-group code { display: inline-block; margin-top: 12px; padding: 4px 12px; border: 1px solid #cfcfcf; border-radius: 62px; color: #333; font-family: var(--num); font-size: 12.5px; }
 
+/* 성능 테스트 › 주요 종류: the origin rings, smaller, so the six circles hold their icon without empty space. */
+/* Fixed tracks narrower than the circles, so they overlap evenly and the group centres (the origin's
+   negative margins let each circle spill to the right). */
+.rm-origin .qp-rings { grid-template-columns: repeat(3, 172px); grid-auto-rows: 188px; justify-content: center; width: auto; margin-top: 44px; }
+.rm-origin .qp-rings li { width: 208px; height: 208px; margin: 0; justify-self: center; align-self: center; gap: 14px; font-size: 15px; }
+.rm-origin .qp-rings .qp-ico { height: 40px; }
+
 /* 화이트박스 › 커버리지: criteria on the left, the same decision's truth table on the right; the note under
    the table keeps one height for every criterion. */
 .rw-cov { display: grid; grid-template-columns: minmax(230px, 270px) minmax(0, 1fr); gap: clamp(28px, 4vw, 56px); align-items: start; max-width: 900px; margin: 44px auto 0; text-align: left; }
@@ -307,6 +314,9 @@
   .rw-types { grid-template-columns: 1fr; gap: 36px; }
 }
 @media (max-width: 768px) {
+  .rm-origin .qp-rings { grid-template-columns: repeat(2, 136px); grid-auto-rows: 150px; }
+  .rm-origin .qp-rings li { width: 164px; height: 164px; gap: 10px; font-size: 13px; }
+  .rm-origin .qp-rings .qp-ico { height: 32px; }
   .ap-x { grid-template-columns: 1fr; gap: 28px; }
   .ap-lanes { padding-top: 0; }
   .rw-cov { grid-template-columns: 1fr; gap: 20px; }
@@ -330,3 +340,24 @@
   .rb-node[aria-pressed="true"]::before { border-color: #27c4d5; background: #27c4d5; }
 }
 @media (prefers-reduced-motion: reduce) { .rb-hand { transition: none !important; } }
+
+/* 성능 테스트 › 주요 핵심 지표: one ruled strip. Each column is led by its unit set large in the number face;
+   thin rules only, no icons or fills. The cyan stroke under each unit draws in on reveal. */
+.pm-strip { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); max-width: 1000px; margin: 52px auto 0; padding: 0; list-style: none; border-top: 2px solid #333; border-bottom: 1px solid #e4e4e4; text-align: left; }
+.pm-strip li { padding: 30px 26px 34px; border-left: 1px solid #e4e4e4; }
+.pm-strip li:first-child { border-left: 0; padding-left: 4px; }
+.pm-strip b { position: relative; display: block; padding-bottom: 18px; color: #121212; font-family: var(--num); font-size: clamp(40px, 3.4vw, 58px); font-weight: 300; line-height: 1; letter-spacing: -.02em; }
+.pm-strip b::after { content: ""; position: absolute; left: 0; bottom: 0; width: 28px; height: 2px; background: #27c4d5; transform-origin: left; transition: transform .7s ease; }
+.pm-strip li:nth-child(2) b::after { transition-delay: .12s; }
+.pm-strip li:nth-child(3) b::after { transition-delay: .24s; }
+.pm-strip li:nth-child(4) b::after { transition-delay: .36s; }
+.qp-js [data-qp-reveal]:not(.is-in) .pm-strip b::after { transform: scaleX(0); }
+.pm-strip h3 { margin: 20px 0 0; color: #333; font-size: 17px; font-weight: 700; }
+.pm-strip h3 small { display: block; margin-top: 3px; color: #969696; font-family: var(--num); font-size: 12px; font-weight: 500; letter-spacing: .02em; }
+.pm-strip p { margin: 12px 0 0; color: #595959; font-size: 14px; line-height: 1.6; word-break: keep-all; }
+@media (max-width: 768px) {
+  .pm-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pm-strip li { padding: 24px 16px 26px; }
+  .pm-strip li:nth-child(odd) { border-left: 0; padding-left: 4px; }
+  .pm-strip li:nth-child(n+3) { border-top: 1px solid #e4e4e4; }
+}

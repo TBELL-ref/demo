@@ -100,53 +100,6 @@ const SVC_PLANS = [
 
 const SVC_DOC_ICON = '<svg viewBox="0 0 26 32" fill="none" aria-hidden="true"><path d="M2 2h15l7 7v21H2z" stroke="#27c4d5" stroke-width="1.6" stroke-linejoin="round"/><path d="M17 2v7h7M7 16h12M7 21h12M7 26h8" stroke="#8a8a8a" stroke-width="1.5" stroke-linecap="round"/></svg>';
 
-// Radar diagram: four linked nodes around a core glyph. Used only by the /services
-// hero (the homes have their own visuals); each node is { href, jump, title, icon(x, y) -> SVG markup }.
-function radarSvg(aria, core, label, nodes) {
-  const spots = [
-    [230, 72, 230, 28, "-0.0s"],
-    [388, 210, 388, 266, "-0.3s"],
-    [230, 348, 230, 404, "-0.6s"],
-    [72, 210, 72, 266, "-0.9s"]
-  ];
-  const spokes = spots.map(([x, y, , , delay]) =>
-    `<line x1="230" y1="210" x2="${x}" y2="${y}" stroke="#3a3a3a" stroke-width="1.5"/>
-      <line class="s-flowline" x1="230" y1="210" x2="${x}" y2="${y}" stroke="#27c4d5" stroke-width="1.5" style="animation-delay:${delay}"/>`).join("");
-  const links = spots.map(([x, y, tx, ty], i) => {
-    const n = nodes[i];
-    return `<a href="${n.href}"${n.jump ? ` data-jump="${n.jump}"` : ""} class="node n${i}">
-        <circle class="s-halo" cx="${x}" cy="${y}" r="34" fill="none" stroke="#27c4d5" stroke-width="2"/>
-        <circle cx="${x}" cy="${y}" r="34" fill="#121212" stroke="#d0d0d0" stroke-width="1.5"/>
-        ${n.icon(x - 18, y - 18)}
-        <text x="${tx}" y="${ty}" text-anchor="middle">${n.title}</text>
-      </a>`;
-  }).join("");
-  return `<svg class="s-diagram" viewBox="0 0 460 430" role="img" aria-label="${aria}: ${nodes.map((n) => n.title).join(", ")}">
-      <defs>
-        <linearGradient id="beam" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#27c4d5" stop-opacity=".22"/><stop offset="1" stop-color="#27c4d5" stop-opacity="0"/></linearGradient>
-      </defs>
-      <circle cx="230" cy="210" r="138" fill="none" stroke="#2e2e2e" stroke-width="1"/>
-      <circle cx="230" cy="210" r="112" fill="none" stroke="#4a4a4a" stroke-width="8" stroke-dasharray="1 5"/>
-      <g class="s-scan"><path d="M230 210 L230 72 A138 138 0 0 1 327.6 112.4 Z" fill="url(#beam)"/></g>
-      ${spokes}
-      <circle cx="230" cy="210" r="66" fill="#1a1a1a" stroke="#d0d0d0" stroke-width="2"/>
-      ${core}
-      <text x="230" y="260" text-anchor="middle" class="ctr">${label}</text>
-      <g style="color:#ffffff;--mask:#121212">${links}</g>
-    </svg>`;
-}
-
-function svcRadar() {
-  return radarSvg("정보보호 컨설팅 4개 영역",
-    `<path d="M230 168 L258 179 V203 C258 222 246 233 230 240 C214 233 202 222 202 203 V179 Z" fill="none" stroke="#ffffff" stroke-width="2.5"/>
-      <path class="s-draw" d="M218 203 L227 212 L244 195" fill="none" stroke="#27c4d5" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>`,
-    "정보보호 컨설팅",
-    SVC_DOMAINS.map((d) => ({
-      href: "#security/services", jump: d.id, title: d.title,
-      icon: (x, y) => `<use href="${SPRITE}${d.icon}" x="${x}" y="${y}" width="36" height="36"/>`
-    })));
-}
-
 function svcDomain(d) {
   const items = d.items.map(([icon, title, tag, text]) =>
     `<li><span class="s-ibox">${use(icon)}</span><div><strong>${title}${tag ? `<span class="s-tag">${tag}</span>` : ""}</strong><span class="t">${text}</span></div></li>`).join("");
@@ -185,28 +138,12 @@ function svcPlans() {
 }
 
 function services() {
-  const shortcuts = SVC_DOMAINS.map((d) =>
-    `<a class="pill ghost sm" href="#security/services" data-jump="${d.id}">${use(d.icon, ' style="--mask:var(--canvas)"')}${d.title}</a>`).join("");
   const steps = SVC_STEPS.map(([icon, name], i) =>
     `<button class="s-step${i ? "" : " on"}" type="button" role="tab" id="st${i + 1}" aria-selected="${i ? "false" : "true"}" aria-controls="stepPanel"${i ? ' tabindex="-1"' : ""}><span class="s-dot">${use(icon)}</span><span class="no s-num">STEP ${i + 1}</span><span class="nm">${name}</span></button>`).join("");
-  return `<div class="s-page light" id="svc">
-  <section class="s-hero">
-    <canvas id="wave" aria-hidden="true"></canvas>
-    <div class="s-wrap">
-      <div>
-        <p class="s-eyebrow">Services</p>
-        <h1>네 가지 영역의<br>정보보호 컨설팅</h1>
-        <p class="lede">관리체계와 인증부터 AI·클라우드 같은 새로운 위험까지, 조직의 상황에 맞는 영역을 골라 시작할 수 있습니다. 진행 단계와 계약 방식은 이 페이지에서 이어서 확인합니다.</p>
-        <div class="pills">${shortcuts}</div>
-      </div>
-      ${svcRadar()}
-    </div>
-  </section>
-
-  <nav class="s-subnav" aria-label="페이지 내 이동">
-    <div class="s-wrap"><button type="button" data-jump="domains">영역</button><button type="button" data-jump="method">방법론</button><button type="button" data-jump="plans">계약 방식</button></div>
-  </nav>
-
+  // Banner and tabs come from the security deck (securityDeck); #svc is the step flow's root.
+  return secPage("Services", "네 가지 영역의<br>정보보호 컨설팅",
+    "관리체계와 인증부터 AI·클라우드 같은 새로운 위험까지, 조직의 상황에 맞는 영역을 골라 시작할 수 있습니다. 진행 단계와 계약 방식은 이 페이지에서 이어서 확인합니다.",
+    `<div id="svc">
   <section class="s-sec" id="domains">
     <div class="s-wrap">
       <div class="s-domains">${SVC_DOMAINS.map(svcDomain).join("")}</div>
@@ -250,7 +187,7 @@ function services() {
       </div>
     </div>
   </section>
-</div>`;
+</div>`);
 }
 
 function wireSvcMotion() {
