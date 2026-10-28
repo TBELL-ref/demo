@@ -331,16 +331,16 @@ const QA_SOLUTIONS = [
     input: ["앱 스토어 리뷰"], output: ["리뷰 유형 분류", "Jira 티켓 등록", "답변 추천"] }
 ];
 
-// Hero: the origin TEST∞OPS banner art with a live layer drawn in its pixel space — the orbit turns,
-// the five printed icons light in turn and their names float out. One click shows a service's text
-// under the badge; a double click opens it (like a banner).
+// Hero: the origin QA banner art (its TEST∞OPS lettering removed, design_demo/qa-hero-badge) with a
+// live layer drawn in its pixel space — the orbit turns,
+// the five printed icons light in turn and their names float out. One click lights a service; a double
+// click opens it (like a banner).
 const QA_BADGE = {
-  pc: { box: "0 0 1920 990", core: [1440, 510, 100], ring: 300, r: 36, nodes: [[1440, 348], [1541, 401], [1330, 388], [1280, 507], [1330, 627]] },
-  mobile: { box: "0 0 1440 2376", core: [952, 1547, 150], ring: 450, r: 54, nodes: [[958, 1208], [1154, 1329], [739, 1305], [625, 1537], [739, 1771]] }
+  pc: { box: "0 0 1920 990", core: [1440, 510, 100], lens: 92, ring: 300, r: 36, nodes: [[1440, 348], [1541, 401], [1330, 388], [1280, 507], [1330, 627]] },
+  mobile: { box: "0 0 1440 2376", core: [950, 1535, 190], lens: 185, ring: 450, r: 54, nodes: [[956, 1218], [1155, 1327], [739, 1304], [636, 1539], [742, 1775]] }
 };
 const QA_BADGE_LINKS = ["outsourcing", "whitebox", "automation", "blackbox", "perfomance"];
 const qaBadgeName = (i) => QA_EXPLORE.find(([id]) => id === QA_BADGE_LINKS[i])[1];
-const qaBadgeText = (i) => QA_EXPLORE.find(([id]) => id === QA_BADGE_LINKS[i])[2];
 
 function qaBadge(kind) {
   const spec = QA_BADGE[kind];
@@ -358,23 +358,32 @@ function qaBadge(kind) {
         <g class="qh-tip"><rect x="${tx}" y="${y - h / 2}" width="${w}" height="${h}" rx="${h / 2}"/><text x="${tx + w / 2}" y="${y + h * 0.14}" text-anchor="middle">${name}</text></g>
       </g>`;
   }).join("");
+  // The emptied lens keeps a quiet core: an inner ring, four marks and a teal point that breathes with the pulse.
+  const L = spec.lens;
+  const marks = [0, 90, 180, 270].map((deg) => {
+    const a = deg * Math.PI / 180;
+    const p = (r) => `${(cx + r * Math.cos(a)).toFixed(1)} ${(cy + r * Math.sin(a)).toFixed(1)}`;
+    return `M${p(L * 0.66)}L${p(L * 0.78)}`;
+  }).join("");
+  const core = `<g class="qh-core" aria-hidden="true">
+        <defs><radialGradient id="qh-core-glow-${kind}"><stop offset="0" stop-color="#27c4d5" stop-opacity=".55"/><stop offset="1" stop-color="#27c4d5" stop-opacity="0"/></radialGradient></defs>
+        <circle class="qh-core-ring" cx="${cx}" cy="${cy}" r="${(L * 0.58).toFixed(1)}"/>
+        <path class="qh-core-marks" d="${marks}"/>
+        <circle class="qh-core-glow" cx="${cx}" cy="${cy}" r="${(L * 0.36).toFixed(1)}" fill="url(#qh-core-glow-${kind})" style="transform-origin:${cx}px ${cy}px"/>
+        <circle class="qh-core-dot" cx="${cx}" cy="${cy}" r="${(L * 0.09).toFixed(1)}"/>
+      </g>`;
   return `<svg class="qh-badge-layer is-${kind}" viewBox="${spec.box}" preserveAspectRatio="${pc ? "xMaxYMid" : "xMidYMax"} slice">
       <g class="qh-orbit" style="transform-origin:${cx}px ${cy}px"><circle cx="${cx}" cy="${cy}" r="${spec.ring}"/></g>
       <circle class="qh-core-pulse" cx="${cx}" cy="${cy}" r="${coreR}" style="transform-origin:${cx}px ${cy}px"/>
       ${nodes}
+      ${core}
     </svg>`;
 }
 
 function qaHeroArt() {
   return `<div class="qh-art">
-      <picture><source media="(max-width: 768px)" srcset="${ORIGIN}banner-main-mobile-001.d743cfc41f203f0522b3.png"><img src="${ORIGIN}banner-main-pc-001.0e1ee99f9660f77d4fe1.png" alt=""></picture>
+      <picture><source media="(max-width: 768px)" srcset="${ORIGIN}banner-main-mobile-notext.png"><img src="${ORIGIN}banner-main-pc-notext.png" alt=""></picture>
       ${qaBadge("pc")}${qaBadge("mobile")}
-    </div>
-    <div class="qh-badge-cap" aria-live="polite">
-      <p class="qh-badge-n"><b>01</b><span>/ ${String(QA_BADGE_LINKS.length).padStart(2, "0")}</span></p>
-      <p class="qh-badge-name">${qaBadgeName(0)}</p>
-      <p class="qh-badge-text">${qaBadgeText(0)}</p>
-      <p class="qh-badge-hint">더블 클릭하면 자세히 볼 수 있습니다</p>
     </div>`;
 }
 
@@ -519,11 +528,10 @@ function wireQaHome() {
   if (!root) return;
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // Hero badge: nodes light in turn; pointing at one holds it. A click shows its text under the badge,
+  // Hero badge: nodes light in turn; pointing at one holds it. A click lights it,
   // a second click on the same node within a moment opens the service. The art leans toward the pointer.
   const hero = root.querySelector(".qh-hero");
   const art = root.querySelector(".qh-art");
-  const cap = root.querySelector(".qh-badge-cap");
   const badgeNodes = Array.from(root.querySelectorAll(".qh-node"));
   let lit = -1;
   let held = false;
@@ -532,24 +540,6 @@ function wireQaHome() {
     if (i === lit) return;
     lit = i;
     root.querySelectorAll(".qh-node").forEach((node) => node.classList.toggle("is-lit", Number(node.dataset.i) === i));
-    cap.querySelector(".qh-badge-n b").textContent = String(i + 1).padStart(2, "0");
-    cap.querySelector(".qh-badge-name").textContent = qaBadgeName(i);
-    cap.querySelector(".qh-badge-text").textContent = qaBadgeText(i);
-    cap.classList.remove("rise");
-    void cap.offsetWidth;
-    cap.classList.add("rise");
-  };
-  // The caption sits under the badge wherever the sliced art puts it.
-  const placeCap = () => {
-    const svg = root.querySelector(".qh-badge-layer.is-pc");
-    if (!svg || getComputedStyle(svg).display === "none") { cap.style.left = cap.style.top = ""; return; }
-    const ctm = svg.getScreenCTM();
-    const box = hero.getBoundingClientRect();
-    if (!ctm) return;
-    const [cx, cy] = QA_BADGE.pc.core;
-    const pt = new DOMPoint(cx, cy + QA_BADGE.pc.ring + 34).matrixTransform(ctm);
-    cap.style.left = `${Math.round(pt.x - box.left)}px`;
-    cap.style.top = `${Math.round(Math.min(pt.y - box.top, box.height - cap.offsetHeight - 24))}px`;
   };
   const open = (i) => go(qaServiceHref(QA_BADGE_LINKS[i]));
   badgeNodes.forEach((node) => {
@@ -571,11 +561,6 @@ function wireQaHome() {
     });
   });
   light(0);
-  placeCap();
-  if (window.__qhCapResize) window.removeEventListener("resize", window.__qhCapResize);
-  window.__qhCapResize = placeCap;
-  window.addEventListener("resize", placeCap, { passive: true });
-  art.querySelector("img").addEventListener("load", placeCap);
   if (!reduce) {
     hero.addEventListener("pointermove", (event) => {
       const box = hero.getBoundingClientRect();
