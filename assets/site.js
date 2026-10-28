@@ -267,20 +267,26 @@ function multiHome() {
       <div class="mh-steps"><p>주요 발자취</p><ol>${MULTI_STEPS.map(([y, t]) => `<li><b>${y}</b><span>${t}</span></li>`).join("")}</ol></div>
     </div>
   </section>
+  <section class="mh-clients">
+    <div class="mh-wrap">
+      <h2>티벨과 함께하는 고객사</h2>
+      <ul>${CLIENT_LOGOS.map((file) => `<li><img src="${base}assets/origin/${file}" alt="" loading="lazy"></li>`).join("")}</ul>
+    </div>
+  </section>
 </div>`;
 }
 
 // ── QA home (design_demo/qa-home-plan.md) ────────────────────────────
-// Scenes built on the origin artwork: TEST∞OPS badge hero, service photo explorer,
-// TestOps office scene, automation-to-AI timeline, industries, clients, closing band.
-
+// Hero, service photo explorer, TestOps flow, T 솔루션 tabs, industries, closing band.
+// Client logos: the origin main page's 19 tiles, shown on the company main page (multiHome).
 const CLIENT_LOGOS = [
   "01_sk_telecom.ae25244966926033ab37.png", "02_logo.26e3f50ed53544c1c7ac.png", "03_lg.a96d12b90e0b1d8e2a5a.png",
   "04_lgu+.5aa452b3620888b8180c.png", "05_woongjin.4b5f79bcf32c2b52d4c0.png", "06_gs.b4937c30866898d5978d.png",
-  "07_olive_young.e63706f5f90bed782755.png", "08_kakaopay.ec0feddaf22e913c7e02.png", "10_logo.903a4c7c9aa13d6268ce.png",
-  "11_theres.78c038692ae02eeeb8b8.png", "12_11street.ce145ee69dde686b285c.png", "14_kt.626d843890e82319cfb2.png",
-  "15_tripstore.35fd24420f22a807102d.png", "16_cyberlogitec.21555d984495dfddc26d.png", "17_lig.c81d0240fab7968ff357.png",
-  "18_hmm.18d13a82edd9e11b5231.png", "19_nuri.9e846a18d466c945442b.png"
+  "07_olive_young.e63706f5f90bed782755.png", "08_kakaopay.ec0feddaf22e913c7e02.png", "09_tmap_mobility.png",
+  "10_logo.903a4c7c9aa13d6268ce.png", "11_theres.78c038692ae02eeeb8b8.png", "12_11street.ce145ee69dde686b285c.png",
+  "13_line.png", "14_kt.626d843890e82319cfb2.png", "15_tripstore.35fd24420f22a807102d.png",
+  "16_cyberlogitec.21555d984495dfddc26d.png", "17_lig.c81d0240fab7968ff357.png", "18_hmm.18d13a82edd9e11b5231.png",
+  "19_nuri.9e846a18d466c945442b.png"
 ];
 
 // Service explorer: names and copy from the origin service pages (SERVICE_SLIDES / page artwork).
@@ -293,68 +299,96 @@ const QA_EXPLORE = [
   ["perfomance", "성능 테스트", "처리량과 응답시간, 자원 사용 등 성능 측정 지표를 산출해 시스템의 한계와 임계점을 검증합니다."]
 ];
 
-// The five icon nodes printed on the origin badge, in image pixels, and the service each one opens.
-const QA_BADGE = {
-  pc: { box: "0 0 1920 990", core: [1440, 510, 100], ring: 300, r: 36, tip: -1, nodes: [[1440, 348], [1541, 401], [1330, 388], [1280, 507], [1330, 627]] },
-  mobile: { box: "0 0 1440 2376", core: [952, 1547, 150], ring: 450, r: 54, tip: -1, nodes: [[958, 1208], [1154, 1329], [739, 1305], [625, 1537], [739, 1771]] }
-};
 // Where a service id opens: 아웃소싱 and 자동화 have pages of their own, the four test types share
 // 테스트 유형. The ids keep the origin's "perfomance" (its artwork names); the URL spells it right.
 function qaServiceHref(id) {
   if (id === "outsourcing" || id === "automation") return "#qa/service/" + id;
   return "#qa/service/types/" + (id === "perfomance" ? "performance" : id);
 }
-const QA_BADGE_LINKS = [["outsourcing", "아웃소싱 테스트"], ["whitebox", "화이트박스 테스트"], ["automation", "테스트 자동화"], ["blackbox", "블랙박스 테스트"], ["perfomance", "성능 테스트"]];
 
-// T 브랜드 솔루션 on the home: the quality cycle from the leaflet (design → platform → eval → feedback).
-const QA_TIMELINE = [
-  { year: "DESIGN", kind: "설계", title: "T-GEN", href: "#qa/tauto/gen", demo: "gen",
-    text: "기획서·Figma·요구사항 문서를 분석해 테스트 케이스를 자동으로 도출하고, AI 에이전트가 중복을 걸러냅니다." },
-  { year: "PLATFORM", kind: "통합 플랫폼", title: "T-AUTO", href: "#qa/tauto/auto", demo: "auto",
-    text: "자연어 시나리오만으로 테스트를 자동 수행하는 No-Code 자동화와, UI가 바뀌어도 스스로 복구하는 Self-Healing을 제공합니다." },
-  { year: "EVAL", kind: "평가", title: "T-LENS", href: "#qa/tauto/lens", demo: "lens",
-    text: "LLM-as-a-Judge로 대화형 AI의 응답 품질을 정량·정성 평가하고, AWS Device Farm으로 여러 기기에서 병렬 검증합니다." },
-  { year: "FEEDBACK", kind: "피드백", title: "T-VOC", href: "#qa/tauto/voc", demo: "voc",
-    text: "앱 스토어 리뷰를 자동으로 모아 부정 리뷰를 Jira 티켓으로 등록하고, AI가 유형을 분류해 답변을 추천합니다." }
+// TestOps on the home: the operating flow from the TestOps page, one step lit at a time.
+const QA_TESTOPS_FLOW = [
+  ["BDD 시나리오", "비즈니스 언어로 테스트 시나리오 작성"],
+  ["CI/CD 자동 실행", "개발 파이프라인과 테스트 실행 연계"],
+  ["결과 분석", "실행 결과 확인 및 분석"],
+  ["결함 관리", "테스트 결과와 결함 관리 체계 연동"]
 ];
+
+// T 솔루션 on the home: four products that stand alone and can be combined. No product screens exist
+// in the project, so each one is drawn as what goes in and what comes out (copy from the T pages).
+const QA_SOLUTIONS = [
+  { id: "gen", name: "T-GEN", role: "AI 기반 테스트케이스 생성", icon: "form", href: "#qa/tauto/gen",
+    text: "기획서·Figma·요구사항 문서를 분석해 테스트 케이스를 자동으로 도출하고, AI 에이전트가 중복을 걸러냅니다.",
+    input: ["기획서", "Figma", "요구사항 문서"], output: ["테스트 케이스 도출", "중복 케이스 정리"] },
+  { id: "auto", name: "T-AUTO", role: "테스트 자동 실행 및 운영", icon: "layers", href: "#qa/tauto/auto",
+    text: "자연어 시나리오만으로 테스트를 자동 수행하는 No-Code 자동화와, UI가 바뀌어도 스스로 복구하는 Self-Healing을 제공합니다.",
+    input: ["자연어 시나리오"], output: ["No-Code 자동 실행", "Self-Healing 복구"] },
+  { id: "lens", name: "T-LENS", role: "LLM 및 AI 서비스 평가", icon: "scan", href: "#qa/tauto/lens",
+    text: "LLM-as-a-Judge로 대화형 AI의 응답 품질을 정량·정성 평가하고, AWS Device Farm으로 여러 기기에서 병렬 검증합니다.",
+    input: ["대화형 AI 응답"], output: ["정량·정성 평가", "여러 기기 병렬 검증"] },
+  { id: "voc", name: "T-VOC", role: "사용자 리뷰 분석 및 피드백 관리", icon: "send", href: "#qa/tauto/voc",
+    text: "앱 스토어 리뷰를 자동으로 모아 부정 리뷰를 Jira 티켓으로 등록하고, AI가 유형을 분류해 답변을 추천합니다.",
+    input: ["앱 스토어 리뷰"], output: ["리뷰 유형 분류", "Jira 티켓 등록", "답변 추천"] }
+];
+
+// Hero: the origin TEST∞OPS banner art with a live layer drawn in its pixel space — the orbit turns,
+// the five printed icons light in turn and their names float out. One click shows a service's text
+// under the badge; a double click opens it (like a banner).
+const QA_BADGE = {
+  pc: { box: "0 0 1920 990", core: [1440, 510, 100], ring: 300, r: 36, nodes: [[1440, 348], [1541, 401], [1330, 388], [1280, 507], [1330, 627]] },
+  mobile: { box: "0 0 1440 2376", core: [952, 1547, 150], ring: 450, r: 54, nodes: [[958, 1208], [1154, 1329], [739, 1305], [625, 1537], [739, 1771]] }
+};
+const QA_BADGE_LINKS = ["outsourcing", "whitebox", "automation", "blackbox", "perfomance"];
+const qaBadgeName = (i) => QA_EXPLORE.find(([id]) => id === QA_BADGE_LINKS[i])[1];
+const qaBadgeText = (i) => QA_EXPLORE.find(([id]) => id === QA_BADGE_LINKS[i])[2];
 
 function qaBadge(kind) {
   const spec = QA_BADGE[kind];
   const [cx, cy, coreR] = spec.core;
+  const pc = kind === "pc";
   const nodes = spec.nodes.map(([x, y], i) => {
-    const [id, name] = QA_BADGE_LINKS[i];
-    const w = name.length * (kind === "pc" ? 17 : 50) + (kind === "pc" ? 36 : 90);
-    const h = kind === "pc" ? 40 : 96;
-    const tx = x - spec.r - 14 - w;
-    return `<a class="qh-node" href="${qaServiceHref(id)}" data-i="${i}" aria-label="${name}">
+    const name = qaBadgeName(i);
+    const w = name.length * (pc ? 17 : 50) + (pc ? 40 : 96);
+    const h = pc ? 42 : 100;
+    const tx = x - spec.r - 18 - w;
+    return `<g class="qh-node" data-i="${i}"${pc ? ` role="button" tabindex="0" aria-label="${name}"` : ' aria-hidden="true"'}>
+        <line class="qh-node-ray" x1="${cx}" y1="${cy}" x2="${x}" y2="${y}"/>
         <circle class="qh-node-halo" cx="${x}" cy="${y}" r="${spec.r + 10}"/>
-        <circle class="qh-node-hit" cx="${x}" cy="${y}" r="${spec.r + 6}"/>
-        <g class="qh-tip"><rect x="${tx}" y="${y - h / 2}" width="${w}" height="${h}" rx="${h / 2}"/><text x="${tx + w / 2}" y="${y + h * 0.13}" text-anchor="middle">${name}</text></g>
-      </a>`;
+        <circle class="qh-node-hit" cx="${x}" cy="${y}" r="${spec.r + 8}"/>
+        <g class="qh-tip"><rect x="${tx}" y="${y - h / 2}" width="${w}" height="${h}" rx="${h / 2}"/><text x="${tx + w / 2}" y="${y + h * 0.14}" text-anchor="middle">${name}</text></g>
+      </g>`;
   }).join("");
-  return `<svg class="qh-badge-layer is-${kind}" viewBox="${spec.box}" preserveAspectRatio="${kind === "pc" ? "xMaxYMid" : "xMidYMax"} slice">
+  return `<svg class="qh-badge-layer is-${kind}" viewBox="${spec.box}" preserveAspectRatio="${pc ? "xMaxYMid" : "xMidYMax"} slice">
       <g class="qh-orbit" style="transform-origin:${cx}px ${cy}px"><circle cx="${cx}" cy="${cy}" r="${spec.ring}"/></g>
       <circle class="qh-core-pulse" cx="${cx}" cy="${cy}" r="${coreR}" style="transform-origin:${cx}px ${cy}px"/>
       ${nodes}
     </svg>`;
 }
 
-function qaDemo(kind) {
-  if (kind === "voc") {
-    return `<div class="qh-demo voc"><div class="qh-voc-in"><span style="--i:0">★★★★☆ 로그인이 자주 풀려요…</span><span style="--i:1">★★☆☆☆ 결제 후 화면이 멈춰요</span><span style="--i:2">★★★★★ 업데이트 후 빨라졌어요</span></div>
-      <div class="qh-voc-lanes"><div><b>장애</b><i></i><i></i></div><div><b>기능</b><i></i></div><div><b>칭찬</b><i></i></div></div>
-      <p class="qh-ticket">Jira 등록 · VOC-1242 (Critical)</p></div>`;
-  }
-  if (kind === "gen") {
-    return `<div class="qh-demo gen"><div class="qh-docs"><span>기획서.pdf</span><span>Figma</span><span>요구사항.xlsx</span></div>
-      <ol>${["TC-001 비밀번호 5회 오류 시 계정 잠금", "TC-002 잠금 해제 메일 발송", "TC-003 임시 비밀번호 재설정"].map((t, i) => `<li style="--i:${i}"><code>${t}</code><em></em></li>`).join("")}</ol></div>`;
-  }
-  if (kind === "auto") {
-    return `<div class="qh-demo auto"><p class="qh-q">“로그인 후 장바구니에 상품을 담고 결제 화면까지 이동”</p><ol>${["로그인 화면 요소 식별", "상품 담기 버튼 식별", "결제 화면 진입 확인"].map((t, i) => `<li style="--i:${i}"><code>${t}</code><em></em></li>`).join("")}</ol></div>`;
-  }
-  return `<div class="qh-demo lens"><p class="qh-q">Q. 해외 결제 수수료는 얼마인가요?</p>
-    ${[["정확성", 92], ["근거 제시", 84], ["어조·안전성", 96]].map(([k, v], i) => `<div class="qh-judge" style="--i:${i};--v:${v}%"><span>${k}</span><i></i><b>${v}</b></div>`).join("")}
-    <p class="qh-reason">사유: 수수료율과 적용 조건을 함께 안내함</p></div>`;
+function qaHeroArt() {
+  return `<div class="qh-art">
+      <picture><source media="(max-width: 768px)" srcset="${ORIGIN}banner-main-mobile-001.d743cfc41f203f0522b3.png"><img src="${ORIGIN}banner-main-pc-001.0e1ee99f9660f77d4fe1.png" alt=""></picture>
+      ${qaBadge("pc")}${qaBadge("mobile")}
+    </div>
+    <div class="qh-badge-cap" aria-live="polite">
+      <p class="qh-badge-n"><b>01</b><span>/ ${String(QA_BADGE_LINKS.length).padStart(2, "0")}</span></p>
+      <p class="qh-badge-name">${qaBadgeName(0)}</p>
+      <p class="qh-badge-text">${qaBadgeText(0)}</p>
+      <p class="qh-badge-hint">더블 클릭하면 자세히 볼 수 있습니다</p>
+    </div>`;
+}
+
+function qaSolutionPanel(i) {
+  const s = QA_SOLUTIONS[i];
+  const chips = (items) => items.map((t, k) => `<li style="--k:${k}">${t}</li>`).join("");
+  return `<div class="qs-copy"><p class="qs-role">${s.role}</p><h3>${s.name}</h3><p>${s.text}</p><a class="qh-btn" href="${s.href}">자세히 보기</a></div>
+    <figure class="qs-fig" aria-label="${s.name}: ${s.input.join(", ")} → ${s.output.join(", ")}">
+      <div class="qs-col"><p>입력</p><ul class="qs-in">${chips(s.input)}</ul></div>
+      <i class="qs-link" aria-hidden="true"></i>
+      <div class="qs-core" aria-hidden="true">${ICO[s.icon]}<b>${s.name}</b></div>
+      <i class="qs-link" aria-hidden="true"></i>
+      <div class="qs-col"><p>결과</p><ul class="qs-out">${chips(s.output)}</ul></div>
+    </figure>`;
 }
 
 function qaHome() {
@@ -366,38 +400,36 @@ function qaHome() {
   }).join("");
   const first = QA_EXPLORE[0];
   const firstTags = SERVICE_SLIDES[0].tags.map((t) => `<span>#${t}</span>`).join("");
-  const timeline = QA_TIMELINE.map((m, i) =>
-    `<li><button type="button" role="tab" id="qt-tab-${i}" aria-selected="${i === QA_TIMELINE.length - 1 ? "true" : "false"}" aria-controls="qt-panel" data-i="${i}"><span class="y">${m.year}</span><b>${m.title}</b><small>${m.kind}</small></button></li>`).join("");
+  const flow = QA_TESTOPS_FLOW.map(([t, d], i) =>
+    `<li style="--i:${i}"><span class="qo-dot" aria-hidden="true"></span><div><b><em>${String(i + 1).padStart(2, "0")}</em>${t}</b><p>${d}</p></div></li>`).join("");
+  const tabs = QA_SOLUTIONS.map((s, i) =>
+    `<li><button type="button" role="tab" id="qs-tab-${i}" aria-selected="${i ? "false" : "true"}" aria-controls="qs-panel" tabindex="${i ? "-1" : "0"}" data-i="${i}"><b>${s.name}</b><small>${s.role}</small></button></li>`).join("");
   const industries = DOMAINS.map(([name, image]) =>
     `<li><img src="${ORIGIN}${image}" alt="" loading="lazy"><span>${name}</span></li>`).join("");
-  const logos = CLIENT_LOGOS.map((file) => `<li><img src="${ORIGIN}${file}" alt="" loading="lazy"></li>`).join("");
   return `<div class="qh s-page dark" id="qh">
   <section class="qh-hero">
-    <div class="qh-art">
-      <picture><source media="(max-width: 768px)" srcset="${ORIGIN}banner-main-mobile-001.d743cfc41f203f0522b3.png"><img src="${ORIGIN}banner-main-pc-001.0e1ee99f9660f77d4fe1.png" alt=""></picture>
-      ${qaBadge("pc")}${qaBadge("mobile")}
-    </div>
-    <div class="qh-hero-copy">
-      <p class="qh-label">SOFTWARE TEST &amp; QUALITY</p>
-      <h1>차별화된 테스트 경험을 제공하는<br>대한민국 대표 품질 서비스 기업</h1>
-      <p class="lede">대한민국 IT 산업에 품질로 기여하고자 테스트 방법론과 서비스를 차별화하여, 테스트 서비스의 패러다임 변화를 주도하고 있습니다.</p>
-      <div class="s-actions">
-        <a class="pill" href="#qa/service">테스트 서비스 보기</a>
-        <a class="pill ghost" href="#qa/inquiry">프로젝트 문의</a>
+    ${qaHeroArt()}
+    <div class="s-wrap qh-hero-in">
+      <div class="qh-hero-copy">
+        <h1>차별화된 테스트 경험으로<br>완성하는 소프트웨어 품질</h1>
+        <p class="lede">전문 테스트 인력과 AI 자동화 기술을 결합해<br>프로젝트에 최적화된 QA 서비스를 제공합니다.</p>
+        <div class="s-actions">
+          <a class="qh-btn" href="#qa" data-jump="qh-services">살펴보기</a>
+          <a class="qh-btn" href="#inquiry/qa">문의하기</a>
+        </div>
       </div>
     </div>
-    <a class="qh-scroll" href="#qa" data-jump="qh-services" aria-label="아래로 이동"><span></span></a>
   </section>
 
   <section class="s-sec qh-light qh-explore" id="qh-services"><div class="s-wrap">
-    <div class="qh-head"><p class="qh-label">TEST SERVICE</p><h2>프로젝트에 맞는 테스트를 고르세요</h2></div>
+    <div class="qh-head"><p class="qh-kicker">QA 서비스</p><h2>프로젝트에 최적화된 QA 서비스</h2><p>다양한 플랫폼과 개발 환경에 맞춰 전문적인 테스트 서비스를 제공합니다.</p></div>
     <div class="qx">
       <div class="qx-list"><ul role="tablist" aria-label="테스트 서비스" aria-orientation="vertical">${list}</ul><i class="qx-bar" aria-hidden="true"></i></div>
       <div class="qx-panel" id="qx-panel" role="tabpanel" aria-labelledby="qx-tab-0">
         <div class="qx-stage">${shots}</div>
         <div class="qx-info">
           <div><h3 data-x="name">${first[1]}</h3><p data-x="text">${first[2]}</p><div class="qx-tags" data-x="tags">${firstTags}</div></div>
-          <a class="pill" data-x="link" href="${qaServiceHref(first[0])}">자세히 보기</a>
+          <a class="qh-btn" data-x="link" href="${qaServiceHref(first[0])}">자세히 보기</a>
         </div>
       </div>
     </div>
@@ -407,53 +439,26 @@ function qaHome() {
     <picture class="qh-testops-bg"><source media="(max-width: 768px)" srcset="${ORIGIN}sec-main-mobile-002.70747ccffb2ac394fa5b.png"><img src="${ORIGIN}sec-main-002.2e4090c5e8921c5fcc33.png" alt="" loading="lazy"></picture>
     <div class="s-wrap">
       <div class="qh-testops-copy">
-        <p class="qh-label">TESTOPS</p>
+        <p class="qh-kicker">TestOps</p>
         <h2>테스트를<br>개발 흐름 안으로</h2>
-        <p>티벨은 최신 테스트 자동화 기술을 적용한 TestOps 환경 구축을 통해 고객에게 최적의 가치를 제공하고 있습니다.</p>
-        <div class="s-actions"><a class="pill" href="#qa/service/automation/testops">TestOps 구축</a><a class="pill ghost" href="#qa/service/automation/ai">AI 기반 검증 자동화</a></div>
+        <p>BDD 기반 테스트 설계부터 CI/CD 자동 실행, 결과 및 결함 관리까지 개발 과정에 테스트를 연결합니다.</p>
+        <div class="s-actions"><a class="qh-btn" href="#qa/service/automation/testops">TestOps 구축</a><a class="qh-btn" href="#qa/service/automation/ai">AI 기반 검증 자동화</a></div>
       </div>
-      <div class="qh-loop" aria-label="TestOps 진행 흐름">
-        <svg viewBox="100 40 320 180" aria-hidden="true">
-          <path class="qh-loop-base" d="M130 130C130 60 230 60 260 130S390 200 390 130 290 60 260 130 130 200 130 130Z"/>
-          <path class="qh-loop-draw" pathLength="100" d="M130 130C130 60 230 60 260 130S390 200 390 130 290 60 260 130 130 200 130 130Z"/>
-          <circle class="qh-loop-dot" r="7"><animateMotion dur="6s" repeatCount="indefinite" path="M130 130C130 60 230 60 260 130S390 200 390 130 290 60 260 130 130 200 130 130Z"/></circle>
-          <text x="260" y="138" text-anchor="middle">TestOps</text>
-        </svg>
-        <ol>
-          <li class="s1" style="--i:0"><b><em>01</em>BDD 시나리오</b><span>비즈니스 언어로 테스트 시나리오 작성</span></li>
-          <li class="s2" style="--i:1"><b><em>02</em>CI/CD 자동 실행</b><span>파이프라인에 연결해 변경마다 실행</span></li>
-          <li class="s3" style="--i:2"><b><em>03</em>관리 도구 연동</b><span>프로젝트·테스트 관리 도구와 연동</span></li>
-          <li class="s4" style="--i:3"><b><em>04</em>결과·결함 관리</b><span>계획부터 결과 관리까지 자동화</span></li>
-        </ol>
-      </div>
+      <ol class="qo-flow" aria-label="TestOps 운영 흐름"><i class="qo-line" aria-hidden="true"><i class="qo-fill"></i></i>${flow}</ol>
     </div>
   </section>
 
-  <section class="s-sec qh-light qh-timeline" id="qh-tsol"><div class="s-wrap">
-    <div class="qh-head"><p class="qh-label">T BRAND SOLUTION</p><h2>AI 기반 품질 검증 자동화</h2><p>T-AUTO를 중심으로 설계부터 평가, 고객 피드백까지 하나로 연결합니다.</p></div>
-    <div class="qt">
-      <div class="qt-rail"><div class="qt-line" aria-hidden="true"><i class="qt-fill"></i></div><ol role="tablist" aria-label="T 브랜드 솔루션">${timeline}</ol></div>
-      <div class="qt-panel" id="qt-panel" role="tabpanel"></div>
-    </div>
-  </div></section>` +
-    sSec("industries", ["INDUSTRIES", "다양한 산업에서 검증했습니다", "업종마다 다른 품질 기준과 규제를 이해하고 테스트를 설계합니다."], `
-    <ul class="s-industries s-body">${industries}</ul>`) + `
-  <section class="s-sec qh-light qh-clients" id="clients"><div class="s-wrap">
-    <div class="s-head"><p class="s-eyebrow">CLIENTS</p><h2>티벨과 함께하는 고객사</h2></div>
-    <div class="s-logos s-body"><ul>${logos}</ul><ul aria-hidden="true">${logos}</ul></div>
+  <section class="s-sec qh-light qh-tsol" id="qh-tsol"><div class="s-wrap">
+    <div class="qh-head"><p class="qh-kicker">T-솔루션</p><h2>AI 기술로 확장하는 품질 검증</h2><p>테스트 설계와 실행, AI 평가부터 사용자 피드백 분석까지. 티벨의 AI 솔루션으로 품질 관리의 범위를 넓힙니다.</p></div>
+    <ul class="qs-tabs" role="tablist" aria-label="T-솔루션">${tabs}</ul>
+    <div class="qs-panel" id="qs-panel" role="tabpanel" aria-labelledby="qs-tab-0">${qaSolutionPanel(0)}</div>
   </div></section>
 
-  <section class="qh-close"><div class="s-wrap">
-    <h2>프로젝트에 맞는 테스트 범위를<br>제안해 드립니다.</h2>
-    <p>일정, 대상 플랫폼, 필요한 테스트 종류를 알려 주시면 투입 인력과 진행 방식을 함께 제안합니다.</p>
-    <a class="pill" href="#qa/inquiry">프로젝트 문의</a>
+  <section class="s-sec qh-domains" id="industries"><div class="s-wrap">
+    <div class="qh-head"><p class="qh-kicker">산업별 경험</p><h2>산업별 환경을 이해하는 QA 전문성</h2><p>산업마다 다른 시스템 환경과 품질 요구사항을 고려해 테스트를 설계하고 수행합니다.</p></div>
+    <ul class="s-industries s-body">${industries}</ul>
   </div></section>
 </div>`;
-}
-
-function qaTimelinePanel(i) {
-  const m = QA_TIMELINE[i];
-  return `<div class="qt-copy"><p class="qt-kind"><span>${m.kind}</span>${m.year}</p><h3>${m.title}</h3><p>${m.text}</p><a class="pill ghost" href="${m.href}">${m.title} 보기</a></div>${qaDemo(m.demo)}`;
 }
 
 // List-and-panel explorer shared by the QA and security homes: the next visual wipes in over the
@@ -513,32 +518,71 @@ function wireQaHome() {
   const root = document.getElementById("qh");
   if (!root) return;
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (reduce) root.querySelectorAll("svg").forEach((svg) => svg.pauseAnimations && svg.pauseAnimations());
 
-  // Hero: nodes light in turn; pointing at one stops the cycle on it. The art leans toward the pointer.
+  // Hero badge: nodes light in turn; pointing at one holds it. A click shows its text under the badge,
+  // a second click on the same node within a moment opens the service. The art leans toward the pointer.
   const hero = root.querySelector(".qh-hero");
   const art = root.querySelector(".qh-art");
-  let lit = 0;
+  const cap = root.querySelector(".qh-badge-cap");
+  const badgeNodes = Array.from(root.querySelectorAll(".qh-node"));
+  let lit = -1;
   let held = false;
+  let lastTap = { i: -1, at: 0 };
   const light = (i) => {
+    if (i === lit) return;
     lit = i;
     root.querySelectorAll(".qh-node").forEach((node) => node.classList.toggle("is-lit", Number(node.dataset.i) === i));
+    cap.querySelector(".qh-badge-n b").textContent = String(i + 1).padStart(2, "0");
+    cap.querySelector(".qh-badge-name").textContent = qaBadgeName(i);
+    cap.querySelector(".qh-badge-text").textContent = qaBadgeText(i);
+    cap.classList.remove("rise");
+    void cap.offsetWidth;
+    cap.classList.add("rise");
   };
-  light(0);
-  root.querySelectorAll(".qh-node").forEach((node) => {
-    const hold = () => { held = true; light(Number(node.dataset.i)); };
-    node.addEventListener("mouseenter", hold);
-    node.addEventListener("focus", hold);
-    node.addEventListener("mouseleave", () => { held = false; });
+  // The caption sits under the badge wherever the sliced art puts it.
+  const placeCap = () => {
+    const svg = root.querySelector(".qh-badge-layer.is-pc");
+    if (!svg || getComputedStyle(svg).display === "none") { cap.style.left = cap.style.top = ""; return; }
+    const ctm = svg.getScreenCTM();
+    const box = hero.getBoundingClientRect();
+    if (!ctm) return;
+    const [cx, cy] = QA_BADGE.pc.core;
+    const pt = new DOMPoint(cx, cy + QA_BADGE.pc.ring + 34).matrixTransform(ctm);
+    cap.style.left = `${Math.round(pt.x - box.left)}px`;
+    cap.style.top = `${Math.round(Math.min(pt.y - box.top, box.height - cap.offsetHeight - 24))}px`;
+  };
+  const open = (i) => go(qaServiceHref(QA_BADGE_LINKS[i]));
+  badgeNodes.forEach((node) => {
+    const i = Number(node.dataset.i);
+    node.addEventListener("pointerenter", () => { held = true; light(i); });
+    node.addEventListener("pointerleave", () => { held = false; });
+    node.addEventListener("focus", () => { held = true; light(i); });
     node.addEventListener("blur", () => { held = false; });
+    node.addEventListener("click", () => {
+      const now = Date.now();
+      if (lastTap.i === i && now - lastTap.at < 450) { open(i); return; }
+      lastTap = { i, at: now };
+      held = true;
+      light(i);
+    });
+    node.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") { event.preventDefault(); open(i); }
+      if (event.key === " ") { event.preventDefault(); light(i); }
+    });
   });
+  light(0);
+  placeCap();
+  if (window.__qhCapResize) window.removeEventListener("resize", window.__qhCapResize);
+  window.__qhCapResize = placeCap;
+  window.addEventListener("resize", placeCap, { passive: true });
+  art.querySelector("img").addEventListener("load", placeCap);
   if (!reduce) {
     hero.addEventListener("pointermove", (event) => {
       const box = hero.getBoundingClientRect();
       art.style.setProperty("--px", ((event.clientX - box.left) / box.width - 0.5).toFixed(3));
       art.style.setProperty("--py", ((event.clientY - box.top) / box.height - 0.5).toFixed(3));
     });
-    hero.addEventListener("pointerleave", () => { art.style.setProperty("--px", 0); art.style.setProperty("--py", 0); });
+    hero.addEventListener("pointerleave", () => { held = false; art.style.setProperty("--px", 0); art.style.setProperty("--py", 0); });
   }
 
   // Service explorer: the chosen service's photo wipes in; copy, tags and link follow.
@@ -547,58 +591,70 @@ function wireQaHome() {
     slot("name").textContent = name;
     slot("text").textContent = text;
     slot("tags").innerHTML = (SERVICE_SLIDES.find((s) => s.id === id).tags || []).map((t) => `<span>#${t}</span>`).join("");
-    slot("link").href = qaServiceHref(id);
+    slot("link").setAttribute("href", qaServiceHref(id));
+    pathLinks();
   });
 
-  // Timeline: choosing a milestone fills the rail up to it and swaps in its demo.
-  const marks = Array.from(root.querySelectorAll(".qt-rail button"));
-  const fill = root.querySelector(".qt-fill");
-  const tPanel = root.querySelector("#qt-panel");
-  let tCurrent = -1;
-  let touched = false;
-  const show = (i) => {
-    if (i === tCurrent) return;
-    tCurrent = i;
-    marks.forEach((mark, k) => {
-      mark.setAttribute("aria-selected", k === i ? "true" : "false");
-      mark.tabIndex = k === i ? 0 : -1;
-      mark.parentElement.classList.toggle("is-past", k < i);
+  // TestOps: one step at a time is lit; the line fills down to it.
+  const flow = root.querySelector(".qo-flow");
+  const steps = Array.from(flow.querySelectorAll("li"));
+  let step = 0;
+  const lightStep = (i) => {
+    step = i;
+    steps.forEach((li, k) => {
+      li.classList.toggle("is-on", k === i);
+      li.classList.toggle("is-past", k < i);
     });
-    fill.style.width = (i / (marks.length - 1)) * 100 + "%";
-    tPanel.innerHTML = qaTimelinePanel(i);
-    tPanel.setAttribute("aria-labelledby", marks[i].id);
+    flow.style.setProperty("--step", i / (steps.length - 1));
   };
-  marks.forEach((mark, i) => {
-    mark.addEventListener("click", () => { touched = true; show(i); });
-    mark.addEventListener("keydown", (event) => {
-      const step = { ArrowRight: 1, ArrowLeft: -1 }[event.key];
-      if (!step) return;
+  lightStep(0);
+
+  // T 솔루션: tabs swap the panel; arrows move between them.
+  const tabs = Array.from(root.querySelectorAll(".qs-tabs button"));
+  const panel = root.querySelector("#qs-panel");
+  let current = 0;
+  let touched = false;
+  const show = (i, focus) => {
+    if (i === current) return;
+    current = i;
+    tabs.forEach((tab, k) => {
+      tab.setAttribute("aria-selected", k === i ? "true" : "false");
+      tab.tabIndex = k === i ? 0 : -1;
+    });
+    panel.innerHTML = qaSolutionPanel(i);
+    panel.setAttribute("aria-labelledby", tabs[i].id);
+    pathLinks();
+    if (focus) tabs[i].focus();
+  };
+  tabs.forEach((tab, i) => {
+    tab.addEventListener("click", () => { touched = true; show(i); });
+    tab.addEventListener("keydown", (event) => {
+      const move = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[event.key];
+      if (!move) return;
       event.preventDefault();
       touched = true;
-      const n = (tCurrent + step + marks.length) % marks.length;
-      show(n);
-      marks[n].focus();
+      show((current + move + tabs.length) % tabs.length, true);
     });
   });
-  show(0);
+  panel.addEventListener("pointerenter", () => { touched = true; });
+  panel.addEventListener("focusin", () => { touched = true; });
 
-  // Scenes start their motion when they come into view; the hero cycle and timeline tour run on one clock.
+  // Motion runs only while its section is on screen.
   window.__qhIo = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => entry.target.classList.toggle("play", entry.isIntersecting));
+    entries.forEach((entry) => {
+      entry.target.classList.toggle("play", entry.isIntersecting);
+    });
   }, { threshold: 0.35 });
-  root.querySelectorAll(".qh-testops, .qh-timeline, .qh-hero").forEach((el) => window.__qhIo.observe(el));
-  if (!reduce) {
-    let tick = 0;
-    window.__qhTimer = setInterval(() => {
-      if (!document.body.contains(root)) { clearInterval(window.__qhTimer); window.__qhTimer = null; return; }
-      tick += 1;
-      if (!held) light((lit + 1) % QA_BADGE_LINKS.length);
-      const timelineSeen = root.querySelector(".qh-timeline").classList.contains("play");
-      if (timelineSeen && !touched && tick % 4 === 0) show((tCurrent + 1) % marks.length);
-    }, 1600);
-  } else {
-    show(marks.length - 1);
-  }
+  root.querySelectorAll(".qh-hero, .qh-testops, .qh-tsol").forEach((el) => window.__qhIo.observe(el));
+  if (reduce) return;
+  let tick = 0;
+  window.__qhTimer = setInterval(() => {
+    if (!document.body.contains(root)) { clearInterval(window.__qhTimer); window.__qhTimer = null; return; }
+    tick += 1;
+    if (!held && root.querySelector(".qh-hero").classList.contains("play")) light((lit + 1) % QA_BADGE_LINKS.length);
+    if (root.querySelector(".qh-testops").classList.contains("play")) lightStep((step + 1) % steps.length);
+    if (!touched && tick % 3 === 0 && root.querySelector(".qh-tsol").classList.contains("play")) show((current + 1) % tabs.length);
+  }, 2400);
 }
 
 
@@ -1445,7 +1501,7 @@ const ESG_SLIDES = [
 ];
 const INQUIRY = {
   qa: {
-    title: "QA 테스트 상담",
+    title: "QA 서비스 상담",
     lede: "범위와 일정을 알려 주시면 진행 방식을 제안해 드립니다.",
     mail: "staff@tbell.co.kr",
     topics: ["아웃소싱 테스트", "테스트 자동화", "블랙박스", "화이트박스", "API", "성능", "TestOps", "T-AUTO", "T-LENS"],
@@ -1689,7 +1745,7 @@ const inquiryMode = (child) => (child === "security" ? "security" : "qa");
 function multiInquiry(child) {
   const which = inquiryMode(child);
   const tab = (id, label) => `<a href="#inquiry/${id}"${id === which ? ' aria-current="page"' : ""}>${label}</a>`;
-  return `<nav class="s-subnav inq-switch" aria-label="문의 분야"><div class="s-wrap">${tab("qa", "QA 문의")}${tab("security", "보안 컨설팅 문의")}</div></nav>${inquiryPage(which)}`;
+  return `<nav class="s-subnav inq-switch" aria-label="문의 분야"><div class="s-wrap">${tab("qa", "QA 문의")}${tab("security", "보안 문의")}</div></nav>${inquiryPage(which)}`;
 }
 
 // Header: QA and 보안 each open their own menu; 블로그 holds both areas' posts; 회사소개 is shared.
