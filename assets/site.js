@@ -255,7 +255,7 @@ function multiHome() {
     <div class="mh-wrap">
       <h2>티벨이 추구하는 가치</h2>
       <p class="mh-mission">기술과 전문성을 바탕으로 <br>고객의 품질과 보안 수준을 높이고, <br>더 나은 비즈니스 가치를 만들어갑니다.</p>
-      <ul class="mh-rings">${core.map(([icon, t, ko], i) => `<li style="--i:${i}"><span><img src="${base}assets/qa/icons/${icon}.png" alt=""></span><b>${t}</b><small>${ko}</small></li>`).join("")}</ul>
+      <ul class="mh-rings">${core.map(([icon, t, ko], i) => `<li style="--i:${i}"><span><img src="${base}assets/qa/icons/${icon}.svg" alt=""></span><b>${t}</b><small>${ko}</small></li>`).join("")}</ul>
     </div>
   </section>
   <section class="mh-since" data-count-zone>

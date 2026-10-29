@@ -292,7 +292,7 @@ function qpAboutIntro() {
   ])}</div>`);
   return `${greeting}
   <h2 class="qp-h qp-h-solo" data-qp-reveal>티벨 코어</h2>
-  ${qpRingBand("qp-core", "core-building.jpg", "", [["core-test", "TEST"], ["core-security", "SECURITY"], ["core-customer", "CUSTOMER"], ["core-human", "HUMAN"]].map(([i, t]) => `<b>${t}</b><span class="qp-ring2">${qpIcon(i, t)}</span>`))}`;
+  ${qpRingBand("qp-core", "core-building.jpg", "", [["core-test", "TEST"], ["core-security", "SECURITY"], ["core-customer", "CUSTOMER"], ["core-human", "HUMAN"]].map(([i, t]) => `<b>${t}</b><span class="qp-ring2"><img class="qp-ico" src="${QA}icons/${i}.svg" alt="${t}"></span>`))}`;
 }
 
 // Six wedges of a half ring; they fan out from the centre when the section comes into view.
