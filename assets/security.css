@@ -1608,7 +1608,7 @@
 #secd .hm-sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
 #secd .hm-wrap { width: min(1200px, calc(100% - 80px)); margin-inline: auto; }
 #secd .hm-kicker { font-size: 15px; font-weight: 700; color: var(--s-teal-ink); }
-#secd .hm-head h2, #secd .hm-diag h2 { margin-top: 14px; font-size: clamp(28px, 3vw, 40px); font-weight: 700; line-height: 1.3; letter-spacing: -0.01em; }
+#secd .hm-head h2 { margin-top: 14px; font-size: clamp(28px, 3vw, 40px); font-weight: 700; line-height: 1.3; letter-spacing: -0.01em; }
 #secd .hm-lede { margin-top: 18px; max-width: 36em; font-size: clamp(15px, 1.15vw, 18px); line-height: 1.75; color: var(--s-body); }
 #secd .hm-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 40px; }
 #secd .hm-btn {
@@ -1663,33 +1663,10 @@
 #secd .hm-cal-foot a:hover { color: var(--s-teal); }
 
 /* 2. Self-diagnosis: the copy says what you learn, the stage shows the tool's real answer. */
-#secd .hm-diag { padding: clamp(96px, 9vw, 150px) 0; }
-#secd .hm-diag-in { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(48px, 6vw, 96px); align-items: center; }
 #secd .hm-know { display: grid; gap: 14px; margin: 36px 0 0; padding: 0; list-style: none; }
 #secd .hm-know li { display: grid; grid-template-columns: 76px minmax(0, 1fr); align-items: baseline; }
 #secd .hm-know span { font-family: var(--font-num); font-size: 13px; font-weight: 600; letter-spacing: .1em; color: var(--s-teal-ink); }
 #secd .hm-know b { font-size: 18px; font-weight: 700; }
-#secd .hm-shot { margin: 0; padding: clamp(28px, 3.4vw, 52px); border-radius: 16px; background: radial-gradient(520px 320px at 70% 20%, #27393c 0%, #161616 70%); }
-#secd .hm-shot-screen { padding-bottom: 22px; overflow: hidden; border-radius: 10px; background: #fff; box-shadow: 0 30px 60px -24px rgba(0, 0, 0, .6); }
-#secd .hm-shot-bar { display: flex; align-items: center; gap: 6px; height: 36px; padding: 0 16px; background: #f4f4f4; border-bottom: 1px solid #ebebeb; }
-#secd .hm-shot-bar i { width: 8px; height: 8px; border-radius: 50%; background: #d4d4d4; }
-#secd .hm-shot-bar span { margin-left: 10px; font-size: 12px; color: #8a8a8a; }
-#secd .hm-shot-sum { padding: 20px 24px 8px; font-size: 14px; color: var(--s-body); }
-#secd .hm-shot-sum b { font-family: var(--font-num); font-size: 16px; color: var(--s-ink); }
-#secd .hm-shot-list { margin: 0; padding: 0 24px; list-style: none; }
-#secd .hm-shot-list li { display: grid; grid-template-columns: 52px minmax(0, 1fr); align-items: center; gap: 12px; padding: 11px 0; border-bottom: 1px solid #f0f0f0; }
-#secd .hm-shot-list b { font-size: 14px; font-weight: 600; line-height: 1.45; }
-#secd .hm-badge { padding: 4px 0; border-radius: 2px; font-size: 12px; font-weight: 700; text-align: center; }
-#secd .hm-badge.is-must { background: rgba(255, 67, 67, .1); color: #c62828; }
-#secd .hm-badge.is-soon { background: rgba(250, 225, 0, .22); color: #7a6700; }
-#secd .hm-shot-plan { display: flex; align-items: center; gap: 16px; margin: 18px 24px 0; padding: 16px 18px; border-radius: 8px; background: #f3f9fa; }
-#secd .hm-shot-plan p span { display: block; font-size: 12px; color: #8a8a8a; }
-#secd .hm-shot-plan p b { font-family: var(--font-num); font-size: 20px; font-weight: 600; }
-#secd .hm-shot-plan .is-teal { color: var(--s-teal-ink); }
-#secd .hm-shot-arrow { flex: 1; font-size: 12px; color: #8a8a8a; text-align: center; }
-#secd .hm-shot-arrow::after { content: ""; display: block; height: 1px; margin-top: 6px; background: linear-gradient(90deg, #cfcfcf, var(--s-teal)); }
-#secd .hm-shot figcaption { margin-top: 18px; font-size: 13px; line-height: 1.65; color: #9a9a9a; }
-#secd .hm-tag { display: inline-block; margin-right: 8px; padding: 2px 8px; background: var(--s-teal); color: #062126; font-size: 12px; font-weight: 700; }
 
 /* 3. The four areas: led by the services page's line icons; the whole column is the link. */
 #secd .hm-areas { padding: clamp(40px, 4vw, 72px) 0 clamp(96px, 9vw, 150px); }
@@ -1737,7 +1714,6 @@
 /* 사업 소개 pages are dark from top to bottom (detail pages are white); sections differ by tone, not by
    switching to white. */
 #secd[data-page="home"] { --mask: #121212; background: #121212; color: #fff; }
-#secd .hm-diag { background: #161616; color: #fff; }
 #secd .hm-areas { background: #121212; color: #fff; padding-top: clamp(96px, 9vw, 150px); }
 #secd .hm-way { background: linear-gradient(#0d0d0d, #121212); }
 #secd .hm-close { background: radial-gradient(800px 360px at 50% 120%, #1f2a2c, #121212 70%); color: #fff; }
@@ -1746,10 +1722,6 @@
 #secd[data-page="home"] .hm-btn { color: #fff; }
 #secd[data-page="home"] .hm-btn.is-main { background: #fff; border-color: #fff; color: #121212; }
 #secd[data-page="home"] .hm-btn:hover, #secd[data-page="home"] .hm-btn:focus-visible { background: var(--s-teal); border-color: var(--s-teal); color: #121212; }
-#secd .hm-diag-in { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); }
-#secd .hm-shot { padding: 0; border-radius: 0; background: none; }
-#secd .hm-shot-screen { color: var(--s-ink); box-shadow: 0 40px 80px -30px rgba(39, 196, 213, .28), 0 30px 60px -20px rgba(0, 0, 0, .8); }
-#secd .hm-shot figcaption { color: #8a8a8a; }
 #secd .hm-ico { color: #fff; }
 #secd .hm-ico::after { border-color: #3a3a3a; }
 #secd .hm-area-list a { color: #fff; }
@@ -1761,7 +1733,7 @@
 #secd .hm-cal-list .is-past { grid-template-columns: 92px minmax(0, 1fr); }
 
 @media (max-width: 1023px) {
-  #secd .hm-hero-in, #secd .hm-diag-in { grid-template-columns: minmax(0, 1fr); }
+  #secd .hm-hero-in { grid-template-columns: minmax(0, 1fr); }
   #secd .hm-hero { min-height: 0; }
   #secd .hm-area-list { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 56px; }
   #secd .hm-way-list { grid-template-columns: minmax(0, 1fr); gap: 56px; max-width: 560px; margin-inline: auto; }
@@ -1771,12 +1743,6 @@
   #secd .hm-btn { min-width: 0; flex: 1 1 auto; padding: 0 16px; white-space: nowrap; }
   #secd .hm-cal-list .is-past { grid-template-columns: 1fr; }
   #secd .hm-cal-list .is-past span { grid-column: 1; }
-  #secd .hm-shot { padding: 16px; border-radius: 12px; }
-  #secd .hm-shot-list { padding: 0 16px; }
-  #secd .hm-shot-sum { padding: 16px 16px 6px; }
-  #secd .hm-shot-plan { margin: 14px 16px 0; padding: 12px 14px; gap: 10px; }
-  #secd .hm-shot-plan p b { font-size: 17px; }
-  #secd .hm-shot-arrow { font-size: 11px; white-space: nowrap; }
   #secd .hm-area-list { grid-template-columns: minmax(0, 1fr); row-gap: 36px; }
   #secd .hm-area-list a { grid-template-columns: 64px minmax(0, 1fr); column-gap: 20px; row-gap: 4px; }
   #secd .hm-ico { grid-row: 1 / 4; width: 64px; height: 64px; margin: 0; padding: 13px; }
@@ -1804,3 +1770,43 @@
 
 /* security_demo's ".field input { width: 100% }" also stretched the area checkboxes; keep them box-sized. */
 #secd .inquiry .chips input { width: auto; height: auto; }
+
+/* 보안 사업 소개 · Start here: one dark panel of three doors, a shield per page. The door in use widens and
+   opens its line and link (first by default, then whichever the pointer or focus is on). */
+#secd .hm-start { padding: clamp(96px, 9vw, 150px) 0 clamp(40px, 4vw, 72px); background: #161616; color: #fff; }
+#secd .hm-start .hm-head { text-align: center; }
+#secd .hm-start .hm-kicker { color: var(--s-teal); }
+#secd .hm-start .hm-lede { margin-inline: auto; color: #a9adb2; }
+#secd .hm-doors { display: flex; height: clamp(420px, 36vw, 520px); margin: clamp(48px, 4.5vw, 72px) 0 0; padding: 0; overflow: hidden; border-radius: 20px;
+  background: linear-gradient(180deg, #0a0a0a 0%, #1c1c1c 55%, #343434 100%); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .06); list-style: none; }
+#secd .hm-doors li { position: relative; flex: 1 1 0; min-width: 0; transition: flex-grow .5s cubic-bezier(.2, .7, .2, 1); }
+#secd .hm-doors li + li { border-left: 1px solid rgba(255, 255, 255, .1); }
+#secd .hm-doors a { position: relative; display: flex; flex-direction: column; justify-content: flex-end; height: 100%; padding: clamp(24px, 2.6vw, 40px); overflow: hidden; color: #fff; text-decoration: none; }
+#secd .hm-doors img { position: absolute; left: 50%; top: 8%; width: min(68%, 300px); height: auto; translate: -50% 0; opacity: .38; scale: .86;
+  -webkit-mask-image: radial-gradient(closest-side, #000 62%, transparent 100%); mask-image: radial-gradient(closest-side, #000 62%, transparent 100%); transition: opacity .5s, scale .5s; }
+#secd .hm-door-n { position: relative; color: var(--s-teal); font-family: var(--font-num); font-size: 15px; font-weight: 600; letter-spacing: .08em; }
+#secd .hm-doors b { position: relative; margin-top: 8px; font-size: clamp(21px, 1.8vw, 28px); font-weight: 700; white-space: nowrap; }
+#secd .hm-door-more { position: relative; display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows .5s, opacity .35s; }
+#secd .hm-door-more > * { min-height: 0; overflow: hidden; }
+#secd .hm-door-more > span { max-width: 30em; margin-top: 0; color: #c4c8cc; font-size: clamp(14px, 1.05vw, 16px); line-height: 1.7; word-break: keep-all; }
+#secd .hm-door-more em { display: inline-block; justify-self: start; margin-top: 18px; padding-bottom: 3px; border-bottom: 1px solid var(--s-teal); color: var(--s-teal); font-size: 15px; font-style: normal; font-weight: 700; }
+#secd .hm-door-more em::after { content: " →"; }
+#secd .hm-doors li:is(:hover, :focus-within), #secd .hm-doors:not(:has(li:hover, li:focus-within)) li.is-on { flex-grow: 1.9; }
+#secd .hm-doors li:is(:hover, :focus-within) img, #secd .hm-doors:not(:has(li:hover, li:focus-within)) li.is-on img { opacity: 1; scale: 1; }
+#secd .hm-doors li:is(:hover, :focus-within) .hm-door-more, #secd .hm-doors:not(:has(li:hover, li:focus-within)) li.is-on .hm-door-more { grid-template-rows: 1fr; opacity: 1; }
+#secd .hm-doors li:is(:hover, :focus-within) .hm-door-more > span, #secd .hm-doors:not(:has(li:hover, li:focus-within)) li.is-on .hm-door-more > span { margin-top: 12px; }
+#secd .hm-doors a:focus-visible { outline: 2px solid var(--s-teal); outline-offset: -4px; }
+@media (max-width: 768px) {
+  #secd .hm-doors { flex-direction: column; height: auto; border-radius: 14px; }
+  #secd .hm-doors li + li { border-left: 0; border-top: 1px solid rgba(255, 255, 255, .1); }
+  #secd .hm-doors a { display: grid; grid-template-columns: 84px minmax(0, 1fr); column-gap: 18px; align-items: center; padding: 20px 18px; }
+  #secd .hm-doors img, #secd .hm-doors li img { position: static; grid-row: 1 / 4; width: 84px; translate: none; opacity: 1; scale: 1; }
+  #secd .hm-door-n, #secd .hm-doors b { grid-column: 2; }
+  #secd .hm-doors b { margin-top: 2px; font-size: 19px; }
+  #secd .hm-doors .hm-door-more, #secd .hm-doors li .hm-door-more { grid-column: 2; grid-template-rows: 1fr; opacity: 1; }
+  #secd .hm-doors .hm-door-more > span { margin-top: 6px; font-size: 14px; }
+  #secd .hm-door-more em { margin-top: 10px; font-size: 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #secd .hm-doors li, #secd .hm-doors img, #secd .hm-door-more { transition: none; }
+}

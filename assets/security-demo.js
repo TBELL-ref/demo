@@ -6,7 +6,9 @@ function securityPage(key) {
   if (key === "contact") return inquiryPage("security");
   // 컨설팅 서비스 is the user's final design with its own stylesheet scope (#secs); the rest are security_demo pages.
   if (key === "services") return `<div id="secs" class="secd" data-page="services">${SECURITY_DEMO.services}</div>`;
-  return `<div id="secd" class="secd${key === "home" ? "" : " theme-inner"}" data-page="${key}">${SECURITY_DEMO[key]}</div>`;
+  // Image paths are written from the site root; pages live at /security/…, so prefix the base.
+  const body = SECURITY_DEMO[key].replaceAll('src="assets/', `src="${window.TBELL_BASE || "/"}assets/`);
+  return `<div id="secd" class="secd${key === "home" ? "" : " theme-inner"}" data-page="${key}">${body}</div>`;
 }
 
 // The final services design's script: the hero's line wave and the six steps that advance on their own.
