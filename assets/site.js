@@ -386,7 +386,7 @@ function qaHome() {
   const first = QA_EXPLORE[0];
   const firstTags = SERVICE_SLIDES[0].tags.map((t) => `<span>#${t}</span>`).join("");
   const tsCols = QA_SOLUTIONS.map(([name, role, href], i) =>
-    `<li${i ? "" : ' class="is-on"'}><a href="${href}"><i class="qh-ts-dot" aria-hidden="true"></i><b>${name}</b><small>${role}</small></a></li>`).join("");
+    `<li${i ? "" : ' class="is-on"'}><a href="${href}"><b>${name}</b><small>${role}</small><em class="qh-ts-more">자세히 보기</em></a></li>`).join("");
   const industries = DOMAINS.map(([name, image]) =>
     `<li><img src="${ORIGIN}${image}" alt="" loading="lazy"><span>${name}</span></li>`).join("");
   return `<div class="qh s-page dark" id="qh">
@@ -404,7 +404,7 @@ function qaHome() {
     </div>
   </section>
 
-  <section class="s-sec qh-light qh-explore" id="qh-services"><div class="s-wrap">
+  <section class="s-sec qh-explore is-dark" id="qh-services"><div class="s-wrap">
     <div class="qh-head"><p class="qh-kicker">QA 서비스</p><h2>프로젝트에 최적화된 QA 서비스</h2><p>다양한 플랫폼과 개발 환경에 맞춰 전문적인 테스트 서비스를 제공합니다.</p></div>
     <div class="qx">
       <div class="qx-list"><ul role="tablist" aria-label="테스트 서비스" aria-orientation="vertical">${list}</ul><i class="qx-bar" aria-hidden="true"></i></div>
@@ -438,7 +438,7 @@ function qaHome() {
       <p>테스트 설계와 실행, AI 평가부터 사용자 피드백 분석까지. 티벨이 직접 만든 품질 기술입니다.</p>
     </div>
     <div class="qh-ts-card">
-      <picture class="qh-ts-photo"><source media="(max-width: 768px)" srcset="${QA_ART}photos/tsol-qa-space-m.jpg"><img src="${QA_ART}photos/tsol-qa-space.jpg" alt="" loading="lazy"></picture>
+      <picture class="qh-ts-photo"><source media="(max-width: 768px)" srcset="${QA_ART}photos/tsol-office-m.jpg"><img src="${QA_ART}photos/tsol-office.jpg" alt="" loading="lazy"></picture>
       <ul class="qh-ts-cols" aria-label="T-솔루션">${tsCols}</ul>
     </div>
   </section>

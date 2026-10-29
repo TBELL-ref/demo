@@ -1771,41 +1771,30 @@
 /* security_demo's ".field input { width: 100% }" also stretched the area checkboxes; keep them box-sized. */
 #secd .inquiry .chips input { width: auto; height: auto; }
 
-/* 보안 사업 소개 · Start here: one dark panel of three doors, a line drawing per page. The door in use widens and
-   opens its line and link (first by default, then whichever the pointer or focus is on). */
-#secd .hm-start { padding: clamp(96px, 9vw, 150px) 0 clamp(40px, 4vw, 72px); background: #161616; color: #fff; }
+/* 보안 사업 소개 · Start here (the user's card UI): three dark photo cards; the photo fills the card, a shade
+   deepens toward the lower left, and the area, name, line and link sit on it. The photo eases closer
+   under the pointer. */
+#secd .hm-start { padding: clamp(96px, 9vw, 150px) 0 clamp(40px, 4vw, 72px); background: #131417; color: #fff; }
 #secd .hm-start .hm-head { text-align: center; }
 #secd .hm-start .hm-kicker { color: var(--s-teal); }
 #secd .hm-start .hm-lede { margin-inline: auto; color: #a9adb2; }
-#secd .hm-doors { display: flex; height: clamp(420px, 36vw, 520px); margin: clamp(48px, 4.5vw, 72px) 0 0; padding: 0; overflow: hidden; border-radius: 20px;
-  background: linear-gradient(180deg, #0a0a0a 0%, #1c1c1c 55%, #343434 100%); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .06); list-style: none; }
-#secd .hm-doors li { position: relative; flex: 1 1 0; min-width: 0; transition: flex-grow .5s cubic-bezier(.2, .7, .2, 1); }
-#secd .hm-doors li + li { border-left: 1px solid rgba(255, 255, 255, .1); }
-#secd .hm-doors a { position: relative; display: flex; flex-direction: column; justify-content: flex-end; height: 100%; padding: clamp(24px, 2.6vw, 40px); overflow: hidden; color: #fff; text-decoration: none; }
-#secd .hm-door-art { position: absolute; left: 50%; top: 14%; width: min(78%, 340px); height: auto; translate: -50% 0; opacity: .35; scale: .82; transform-origin: 50% 30%; transition: opacity .5s, scale .5s; }
-#secd .hm-door-n { position: relative; color: var(--s-teal); font-family: var(--font-num); font-size: 15px; font-weight: 600; letter-spacing: .08em; }
-#secd .hm-doors b { position: relative; margin-top: 8px; font-size: clamp(21px, 1.8vw, 28px); font-weight: 700; white-space: nowrap; }
-#secd .hm-door-more { position: relative; display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows .5s, opacity .35s; }
-#secd .hm-door-more > * { min-height: 0; overflow: hidden; }
-#secd .hm-door-more > span { max-width: 30em; margin-top: 0; color: #c4c8cc; font-size: clamp(14px, 1.05vw, 16px); line-height: 1.7; word-break: keep-all; }
-#secd .hm-door-more em { display: inline-block; justify-self: start; margin-top: 18px; padding-bottom: 3px; border-bottom: 1px solid var(--s-teal); color: var(--s-teal); font-size: 15px; font-style: normal; font-weight: 700; }
-#secd .hm-door-more em::after { content: " →"; }
-#secd .hm-doors li:is(:hover, :focus-within), #secd .hm-doors:not(:has(li:hover, li:focus-within)) li.is-on { flex-grow: 1.9; }
-#secd .hm-doors li:is(:hover, :focus-within) .hm-door-art, #secd .hm-doors:not(:has(li:hover, li:focus-within)) li.is-on .hm-door-art { opacity: 1; scale: 1; }
-#secd .hm-doors li:is(:hover, :focus-within) .hm-door-more, #secd .hm-doors:not(:has(li:hover, li:focus-within)) li.is-on .hm-door-more { grid-template-rows: 1fr; opacity: 1; }
-#secd .hm-doors li:is(:hover, :focus-within) .hm-door-more > span, #secd .hm-doors:not(:has(li:hover, li:focus-within)) li.is-on .hm-door-more > span { margin-top: 12px; }
-#secd .hm-doors a:focus-visible { outline: 2px solid var(--s-teal); outline-offset: -4px; }
-@media (max-width: 768px) {
-  #secd .hm-doors { flex-direction: column; height: auto; border-radius: 14px; }
-  #secd .hm-doors li + li { border-left: 0; border-top: 1px solid rgba(255, 255, 255, .1); }
-  #secd .hm-doors a { display: grid; grid-template-columns: 96px minmax(0, 1fr); column-gap: 18px; align-items: center; padding: 20px 18px; }
-  #secd .hm-door-art, #secd .hm-doors li .hm-door-art { position: static; grid-row: 1 / 4; width: 96px; translate: none; opacity: 1; scale: 1; }
-  #secd .hm-door-n, #secd .hm-doors b { grid-column: 2; }
-  #secd .hm-doors b { margin-top: 2px; font-size: 19px; }
-  #secd .hm-doors .hm-door-more, #secd .hm-doors li .hm-door-more { grid-column: 2; grid-template-rows: 1fr; opacity: 1; }
-  #secd .hm-doors .hm-door-more > span { margin-top: 6px; font-size: 14px; }
-  #secd .hm-door-more em { margin-top: 10px; font-size: 14px; }
+#secd .hm-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(14px, 1.4vw, 22px); margin: clamp(48px, 4.5vw, 72px) 0 0; padding: 0; list-style: none; }
+#secd .hm-cards a { position: relative; display: flex; flex-direction: column; justify-content: flex-end; aspect-ratio: 630 / 545; overflow: hidden; border-radius: 14px; background: #1b1e23; color: #fff; text-decoration: none; isolation: isolate; }
+#secd .hm-cards img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; transition: scale .6s cubic-bezier(.2, .7, .2, 1); }
+#secd .hm-cards a::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgba(12, 16, 22, .45) 0%, rgba(12, 16, 22, 0) 70%), linear-gradient(0deg, rgba(10, 12, 16, .72) 0%, rgba(10, 12, 16, .12) 58%, rgba(10, 12, 16, 0) 100%); }
+#secd .hm-card-glass { display: grid; gap: 4px; padding: 0 clamp(22px, 2.6vw, 40px) clamp(24px, 2.8vw, 42px); }
+#secd .hm-card-glass small { color: var(--s-teal); font-size: clamp(13px, 1vw, 15px); font-weight: 500; }
+#secd .hm-card-glass b { margin-top: 2px; font-size: clamp(22px, 2vw, 32px); font-weight: 700; line-height: 1.25; letter-spacing: -.01em; }
+#secd .hm-card-glass > span { margin-top: 10px; color: #c9ced3; font-size: clamp(13px, .98vw, 16px); line-height: 1.65; word-break: keep-all; }
+#secd .hm-card-glass em { justify-self: start; margin-top: clamp(14px, 1.4vw, 22px); color: #fff; font-size: clamp(14px, 1vw, 16px); font-style: normal; font-weight: 700; transition: color .3s; }
+#secd .hm-card-glass em::after { content: "→"; display: inline-block; margin-left: 8px; transition: translate .3s; }
+#secd .hm-cards a:is(:hover, :focus-visible) img { scale: 1.05; }
+#secd .hm-cards a:is(:hover, :focus-visible) em { color: var(--s-teal); }
+#secd .hm-cards a:is(:hover, :focus-visible) em::after { translate: 4px 0; }
+#secd .hm-cards a:focus-visible { outline: 2px solid var(--s-teal); outline-offset: 3px; }
+@media (max-width: 1024px) {
+  #secd .hm-cards { grid-template-columns: 1fr; max-width: 560px; margin-inline: auto; }
 }
 @media (prefers-reduced-motion: reduce) {
-  #secd .hm-doors li, #secd .hm-door-art, #secd .hm-door-more { transition: none; }
+  #secd .hm-cards img { transition: none; }
 }
