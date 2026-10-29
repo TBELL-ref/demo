@@ -28,7 +28,7 @@ const hashBase = (mode) => (mode === "all" ? "#" : "#" + mode + "/");
 // The /re-menu shell sets TBELL_HASH_ROUTES and keeps the "#…" routes.
 const HASH_ROUTES = !!window.TBELL_HASH_ROUTES;
 const SITE_ROOT = new URL(window.TBELL_BASE || "./", location.href).pathname;
-const ROUTE_HEADS = ["qa", "security", "blog", "company", "inquiry"];
+const ROUTE_HEADS = ["qa", "security", "blog", "company", "inquiry", "privacy"];
 
 function isRoute(href) {
   if (href === "#") return true;
@@ -180,7 +180,7 @@ function parse() {
   const raw = currentRaw();
   let [mode, group, child, page] = raw.split("/");
   const known = ["qa", "security"];
-  if (["blog", "company", "inquiry"].includes(mode)) {
+  if (["blog", "company", "inquiry", "privacy"].includes(mode)) {
     // #blog[/cat][/n] · #company[/child] · #inquiry/qa|security
     let [, a = "", b = ""] = raw.split("/");
     if (mode === "blog" && /^\d+$/.test(a)) { b = a; a = ""; }
@@ -965,6 +965,7 @@ function tDeck(child) {
 
 // Title and description for routes that carry their own (the T pages); null keeps the site default.
 function pageMeta(mode, group, child) {
+  if (mode === "all" && group === "privacy") return { title: "개인정보 처리방침 · TBELL", description: "티벨이 문의 회신을 위해 처리하는 개인정보의 항목, 목적, 보유 기간과 정보주체의 권리를 안내합니다." };
   if (mode !== "qa" || group !== "solution") return null;
   const slide = T_PAGES[child || "overview"];
   return slide ? { title: slide.meta[0] + " · TBELL", description: slide.meta[1] } : null;
@@ -1632,6 +1633,52 @@ function inquiryPage(mode) {
   </div></section>`;
 }
 
+// 개인정보 처리방침 (#privacy, linked from the footer). Only what the site itself states: the inquiry forms'
+// fields and consent lines, the footer's company lines, and the public remedy contacts. Items the company
+// still has to fill in (책임자, 위탁, 시행일, …) are listed in design_demo/privacy-content-audit.md, not guessed.
+const PRIVACY = [
+  ["purpose", "개인정보의 처리 목적", `<p>티벨은 다음 목적으로만 개인정보를 처리하며, 목적이 바뀌면 개인정보 보호법 제18조에 따라 별도의 동의를 받습니다.</p>
+    <ul><li>QA·보안 서비스 문의에 대한 회신과 상담</li></ul>`],
+  ["items", "처리하는 개인정보 항목", `<table class="lg-table">
+      <thead><tr><th scope="col">구분</th><th scope="col">항목</th><th scope="col">수집 방법</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">필수</th><td>이름, 회사명, 이메일</td><td rowspan="2">홈페이지 문의 양식</td></tr>
+        <tr><th scope="row">선택</th><td>연락처</td></tr>
+      </tbody>
+    </table>
+    <p class="lg-note">문의 내용과 관심 분야, 보안 문의의 회사 정보(업종, 규모 등)는 상담을 위해 함께 받습니다. 이 칸에는 개인정보를 적지 않도록 부탁드립니다.</p>`],
+  ["period", "처리 및 보유 기간", `<p>문의 회신과 상담이 끝나면 지체 없이 파기합니다. 다른 법령에서 보관을 요구하는 경우에는 그 법령이 정한 기간 동안만 보관합니다.</p>`],
+  ["third", "개인정보의 제3자 제공", `<p>정보주체의 동의가 있거나 법률에 특별한 규정이 있는 경우를 제외하고, 개인정보를 제3자에게 제공하지 않습니다.</p>`],
+  ["destroy", "개인정보의 파기 절차와 방법", `<p>보유 기간이 지나거나 처리 목적이 달성된 개인정보는 지체 없이 파기합니다. 전자 파일은 복구할 수 없는 방법으로 삭제하고, 종이 문서는 분쇄하거나 소각합니다.</p>`],
+  ["rights", "정보주체의 권리와 행사 방법", `<p>정보주체는 언제든지 자신의 개인정보에 대해 열람, 정정·삭제, 처리 정지를 요구하고 동의를 철회할 수 있습니다. 아래 문의처로 서면, 전화, 이메일로 요청하시면 지체 없이 조치합니다.</p>
+    <p>법정대리인이나 위임을 받은 사람을 통해서도 요구할 수 있으며, 이때는 위임장을 제출해야 합니다.</p>`],
+  ["safety", "개인정보의 안전성 확보 조치", `<p>개인정보 보호법 제29조에 따라 개인정보가 분실·도난·유출·위조·변조·훼손되지 않도록 관리적·기술적·물리적 조치를 취합니다.</p>`],
+  ["contact", "개인정보 관련 문의처", `<dl class="lg-contact">
+      <div><dt>회사</dt><dd>티벨 (TBELL Corp.) · 대표이사 김종균</dd></div>
+      <div><dt>이메일</dt><dd><a href="mailto:staff@tbell.co.kr">staff@tbell.co.kr</a></dd></div>
+      <div><dt>전화</dt><dd>070-7777-9113 (월–금 09:30–18:00)</dd></div>
+      <div><dt>주소</dt><dd>서울특별시 강남구 강남대로 354, 9층</dd></div>
+    </dl>`],
+  ["remedy", "권익침해 구제 방법", `<p>개인정보 침해에 대한 신고나 상담이 필요하면 아래 기관에 문의할 수 있습니다.</p>
+    <ul class="lg-remedy">
+      <li><b>개인정보침해 신고센터</b><span>(국번없이) 118 · privacy.kisa.or.kr</span></li>
+      <li><b>개인정보 분쟁조정위원회</b><span>1833-6972 · www.kopico.go.kr</span></li>
+      <li><b>대검찰청</b><span>(국번없이) 1301 · www.spo.go.kr</span></li>
+      <li><b>경찰청</b><span>(국번없이) 182 · ecrm.police.go.kr</span></li>
+    </ul>`]
+];
+
+function privacyPage() {
+  const toc = PRIVACY.map(([id, title], i) => `<li><button type="button" data-jump="lg-${id}"><span>${String(i + 1).padStart(2, "0")}</span>${title}</button></li>`).join("");
+  const body = PRIVACY.map(([id, title, html], i) => `<section class="lg-sec" id="lg-${id}"><h2><span>${String(i + 1).padStart(2, "0")}</span>${title}</h2>${html}</section>`).join("");
+  return `<section class="detail legal"><div class="banner"><p class="kicker">Privacy Policy</p><h1>개인정보 처리방침</h1>
+    <p class="lede">티벨(이하 '회사')은 개인정보 보호법에 따라 정보주체의 개인정보를 보호하고, 관련 고충을 신속하게 처리하기 위해 다음과 같이 개인정보 처리방침을 둡니다.</p></div>
+    <div class="sheet"><div class="lg">
+      <nav class="lg-toc" aria-label="목차"><ol>${toc}</ol></nav>
+      <div class="lg-body">${body}</div>
+    </div></div></section>`;
+}
+
 function esc(text) {
   return String(text).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/"/g, "&quot;");
 }
@@ -1778,7 +1825,8 @@ const DRAW = {
     "": () => blogList("all", ""),
     blog: (child) => blogList("all", child),
     company: drawCompany,
-    inquiry: (child) => multiInquiry(child)
+    inquiry: (child) => multiInquiry(child),
+    privacy: privacyPage
   }
 };
 
