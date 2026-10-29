@@ -1771,7 +1771,7 @@
 /* security_demo's ".field input { width: 100% }" also stretched the area checkboxes; keep them box-sized. */
 #secd .inquiry .chips input { width: auto; height: auto; }
 
-/* 보안 사업 소개 · Start here: one dark panel of three doors, a shield per page. The door in use widens and
+/* 보안 사업 소개 · Start here: one dark panel of three doors, a line drawing per page. The door in use widens and
    opens its line and link (first by default, then whichever the pointer or focus is on). */
 #secd .hm-start { padding: clamp(96px, 9vw, 150px) 0 clamp(40px, 4vw, 72px); background: #161616; color: #fff; }
 #secd .hm-start .hm-head { text-align: center; }
@@ -1782,8 +1782,7 @@
 #secd .hm-doors li { position: relative; flex: 1 1 0; min-width: 0; transition: flex-grow .5s cubic-bezier(.2, .7, .2, 1); }
 #secd .hm-doors li + li { border-left: 1px solid rgba(255, 255, 255, .1); }
 #secd .hm-doors a { position: relative; display: flex; flex-direction: column; justify-content: flex-end; height: 100%; padding: clamp(24px, 2.6vw, 40px); overflow: hidden; color: #fff; text-decoration: none; }
-#secd .hm-doors img { position: absolute; left: 50%; top: 8%; width: min(68%, 300px); height: auto; translate: -50% 0; opacity: .38; scale: .86;
-  -webkit-mask-image: radial-gradient(closest-side, #000 62%, transparent 100%); mask-image: radial-gradient(closest-side, #000 62%, transparent 100%); transition: opacity .5s, scale .5s; }
+#secd .hm-door-art { position: absolute; left: 50%; top: 14%; width: min(78%, 340px); height: auto; translate: -50% 0; opacity: .35; scale: .82; transform-origin: 50% 30%; transition: opacity .5s, scale .5s; }
 #secd .hm-door-n { position: relative; color: var(--s-teal); font-family: var(--font-num); font-size: 15px; font-weight: 600; letter-spacing: .08em; }
 #secd .hm-doors b { position: relative; margin-top: 8px; font-size: clamp(21px, 1.8vw, 28px); font-weight: 700; white-space: nowrap; }
 #secd .hm-door-more { position: relative; display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows .5s, opacity .35s; }
@@ -1792,15 +1791,15 @@
 #secd .hm-door-more em { display: inline-block; justify-self: start; margin-top: 18px; padding-bottom: 3px; border-bottom: 1px solid var(--s-teal); color: var(--s-teal); font-size: 15px; font-style: normal; font-weight: 700; }
 #secd .hm-door-more em::after { content: " →"; }
 #secd .hm-doors li:is(:hover, :focus-within), #secd .hm-doors:not(:has(li:hover, li:focus-within)) li.is-on { flex-grow: 1.9; }
-#secd .hm-doors li:is(:hover, :focus-within) img, #secd .hm-doors:not(:has(li:hover, li:focus-within)) li.is-on img { opacity: 1; scale: 1; }
+#secd .hm-doors li:is(:hover, :focus-within) .hm-door-art, #secd .hm-doors:not(:has(li:hover, li:focus-within)) li.is-on .hm-door-art { opacity: 1; scale: 1; }
 #secd .hm-doors li:is(:hover, :focus-within) .hm-door-more, #secd .hm-doors:not(:has(li:hover, li:focus-within)) li.is-on .hm-door-more { grid-template-rows: 1fr; opacity: 1; }
 #secd .hm-doors li:is(:hover, :focus-within) .hm-door-more > span, #secd .hm-doors:not(:has(li:hover, li:focus-within)) li.is-on .hm-door-more > span { margin-top: 12px; }
 #secd .hm-doors a:focus-visible { outline: 2px solid var(--s-teal); outline-offset: -4px; }
 @media (max-width: 768px) {
   #secd .hm-doors { flex-direction: column; height: auto; border-radius: 14px; }
   #secd .hm-doors li + li { border-left: 0; border-top: 1px solid rgba(255, 255, 255, .1); }
-  #secd .hm-doors a { display: grid; grid-template-columns: 84px minmax(0, 1fr); column-gap: 18px; align-items: center; padding: 20px 18px; }
-  #secd .hm-doors img, #secd .hm-doors li img { position: static; grid-row: 1 / 4; width: 84px; translate: none; opacity: 1; scale: 1; }
+  #secd .hm-doors a { display: grid; grid-template-columns: 96px minmax(0, 1fr); column-gap: 18px; align-items: center; padding: 20px 18px; }
+  #secd .hm-door-art, #secd .hm-doors li .hm-door-art { position: static; grid-row: 1 / 4; width: 96px; translate: none; opacity: 1; scale: 1; }
   #secd .hm-door-n, #secd .hm-doors b { grid-column: 2; }
   #secd .hm-doors b { margin-top: 2px; font-size: 19px; }
   #secd .hm-doors .hm-door-more, #secd .hm-doors li .hm-door-more { grid-column: 2; grid-template-rows: 1fr; opacity: 1; }
@@ -1808,5 +1807,5 @@
   #secd .hm-door-more em { margin-top: 10px; font-size: 14px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  #secd .hm-doors li, #secd .hm-doors img, #secd .hm-door-more { transition: none; }
+  #secd .hm-doors li, #secd .hm-door-art, #secd .hm-door-more { transition: none; }
 }
